@@ -1,3 +1,7 @@
 # IM3_ORNL
 
-Code, data, and products related to IM3
+This repository contains:
+-Code 
+-data, and 
+-products related to IM3
+
