@@ -14,6 +14,9 @@ import pickle
 import sklearn.preprocessing
 import struct
 import csv
+import os
+import glob
+import shutil
 
 try:
     from osgeo import gdal, ogr
@@ -422,7 +425,80 @@ afile = save('temp', master_out_final)
 with open('temp.npy', 'rb') as tile, open(filename, 'wb') as tile2:
     tile2.write(tile.read()[20*4:])
 
-print("WRF Index:", min(gridleft,gridright), "-", max(gridleft,gridright), ".", min(gridbottom,gridtop), "-", max(gridbottom,gridtop))
-print("Tile Size:", tilex, "X", tiley)
+tilex = str(tilex)
+tiley = str(tiley)
+
+txtname = "%s.txt" % name
+
+with open('index.txt','w') as index:
+    index.write('type=continuous\n')
+    index.write('  projection=regular_ll\n')
+    index.write('  missing_value=-999900.\n')
+    index.write('  dy=0.08333333333\n')
+    index.write('  dx=0.08333333333\n')
+    index.write('  known_x=1\n')
+    index.write('  known_y=1\n')
+    index.write('  known_lat=0.0\n')
+    index.write('  known_lon=-180.0\n')
+    index.write('  wordsize=4\n')
+    index.write('  endian=big\n')
+    index.write('  signed=no\n')
+    index.write('  tile_x=')
+    index.write(tilex + '\n')
+    index.write('  tile_y=')
+    index.write(tiley + '\n')
+    index.write('  tile_z=132\n')
+    index.write('  units="dimensionless"\n')
+    index.write('  scale_factor=0.0001\n')
+    index.write('  description="Urban_Parameters"\n')
+
+with open('index.txt', 'r') as index, open(txtname, 'w') as index2:
+    index2.write(index.read())
+
+minlr = str(min(gridleft,gridright))
+maxlr = str(max(gridleft,gridright))
+mintb = str(min(gridbottom,gridtop))
+maxtb = str(max(gridbottom,gridtop))
+
+indexname = minlr + "-" + maxlr
+indexext = mintb + "-" + maxtb
+
+indexfile = "%s.%s" % (indexname,indexext)
+
+with open(filename, 'rb') as tile, open(indexfile, 'wb') as tile2:
+    tile2.write(tile.read())
+
+#print("WRF Index:", min(gridleft,gridright), "-", max(gridleft,gridright), ".", min(gridbottom,gridtop), "-", max(gridbottom,gridtop))
+#print("Tile Size:", tilex, "X", tiley)
+
+os.mkdir(wrf)
+os.mkdir(txt)
+os.mkdir(tif)
+
+srcfiles = os.listdir(src)
+for file_name in srcfiles:
+    full_file_name = os.path.join(src, file_name)
+    if os.path.isfile(full_file_name):
+        shutil.copy(full_file_name, dest)
+
+binary = os.path.join(dest, indexfile)
+shutil.copy2(binary, wrf)
+index = os.path.join(dest, 'index.txt')
+shutil.copy2(index, wrf)
+
+txtfiles = glob.iglob(os.path.join(dest, "*.txt"))
+for file in txtfiles:
+    if os.path.isfile(file):
+        shutil.move(file, txt)
+
+tiffiles = glob.iglob(os.path.join(dest, "*.tif"))
+for file in tiffiles:
+    if os.path.isfile(file):
+        shutil.move(file, tif)
+
+npyfiles = glob.iglob(os.path.join(dest, "*.npy"))
+for file in npyfiles:
+    if os.path.isfile(file):
+        shutil.move(file, npy)
 
 print("Script 4 took", str(time() - start_time), "seconds to run")

@@ -148,5 +148,6 @@ bandOut1.WriteArray(ids, 0, 0)
 
 imgOut.SetGeoTransform((start_x, pixelWidth, 0, start_y, 0, pixelHeight))
 imgOut.SetProjection(proj.ExportToWkt())
+del imgOut
 
 print("Script 2 took", str(time() - start_time), "seconds to run")

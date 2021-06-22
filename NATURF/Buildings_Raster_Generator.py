@@ -20,8 +20,8 @@ except ImportError:
 
 start_time = time()
 
-#path = r'C:\ORNL Spring\Census Tracts\Tracts 51-60\005803-005877\005844\005844.shp'
-
+#path = path.encode('unicode_escape')
+#print(path)
 # get the shapefile driver
 driver = ogr.GetDriverByName('ESRI Shapefile')
 
@@ -148,5 +148,6 @@ bandOut1.WriteArray(data1, 0, 0)
 
 imgOut.SetGeoTransform((start_x, pixelWidth, 0, start_y, 0, pixelHeight))
 imgOut.SetProjection(proj.ExportToWkt())
+del imgOut
 
 print("Script 1 took", str(time() - start_time), "seconds to run")
