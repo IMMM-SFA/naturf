@@ -1,5 +1,5 @@
 #!/bin/bash
-FILES="/mnt/data/UrbanMorphology/im3_ornl/New_Vegas/Vegas_Top_Half/*.shp"
+FILES="/mnt/data/UrbanMorphology/im3_ornl/New_Vegas/Vegas_Tiles_Top_Half/*.shp"
 for f in $FILES
 do
 export path=$f
@@ -8,8 +8,8 @@ python << EOF
 import os
 path= os.environ['path']
 name = 'LV_' + str(os.path.splitext(os.path.basename(path))[0])
-src = r'/mnt/data/UrbanMorphology/im3_ornl/New_Vegas/Vegas_Top_Half/Scripts'
-dest = os.path.join(r'/mnt/data/UrbanMorphology/im3_ornl/New_Vegas/Vegas_Top_Half', name)
+src = r'/mnt/data/UrbanMorphology/im3_ornl/New_Vegas/Vegas_Tiles_Top_Half/Scripts'
+dest = os.path.join(r'/mnt/data/UrbanMorphology/im3_ornl/New_Vegas/Vegas_Tiles_Top_Half', name)
 wrf = os.path.join(dest, name)
 tif = os.path.join(dest, 'Tifs')
 txt = os.path.join(dest, 'Text')
@@ -27,6 +27,6 @@ python Building_IDs_Generator.py
 python Parameter_Calculations.py
 python Final_Outputs.py
 
-mv $f /mnt/data/UrbanMorphology/im3_ornl/New_Vegas/LV_Processed_Tracts
+mv $f /mnt/data/UrbanMorphology/im3_ornl/New_Vegas/LV_Processed_Tiles
 
 done
