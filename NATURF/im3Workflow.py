@@ -15,10 +15,10 @@ def processFile(shapeFile):
     tifDir.mkdir(parents=True, exist_ok=True) # automatically also creates outputDir
 
     indexfile = filenames[buildingTile][0] # binary file name
-    cenlat = 34.0 # Center latitude of the study area
-    cenlon = -118.0 # Center longitude of the study area
-    id_field = 'ID' # Name of the field containing ID data in shapefile
-    height_field = 'Height' # Name of the field containing height data in shapefile
+    cenlat = 38.9 # Center latitude of the study area
+    cenlon = -77.0 # Center longitude of the study area
+    id_field = 'OBJECTID' # Name of the field containing ID data in shapefile
+    height_field = 'Max_HOUSE_' # Name of the field containing height data in shapefile
     
     BR.make_raster(shapeFile, tifDir, cenlat, cenlon)
     BI.make_ids_image(shapeFile, tifDir, cenlat, cenlon, id_field)
