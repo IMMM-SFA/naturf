@@ -28,7 +28,7 @@ setup(
     description='An open-source Python package to address the effect of the geometry of a neighborhood on the local meteorology. ',
     long_description=readme(),
     long_description_content_type="text/markdown",
-    python_requires='=3.8.5',
+    python_requires='>=3.8.5',
     include_package_data=True,
     install_requires=get_requirements()
 )
