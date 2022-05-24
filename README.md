@@ -1,3 +1,4 @@
-# IM3_ORNL
+[![build](https://github.com/IMMM-SFA/naturf/actions/workflows/build.yml/badge.svg)](https://github.com/IMMM-SFA/naturf/actions/workflows/build.yml)
 
-Code, data, and products related to IM3
+# NATURF
+Code, data, and products related to NATURF

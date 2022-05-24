@@ -12,7 +12,7 @@ jobs:
 
       env:
         OS: ${{ matrix.os }}
-        PYTHON: '3.9'
+        PYTHON: '3.8'
 
       steps:
 
