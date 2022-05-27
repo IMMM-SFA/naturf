@@ -10,3 +10,7 @@ def test_DC():
 
     for file in files:
         assert filecmp.cmp(f"{actual_dir}{file}", f"{expected_dir}{file}")
+
+
+if __name__ == "__main__":
+    test_DC()
