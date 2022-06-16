@@ -1,3 +1,6 @@
+# vscode
+naturf/.vscode
+
 # ignore docs build
 docs/build/
 
@@ -77,4 +80,3 @@ API
 Training
 Blog
 About
-
