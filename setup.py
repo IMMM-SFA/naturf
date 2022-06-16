@@ -8,12 +8,6 @@ def readme():
         return f.read()
 
 
-def get_requirements():
-    """Return a list of package requirements from the requirements.txt file."""
-    with open('requirements.txt') as f:
-        return f.read().split()
-
-
 version = re.search(r"__version__ = ['\"]([^'\"]*)['\"]", open('NATURF/__init__.py').read(), re.M).group(1)
 
 setup(
@@ -30,5 +24,17 @@ setup(
     long_description_content_type="text/markdown",
     python_requires='>=3.8.5',
     include_package_data=True,
-    install_requires=get_requirements()
+    install_requires=[
+        'numpy>=1.22.4',
+        'pandas>=1.4.2',
+        'geocube>=0.3.1',
+        'rasterio>=1.2.10',
+        'xarray>=2022.3.0',
+        'joblib>=1.0.1',
+        'fiona>=1.8.19',
+        'pyproj>=3.0.1',
+        'rtree>=1.0.0',
+        'shapely>=1.8.2',
+        'geopandas>=0.10.2',
+    ]
 )
