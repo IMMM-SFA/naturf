@@ -49,6 +49,7 @@ def calculate_parameters(path, tifDir, outputDir, name, height_field, id_field):
     if datasource2 is None:
         print('Could not open shapefile')
         exit(1)
+
     buils_raster = tifDir +'/Buildings_Raster.tif'
     img = gdal.Open(buils_raster, GA_ReadOnly)
     if img is None:
@@ -86,6 +87,12 @@ def calculate_parameters(path, tifDir, outputDir, name, height_field, id_field):
     ids = Image.open(buils_ids)
 
     ids = array(ids)
+
+    import rasterio
+
+    with rasterio.open(tifDir +'/Building_IDs.tif') as src:
+
+        arr_ids = src.read(1)
 
 
     filename = "%s.csv" % name

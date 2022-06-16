@@ -7,6 +7,7 @@ import Parameter_Calculations as PC
 import Binary
 
 def processFile(shapeFile):
+
     folder = shapeFile.parent.parent # directory housing output subdirectories
     scenario = shapeFile.parent.parent.stem # first part of output directory name
     buildingTile = shapeFile.stem # filename without extension

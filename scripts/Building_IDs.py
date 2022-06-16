@@ -29,14 +29,15 @@ def make_ids_image(path, tifDir, cenlat, cenlon, id_field):
     id_field : str
         Name of ID field in study shapefile
     '''
-    if type(path) != 'str':
-        path = str(path) 
-    if type(tifDir) != 'str':
-        tifDir = str(tifDir)
+    # if type(path) != 'str':
+    #     path = str(path)
+    # if type(tifDir) != 'str':
+    #     tifDir = str(tifDir)
 
     # get the shapefile driver
     driver = ogr.GetDriverByName('ESRI Shapefile')
 
+    # open the shapefile
     datasource2 = driver.Open(path, 0)
     if datasource2 is None:
         print('Could not open shapefile')
@@ -45,10 +46,11 @@ def make_ids_image(path, tifDir, cenlat, cenlon, id_field):
     # register all of the GDAL drivers
     gdal.AllRegister()
 
+    # get shapefile as an object
     layer2 = datasource2.GetLayer()
 
+    # get bounds data from shapefile to build th output raster
     extent2 = layer2.GetExtent()
-
     xOrigin = extent2[0]
     yOrigin = extent2[3]
 
@@ -66,20 +68,19 @@ def make_ids_image(path, tifDir, cenlat, cenlon, id_field):
     start_x_p = int((start_x - xOrigin) / pixelWidth)
     start_y_p = int((start_y - yOrigin) / pixelHeight)
 
+    # generate empty raster
     driver_out = gdal.GetDriverByName('GTiff')
-    imgOut = driver_out.Create(tifDir + '/Building_IDs.tif',
-                            IMAGE_SIZE_Y, IMAGE_SIZE_X, 1, gdal.GDT_Int32)
+    imgOut = driver_out.Create(tifDir + '/Building_IDs.tif', IMAGE_SIZE_Y, IMAGE_SIZE_X, 1, gdal.GDT_Int32)
 
+    # set  projection to albers equal area
     proj = osr.SpatialReference()
     proj.SetWellKnownGeogCS("NAD1983")
     proj.SetACEA(29.5, 45.5, cenlat, cenlon, 0, 0)
 
-    #proj = osr.SpatialReference()
-    #proj.SetWellKnownGeogCS("WGS84")
-    #proj.SetUTM(18, False)
-
+    # select the first band in the raster
     bandOut1 = imgOut.GetRasterBand(1)
 
+    # initialize empty numpy arrays
     data1 = empty((IMAGE_SIZE_X, IMAGE_SIZE_Y), dtype=uint8)
     data1.fill(255)
 
@@ -89,35 +90,32 @@ def make_ids_image(path, tifDir, cenlat, cenlon, id_field):
     buils = empty((IMAGE_SIZE_X, IMAGE_SIZE_Y), dtype=uint16)
     buils.fill(255)
 
-    tempxyz = empty((IMAGE_SIZE_X, IMAGE_SIZE_Y), dtype=float64)
-
     distarr = empty((IMAGE_SIZE_X, IMAGE_SIZE_Y), dtype=float64)
     distarr.fill(0)
 
-    ind = indices(data1.shape)
-
-    names = []
-    heights = []
-    widths = []
-    ratios = []
-
     cnt = 1
 
-    # radius = 15
-
-    # loop through the buildings
+    # loop through the buildings, this is a generator
     feature_buil = layer2.GetNextFeature()
 
+    # while there are buildings to process...
     while feature_buil:
+
+        # get the building id for the target feature
         bid = feature_buil.GetFieldAsString(id_field)
 
+        # extract internal geometry elements
         geomb = feature_buil.GetGeometryRef()
         ring = geomb.GetGeometryRef(0)
         numpoints = ring.GetPointCount()
 
+        # if the geometry ring has any points at all...
         if numpoints != 0:
+
+            # get the points x, y, z coordinates
             nx, ny, nz = ring.GetPoint(0)
 
+            # calculate
             xOffset = int((nx - xOrigin) / pixelWidth)
             yOffset = int((ny - yOrigin) / pixelHeight)
 
