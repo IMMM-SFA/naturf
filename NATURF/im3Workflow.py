@@ -11,7 +11,7 @@ def processFile(shapeFile):
     scenario = shapeFile.parent.parent.stem # first part of output directory name
     buildingTile = shapeFile.stem # filename without extension
     outputDir = folder/'{}_{}'.format(scenario, buildingTile) # create output directory named according to tile
-    tifDir = outputDir/'Tifs'
+    tifDir = outputDir/'{}_{}_Tifs'.format(scenario, buildingTile)
     tifDir.mkdir(parents=True, exist_ok=True) # automatically also creates outputDir
 
     indexfile = filenames[buildingTile][0] # binary file name
@@ -27,9 +27,9 @@ def processFile(shapeFile):
 
     print(buildingTile + " has finished")
     
-basePath = pathlib.Path('/mnt/data/UrbanMorphology/data/32x32/dilarea_testing/Shapefiles') # Path to directory containing shapefiles
+basePath = pathlib.Path('/mnt/data/UrbanMorphology/data/WDC/100m/test') # Path to directory containing shapefiles
 shapeFiles = list(basePath.glob('*.shp')) # Creates a list of all the shapefile paths
-grid = pd.read_csv(pathlib.Path('/mnt/data/UrbanMorphology/data/32x32/LA_Indices.csv')) # Path to geogrid csv
+grid = pd.read_csv(pathlib.Path('/mnt/data/UrbanMorphology/data/WDC/100m/DC_Indices.csv')) # Path to geogrid csv
 filenames = grid.set_index('GRID_ID').T.to_dict("list") # Creates a dictionary from the csv where grid IDs and the names are values
 
 try:

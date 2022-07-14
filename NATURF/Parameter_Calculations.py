@@ -2,7 +2,7 @@
 from Parameter_Definitions import *
 from sys import exit
 import math
-from numpy import array, zeros, uint8, mean
+from numpy import array, zeros, uint8, mean, set_printoptions, inf
 from PIL import Image
 import csv
 import warnings
@@ -84,8 +84,10 @@ def calculate_parameters(path, tifDir, outputDir, name, height_field, id_field):
 
     buils_ids = tifDir +'/Building_IDs.tif'
     ids = Image.open(buils_ids)
-
+    #print(ids)
     ids = array(ids)
+    #set_printoptions(threshold=inf)
+    #print(ids)
 
 
     filename = "%s.csv" % name
@@ -143,13 +145,15 @@ def calculate_parameters(path, tifDir, outputDir, name, height_field, id_field):
                 bs21 = mean(bs2par_out[i])  # 1
 
                 for qw in range(15):
-
+                    #print("Before", fad_out[i]['n'][qw])
                     fad_out[i]['n'][qw] = mean(fad_out[i]['n'][qw])
+                    #print("After", fad_out[i]['n'][qw])
                     fad_out[i]['w'][qw] = mean(fad_out[i]['w'][qw])
                     fad_out[i]['s'][qw] = mean(fad_out[i]['s'][qw])
                     fad_out[i]['e'][qw] = mean(fad_out[i]['e'][qw])
 
                 fad1 = fad_out[i]  # 15 * 4
+                #print(fad1)
 
                 fai_out[i]['n'] = mean(fai_out[i]['n'])
                 fai_out[i]['w'] = mean(fai_out[i]['w'])
@@ -175,8 +179,9 @@ def calculate_parameters(path, tifDir, outputDir, name, height_field, id_field):
                 rrl1 = rrl_out[i]  # 4
                 rdh1 = rdh_out[i]  # 4
                 mrl1 = mrl_out[i]  # 4
-
-                paf = mean(builfrac_out[i])
+                #print(builfrac_out[i])
+                paf = mean(builfrac_out[i]) # Averages the building fraction over all vertical heights
+                #print(paf)
 
                 mdh1 = mean(mdh_out[i])  # 1?
 
