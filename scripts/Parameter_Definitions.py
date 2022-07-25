@@ -120,6 +120,25 @@ def ang2points(x1, y1, x2, y2):
 
 
 def get_cents_hts(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_field):
+    '''
+    Loop through all buildings in the shapefile and append their centroids, heights, and areas to dictionaries.
+
+    Parameters
+    ----------
+
+    IMAGE_SIZE_X : int
+        Length of the shapefile in the x-direction.
+    IMAGE_SIZE_Y : int
+        Length of the shapefile in the y-direction.
+    layer2 : osgeo.ogr.Layer
+        The target layer of the shapefile, automatically generated in Parameter_Calulcations.py.
+    ids : numpy.ndarray
+        Array where the buildings in the shapefile are represented by unique ids, automatically generated in Parameter_Calulcations.py.
+    PIXEL_SIZE : float
+        Pixel size of the building raster.
+    height_field : str
+        Name of height field in study shapefile.
+    '''
     cents1 = {}
     heights = {}
     areas = {}
