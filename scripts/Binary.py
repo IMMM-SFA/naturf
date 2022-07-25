@@ -1,7 +1,7 @@
 from sys import exit
 from math import ceil
 from numpy import array, zeros, uint8, uint16, indices,empty, float64, \
-    isnan, ones, save, float32, double
+    isnan, ones, save, float32, double, amax
 from skimage.draw import polygon
 import osr
 import pickle
@@ -344,7 +344,7 @@ def make_binary(name, path, tifDir, cenlat, cenlon, outputDir, id_field, height_
     for i in range(len(fad_out2)):
         for j in range(len(bldgsh)):
             dbh[j][bldgsh[j] == double(names2[i])] += float(1) / float(len(fad_out2))
-
+    #print(amax(dbh))
     master = zeros((132, IMAGE_SIZE_X, IMAGE_SIZE_Y), dtype=float64)
 
     master[0:15] = fadn[0:15]
@@ -453,11 +453,11 @@ def make_binary(name, path, tifDir, cenlat, cenlon, outputDir, id_field, height_
         index.write('  dx=100.0\n')
         index.write('  known_x=1\n')
         index.write('  known_y=1\n')
-        index.write('  known_lat=38.794034\n')
-        index.write('  known_lon=-77.129474\n')
+        index.write('  known_lat=35.6936372\n')
+        index.write('  known_lon=-115.4739874\n')
         index.write('  truelat1=45.5\n')
         index.write('  truelat2=29.5\n')
-        index.write('  stdlon=-77.0\n')
+        index.write('  stdlon=-114.75\n')
         index.write('  wordsize=4\n')
         index.write('  endian=big\n')
         index.write('  signed=no\n')
