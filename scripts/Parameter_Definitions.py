@@ -125,7 +125,6 @@ def get_cents_hts(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fi
 
     Parameters
     ----------
-
     IMAGE_SIZE_X : int
         Length of the shapefile in the x-direction.
     IMAGE_SIZE_Y : int
@@ -138,6 +137,16 @@ def get_cents_hts(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fi
         Pixel size of the building raster.
     height_field : str
         Name of height field in study shapefile.
+
+    Returns
+    ----------
+    cents1 : dict
+        Centroid of every building in the shapefile
+    heights : dict
+        Height of every building in the shapefile
+    areas : dict
+        Area of every building in the shapefile
+
     '''
     cents1 = {}
     heights = {}
@@ -189,6 +198,49 @@ def get_cents_hts(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fi
 
 
 def avg_building_dist(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids,  PIXEL_SIZE, height_field, heights, ars, cents):
+    '''
+    Loops through all the buildings in the shapefile to calculate distances between buildings and other information used in
+    calculating urban parameters.
+
+    Parameters
+    ----------
+    IMAGE_SIZE_X : int
+        Length of the shapefile in the x-direction.
+    IMAGE_SIZE_Y : int
+        Length of the shapefile in the y-direction.
+    layer2 : osgeo.ogr.Layer
+        The target layer of the shapefile, automatically generated in Parameter_Calulcations.py.
+    ids : numpy.ndarray
+        Array where the buildings in the shapefile are represented by unique ids, automatically generated in Parameter_Calulcations.py.
+    PIXEL_SIZE : float
+        Pixel size of the building raster.
+    height_field : str
+        Name of height field in the shapefile.
+    heights : dict
+        Height of every building in the shapefile.
+    ars : dict
+        Area of every building in the shapefile.
+    cents : dict
+        Centroid of every building in the shapefile.
+
+    Returns
+    ----------
+    cns_out : dict
+        Average north/south distance from each building to every other building
+    cew_out : dict
+        Average east/west distance from each building to every other building
+    avgsa : float
+        Average building area for the shapefile
+    pareas : dict
+        Height and plan area for each building
+    meanht_out : list
+        Average height of the buildings
+    stdht_out : list
+        Standard deviation of heights of the buildings
+    awmh1_out : list
+        Area-weighted mean building heights
+
+    '''
 
     i2arr = zeros((IMAGE_SIZE_X, IMAGE_SIZE_Y), dtype=uint8)
     dils = zeros((IMAGE_SIZE_X, IMAGE_SIZE_Y), dtype=uint8)
