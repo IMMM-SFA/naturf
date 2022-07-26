@@ -200,7 +200,7 @@ def get_cents_hts(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fi
 def avg_building_dist(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids,  PIXEL_SIZE, height_field, heights, ars, cents):
     '''
     Loops through all the buildings in the shapefile to calculate distances between buildings and other information used in
-    calculating urban parameters.
+    calculating urban parameters. Calculates urban parameters 92-94.
 
     Parameters
     ----------
@@ -226,19 +226,19 @@ def avg_building_dist(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids,  PIXEL_SIZE, heig
     Returns
     ----------
     cns_out : dict
-        Average north/south distance from each building to every other building
+        Average north/south distance from each building to every other building.
     cew_out : dict
-        Average east/west distance from each building to every other building
+        Average east/west distance from each building to every other building.
     avgsa : float
-        Average building area for the shapefile
+        Average building area for the shapefile.
     pareas : dict
-        Height and plan area for each building
+        Height and plan area for each building.
     meanht_out : list
-        Average height of the buildings
+        Average height of the buildings.
     stdht_out : list
-        Standard deviation of heights of the buildings
+        Standard deviation of heights of the buildings.
     awmh1_out : list
-        Area-weighted mean building heights
+        Area-weighted mean building heights.
 
     '''
 
@@ -387,7 +387,61 @@ def avg_building_dist(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids,  PIXEL_SIZE, heig
 
 
 def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_field, direc, bid, newbarea, cents_ns, cents_ew, avgsa):  # if bid == 0, loops through all of the buildings
+    '''
+    Takes variables from previous functions and calculates urban parameters 1-91, 95, 96-100, 103-117.
 
+    Parameters
+    ----------
+    IMAGE_SIZE_X : int
+        Length of the shapefile in the x-direction.
+    IMAGE_SIZE_Y : int
+        Length of the shapefile in the y-direction.
+    layer2 : osgeo.ogr.Layer
+        The target layer of the shapefile, automatically generated in Parameter_Calulcations.py.
+    ids : numpy.ndarray
+        Array where the buildings in the shapefile are represented by unique ids, automatically generated in Parameter_Calulcations.py.
+    PIXEL_SIZE : float
+        Pixel size of the building raster.
+    height_field : str
+        Name of height field in the shapefile.
+    direc : str
+        Direction used to calculate certain parameters. (NOTE: Current default is south)
+    bid : int or float
+        Unique building ID; if 0, loops through all buildings. (NOTE: Current default is 0)
+    newbarea : dict
+        Height and plan area for each building. (NOTE: This is the same as pareas from the previous function)
+    cents_ns : dict
+        Average north/south distance from each building to every other building. (NOTE: This is the same as cns_out from the previous function)
+    cents_es : dict
+        Average east/west distance from each building to every other building. (NOTE: This is the same as cew_out from the previous function)
+    avgsa : float
+        Average building area for the shapefile.
+ 
+    Returns
+    ----------
+    fad_out_inc : list
+        Frontal area density for each building from each direction and vertical level.
+    builfrac_out_inc : list
+        Plan area density for each building at each vertical level.
+    fai_out_inc : list
+        Frontal area index for each building from each direction.
+    rdh_out_inc : list
+        Raupach displacement height for each building from each direction.
+    rrl_out_inc : list
+        Raupach roughness length for each building from each direction.
+    mdh_out_inc : list
+        Macdonald et al. displacement height for each building, calculated from one direction (south).
+    mrl_out_inc : list
+        Macdonald et al. roughness length for each building, calculated from each direction.
+    bs2par_out_inc : list
+        Building surface area to plan area ratio for each building (currently 1 for each building).
+    zo_out_inc : list
+        Grimmond & Oke roughness length for each building.
+    zd_out_inc : list
+        Grimmond & Oke displacement height for each building.
+    car_out_inc: list
+        Complete aspect ratio for each building.
+    '''
     i2arr = zeros((IMAGE_SIZE_X, IMAGE_SIZE_Y), dtype=uint8)
     struct = ndimage.generate_binary_structure(2, 2)
     rad = 100
