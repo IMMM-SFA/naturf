@@ -232,7 +232,7 @@ def avg_building_dist(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids,  PIXEL_SIZE, heig
     avgsa : float
         Average building area for the shapefile.
     pareas : dict
-        Height and plan area for each building.
+        Height and building footprint areas within the plan area for each building.
     meanht_out : list
         Average height of the buildings.
     stdht_out : list
@@ -409,7 +409,7 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
     bid : int or float
         Unique building ID; if 0, loops through all buildings. (NOTE: Current default is 0)
     newbarea : dict
-        Height and plan area for each building. (NOTE: This is the same as pareas from the previous function)
+        Height and building footprint areas within the plan area for each building. (NOTE: This is the same as pareas from the previous function)
     cents_ns : dict
         Average north/south distance from each building to every other building. (NOTE: This is the same as cns_out from the previous function)
     cents_es : dict
@@ -465,6 +465,11 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
     zo_out_inc = []
     zd_out_inc = []
     car_out_inc = []
+
+    ################
+    # The "if" portion of this loop currently never runs; "bid" defaults as zero, meaning the else statement on 
+    # line 677 is what always runs.
+    ################
 
     if bid != 0:
         layer2.ResetReading()
@@ -824,7 +829,15 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                 wdist = 0
                 sdist = 0
 
-                for asdf in range(0, 75, 5):
+                ##############
+                # "asdf" represents the current vertical level, from 0 to 75 meters.
+                # "nht" is used for some parameters when we only want to look at a 5m section of a building.
+                # If the building height is greater than the current vertical level by at least 5m, then nht is 5.
+                # If the building height is greater than the current vertical level by less than 5, then nht is that difference.
+                # Otherwise, we set nht to be just above 0.
+                ##############
+
+                for asdf in range(0, 75, 5): 
                     if (ht - asdf) >= 5:
                         nht = 5
                     elif 0 < (ht - asdf) < 5:
@@ -833,6 +846,11 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                         nht = 0.00000000000000000000000000000001
 
                     # print ht, asdf, nht
+
+                    ##############
+                    # "zh" represents the entire building height, which we want to use for some parameters.
+                    # "zo" and "zd" represent Grimmond & Oke roughness length and displacement height, respectively.
+                    # "zo" is parameter 103 and "zd" is parameter 104.
 
                     zh = ht
                     if zh == 0:
@@ -885,6 +903,17 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                         builarea = 0
                         dilarea = 0
                         #print(counter)
+
+                        ##############
+                        # This if statement creates four variables used for various parameters: "builarea", "dilarea", "sumarhts", and "sumareas".
+                        # They all use "i2arr", which I believe is an array the size of the shapefile with 1s where the current building is in the "ids" array.
+                        # "builarea" is the sum of all the 1s in "i2arr" multiplied by the pixel area, meaning the footprint area of the current building.
+                        # "i2arr" is then dilated to put a buffer around the current building.
+                        # "dilarea" is the sum of all the 1s in the dilated "i2arr" multiplied by the pixel area, meaning the plan area for the current building.
+                        # "sumarhts" is the rolling sum of the building footprint areas multiplied by "nht"
+                        # "sumareas" is the rolling sum of the building footprint areas
+                        ##############
+
                         if len(ids[ids == counter]) != 0:
                             i2arr[ids == counter] = 1 # Puts a 1 wherever the current counter corresponds with the IDs file
                             #print(i2arr)
@@ -946,17 +975,35 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
 
                                 if breadth >= 1:
 
-                                    # if 315 <= deg <= 360 or 0 <= deg < 45:
-                                    #     direc2 = 'East'
-                                    # if 45 <= deg < 135:
-                                    #     direc2 = 'South'
-                                    # if 135 <= deg < 225:
-                                    #     direc2 = 'West'
-                                    # if 225 <= deg < 315:
-                                    #     direc2 = 'North'
+                                    ##############
+                                    # The calculation of frontal area density, frontal area index, Raupach roughness length and displacement height,
+                                    # Macdonald et al. roughness length and displacement height, complete aspect ratio, and plan area density start here.
+                                    # We define the direction of the wind normal to the wall in the mathematical plane, which is calculated above for each
+                                    # wall of the current building.
                                     #
-                                    # if prevdir == direc2:
-                                    #     dist += prevdist
+                                    # East/West/South
+                                    #
+                                    # The length of walls facing east, west, and south are captured with the variable "edist", "wdist", and "sdist". They
+                                    # will be used later on for the complete aspect ratio. 
+                                    #
+                                    # East/North/West/South
+                                    #
+                                    # The area of the wall at the current vertical level is captured by "wallarea", and is divided by the plan area for the
+                                    # current building to calculate frontal area density. 
+                                    # The frontal area index is calculated using the length of the current wall, the total building height, and the average
+                                    # north/south and east/west distances to the other buildings.
+                                    # Raupach displacement height is calculated from the total building height and the frontal area index.
+                                    # Raupach roughness length is then calculated from the total building height, Raupach displacement height, and frontal 
+                                    # area index.
+                                    # Macdonald et al. roughness length is calculated from the total building height, Raupach displacement height, the wall area,
+                                    # and the average building area for the shapefile.
+                                    # 
+                                    # South
+                                    # 
+                                    # The plan area fraction/density/rooftop area density is calculated (as "builfrac") using the building areas calculated prior and 
+                                    # the current plan area.
+                                    # Macdonald et al. displacement height is calculated using the total building height and the plan area fraction. 
+                                    ##############
 
                                     if 315 <= deg <= 360 or 0 <= deg < 45:
                                         if ((dist / 10) - 1) > 0:
@@ -1098,7 +1145,7 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
 
 
                                             # print newbarea[counter][0], float(asdf), float(newbarea[counter][0]) > float(asdf)
-
+                                            print(newbarea[counter][0])
                                             if float(newbarea[counter][0]) > float(asdf): # Checks if the height of the current building is greater than the current 5m slice
                                                 builfrac = newbarea[counter][1] / dilarea # Divides the plan area by the dilated area to calculate the ratio of building area to dilated area
                                                 #print(builfrac, newbarea[counter][1], dilarea)
@@ -1184,7 +1231,10 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                 zo_out_inc.append(zo_out)
                 zd_out_inc.append(zd_out)
 
-                # print sdist, edist, wdist
+                ##############
+                # The complete aspect ratio is calculated here using the length of the south wall of the current building and either
+                # the east or west wall.
+                ##############
 
                 if edist != 0:
                     car_out_inc.append(float(sdist) / float(edist)) # The ratio of the length of the south wall to the east wall
