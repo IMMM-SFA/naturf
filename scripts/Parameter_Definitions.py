@@ -1206,6 +1206,43 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
 
 
 def h2w(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, xOrigin, yOrigin, pixelWidth, pixelHeight, start_x_p, start_y_p, PIXEL_SIZE, height_field, id_field):
+    '''
+    Calculates urban parameter 101, height-to-width ratio.
+
+    Parameters
+    ----------
+    IMAGE_SIZE_X : int
+        Length of the shapefile in the x-direction.
+    IMAGE_SIZE_Y : int
+        Length of the shapefile in the y-direction.
+    layer2 : osgeo.ogr.Layer
+        The target layer of the shapefile, automatically generated in Parameter_Calulcations.py.
+    xOrigin : float
+        Minimum x coordinate of the shapefile.
+    yOrigin : float
+        Maximum y coordinate of the shapefile.
+    pixelWidth : float
+        Width of the building raster pixels (equal to PIXEL_SIZE).
+    pixelHeight : float
+        Height of the building raster pixels (equal to -PIXEL_SIZE).
+    start_x_p : int
+        Starting pixel x coordinate?
+    start_y_p : int
+        Starting pixel y coordinate?
+    PIXEL_SIZE : float
+        Pixel size of the building raster.
+    height_field : str
+        Name of height field in the shapefile.
+    id_field : str
+        Name of ID field in study shapefile.
+ 
+    Returns
+    ----------
+    ratios : list
+        Height-to-width ratio for each building.
+    names : list
+        Unique building ID for each building as listed in the shapefile.
+    '''
     names = []
     heights = []
     widths = []
