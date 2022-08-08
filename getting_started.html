@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting started &mdash; naturf 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" type="text/css" />
+      <link rel="stylesheet" href="_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" type="text/css" />
+      <link rel="stylesheet" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/naturf.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/getting_started.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="User guide" href="user_guide.html" />
+    <link rel="prev" title="cerf documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> naturf
+          </a>
+              <div class="version">
+                0.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#about">About</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-version-support">Python version support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-package-data">Installing package data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#optional-dependencies">Optional dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">naturf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to <strong>cerf</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_cite.html">How to cite <strong>cerf</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="footer.html">Acknowledgement</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">naturf</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Getting started</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/getting_started.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="getting-started">
+<h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h1>
+<section id="about">
+<h2>About<a class="headerlink" href="#about" title="Permalink to this headline"></a></h2>
+<p>The Capacity Expansion Regional Feasibility model (<strong>cerf</strong>) helps us evaluate the feasibility and structure of future electricity capacity expansion plans by siting power plants in areas that have been deemed the least cost option. We can use <strong>cerf</strong> to gain an understanding of topics such as: 1) whether or not future projected electricity expansion plans from models such as GCAM are possible to achieve, 2) where and which on-the-ground barriers to siting (e.g., protected areas, cooling water availability) may influence our ability to achieve certain expansions, and 3) how power plant infrastructure build outs and value may evolve into the future when considering locational marginal pricing (LMP) based on the supply and demand of electricity from a grid operations model.</p>
+<p>Each grid cell in <strong>cerf</strong> is given an initial value of suitable (0) or unsuitable (1) based on a collection of suitability criteria gleaned from the literature. <strong>cerf</strong>’s default suitability layers include both those that are common to all thermal technologies as well as technology-specific suitability criteria. Common suitability layers represent categories such as protected lands, critical habitat areas, and much more. Technology-specific suitability layers are those that satisfy requirements that may not be applicable to all technologies. An example would be minimum mean annual flow requirements for cooling water availability for individual thermal technologies.</p>
+<p>Though <strong>cerf</strong> provides sample data to run the conterminous United States (CONUS), it could be extended to function for any country or set of regions that had the following prerequisite data sources:  a spatial representation of substations or electricity transmission infrastructure, a spatial representation of gas pipeline infrastructure if applicable, any regionally applicable spatial data to construct suitability rasters from, access to hourly zonal LMP, and access to technology-specific information and each technologies accompanying electricity capacity expansion plan per region.  The Global Change Analysis Model (<a class="reference external" href="https://github.com/JGCRI/gcam-core">GCAM</a>) is used to build our expansion plans and establish our technology-specific requirements through the end of the century. We derive our LMP from a grid operations model that also is harmonized with GCAM to provide consistent projections of energy system evolution.  See more about how to generalize <strong>cerf</strong> for your research <a class="reference internal" href="user_guide.html#generalization"><span class="std std-ref">here</span></a>.</p>
+<p>We introduce a metric named Net Locational Cost (NLC) that is used compete power plant technologies for each grid cell based on the least cost option to site. NLC is calculated by subtracting the Net Operating Value (NOV) of a proposed power plant from the cost of its interconnection to the grid to represent the potential deployment value. Both the NOV parameter which incorporates many technology-specific values such as variable operations and maintenance costs, carbon price, heat rate, etc. and the interconnection cost parameter used for both electricity transmission and gas pipelines are configurable per time step.  All equations used in <strong>cerf</strong> are described in detail in the <a class="reference internal" href="user_guide.html#fundamental-equations-and-concepts"><span class="std std-ref">documentation</span></a>.</p>
+</section>
+<section id="python-version-support">
+<h2>Python version support<a class="headerlink" href="#python-version-support" title="Permalink to this headline"></a></h2>
+<p>Officially Python 3.7, 3.8, and 3.9</p>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>cerf</strong> is not officially supported for Ubuntu 18 users due to a system dependency (<code class="docutils literal notranslate"><span class="pre">GLIBC_2.29</span></code>) required by the <code class="docutils literal notranslate"><span class="pre">whitebox</span></code> package which <strong>cerf</strong> uses to conduct spatial analysis. Ubuntu 18 natively includes <code class="docutils literal notranslate"><span class="pre">GLIBC_2.27</span></code>.  It may be possible for Ubuntu 18 users to upgrade to <code class="docutils literal notranslate"><span class="pre">GLIBC_2.29</span></code> but this should be done with careful consideration.  Instead, we officially support <strong>cerf</strong> use for Ubuntu users for versions 20.04.2 LTS and greater.</p>
+</div>
+<p><strong>cerf</strong> can be installed via pip by running the following from a terminal window:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">cerf</span>
+</pre></div>
+</div>
+<p>Conda/Miniconda users can utilize the <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> stored in the root of this repository by executing the following from a terminal window:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">env</span> <span class="n">create</span> <span class="o">--</span><span class="n">file</span> <span class="n">environment</span><span class="o">.</span><span class="n">yml</span>
+</pre></div>
+</div>
+<p>It may be favorable to the user to create a virtual environment for the <strong>cerf</strong> package to minimize package version conflicts.  See <a class="reference external" href="https://docs.python.org/3/library/venv.html">creating virtual environments</a> to learn how these function and can be setup.</p>
+</section>
+<section id="installing-package-data">
+<h2>Installing package data<a class="headerlink" href="#installing-package-data" title="Permalink to this headline"></a></h2>
+<p><strong>cerf</strong> requires package data to be installed from Zenodo to keep the package lightweight.  After <strong>cerf</strong> has been installed, run the following from a Python prompt:</p>
+<p><strong>NOTE</strong>:  The package data will require approximately 195 MB of storage.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cerf</span>
+
+<span class="n">cerf</span><span class="o">.</span><span class="n">install_package_data</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This will automatically download and install the package data necessary to run the examples in accordance with the version of <strong>cerf</strong> you are running.  You can pass an alternative directory to install the data into (default is to install it in the package data directory) using <code class="docutils literal notranslate"><span class="pre">data_dir</span></code>.  When doing so, you must modify the configuration file to point to your custom paths.</p>
+</section>
+<section id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 45%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Dependency</p></th>
+<th class="head"><p>Minimum Version</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>numpy</p></td>
+<td><p>1.19.4</p></td>
+</tr>
+<tr class="row-odd"><td><p>pandas</p></td>
+<td><p>1.1.4</p></td>
+</tr>
+<tr class="row-even"><td><p>rasterio</p></td>
+<td><p>1.2.3</p></td>
+</tr>
+<tr class="row-odd"><td><p>xarray</p></td>
+<td><p>0.16.1</p></td>
+</tr>
+<tr class="row-even"><td><p>PyYAML</p></td>
+<td><p>5.4.1</p></td>
+</tr>
+<tr class="row-odd"><td><p>requests</p></td>
+<td><p>2.25.1</p></td>
+</tr>
+<tr class="row-even"><td><p>joblib</p></td>
+<td><p>1.0.1</p></td>
+</tr>
+<tr class="row-odd"><td><p>matplotlib</p></td>
+<td><p>3.3.3</p></td>
+</tr>
+<tr class="row-even"><td><p>seaborn</p></td>
+<td><p>0.11.1</p></td>
+</tr>
+<tr class="row-odd"><td><p>whitebox</p></td>
+<td><p>1.5.1</p></td>
+</tr>
+<tr class="row-even"><td><p>fiona</p></td>
+<td><p>1.8.19</p></td>
+</tr>
+<tr class="row-odd"><td><p>pyproj</p></td>
+<td><p>3.0.1</p></td>
+</tr>
+<tr class="row-even"><td><p>rtree</p></td>
+<td><p>0.9.7</p></td>
+</tr>
+<tr class="row-odd"><td><p>shapely</p></td>
+<td><p>1.7.1</p></td>
+</tr>
+<tr class="row-even"><td><p>geopandas</p></td>
+<td><p>0.9.0</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="optional-dependencies">
+<h2>Optional dependencies<a class="headerlink" href="#optional-dependencies" title="Permalink to this headline"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 53%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Dependency</p></th>
+<th class="head"><p>Minimum Version</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>build</p></td>
+<td><p>0.5.1</p></td>
+</tr>
+<tr class="row-odd"><td><p>nbsphinx</p></td>
+<td><p>0.8.6</p></td>
+</tr>
+<tr class="row-even"><td><p>setuptools</p></td>
+<td><p>57.0.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>sphinx</p></td>
+<td><p>4.0.2</p></td>
+</tr>
+<tr class="row-even"><td><p>sphinx-panels</p></td>
+<td><p>0.6.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>sphinx-rtd-theme</p></td>
+<td><p>0.5.2</p></td>
+</tr>
+<tr class="row-even"><td><p>twine</p></td>
+<td><p>3.4.1</p></td>
+</tr>
+<tr class="row-odd"><td><p>pytest</p></td>
+<td><p>6.2.4</p></td>
+</tr>
+<tr class="row-even"><td><p>pytest-cov</p></td>
+<td><p>2.12.1</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="cerf documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="user_guide.html" class="btn btn-neutral float-right" title="User guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2099, Battelle Memorial Institute.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
