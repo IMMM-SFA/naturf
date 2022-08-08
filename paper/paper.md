@@ -30,7 +30,7 @@ We present the `naturf` Python package... [Figure 1].
 You really need `naturf` because of something that was published in @vernon2018cerf and other reasons.  
 
 # Design and Functionality
-We have a quickstarter and some documentation here for you [documentation](https://immm-sfa.github.io/cerf/user_guide.html#fundamental-equations-and-concepts).
+We have a quickstarter and some documentation here for you [documentation](https://immm-sfa.github.io/naturf/).
 
 # Acknowledgements
 This research was supported by the U.S. Department of Energy, Office of Science, as part of research in MultiSector Dynamics, Earth and Environmental System Modeling Program.
