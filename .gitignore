@@ -8,7 +8,7 @@ docs/build/
 .python-version
 
 # jupyter
-notebooks/.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/*
 
 # package
 build/
@@ -73,7 +73,6 @@ Terms
 Privacy
 Security
 Status
-Docs
 Contact GitHub
 Pricing
 API
