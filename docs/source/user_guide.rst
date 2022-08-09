@@ -480,8 +480,10 @@ Rooftop Area Density (76-90)
 
 Rooftop area density is the ratio of building rooftop area to the building plan area, calculated in 5 meter increments from ground level to 75 meters. Because **naturf** projects building footprints vertically to the building height, these parameters are equal to the plan area density.
 
-Annuity factor (AF)
-^^^^^^^^^^^^^^^^^^^
+Plan Area Fraction (91)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Plan area fraction is the ratio of building footprint areas within the building plan area to the entire building plan area, calculated at ground level. For **naturf**, this is equal to plan area density at any height increment.
 
 .. math::
 
