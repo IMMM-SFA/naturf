@@ -458,36 +458,27 @@ Frontal Area Density (1-60)
 
 Frontal area density is the frontal area of a building at a certain height increment divided by the building plan area. **naturf** calculates frontal area density from the four cardinal directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters. Parameters 1-15 represent the north, paramters 16-30 represent the west, parameters 31-45 represent the south, and parameters 46-60 represent the east.
 
-Frontal Area Density (FAD)
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
 .. math::
 
     FAD = \frac{FA}{PA}
 
 where, *FAD* is Frontal area density; *FA* is the frontal area of the wall from the current direction and height level in m^2; *PA* is the building plan area in m^2.
 
-Generation (G)
-^^^^^^^^^^^^^^
+Plan Area Density (61-75)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Plan area density is the ratio of building footprint areas within the building plan area to the entire building plan area, calculated in 5 meter increments from ground level to 75 meters. **naturf** projects the building footprint vertically to the building height, meaning plan area density is the same at every vertical level.
 
 .. math::
 
-    G = U * CF * HPY
+    PAD = \frac{TBA}{PA}
 
-where, *U* is the unit size of a power plant in MW; *CF* is the capacity factor of the power plant; *HPY* is the number of hours in a year.  Both unit size and capacity factor are input variables to **naturf**.
+where, *PAD* is the plan area density; *TBA* is the total area of the buildings within the current building plan area in m^2; *PA* is the building plan area in m^2.
 
-Levelization factor (LF\ :subscript:`i`\)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Rooftop Area Density (76-90)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. math::
-
-    k_i = \frac{1 + l_i}{1 + d}
-
-.. math::
-
-    LF_i = k_i(1-k_i^n) * \frac{AF}{1-k_i}
-
-where, *l*\ :subscript:`fuel` \ is an escalation rate as a fraction; *d* is the real annual discount rate as a fraction; *n* is the asset lifetime in years; and *AF* is the annuity factor.  All escalation rates are input variables to **naturf**.
+Rooftop area density is the ratio of building rooftop area to the building plan area, calculated in 5 meter increments from ground level to 75 meters. Because **naturf** projects building footprints vertically to the building height, these parameters are equal to the plan area density.
 
 Annuity factor (AF)
 ^^^^^^^^^^^^^^^^^^^
