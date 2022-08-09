@@ -485,11 +485,20 @@ Plan Area Fraction (91)
 
 Plan area fraction is the ratio of building footprint areas within the building plan area to the entire building plan area, calculated at ground level. For **naturf**, this is equal to plan area density at any height increment.
 
-.. math::
+Mean Building Height (92)
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    AF = \frac{d(1 + d)^n}{(1 + d)^n - 1}
+The average building height of all buildings within the building plan area.
 
-where, *d* is the real annual discount rate as a fraction and *n* is the asset lifetime in years.
+Standard Deviation of Building Heights (93)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The standard deviation of building heights for all buildings within the building plan area.
+
+Surface Area Weighted Mean of Building Heights (94)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 
 
 Locational marginal price (LMP)
