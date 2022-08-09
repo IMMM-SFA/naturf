@@ -553,7 +553,11 @@ Macdonald et al. Roughness Length (113-116)
 Macdonald et al. Displacement Height (117)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. math::
 
+    MDH = zh * (1 + \frac{1}{A^\lambda} * (\lambda - 1))
+
+where, *MDH* is the Macdonald displacement height in m; A is a constant = 3.59; \lambda is the plan area density 
 
 Vertical Distribution of Building Heights (118-132)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
