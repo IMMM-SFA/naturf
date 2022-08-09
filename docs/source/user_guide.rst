@@ -5,11 +5,11 @@ User guide
 Generalization
 --------------
 
-Though **cerf** is demonstrated for the conterminous United States (CONUS), the package could easily be used in research ranging from regional to global analysis.
+Though **naturf** is demonstrated for the conterminous United States (CONUS), the package could easily be used in research ranging from regional to global analysis.
 
-**cerf** requires the following inputs to be able to operate:
+**naturf** requires the following inputs to be able to operate:
 
-- A shapefile of substations as points.
+- A shapefile of buildings as polygons with height data.
 - A shapefile of gas pipelines as polylines if siting gas technologies.
 - A raster containing region IDs.  Each grid cell has the value of its parent region.  Currently, this is demonstrated using US states, though this could be generalized to any region/country/locale identifier matching what the electricity expansion plan provides.
 - A raster containing locational marginal pricing (LMP) zone IDs.  Each grid cell has the ID of its LMP zones.  These zones are representative of the nodal structure of the underlying model or software that produces the LMPs.  Production cost models to generate this value are not US-specific and this could be generated from any number of open-source and/or commercial products.
@@ -19,24 +19,24 @@ Though **cerf** is demonstrated for the conterminous United States (CONUS), the 
 - Other variable information which is able to be modified per run, are the assumed interconnection costs per km to a substation KV class and the cost per km to connect to a gas pipeline if applicable.
 - Lastly, are the suitability rasters which can be composed of any number of locally-relevant exclusion criteria (e.g., protected area, critical habitat, etc.) per technology being sited in the expansion plan.
 
-Let us know if you are using **cerf** in your research in our `discussion thread <https://github.com/IMMM-SFA/cerf/discussions/61>`_!
+Let us know if you are using **naturf** in your research in our `discussion thread <https://github.com/IMMM-SFA/naturf/discussions/61>`_!
 
 
-Setting up a **cerf** run
+Setting up a **naturf** run
 -------------------------
 
-The following with indroduce you to the input data required by **cerf** and how to set up a configuration file to run **cerf**.
+The following with indroduce you to the input data required by **naturf** and how to set up a configuration file to run **naturf**.
 
 Configuration file setup
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-The **cerf** package utilizes a YAML configuration file customized by the user with project level and technology-specific settings, an electricity technology capacity expansion plan, and LMP zone data for each year intended to model. **cerf** comes equipped with prebuilt configuration files for years 2010 through 2050 to provide an illustrative example. Each example configuration file can be viewed using the following:
+The **naturf** package utilizes a YAML configuration file customized by the user with project level and technology-specific settings, an electricity technology capacity expansion plan, and LMP zone data for each year intended to model. **naturf** comes equipped with prebuilt configuration files for years 2010 through 2050 to provide an illustrative example. Each example configuration file can be viewed using the following:
 
 .. code-block:: python
 
-  import cerf
+  import naturf
 
-  sample_config = cerf.load_sample_config(yr=2010)
+  sample_config = naturf.load_sample_config(yr=2010)
 
 The following are the required key, values if your wish to construct your own configuration files:
 
@@ -237,24 +237,24 @@ The following is an example implementation in the YAML configuration file:
         lmp_hourly_data_file: <path to data file>
 
 
-The `cerf` package comes equipped with a sample lmp zoness raster file and a sample hourly (8760) locational marginal price file for illustrative purposes only.
+The `naturf` package comes equipped with a sample lmp zoness raster file and a sample hourly (8760) locational marginal price file for illustrative purposes only.
 
 You can take a look at the lmp zoness raster file by running:
 
 .. code-block:: python
 
-    import cerf
+    import naturf
 
-    lmp_zone_file = cerf.sample_lmp_zones_raster_file()
+    lmp_zone_file = naturf.sample_lmp_zones_raster_file()
 
 
 You can also view the sample hourly locational marginal price file as a Pandas DataFrame using:
 
 .. code-block:: python
 
-    import cerf
+    import naturf
 
-    df = cerf.get_sample_lmp_data()
+    df = naturf.get_sample_lmp_data()
 
 
 ``infrastructure``
@@ -269,12 +269,12 @@ These are the electricity transmission and gas pipeline infrastructure data.
     +============================+=============================================+==========+==========+
     | substation_file            | | Full path with file name and extension to | NA       | str      |
     |                            | | he input substations shapefile. If        |          |          |
-    |                            | | ``null`` **cerf** will use the default    |          |          |
+    |                            | | ``null`` **naturf** will use the default    |          |          |
     |                            | | data stored in the package.               |          |          |
     +----------------------------+---------------------------------------------+----------+----------+
     | pipeline_file              | | Full path with file name and extension to | NA       | str      |
     |                            | | he input pipelines shapefile. If ``null`` |          |          |
-    |                            | | CERF will use the default data stored in  |          |          |
+    |                            | | naturf will use the default data stored in  |          |          |
     |                            | | the package.                              |          |          |
     +----------------------------+---------------------------------------------+----------+----------+
     | transmission_costs_file    | | A YAML file containing the costs of       | NA       | str      |
@@ -327,23 +327,23 @@ You can view the built-in costs per kV to connect to a substation using:
 
 .. code-block:: python
 
-    import cerf
+    import naturf
 
-    costs_dict = cerf.costs_per_kv_substation()
+    costs_dict = naturf.costs_per_kv_substation()
 
 
 Preparing suitability rasters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The **cerf** package comes equipped with sample suitability data but you can build your on as well.
+The **naturf** package comes equipped with sample suitability data but you can build your on as well.
 
-You can see which suitability rasters are available in the `cerf` package by running the following after installing the package data:
+You can see which suitability rasters are available in the `naturf` package by running the following after installing the package data:
 
 .. code-block:: python
 
-    import cerf
+    import naturf
 
-    cerf.list_available_suitability_files()
+    naturf.list_available_suitability_files()
 
 
 The sample rasters for spatial suitability at a resolution of 1km over the CONUS use the following format.  Suitability rasters can be prepared using any GIS.
@@ -392,9 +392,9 @@ The sample rasters for spatial suitability at a resolution of 1km over the CONUS
 Locational Marginal Price
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Locational Marginal Pricing (LMP) represents the cost of making and delivering electricity over an interconnected network of service nodes. LMPs are delivered on an hourly basis (8760 hours for the year) and help us to understand aspects of generation and congestion costs relative to the supply and demand of electricity when considering existing transmission infrastructure.  LMPs are a also driven by factors such as the cost of fuel which **cerf** also takes into account when calculating a power plants :ref:`Net Operating Value`.  When working with a scenario-driven grid operations model to evaluate the future evolution of the electricity system, **cerf** can ingest LMPs, return the sited generation per service area for the time step, and then continue this iteration through all future years to provide a harmonized view how the electricity system may respond to stressors in the future.
+Locational Marginal Pricing (LMP) represents the cost of making and delivering electricity over an interconnected network of service nodes. LMPs are delivered on an hourly basis (8760 hours for the year) and help us to understand aspects of generation and congestion costs relative to the supply and demand of electricity when considering existing transmission infrastructure.  LMPs are a also driven by factors such as the cost of fuel which **naturf** also takes into account when calculating a power plants :ref:`Net Operating Value`.  When working with a scenario-driven grid operations model to evaluate the future evolution of the electricity system, **naturf** can ingest LMPs, return the sited generation per service area for the time step, and then continue this iteration through all future years to provide a harmonized view how the electricity system may respond to stressors in the future.
 
-**cerf** was designed to ingest a single CSV file of LMPs per service area for each of the 8760 hours in a year where LMPs are in units $/MWh.  Mean LMPs representing annual trends are then calculated over the time period corresponding to each technology's capacity factor using the following logic:
+**naturf** was designed to ingest a single CSV file of LMPs per service area for each of the 8760 hours in a year where LMPs are in units $/MWh.  Mean LMPs representing annual trends are then calculated over the time period corresponding to each technology's capacity factor using the following logic:
 
 .. code:: sh
 
@@ -418,13 +418,13 @@ Locational Marginal Pricing (LMP) represents the cost of making and delivering e
 
 .. note::
 
-  **cerf** comes with an LMP dataset for illustrative purposes only which can be accessed using the ``get_sample_lmp_file()`` function.  The service areas in this file correspond with the sample lmp zoness raster file in the **cerf** package which defines the service area ID for each grid cell in the CONUS.  This raster file can also be accessed using ``sample_lmp_zones_raster_file()`` function.
+  **naturf** comes with an LMP dataset for illustrative purposes only which can be accessed using the ``get_sample_lmp_file()`` function.  The service areas in this file correspond with the sample lmp zoness raster file in the **naturf** package which defines the service area ID for each grid cell in the CONUS.  This raster file can also be accessed using ``sample_lmp_zones_raster_file()`` function.
 
 
 Tutorials
 ---------
 
-**cerf** quickstarter
+**naturf** quickstarter
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. include:: quickstarter.rst
@@ -432,40 +432,40 @@ Tutorials
 
 Running the quickstarter locally
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-You can download the **cerf** quickstarter Jupyter notebook here: `cerf quickstarter <https://github.com/IMMM-SFA/cerf/blob/main/notebooks/quickstarter.ipynb>`_
+You can download the **naturf** quickstarter Jupyter notebook here: `naturf quickstarter <https://github.com/IMMM-SFA/naturf/blob/main/notebooks/quickstarter.ipynb>`_
 
 This will allow you to run the tutorial interactively on your local computer.  Installation instructions for installing Jupyter software can be found `here <https://jupyter.org/install>`_.
 
-Once you have Jupyter up-and-running, make sure you install **cerf** and its package data by running:
+Once you have Jupyter up-and-running, make sure you install **naturf** and its package data by running:
 
 .. code-block:: bash
 
-  python3 -m pip install cerf
+  python3 -m pip install naturf
 
-  python3 -c 'import cerf; cerf.install_package_data()'
+  python3 -c 'import naturf; naturf.install_package_data()'
 
-where, ``python3`` would be the instance of Python that you installed Jupyter on.  Now you are ready to explore **cerf**!
+where, ``python3`` would be the instance of Python that you installed Jupyter on.  Now you are ready to explore **naturf**!
 
 
 Fundamental equations and concepts
 ----------------------------------
 
-The following are the building blocks of how **cerf** sites power plants.
+The following are the urban parameters calculated by **naturf**.
 
 
-Net Operating Value
-~~~~~~~~~~~~~~~~~~~
+Frontal Area Density (1-60)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Net Operating Value is the difference between the locational marginal value of the energy generated by a technology and its operating costs.  The locational marginal value is a function of the plant’s capacity factor, the average locational marginal price (LMP) for that capacity factor in the zone that encompasses the grid cell, and the plant’s generation.  The average LMP for each zone/capacity factor is calculated from a grid operation model output as the average of the hours corresponding to that capacity factor (e.g., for a 10% capacity factor, the LMP is calculated based on the top 10% of LMP values).  The operating costs are determined by the plant’s generation, heat rate, fuel cost, variable O&M, carbon tax, and carbon emissions--if there is a carbon tax in the expansion plan scenario being processed.
+Frontal area density is the frontal area of a building at a certain height increment divided by the building plan area. **naturf** calculates frontal area density from the four cardinal directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters. Parameters 1-15 represent the north, paramters 16-30 represent the west, parameters 31-45 represent the south, and parameters 46-60 represent the east.
 
-Net operating value (NOV)
+Frontal Area Density (FAD)
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. math::
 
-    NOV = G(LMP - OC)
+    FAD = \frac{FA}{PA}
 
-where, *NOV* is Net Operating Value in $/yr; *G* is electricity generation in MWh/yr; *LMP* is locational marginal price in $/MWh; *OC* are operating costs in $/MWh.
+where, *FAD* is Frontal area density; *FA* is the frontal area of the wall from the current direction and height level in m^2; *PA* is the building plan area in m^2.
 
 Generation (G)
 ^^^^^^^^^^^^^^
@@ -474,7 +474,7 @@ Generation (G)
 
     G = U * CF * HPY
 
-where, *U* is the unit size of a power plant in MW; *CF* is the capacity factor of the power plant; *HPY* is the number of hours in a year.  Both unit size and capacity factor are input variables to **cerf**.
+where, *U* is the unit size of a power plant in MW; *CF* is the capacity factor of the power plant; *HPY* is the number of hours in a year.  Both unit size and capacity factor are input variables to **naturf**.
 
 Levelization factor (LF\ :subscript:`i`\)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -487,7 +487,7 @@ Levelization factor (LF\ :subscript:`i`\)
 
     LF_i = k_i(1-k_i^n) * \frac{AF}{1-k_i}
 
-where, *l*\ :subscript:`fuel` \ is an escalation rate as a fraction; *d* is the real annual discount rate as a fraction; *n* is the asset lifetime in years; and *AF* is the annuity factor.  All escalation rates are input variables to **cerf**.
+where, *l*\ :subscript:`fuel` \ is an escalation rate as a fraction; *d* is the real annual discount rate as a fraction; *n* is the asset lifetime in years; and *AF* is the annuity factor.  All escalation rates are input variables to **naturf**.
 
 Annuity factor (AF)
 ^^^^^^^^^^^^^^^^^^^
@@ -506,7 +506,7 @@ Locational marginal price (LMP)
 
     LMP_{lev} = LMP * LF_{fuel}
 
-where, *LMP* is the locational marginal price (*LMP*) in $/MWh and *LF*\ :subscript:`fuel` \ is the levelization factor of fuel.  *LMP* is also an input to **cerf** and is described in full in the :ref:`Locational Marginal Price` section.
+where, *LMP* is the locational marginal price (*LMP*) in $/MWh and *LF*\ :subscript:`fuel` \ is the levelization factor of fuel.  *LMP* is also an input to **naturf** and is described in full in the :ref:`Locational Marginal Price` section.
 
 Operating cost (OC)
 ^^^^^^^^^^^^^^^^^^^
@@ -515,13 +515,13 @@ Operating cost (OC)
 
     OC = \bigg(HR * \bigg(\frac{FP}{1000}\bigg) * LF_{fuel}\bigg) + \bigg(VOM * LF_{vom}\bigg) + \bigg(\bigg(\frac{CT * CO2 * HR * LF_{carbon}}{1000000}\bigg) * \bigg(1 - CCR\bigg)\bigg)
 
-where, *HR* is heat rate in Btu/kWh; *FP* is fuel price which **cerf** takes in as $/GJ but it gets converted to $/MBtu in the model; *VOM* is the variable operation and maintenance costs of yearly capacity use in $/MWh; *LF*\ :subscript:`vom` \ is the levelization factor of variable O&M; *CT* is the carbon tax in $/ton; *CO2* is the CO2 content of the fuel taken as an input in units tons/MWh but gets converted to tons/Btu in the model; *LF*\ :subscript:`carbon` \ is the levelization factor for carbon as a fraction; and *CCR* is the carbon capture rate as a fraction.  All variables are inputs to the **cerf** model.
+where, *HR* is heat rate in Btu/kWh; *FP* is fuel price which **naturf** takes in as $/GJ but it gets converted to $/MBtu in the model; *VOM* is the variable operation and maintenance costs of yearly capacity use in $/MWh; *LF*\ :subscript:`vom` \ is the levelization factor of variable O&M; *CT* is the carbon tax in $/ton; *CO2* is the CO2 content of the fuel taken as an input in units tons/MWh but gets converted to tons/Btu in the model; *LF*\ :subscript:`carbon` \ is the levelization factor for carbon as a fraction; and *CCR* is the carbon capture rate as a fraction.  All variables are inputs to the **naturf** model.
 
 
 Interconnection Cost
 ~~~~~~~~~~~~~~~~~~~~
 
-Interconnection cost is the sum of the transmission interconnection cost and the gas pipeline interconnection cost (if a gas-fired technology is being evaluated) at each grid cell.  **cerf** calculates the distances to the nearest substation with the minimum required voltage rating and to the nearest gas pipeline with the minimum required diameter for each suitable grid cell.  It then applies distance- and voltage-based capital costs to estimate the total cost for the new plant to connect to the grid.  This is calculated as:
+Interconnection cost is the sum of the transmission interconnection cost and the gas pipeline interconnection cost (if a gas-fired technology is being evaluated) at each grid cell.  **naturf** calculates the distances to the nearest substation with the minimum required voltage rating and to the nearest gas pipeline with the minimum required diameter for each suitable grid cell.  It then applies distance- and voltage-based capital costs to estimate the total cost for the new plant to connect to the grid.  This is calculated as:
 
 .. math::
 
@@ -556,7 +556,7 @@ where, *NLC* is in $/yr; *IC* is interconnection cost in $/yr; and *NOV* is in $
 Competition algorithm
 ~~~~~~~~~~~~~~~~~~~~~
 
-Technology competition algorithm for CERF.
+Technology competition algorithm for naturf.
 
 Grid cell level net locational cost (NLC) per technology and an electricity technology capacity expansion plan are used to compete technologies against each other to see which will win the grid cell. The technology that wins the grid cell is then sited until no further winning cells exist. Once sited, the location of the winning technology’s grid cell, along with its buffer, are no longer available for siting. The competition array is recalculated after all technologies have passed through an iteration. This process is repeated until there are either no cells left to site or there are no more power plants left to satisfy the expansion plan for any technology. For technologies that have the same NLC value in multiple grid cells that win the competition, random selection is available by default. If the user wishes to have the outcomes be repeatable, the randomizer can be set to False and a random seed set.
 
