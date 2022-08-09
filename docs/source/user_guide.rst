@@ -500,6 +500,67 @@ Surface Area Weighted Mean of Building Heights (94)
 
 
 
+Building Surface Area to Plan Area Ratio (95)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ratio of all the surface areas of a building to the building plan area.
+
+Frontal Area Index (96-99)
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+Complete Aspect Ratio (100)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+Height-to-Width Ratio (101)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+Sky-View Factor (102)
+~~~~~~~~~~~~~~~~~~~~~
+
+
+
+Grimmond & Oke Roughness Length (103)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+Grimmond & Oke Displacement Height (104)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+Raupach Roughness Length (105, 107, 109, 111)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+Raupach Displacment Height (106, 108, 110, 112)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+Macdonald et al. Roughness Length (113-116)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+Macdonald et al. Displacement Height (117)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+Vertical Distribution of Building Heights (118-132)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
 
 Locational marginal price (LMP)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
