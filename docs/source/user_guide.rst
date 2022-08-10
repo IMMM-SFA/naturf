@@ -548,7 +548,11 @@ Raupach Displacment Height (106, 108, 110, 112)
 Macdonald et al. Roughness Length (113-116)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. math::
 
+  MRL = zh * (1 - RDH)\exp(-(0.5\frac{C_D}{\kappa^2}(1 - RDH)\frac{A_f}{A_d})^-0.5)
+
+where, *MRL* is the Macdonald roughness length in m; *zh* is the building height in m; *RDH* is the Raupach displacement height in m; *C_D* is the obstacle drag coefficient = 1.12; *\kappa* is von Kármán's constant = 0.4; *A_f* is the frontal area of the building in m^2; *A_d* is the total surface area of the buildings in the plan area divided by the number of buildings in m^2.
 
 Macdonald et al. Displacement Height (117)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -557,7 +561,7 @@ Macdonald et al. Displacement Height (117)
 
     MDH = zh * (1 + \frac{1}{A^\lambda} * (\lambda - 1))
 
-where, *MDH* is the Macdonald displacement height in m; A is a constant = 3.59; \lambda is the plan area density 
+where, *MDH* is the Macdonald displacement height in m; *zh* is the building height in; *A* is a constant = 3.59; *\lambda* is the plan area density. 
 
 Vertical Distribution of Building Heights (118-132)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
