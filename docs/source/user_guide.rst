@@ -528,11 +528,20 @@ Sky-View Factor (102)
 Grimmond & Oke Roughness Length (103)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. math::
 
+  GORL = 0.1 * zh
+
+where, *zh* is the building height in m.
 
 Grimmond & Oke Displacement Height (104)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. math::
+
+  GODH = 0.67 * zh
+
+where, *zh* is building height in m.
 
 
 Raupach Roughness Length (105, 107, 109, 111)
