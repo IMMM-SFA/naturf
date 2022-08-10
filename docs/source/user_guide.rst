@@ -538,6 +538,11 @@ Grimmond & Oke Displacement Height (104)
 Raupach Roughness Length (105, 107, 109, 111)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. math::
+
+  RRL = zh * (1 - RDH) * exp(-\kappa * (C_S + C_R * \lamba)^-0.5 - \Psi_h))
+
+where, *RRL* is the Raupach roughness length in m; *RDH* is the Raupach displacement height in m; *\kappa* is von Kármán's constant = 0.4; *C_S* is the substrate-surface drag coefficient = 0.003; *C_R* is the roughness-element drag coefficient = 0.3; *\Psi_h* is the roughness-sublayer influence function = 0.193.
 
 
 Raupach Displacment Height (106, 108, 110, 112)
