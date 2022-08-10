@@ -543,7 +543,11 @@ Raupach Roughness Length (105, 107, 109, 111)
 Raupach Displacment Height (106, 108, 110, 112)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. math::
 
+  RDH = zh * (1 - (\frac{1 - \exp(-\sqrt(c_d1 * \Lambda))}{\sqrt(c_d1 * \Lambda)}))
+
+where, *RDH* is the Raupach displacement height in m; *c_d1* is a constant = 7.5; *\Lambda* is frontal area index times 2.
 
 Macdonald et al. Roughness Length (113-116)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
