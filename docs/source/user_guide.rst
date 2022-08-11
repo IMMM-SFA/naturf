@@ -67,10 +67,17 @@ Then, calculate the X indices much the same as the Y indices.
 Second_Index_X = 32 * !Let_To_Num!
 First_Index_X = !Second_Index_X! - 31
 
-The rest of the indexing will be done in Excel.
+The attribute table should then be exported to an Excel file using the "Table to Table" tool, and the rest of the indexing will be done in Excel.
 
-Export to Excel and create CSV
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Create CSV file
+^^^^^^^^^^^^^^^
+
+Now that the tessellation attribute table is an Excel file, all columns can be deleted except for the grid ID column and the indices columns. In new columns, use =TEXT(cell, "00000") to add leading zeroes to the indices (at least 5 digits are required, more can be added if necessary). In another column, concatenate the indices using =CONCAT(cell1,"-",cell2,".",cell3,"-",cell4). Copy the GRID_ID and concatenated index numbers(important: with headers) into a separate spreadsheet and save as a CSV. This CSV will allow **naturf** to assign the correct index name to the corresponsing binary file.
+
+Spatial join and split by attribute
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Back in the GIS software, perform a spatial join with the buildings shapefile being the target features and the tessellation shapefile being the join features. This will create a buildings shapefile where every building has a grid ID associated with it. The last step is to use the "Split by Attribute" tool to separate the buildings into shapefiles for each tile. These shapefiles will be the input to **naturf** along with the CSV with index names. 
 
 Configuration file setup
 ~~~~~~~~~~~~~~~~~~~~~~~~
