@@ -34,7 +34,43 @@ The first step to splitting the input building shapefile into tiles is to load t
 Assign index numbers
 ^^^^^^^^^^^^^^^^^^^^
 
-After the tessellation is created, the next step is to use the "Calculate Field" tool to assign index numbers to each tile. The following fields will need to be created and calculated: Columns, Rows, Let_To_Num, First_Index_X, Second_Index_X, First_Index_Y, and Second_Index_Y.
+After the tessellation is created, the next step is to use the "Calculate Field" tool to assign index numbers to each tile. By default, the "Generate Tessellation" tool assigns each tile an ID associated with its location, with the letters representing the columns and x-positions and the numbers representing the rows and the y-position. The letters go from A to Z, AA to ZZ, etc. from left to right and the numbers increase as they go top to bottom. The following fields will need to be created and calculated: Columns, Rows, Let_To_Num, First_Index_X, Second_Index_X, First_Index_Y, and Second_Index_Y.
+
+First, split the IDs into fields representing their columns and rows:
+
+Columns = !GRID_ID!.split("-")[0]
+Rows = !GRID_ID!.split("-")[1] 
+
+Next, assign the y-indices (Note: WRF requires the indexing to begin from the bottom left corner of the dataset):
+
+Second_Index_Y = 32 * ((Number of rows) - !Rows! + 1)
+First_Index_Y = !Second_Index_Y! - 31
+
+The x-indices require an additional step. First, calculate the Let_To_Num field by turning the letters in the Columns field into numbers using the code below, which can be adjusted to accomodated as many columns as needed:
+
+Expression:
+LetToNum(!Columns!)
+
+Code Block:
+def LetToNum(feat):
+    letters = list(feat)
+    if len(letters) == 1:
+        number = ord(letters[0]) - 64
+    elif letters[0] == 'A':
+        number = 26 + ord(letters[1]) - 64
+    else:
+        number = 52 + ord(letters[1]) - 64
+    return number 
+
+Then, calculate the X indices much the same as the Y indices.
+
+Second_Index_X = 32 * !Let_To_Num!
+First_Index_X = !Second_Index_X! - 31
+
+The rest of the indexing will be done in Excel.
+
+Export to Excel and create CSV
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Configuration file setup
 ~~~~~~~~~~~~~~~~~~~~~~~~
