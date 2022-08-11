@@ -10,14 +10,8 @@ Though **naturf** is demonstrated for the conterminous United States (CONUS), th
 **naturf** requires the following inputs to be able to operate:
 
 - A shapefile of buildings as polygons with height data.
-- A shapefile of gas pipelines as polylines if siting gas technologies.
-- A raster containing region IDs.  Each grid cell has the value of its parent region.  Currently, this is demonstrated using US states, though this could be generalized to any region/country/locale identifier matching what the electricity expansion plan provides.
-- A raster containing locational marginal pricing (LMP) zone IDs.  Each grid cell has the ID of its LMP zones.  These zones are representative of the nodal structure of the underlying model or software that produces the LMPs.  Production cost models to generate this value are not US-specific and this could be generated from any number of open-source and/or commercial products.
-- A file of LMPs per zone (corresponding to the aforementioned raster) for each 8760 hour.  Again, the source model or dataset that these are generated from does not have to be US-specific.
-- An electricity capacity expansion plan and its accompanying technology-specific information (e.g., variable O&M, fuel price, etc.).  For the CONUS, we use the 50 US-state version of GCAM.  However, GCAM is a global model and can produce this data for each of its regions.
-- Both the `region-abbrev_to_region-name.yml` and the `region-name_to_region-id.yml` files can be replaced with regional information.
-- Other variable information which is able to be modified per run, are the assumed interconnection costs per km to a substation KV class and the cost per km to connect to a gas pipeline if applicable.
-- Lastly, are the suitability rasters which can be composed of any number of locally-relevant exclusion criteria (e.g., protected area, critical habitat, etc.) per technology being sited in the expansion plan.
+- A shapefile of square polygons tessellated over the study area.
+- A CSV file matching each tile name to its index number.
 
 Let us know if you are using **naturf** in your research in our `discussion thread <https://github.com/IMMM-SFA/naturf/discussions/61>`_!
 
@@ -26,6 +20,21 @@ Setting up a **naturf** run
 -------------------------
 
 The following with indroduce you to the input data required by **naturf** and how to set up a configuration file to run **naturf**.
+
+Splitting the building shapefile into tiles
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**naturf** works optimally with inputs of building shapefiles as regular square tiles that can be processed in parallel. Experiments with Los Angeles found that tiles of 3.2 km by 3.2 km were the most computationally efficient (at 100 meter output resolution).
+
+Generate a tessellation
+^^^^^^^^^^^^^^^^^^^^^^^
+
+The first step to splitting the input building shapefile into tiles is to load the shapefile into any GIS software (ArcPro, ArcMap, QGIS, etc.) and run the "Generate Tessellation" tool (https://pro.arcgis.com/en/pro-app/2.8/tool-reference/data-management/generatetesellation.htm for ArcPro/ArcMap; https://docs.qgis.org/2.6/en/docs/user_manual/processing_algs/qgis/vector_creation_tools/creategrid.html for QGIS) with the desired tile size.
+
+Assign index numbers
+^^^^^^^^^^^^^^^^^^^^
+
+After the tessellation is created, the next step is to use the "Calculate Field" tool to assign index numbers to each tile. The following fields will need to be created and calculated: Columns, Rows, Let_To_Num, First_Index_X, Second_Index_X, First_Index_Y, and Second_Index_Y.
 
 Configuration file setup
 ~~~~~~~~~~~~~~~~~~~~~~~~
