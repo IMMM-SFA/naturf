@@ -1,9 +1,24 @@
-Authors
-=======
+Authors and Contributors
+========================
 
-* **Levi T. Sweet-Breu (@levisweetbreu)**. 
-* **Melissa R. Allen-Dumas (@mallen2718)**.
-* **Matthew Seals**.
-* **Andy Berres (@q-rai)**.
-* **Chris R. Vernon (@crvernon)**.
-* **Emily Rexer (@erexer)**.
+Authors
+-------
+
+* **Levi T. Sweet-Breu (@levisweetbreu)**
+* **Melissa R. Allen-Dumas (@mallen2718)**
+
+Contributors
+------------
+
+Additional Developers
+^^^^^^^^^^^^^^^^^^^^^
+
+* **Matthew Seals**
+* **Andy Berres (@q-rai)**
+* **Chris R. Vernon (@crvernon)**
+* **Emily Rexer (@erexer)**
+
+Code Tester
+^^^^^^^^^^^
+
+* **Pouya Vahmani** 
