@@ -560,7 +560,13 @@ The ratio of all the surface areas of a building to the building plan area.
 Frontal Area Index (96-99)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Frontal area index is the ratio of the entire frontal area of a building to the building plan area. **naturf** calculates the frontal area index from the four cardinal directions. Because buildings often do not face a cardinal direction head on, **naturf** uses the average alongwind and crosswind distance from the current building centroid to all other building centroids for the building plan area.
 
+.. math::
+
+  FAI = \frac{l * zh}{AW * CW}
+
+where, *FAI* is frontal area index; *l* is the building wall length in m; *zh* is the building height in m; *AW* the average alongwind distance to other buildings in m; *CW* is the average crosswind distance to other buildings in m.
 
 Complete Aspect Ratio (100)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -575,7 +581,7 @@ Height-to-Width Ratio (101)
 Sky-View Factor (102)
 ~~~~~~~~~~~~~~~~~~~~~
 
-
+Not calculated by **naturf**.
 
 Grimmond & Oke Roughness Length (103)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -584,7 +590,7 @@ Grimmond & Oke Roughness Length (103)
 
   GORL = 0.1 * zh
 
-where, *zh* is the building height in m.
+where, *GORL* is Grimmond & Oke rougness length in m; *zh* is the building height in m.
 
 Grimmond & Oke Displacement Height (104)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -593,7 +599,7 @@ Grimmond & Oke Displacement Height (104)
 
   GODH = 0.67 * zh
 
-where, *zh* is building height in m.
+where, *GODH* is Grimmond & Oke displacement height in m; *zh* is building height in m.
 
 
 Raupach Roughness Length (105, 107, 109, 111)
