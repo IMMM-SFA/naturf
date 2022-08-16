@@ -642,7 +642,7 @@ where, *MDH* is the Macdonald displacement height in m; *zh* is the building hei
 Vertical Distribution of Building Heights (118-132)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
+The vertical distribution of building heights is a representation of where buildings are located at each vertical level. **naturf** represents buildings as arbitrary float values in an array, and each vertical dimension of the array shows how many buildings reach that height.
 
 
 
