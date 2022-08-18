@@ -508,7 +508,7 @@ The following are the urban parameters calculated by **naturf**.
 Frontal Area Density (1-60)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Frontal area density is the frontal area of a building at a certain height increment divided by the building plan area. **naturf** calculates frontal area density from the four cardinal directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters. Parameters 1-15 represent the north, paramters 16-30 represent the west, parameters 31-45 represent the south, and parameters 46-60 represent the east.
+Frontal area density is the frontal area of a building at a certain height increment divided by the building plan area. **naturf** calculates frontal area density from the four cardinal directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters. Parameters 1-15 represent the north, paramters 16-30 represent the west, parameters 31-45 represent the south, and parameters 46-60 represent the east. (Burian 2004)
 
 .. math::
 
@@ -519,7 +519,7 @@ where, *FAD* is Frontal area density; *FA* is the frontal area of the wall from 
 Plan Area Density (61-75)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Plan area density is the ratio of building footprint areas within the building plan area to the entire building plan area, calculated in 5 meter increments from ground level to 75 meters. **naturf** projects the building footprint vertically to the building height, meaning plan area density is the same at every vertical level.
+Plan area density is the ratio of building footprint areas within the building plan area to the entire building plan area, calculated in 5 meter increments from ground level to 75 meters. **naturf** projects the building footprint vertically to the building height, meaning plan area density is the same at every vertical level. (Burian 2004)
 
 .. math::
 
@@ -530,12 +530,12 @@ where, *PAD* is the plan area density; *TBA* is the total area of the buildings 
 Rooftop Area Density (76-90)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Rooftop area density is the ratio of building rooftop area to the building plan area, calculated in 5 meter increments from ground level to 75 meters. Because **naturf** projects building footprints vertically to the building height, these parameters are equal to the plan area density.
+Rooftop area density is the ratio of building rooftop area to the building plan area, calculated in 5 meter increments from ground level to 75 meters. Because **naturf** projects building footprints vertically to the building height, these parameters are equal to the plan area density. (Burian 2004)
 
 Plan Area Fraction (91)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Plan area fraction is the ratio of building footprint areas within the building plan area to the entire building plan area, calculated at ground level. For **naturf**, this is equal to plan area density at any height increment.
+Plan area fraction is the ratio of building footprint areas within the building plan area to the entire building plan area, calculated at ground level. For **naturf**, this is equal to plan area density at any height increment. (Burian 2004)
 
 Mean Building Height (92)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -550,7 +550,7 @@ The standard deviation of building heights for all buildings within the building
 Surface Area Weighted Mean of Building Heights (94)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The mean building height for all buildings within the building plan area weighted by the ratio of the current building surface area to the total building surface area.
+The mean building height for all buildings within the building plan area weighted by the ratio of the current building surface area to the total building surface area. 
 
 .. math::
 
@@ -561,12 +561,12 @@ where, *AWMH* is the surface area weighted mean height in m; *BSA* is the curren
 Building Surface Area to Plan Area Ratio (95)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ratio of all the surface areas of a building to the building plan area.
+The ratio of all the surface areas of a building to the building plan area. (Burian 2004)
 
 Frontal Area Index (96-99)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Frontal area index is the ratio of the entire frontal area of a building to the building plan area. **naturf** calculates the frontal area index from the four cardinal directions. Because buildings often do not face a cardinal direction head on, **naturf** uses the average alongwind and crosswind distance from the current building centroid to all other building centroids for the building plan area.
+Frontal area index is the ratio of the entire frontal area of a building to the building plan area. **naturf** calculates the frontal area index from the four cardinal directions. Because buildings often do not face a cardinal direction head on, **naturf** uses the average alongwind and crosswind distance from the current building centroid to all other building centroids for the building plan area. (Burian 2004)
 
 .. math::
 
@@ -577,7 +577,7 @@ where, *FAI* is frontal area index; *l* is the building wall length in m; *zh* i
 Complete Aspect Ratio (100)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ratio of building surface area and exposed ground area to the total building plan area. Because **naturf** does not include vegetation, this is the same as building surface area to plan area ratio.
+The ratio of building surface area and exposed ground area to the total building plan area. Because **naturf** does not include vegetation, this is the same as building surface area to plan area ratio. (Burian 2204)
 
 Height-to-Width Ratio (101)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -592,6 +592,7 @@ Not calculated by **naturf**.
 Grimmond & Oke Roughness Length (103)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+(Grimmond & Oke 1999 Eq. 2)
 .. math::
 
   GORL = 0.1 * zh
@@ -601,6 +602,7 @@ where, *GORL* is Grimmond & Oke rougness length in m; *zh* is the building heigh
 Grimmond & Oke Displacement Height (104)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+(Grimmond & Oke 1999 Eq. 1)
 .. math::
 
   GODH = 0.67 * zh
@@ -611,6 +613,7 @@ where, *GODH* is Grimmond & Oke displacement height in m; *zh* is building heigh
 Raupach Roughness Length (105, 107, 109, 111)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+(Raupach 1994 Eq. 4)
 .. math::
 
   RRL = zh * (1 - RDH) * exp(-\kappa * (C_S + C_R * \lamba)^-0.5 - \Psi_h))
@@ -621,6 +624,7 @@ where, *RRL* is the Raupach roughness length in m; *RDH* is the Raupach displace
 Raupach Displacment Height (106, 108, 110, 112)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+(Raupach 1994 Eq. 8)
 .. math::
 
   RDH = zh * (1 - (\frac{1 - \exp(-\sqrt(c_d1 * \Lambda))}{\sqrt(c_d1 * \Lambda)}))
@@ -630,6 +634,7 @@ where, *RDH* is the Raupach displacement height in m; *c_d1* is a constant = 7.5
 Macdonald et al. Roughness Length (113-116)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+(Macdonald et al. 1998 Eq. 22)
 .. math::
 
   MRL = zh * (1 - RDH)\exp(-(0.5\frac{C_D}{\kappa^2}(1 - RDH)\frac{A_f}{A_d})^-0.5)
@@ -639,6 +644,7 @@ where, *MRL* is the Macdonald roughness length in m; *zh* is the building height
 Macdonald et al. Displacement Height (117)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+(Macdonald et al. 1998 Eq. 23)
 .. math::
 
     MDH = zh * (1 + \frac{1}{A^\lambda} * (\lambda - 1))
@@ -712,6 +718,17 @@ Competition algorithm
 Technology competition algorithm for naturf.
 
 Grid cell level net locational cost (NLC) per technology and an electricity technology capacity expansion plan are used to compete technologies against each other to see which will win the grid cell. The technology that wins the grid cell is then sited until no further winning cells exist. Once sited, the location of the winning technology’s grid cell, along with its buffer, are no longer available for siting. The competition array is recalculated after all technologies have passed through an iteration. This process is repeated until there are either no cells left to site or there are no more power plants left to satisfy the expansion plan for any technology. For technologies that have the same NLC value in multiple grid cells that win the competition, random selection is available by default. If the user wishes to have the outcomes be repeatable, the randomizer can be set to False and a random seed set.
+
+References
+----------
+
+Burian, S. J., Han, W. S., & Brown, M. J. (2003). Morphological analyses using 3D building databases: Houston, Texas. Department of Civil and Environmental Engineering, University of Utah.
+
+Grimmond, C. S. B., & Oke, T. R. (1999). Aerodynamic properties of urban areas derived from analysis of surface form. Journal of Applied Meteorology and Climatology, 38(9), 1262-1292. 
+
+Macdonald, R. W., Griffiths, R. F., & Hall, D. J. (1998). An improved method for the estimation of surface roughness of obstacle arrays. Atmospheric environment, 32(11), 1857-1864. 
+
+Raupach, M. R. (1994). Simplified expressions for vegetation roughness length and zero-plane displacement as functions of canopy height and area index. Boundary-layer meteorology, 71(1), 211-216. 
 
 
 Key outputs
