@@ -577,7 +577,7 @@ where, *FAI* is frontal area index; *l* is the building wall length in m; *zh* i
 Complete Aspect Ratio (100)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
+The ratio of building surface area and exposed ground area to the total building plan area. Because **naturf** does not include vegetation, this is the same as building surface area to plan area ratio.
 
 Height-to-Width Ratio (101)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
