@@ -18,7 +18,7 @@ Additional Developers
 * **Chris R. Vernon (@crvernon)**
 * **Emily Rexer (@erexer)**
 
-Code Tester
-^^^^^^^^^^^
+Product Tester
+^^^^^^^^^^^^^^
 
 * **Pouya Vahmani** 
