@@ -577,7 +577,7 @@ where, *FAI* is frontal area index; *l* is the building wall length in m; *zh* i
 Complete Aspect Ratio (100)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ratio of building surface area and exposed ground area to the total building plan area. Because **naturf** does not include vegetation, this is the same as building surface area to plan area ratio. (Burian 2204)
+The ratio of building surface area and exposed ground area to the total building plan area. Because **naturf** does not include vegetation, this is the same as building surface area to plan area ratio. (Burian 2004)
 
 Height-to-Width Ratio (101)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -587,12 +587,21 @@ Height-to-Width Ratio (101)
 Sky-View Factor (102)
 ~~~~~~~~~~~~~~~~~~~~~
 
-Not calculated by **naturf**.
+**Not yet implemented**
+
+The fraction of visible sky in a given area. ()
+
+.. math::
+
+  SVF = cos(arctan(\frac{H}{0.5W}))
+
+where, *SVF* is the sky-view factor; *H* is the building height in m; *W* is the distance between buildings in m.
 
 Grimmond & Oke Roughness Length (103)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 (Grimmond & Oke 1999 Eq. 2)
+
 .. math::
 
   GORL = 0.1 * zh
@@ -603,6 +612,7 @@ Grimmond & Oke Displacement Height (104)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 (Grimmond & Oke 1999 Eq. 1)
+
 .. math::
 
   GODH = 0.67 * zh
@@ -614,6 +624,7 @@ Raupach Roughness Length (105, 107, 109, 111)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 (Raupach 1994 Eq. 4)
+
 .. math::
 
   RRL = zh * (1 - RDH) * exp(-\kappa * (C_S + C_R * \lamba)^-0.5 - \Psi_h))
@@ -625,6 +636,7 @@ Raupach Displacment Height (106, 108, 110, 112)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 (Raupach 1994 Eq. 8)
+
 .. math::
 
   RDH = zh * (1 - (\frac{1 - \exp(-\sqrt(c_d1 * \Lambda))}{\sqrt(c_d1 * \Lambda)}))
@@ -635,6 +647,7 @@ Macdonald et al. Roughness Length (113-116)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 (Macdonald et al. 1998 Eq. 22)
+
 .. math::
 
   MRL = zh * (1 - RDH)\exp(-(0.5\frac{C_D}{\kappa^2}(1 - RDH)\frac{A_f}{A_d})^-0.5)
@@ -645,6 +658,7 @@ Macdonald et al. Displacement Height (117)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 (Macdonald et al. 1998 Eq. 23)
+
 .. math::
 
     MDH = zh * (1 + \frac{1}{A^\lambda} * (\lambda - 1))
