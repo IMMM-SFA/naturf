@@ -514,7 +514,7 @@ Frontal area density is the frontal area of a building at a certain height incre
 
     FAD = \frac{FA}{PA}
 
-where, *FAD* is Frontal area density; *FA* is the frontal area of the wall from the current direction and height level in m^2; *PA* is the building plan area in m^2.
+where, *FAD* is Frontal area density; *FA* is the frontal area of the wall from the current direction and height level in m\ :superscript:'2' \ ; *PA* is the building plan area in m\ :superscript:'2' \ .
 
 Plan Area Density (61-75)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -525,7 +525,7 @@ Plan area density is the ratio of building footprint areas within the building p
 
     PAD = \frac{TBA}{PA}
 
-where, *PAD* is the plan area density; *TBA* is the total area of the buildings within the current building plan area in m^2; *PA* is the building plan area in m^2.
+where, *PAD* is the plan area density; *TBA* is the total area of the buildings within the current building plan area in m\ :superscript:'2' \ ; *PA* is the building plan area in m\ :superscript:'2' \ .
 
 Rooftop Area Density (76-90)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -556,7 +556,7 @@ The mean building height for all buildings within the building plan area weighte
 
   AWMH = \frac{BSA}{TBSA} * MBH
 
-where, *AWMH* is the surface area weighted mean height in m; *BSA* is the current building surface area in m^2; *TBSA* is the total building surface area for the tile in m^2; *MBH* is the mean building height for the building plan area in m.
+where, *AWMH* is the surface area weighted mean height in m; *BSA* is the current building surface area in m\ :superscript:'2' \ ; *TBSA* is the total building surface area for the tile in m\ :superscript:'2' \ ; *MBH* is the mean building height for the building plan area in m.
 
 Building Surface Area to Plan Area Ratio (95)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -627,9 +627,9 @@ Raupach Roughness Length (105, 107, 109, 111)
 
 .. math::
 
-  RRL = zh * (1 - RDH) * exp(-\kappa * (C_S + C_R * \lamba)^-0.5 - \Psi_h))
+  RRL = zh * (1 - RDH) * exp(-\kappa * (C_{S} + C_{R} * \lamba)^-0.5 - \Psi_{h}))
 
-where, *RRL* is the Raupach roughness length in m; *RDH* is the Raupach displacement height in m; *\kappa* is von Kármán's constant = 0.4; *C_S* is the substrate-surface drag coefficient = 0.003; *C_R* is the roughness-element drag coefficient = 0.3; *\Psi_h* is the roughness-sublayer influence function = 0.193.
+where, *RRL* is the Raupach roughness length in m; *RDH* is the Raupach displacement height in m; *\kappa* is von Kármán's constant = 0.4; *C*\ :subscript:'S' \ is the substrate-surface drag coefficient = 0.003; *C*\ :subscript:'R' \ is the roughness-element drag coefficient = 0.3; *\Psi*\ :subscript:'h' \ is the roughness-sublayer influence function = 0.193.
 
 
 Raupach Displacment Height (106, 108, 110, 112)
@@ -639,9 +639,9 @@ Raupach Displacment Height (106, 108, 110, 112)
 
 .. math::
 
-  RDH = zh * (1 - (\frac{1 - \exp(-\sqrt(c_d1 * \Lambda))}{\sqrt(c_d1 * \Lambda)}))
+  RDH = zh * (1 - (\frac{1 - \exp(-\sqrt(c_{d1} * \Lambda))}{\sqrt(c_{d1} * \Lambda)}))
 
-where, *RDH* is the Raupach displacement height in m; *c_d1* is a constant = 7.5; *\Lambda* is frontal area index times 2.
+where, *RDH* is the Raupach displacement height in m; *c*\ :subscript:'d1' \ is a constant = 7.5; *\Lambda* is frontal area index times 2.
 
 Macdonald et al. Roughness Length (113-116)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -650,9 +650,9 @@ Macdonald et al. Roughness Length (113-116)
 
 .. math::
 
-  MRL = zh * (1 - RDH)\exp(-(0.5\frac{C_D}{\kappa^2}(1 - RDH)\frac{A_f}{A_d})^-0.5)
+  MRL = zh * (1 - RDH)\exp(-(0.5\frac{C_{D}}{\kappa^2}(1 - RDH)\frac{A_{f}}{A_{d}})^-0.5)
 
-where, *MRL* is the Macdonald roughness length in m; *zh* is the building height in m; *RDH* is the Raupach displacement height in m; *C_D* is the obstacle drag coefficient = 1.12; *\kappa* is von Kármán's constant = 0.4; *A_f* is the frontal area of the building in m^2; *A_d* is the total surface area of the buildings in the plan area divided by the number of buildings in m^2.
+where, *MRL* is the Macdonald roughness length in m; *zh* is the building height in m; *RDH* is the Raupach displacement height in m; *C*\ :subscript:'D' \ is the obstacle drag coefficient = 1.12; *\kappa* is von Kármán's constant = 0.4; *A*\ :subscript:'f' \ is the frontal area of the building in m^2; *A*\ :subscript:'d' \ is the total surface area of the buildings in the plan area divided by the number of buildings in m\ :superscript:'2' \ .
 
 Macdonald et al. Displacement Height (117)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
