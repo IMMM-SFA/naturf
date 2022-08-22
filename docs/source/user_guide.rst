@@ -550,13 +550,13 @@ The standard deviation of building heights for all buildings within the building
 Area Weighted Mean of Building Heights (94)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The mean building height for all buildings within the building plan area weighted by the ratio of the current building surface area to the total building surface area. (Burian 2003, Eq. 3)
+The average height of all buildings within the plan area weighted by the plan area. (Burian 2003, Eq. 3)
 
 .. math::
 
-  AWMH = \frac{BSA}{TBSA} * MBH
+  AWMH = \frac{\Sigma{A_i zh_i}}{\Sigma{A_i}}
 
-where, *AWMH* is the surface area weighted mean height in m; *BSA* is the current building surface area in m\ :superscript:'2' \ ; *TBSA* is the total building surface area for the tile in m\ :superscript:'2' \ ; *MBH* is the mean building height for the building plan area in m.
+where, *AWMH* is the area weighted mean height in m; *A*\ :subscript:'i' \ is the current building plan area in m\ :superscript:'2' \ ; *zh*\ :subscript:'i' \ is the current building height in m\ :superscript:'2' \ .
 
 Building Surface Area to Plan Area Ratio (95)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
