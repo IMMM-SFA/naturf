@@ -589,7 +589,7 @@ Sky-View Factor (102)
 
 **Not yet implemented**
 
-The fraction of visible sky in a given area. ()
+The fraction of visible sky in a given area. (Dirksen et al. 2019, Eq. 1)
 
 .. math::
 
@@ -737,6 +737,8 @@ References
 ----------
 
 Burian, S. J., Han, W. S., & Brown, M. J. (2003). Morphological analyses using 3D building databases: Houston, Texas. Department of Civil and Environmental Engineering, University of Utah.
+
+Dirksen, M., Ronda, R. J., Theeuwes, N. E., & Pagani, G. A. (2019). Sky view factor calculations and its application in urban heat island studies. Urban Climate, 30, 100498.
 
 Grimmond, C. S. B., & Oke, T. R. (1999). Aerodynamic properties of urban areas derived from analysis of surface form. Journal of Applied Meteorology and Climatology, 38(9), 1262-1292. 
 
