@@ -8,6 +8,7 @@ docs/build/
 .python-version
 
 # jupyter
+.ipynb_checkpoints
 notebooks/.ipynb_checkpoints/*
 
 # package
