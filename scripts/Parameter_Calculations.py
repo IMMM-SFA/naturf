@@ -92,8 +92,8 @@ def calculate_parameters(path, tifDir, outputDir, name, height_field, id_field):
 
     filename = "%s.csv" % name
 
+    # TODO:  is this is a bug (extent2[2] - extent2[2])
     wi = math.hypot((extent2[0] - extent2[1]), (extent2[2] - extent2[2]))
-
     he = math.hypot((extent2[0] - extent2[0]), (extent2[3] - extent2[2]))
 
     car = wi / he
@@ -102,8 +102,20 @@ def calculate_parameters(path, tifDir, outputDir, name, height_field, id_field):
 
     cents_ns, cents_ew, avgsa, nbarea, mean_ht_out, std_ht_out, awmh_out = avg_building_dist(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_field, hts, areas, cents)
 
-    fad_out, builfrac_out, fai_out, rdh_out, rrl_out, mdh_out, mrl_out, bs2par_out,\
-        zo_out, zd_out, car_out = parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_field, 'south', 0, nbarea, cents_ns, cents_ew, avgsa)
+    xparsout = parameters1(IMAGE_SIZE_X,
+                           IMAGE_SIZE_Y,
+                           layer2,
+                           ids,
+                           PIXEL_SIZE,
+                           height_field,
+                           'south',
+                           0,
+                           nbarea,
+                           cents_ns,
+                           cents_ew,
+                           avgsa)
+
+    fad_out, builfrac_out, fai_out, rdh_out, rrl_out, mdh_out, mrl_out, bs2par_out, zo_out, zd_out, car_out = xparsout
 
     # print car_out
 

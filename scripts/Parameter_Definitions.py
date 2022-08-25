@@ -2,7 +2,8 @@ import math
 from numpy import array, zeros, uint8, uint16, where, empty, sum, unique, rint, array_equiv
 from skimage.draw import polygon
 from scipy import ndimage
-                        
+
+
 def get_pixels2_c(IMAGE_SIZE_X, IMAGE_SIZE_Y, x1, y1, x2, y2):
 
     SMALL_DECIMAL = 0.0000000000000000000000000000001
@@ -305,6 +306,7 @@ def avg_building_dist(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, heigh
                                 sumarhts += areas[building_id] * heights[building_id] # Multiplies the current building area and height together, and then adds it to a rolling sum for the tile
                                 sumareas2 += areas[building_id] # Adds the current building height to a rolling sum
                                 #print("counter", counter)
+
                                 if building_id != counter: # Loops through every building except for the current one
                                     cx = centroids[building_id][0] # The centroid x coordinate of the other building
                                     cy = centroids[building_id][1] # The centroid y coordinate of the other building
@@ -348,6 +350,8 @@ def avg_building_dist(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, heigh
                 standard_deviation_building_heights.append(current_building_heights.std())
             else:
                 average_building_heights.append(height)
+
+                # TODO:  wouldn't the standard deviation of a single value be 0 and not the value itself?
                 standard_deviation_building_heights.append(height)
 
             average_north_south_building_distances[counter] = average_north_south
@@ -494,8 +498,13 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
 
             # todo: is this checking if height(int) is null?
             if height != '':
+
+
                 height = float(height)
+
+
                 for vertical_height in range(BUILDING_HEIGHT_INTERVAL, MAX_BUILDING_HEIGHT, BUILDING_HEIGHT_INTERVAL):
+
                     if (height - vertical_height) > 0:
                         nht = BUILDING_HEIGHT_INTERVAL
                     elif (height - vertical_height + BUILDING_HEIGHT_INTERVAL) > 0:
