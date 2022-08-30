@@ -6,12 +6,12 @@ class Settings:
     data_height_field_name = "Max_HOUSE_"
     data_geometry_field_name = "geometry"
 
-    id_field = "object_id"
-    height_field = "height"
-    geometry_field = "geometry"
-    area_field = "area"
-    centroid_field = "centroid"
-    buffered_field = "buffered"
+    id_field = "building_id"
+    height_field = "building_height"
+    geometry_field = "building_polygon_geometry"
+    area_field = "building_area"
+    centroid_field = "building_centroid"
+    buffered_field = "building_centroid_buffered"
     radius = 100
 
     target_height_field = f"{height_field}_target"

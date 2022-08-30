@@ -6,7 +6,7 @@ from hamilton.function_modifiers import extract_columns
 from .config import Settings
 
 
-def shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
+def input_shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
     """Import shapefile to GeoDataFrame and add columns to record.
 
     :params input_shapefile:                        Full path with file name and extension to the input shapefile.
@@ -17,68 +17,75 @@ def shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
     """
 
     # read in shapefile and only keep necessary fields
-    gdf = gpd.read_file(input_shapefile)[[Settings.data_id_field_name,
-                                          Settings.data_height_field_name,
-                                          Settings.data_geometry_field_name]]
+    return gpd.read_file(input_shapefile)[[Settings.data_id_field_name,
+                                           Settings.data_height_field_name,
+                                           Settings.data_geometry_field_name]]
+
+
+def target_crs(input_shapefile_df: gpd.GeoDataFrame) -> CRS:
+    """Extract coordinate reference system from geometry.
+
+    """
+
+    return input_shapefile_df.crs
+
+
+def standardize_column_names_df(input_shapefile_df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    """Standardize field names from data to reference names in code.
+
+    """
 
     # standardize field names from data to reference names in code
-    gdf.rename(columns={Settings.data_id_field_name: Settings.id_field,
-                        Settings.data_height_field_name: Settings.height_field,
-                        Settings.data_geometry_field_name: Settings.geometry_field},
-               inplace=True)
+    input_shapefile_df.rename(columns={Settings.data_id_field_name: Settings.id_field,
+                                       Settings.data_height_field_name: Settings.height_field,
+                                       Settings.data_geometry_field_name: Settings.geometry_field},
+                              inplace=True)
 
-    return gdf
-
-
-def target_crs(shapefile_df: gpd.GeoDataFrame) -> CRS:
-    """Extract coordinate reference system from geometry."""
-
-    return shapefile_df.crs
+    return input_shapefile_df
 
 
 @extract_columns(*[Settings.id_field, Settings.height_field, Settings.geometry_field])
-def filter_df(shapefile_df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+def filter_zero_height_df(standardize_column_names_df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     """Filter out any 0 height buildings and reindex the data frame.
 
     """
 
-    return shapefile_df.loc[shapefile_df[Settings.height_field] > 0].reset_index(drop=True)
+    return standardize_column_names_df.loc[standardize_column_names_df[Settings.height_field] > 0].reset_index(drop=True)
 
 
-def area(geometry: pd.Series,
-         target_crs: CRS) -> gpd.GeoSeries:
+def building_area(building_polygon_geometry: pd.Series) -> gpd.GeoSeries:
     """Calculate the area of the polygon geometry.
 
     :param geometry:                                Polygon geometry.
-    :type geometry:                                 gpd.GeoSeries
+    :type geometry:                                 pd.Series
 
     :return:                                        Calculated area in units of the geometry.
 
     """
 
-    return gpd.GeoSeries(geometry, crs=target_crs).area
+    return building_polygon_geometry.area
 
 
-def centroid(geometry: gpd.GeoSeries) -> gpd.GeoSeries:
+def building_centroid(building_polygon_geometry: pd.Series) -> pd.Series:
     """Calculate the centroid of the polygon geometry.
 
     :param geometry:                                Polygon geometry.
-    :type geometry:                                 gpd.GeoSeries
+    :type geometry:                                 pd.Series
 
     :return:                                        Centroid geometry of the polygon geometry.
 
     """
 
-    return geometry.centroid
+    return building_polygon_geometry.centroid
 
 
-def buffered(centroid: gpd.GeoSeries,
-             radius: int = 100,
-             cap_style: int = 3) -> gpd.GeoSeries:
+def building_centroid_buffered(building_centroid: pd.Series,
+                               radius: int = 100,
+                               cap_style: int = 3) -> pd.Series:
     """Calculate a buffered polygon geometry.
 
-    :param centroid:                                Centroid geometry of the polygon.
-    :type centroid:                                 gpd.GeoSeries
+    :param building_centroid:                       Centroid geometry of the polygon.
+    :type building_centroid:                        pd.Series
 
     :param radius:                                  The radius of the buffer.
                                                     100 (default)
@@ -93,35 +100,36 @@ def buffered(centroid: gpd.GeoSeries,
 
     """
 
-    return centroid.buffer(distance=radius, cap_style=cap_style)
+    return building_centroid.buffer(distance=radius, cap_style=cap_style)
 
 
 @extract_columns(*Settings.spatial_join_list)
-def spatial_join_df(object_id: pd.Series,
-                    height: pd.Series,
-                    geometry: gpd.GeoSeries,
-                    area: pd.Series,
-                    centroid: gpd.GeoSeries,
-                    buffered: gpd.GeoSeries) -> gpd.GeoDataFrame:
+def target_buffered_buildings_to_neighbor_centroids_df(building_id: pd.Series,
+                    building_height: pd.Series,
+                    building_polygon_geometry: pd.Series,
+                    building_area: pd.Series,
+                    building_centroid: pd.Series,
+                    building_centroid_buffered: pd.Series,
+                    target_crs: CRS) -> gpd.GeoDataFrame:
     """Conduct a spatial join to get the building centroids that intersect
     the buffered target buildings.
 
     """
 
     xdf = gpd.sjoin(
-        left_df=gpd.GeoDataFrame({Settings.id_field: object_id,
-                                  Settings.height_field: height,
-                                  Settings.area_field: area,
-                                  Settings.geometry_field: geometry,
-                                  Settings.centroid_field: centroid,
-                                  Settings.buffered_field: buffered},
-                                 crs=geometry.crs,
+        left_df=gpd.GeoDataFrame({Settings.id_field: building_id,
+                                  Settings.height_field: building_height,
+                                  Settings.area_field: building_area,
+                                  Settings.geometry_field: building_polygon_geometry,
+                                  Settings.centroid_field: building_centroid,
+                                  Settings.buffered_field: building_centroid_buffered},
+                                 crs=target_crs,
                                  geometry=Settings.geometry_field),
-        right_df=gpd.GeoDataFrame({Settings.id_field: object_id,
-                                   Settings.height_field: height,
-                                   Settings.area_field: area,
-                                   Settings.centroid_field: centroid},
-                                  crs=geometry.crs,
+        right_df=gpd.GeoDataFrame({Settings.id_field: building_id,
+                                   Settings.height_field: building_height,
+                                   Settings.area_field: building_area,
+                                   Settings.centroid_field: building_centroid},
+                                  crs=target_crs,
                                   geometry=Settings.centroid_field),
         how="left",
         predicate='intersects',
@@ -131,11 +139,30 @@ def spatial_join_df(object_id: pd.Series,
     return xdf
 
 
-def neighbor_centroid(spatial_join_df: pd.DataFrame) -> gpd.GeoSeries:
+def neighbor_centroid(target_buffered_buildings_to_neighbor_centroids_df: pd.DataFrame) -> gpd.GeoSeries:
+    """asdf
 
-    # asdf
-    neighbor_centroid_per_target_polygon = spatial_join_df.groupby(Settings.target_id_field)[Settings.centroid_field].first()
+    """
+
+    # get the centroid for each
+    x = target_buffered_buildings_to_neighbor_centroids_df.groupby(Settings.target_id_field)[Settings.centroid_field].first()
 
     # generate the building centroid of each neighbor building
-    return gpd.GeoSeries(spatial_join_df[Settings.neighbor_id_field].map(neighbor_centroid_per_target_polygon),
-                         crs=spatial_join_df.crs)
+    return target_buffered_buildings_to_neighbor_centroids_df[Settings.neighbor_id_field].map(x)
+
+
+# calculate the distance from the target building neighbor to each neighbor building centroid
+gdf["distance"] = gdf.geometry.centroid.distance(gdf["neighbor_centroid"])
+
+# calculate the angle in degrees of the neighbor building orientation to the target
+gdf["angle_in_degrees"] = np.degrees(np.arctan2(gdf["neighbor_centroid"].y - gdf["centroid"].y, gdf["neighbor_centroid"].x - gdf["centroid"].x))
+
+# adjust the angle to correspond to a circle where 0/360 degrees is directly east, and the degrees increase counter-clockwise
+gdf["angle_in_degrees"] = np.where(gdf["angle_in_degrees"] < 0,
+                                   gdf["angle_in_degrees"] + DEGREES_IN_CIRCLE,
+                                   gdf["angle_in_degrees"])
+
+
+def target_centroid_to_neighbor_centroid_distance():
+
+    pass
