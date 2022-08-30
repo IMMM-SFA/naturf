@@ -15,11 +15,11 @@ class Settings:
     radius = 100
 
     target_height_field = f"{height_field}_target"
-    neighbor_height_field = f"{height_field}_neighbors"
+    neighbor_height_field = f"{height_field}_neighbor"
     target_id_field = f"{id_field}_target"
-    neighbor_id_field = f"{id_field}_neighbors"
+    neighbor_id_field = f"{id_field}_neighbor"
     target_area_field = f"{area_field}_target"
-    neighbor_area_field = f"{area_field}_neighbors"
+    neighbor_area_field = f"{area_field}_neighbor"
 
     spatial_join_list = [target_height_field,
                          neighbor_height_field,

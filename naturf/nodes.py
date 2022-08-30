@@ -7,16 +7,15 @@ from .config import Settings
 
 
 def input_shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
-    """Import shapefile to GeoDataFrame and add columns to record.
+    """Import shapefile to GeoDataFrame using only desired columns.
 
     :params input_shapefile:                        Full path with file name and extension to the input shapefile.
     :type input_shapefile:                          str
 
-    :return:                                        GeoDataFrame of shapefile target fields
+    :return:                                        GeoDataFrame
 
     """
 
-    # read in shapefile and only keep necessary fields
     return gpd.read_file(input_shapefile)[[Settings.data_id_field_name,
                                            Settings.data_height_field_name,
                                            Settings.data_geometry_field_name]]
@@ -25,13 +24,23 @@ def input_shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
 def target_crs(input_shapefile_df: gpd.GeoDataFrame) -> CRS:
     """Extract coordinate reference system from geometry.
 
+    :params input_shapefile_df:                     GeoDataFrame of from the input shapefile.
+    :type input_shapefile_df:                       gpd.GeoDataFrame
+
+    :return:                                        pyproj Coordinate Reference System (CRS) object
+
     """
 
     return input_shapefile_df.crs
 
 
 def standardize_column_names_df(input_shapefile_df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
-    """Standardize field names from data to reference names in code.
+    """Standardize field names so use throughout code will be consistent throughout.
+
+    :params input_shapefile_df:                     GeoDataFrame of from the input shapefile.
+    :type input_shapefile_df:                       gpd.GeoDataFrame
+
+    :return:                                        GeoDataFrame
 
     """
 
@@ -46,20 +55,26 @@ def standardize_column_names_df(input_shapefile_df: gpd.GeoDataFrame) -> gpd.Geo
 
 @extract_columns(*[Settings.id_field, Settings.height_field, Settings.geometry_field])
 def filter_zero_height_df(standardize_column_names_df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
-    """Filter out any 0 height buildings and reindex the data frame.
+    """Filter out any zero height buildings and reindex the data frame.  Extract the building_id,
+    building_height, and polygon geometry fields to nodes.
+
+    :param standardize_column_names_df:             GeoDataFrame of the input shapefile with renamed columns.
+    :type standardize_column_names_df:              gpd.GeoDataFrame
+
+    :return:                                        GeoDataFrame
 
     """
 
     return standardize_column_names_df.loc[standardize_column_names_df[Settings.height_field] > 0].reset_index(drop=True)
 
 
-def building_area(building_polygon_geometry: pd.Series) -> gpd.GeoSeries:
+def building_area(building_polygon_geometry: pd.Series) -> pd.Series:
     """Calculate the area of the polygon geometry.
 
-    :param geometry:                                Polygon geometry.
-    :type geometry:                                 pd.Series
+    :param building_polygon_geometry:               Polygon geometry.
+    :type building_polygon_geometry:                pd.Series
 
-    :return:                                        Calculated area in units of the geometry.
+    :return:                                        pd.Series
 
     """
 
@@ -69,10 +84,10 @@ def building_area(building_polygon_geometry: pd.Series) -> gpd.GeoSeries:
 def building_centroid(building_polygon_geometry: pd.Series) -> pd.Series:
     """Calculate the centroid of the polygon geometry.
 
-    :param geometry:                                Polygon geometry.
-    :type geometry:                                 pd.Series
+    :param building_polygon_geometry:               Polygon geometry.
+    :type building_polygon_geometry:                pd.Series
 
-    :return:                                        Centroid geometry of the polygon geometry.
+    :return:                                        pd.Series
 
     """
 
@@ -82,7 +97,7 @@ def building_centroid(building_polygon_geometry: pd.Series) -> pd.Series:
 def building_centroid_buffered(building_centroid: pd.Series,
                                radius: int = 100,
                                cap_style: int = 3) -> pd.Series:
-    """Calculate a buffered polygon geometry.
+    """Calculate the buffer of the building centroid for the desired radius and cap style.
 
     :param building_centroid:                       Centroid geometry of the polygon.
     :type building_centroid:                        pd.Series
@@ -96,7 +111,7 @@ def building_centroid_buffered(building_centroid: pd.Series,
                                                     2 == Flat
                                                     3 == Square (default)
 
-    :return:                                        Buffered geometry of the polygon geometry.
+    :return:                                        pd.Series
 
     """
 
@@ -104,13 +119,17 @@ def building_centroid_buffered(building_centroid: pd.Series,
 
 
 @extract_columns(*Settings.spatial_join_list)
-def target_buffered_buildings_to_neighbor_centroids_df(building_id: pd.Series,
-                    building_height: pd.Series,
-                    building_polygon_geometry: pd.Series,
-                    building_area: pd.Series,
-                    building_centroid: pd.Series,
-                    building_centroid_buffered: pd.Series,
-                    target_crs: CRS) -> gpd.GeoDataFrame:
+def get_neighboring_buildings_df(building_id: pd.Series,
+                                 building_height: pd.Series,
+                                 building_polygon_geometry: pd.Series,
+                                 building_area: pd.Series,
+                                 building_centroid: pd.Series,
+                                 building_centroid_buffered: pd.Series,
+                                 target_crs: CRS,
+                                 join_type: str = "left",
+                                 join_predicate: str = "intersects",
+                                 join_lsuffix: str = "target",
+                                 join_rsuffix: str = "neighbor") -> gpd.GeoDataFrame:
     """Conduct a spatial join to get the building centroids that intersect
     the buffered target buildings.
 
@@ -131,38 +150,28 @@ def target_buffered_buildings_to_neighbor_centroids_df(building_id: pd.Series,
                                    Settings.centroid_field: building_centroid},
                                   crs=target_crs,
                                   geometry=Settings.centroid_field),
-        how="left",
-        predicate='intersects',
-        lsuffix="target",
-        rsuffix="neighbors")
+        how=join_type,
+        predicate=join_predicate,
+        lsuffix=join_lsuffix,
+        rsuffix=join_rsuffix)
 
     return xdf
 
 
-def neighbor_centroid(target_buffered_buildings_to_neighbor_centroids_df: pd.DataFrame) -> gpd.GeoSeries:
-    """asdf
-
-    """
-
-    # get the centroid for each
-    x = target_buffered_buildings_to_neighbor_centroids_df.groupby(Settings.target_id_field)[Settings.centroid_field].first()
-
-    # generate the building centroid of each neighbor building
-    return target_buffered_buildings_to_neighbor_centroids_df[Settings.neighbor_id_field].map(x)
-
-
-# calculate the distance from the target building neighbor to each neighbor building centroid
-gdf["distance"] = gdf.geometry.centroid.distance(gdf["neighbor_centroid"])
-
-# calculate the angle in degrees of the neighbor building orientation to the target
-gdf["angle_in_degrees"] = np.degrees(np.arctan2(gdf["neighbor_centroid"].y - gdf["centroid"].y, gdf["neighbor_centroid"].x - gdf["centroid"].x))
-
-# adjust the angle to correspond to a circle where 0/360 degrees is directly east, and the degrees increase counter-clockwise
-gdf["angle_in_degrees"] = np.where(gdf["angle_in_degrees"] < 0,
-                                   gdf["angle_in_degrees"] + DEGREES_IN_CIRCLE,
-                                   gdf["angle_in_degrees"])
-
-
-def target_centroid_to_neighbor_centroid_distance():
-
-    pass
+# def neighbor_centroid(get_neighboring_buildings_df: pd.DataFrame) -> gpd.GeoSeries:
+#     """Generate a centroid geometry for each neighbor building in each row.
+#
+#
+#
+#     """
+#
+#     # get the centroid for each
+#     x = get_neighboring_buildings.groupby(Settings.target_id_field)[Settings.centroid_field].first()
+#
+#     # generate the building centroid of each neighbor building
+#     return get_neighboring_buildings[Settings.neighbor_id_field].map(x)
+#
+#
+# def target_centroid_to_neighbor_centroid_distance():
+#
+#     pass

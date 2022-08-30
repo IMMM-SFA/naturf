@@ -369,7 +369,13 @@ def avg_building_dist(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, heigh
 
     average_building_area = sumareas / counter  # sum of all of the surface areas in shapefile (used in a parameter)
 
-    return average_north_south_building_distances, average_east_west_building_distances, average_building_area, footprint_building_areas, average_building_heights, standard_deviation_building_heights, area_weighted_average_building_heights
+    return average_north_south_building_distances, \
+           average_east_west_building_distances, \
+           average_building_area, \
+           footprint_building_areas, \
+           average_building_heights, \
+           standard_deviation_building_heights, \
+           area_weighted_average_building_heights
 
 
 def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_field, direc, building_id, newbarea, cents_ns, cents_ew, average_building_area):  # if building_id == 0, loops through all of the buildings
