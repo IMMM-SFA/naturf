@@ -1,7 +1,8 @@
+import numpy as np
 import pandas as pd
 import geopandas as gpd
 from pyproj.crs import CRS
-from hamilton.function_modifiers import extract_columns
+from hamilton.function_modifiers import extract_columns, tag
 
 from .config import Settings
 
@@ -84,7 +85,7 @@ def building_area(building_polygon_geometry: pd.Series) -> pd.Series:
 def building_centroid(building_polygon_geometry: pd.Series) -> pd.Series:
     """Calculate the centroid of the polygon geometry.
 
-    :param building_polygon_geometry:               Polygon geometry.
+    :param building_polygon_geometry:               Polygon geometry of the building.
     :type building_polygon_geometry:                pd.Series
 
     :return:                                        pd.Series
@@ -94,13 +95,13 @@ def building_centroid(building_polygon_geometry: pd.Series) -> pd.Series:
     return building_polygon_geometry.centroid
 
 
-def building_centroid_buffered(building_centroid: pd.Series,
-                               radius: int = 100,
-                               cap_style: int = 3) -> pd.Series:
+def building_buffered(building_polygon_geometry: pd.Series,
+                      radius: int = 100,
+                      cap_style: int = 3) -> pd.Series:
     """Calculate the buffer of the building centroid for the desired radius and cap style.
 
-    :param building_centroid:                       Centroid geometry of the polygon.
-    :type building_centroid:                        pd.Series
+    :param building_polygon_geometry:               Polygon geometry of the building.
+    :type building_polygon_geometry:                pd.Series
 
     :param radius:                                  The radius of the buffer.
                                                     100 (default)
@@ -115,7 +116,7 @@ def building_centroid_buffered(building_centroid: pd.Series,
 
     """
 
-    return building_centroid.buffer(distance=radius, cap_style=cap_style)
+    return building_polygon_geometry.buffer(distance=radius, cap_style=cap_style)
 
 
 @extract_columns(*Settings.spatial_join_list)
@@ -124,7 +125,7 @@ def get_neighboring_buildings_df(building_id: pd.Series,
                                  building_polygon_geometry: pd.Series,
                                  building_area: pd.Series,
                                  building_centroid: pd.Series,
-                                 building_centroid_buffered: pd.Series,
+                                 building_buffered: pd.Series,
                                  target_crs: CRS,
                                  join_type: str = "left",
                                  join_predicate: str = "intersects",
@@ -135,21 +136,22 @@ def get_neighboring_buildings_df(building_id: pd.Series,
 
     """
 
+    # assemble a pandas data frame
+    df = pd.DataFrame({Settings.id_field: building_id,
+                       Settings.height_field: building_height,
+                       Settings.area_field: building_area,
+                       Settings.geometry_field: building_polygon_geometry,
+                       Settings.centroid_field: building_centroid,
+                       Settings.buffered_field: building_buffered})
+
+    # create left and right geodataframes
+    left_gdf = gpd.GeoDataFrame(df, geometry=Settings.buffered_field, crs=target_crs)
+    right_gdf = gpd.GeoDataFrame(df, geometry=Settings.centroid_field, crs=target_crs)
+
+    # spatially join the building centroids to the target buffered areas
     xdf = gpd.sjoin(
-        left_df=gpd.GeoDataFrame({Settings.id_field: building_id,
-                                  Settings.height_field: building_height,
-                                  Settings.area_field: building_area,
-                                  Settings.geometry_field: building_polygon_geometry,
-                                  Settings.centroid_field: building_centroid,
-                                  Settings.buffered_field: building_centroid_buffered},
-                                 crs=target_crs,
-                                 geometry=Settings.geometry_field),
-        right_df=gpd.GeoDataFrame({Settings.id_field: building_id,
-                                   Settings.height_field: building_height,
-                                   Settings.area_field: building_area,
-                                   Settings.centroid_field: building_centroid},
-                                  crs=target_crs,
-                                  geometry=Settings.centroid_field),
+        left_df=left_gdf,
+        right_df=right_gdf,
         how=join_type,
         predicate=join_predicate,
         lsuffix=join_lsuffix,
@@ -158,20 +160,61 @@ def get_neighboring_buildings_df(building_id: pd.Series,
     return xdf
 
 
-# def neighbor_centroid(get_neighboring_buildings_df: pd.DataFrame) -> gpd.GeoSeries:
-#     """Generate a centroid geometry for each neighbor building in each row.
-#
-#
-#
-#     """
-#
-#     # get the centroid for each
-#     x = get_neighboring_buildings.groupby(Settings.target_id_field)[Settings.centroid_field].first()
-#
-#     # generate the building centroid of each neighbor building
-#     return get_neighboring_buildings[Settings.neighbor_id_field].map(x)
-#
-#
-# def target_centroid_to_neighbor_centroid_distance():
-#
-#     pass
+def building_centroid_target(building_polygon_geometry_target: pd.Series,
+                             target_crs: CRS) -> gpd.GeoSeries:
+    """Calculate the centroid geometry from the parent building geometry.
+
+    """
+
+    return gpd.GeoSeries(building_polygon_geometry_target, crs=target_crs).centroid
+
+
+def building_centroid_neighbor(building_polygon_geometry_neighbor: pd.Series,
+                             target_crs: CRS) -> gpd.GeoSeries:
+    """Calculate the centroid geometry from the neighbor building geometry.
+
+    """
+
+    return gpd.GeoSeries(building_polygon_geometry_neighbor, crs=target_crs).centroid
+
+
+@tag(parameter="wrf", pii="true")
+def distance_to_neighbor(building_centroid_target: gpd.GeoSeries,
+                         building_centroid_neighbor: gpd.GeoSeries) -> pd.Series:
+    """Calculate the distance from the target building neighbor to each neighbor building centroid.
+
+    """
+
+    # calculate the distance from the target building neighbor to each neighbor building centroid
+    return building_centroid_target.distance(building_centroid_neighbor)
+
+
+def angle_in_degrees_to_neighbor(building_centroid_target: gpd.GeoSeries,
+                                 building_centroid_neighbor: gpd.GeoSeries) -> pd.Series:
+    """Calculate the angle in degrees of the neighbor building orientation to the target.
+    Adjust the angle to correspond to a circle where 0/360 degrees is directly east, and the
+    degrees increase counter-clockwise.
+
+
+    """
+
+    # unpack coordinates for readability
+    target_x = building_centroid_target.x
+    target_y = building_centroid_target.y
+    neighbor_x = building_centroid_neighbor.x
+    neighbor_y = building_centroid_neighbor.y
+
+    # calculate the angle in degrees of the neighbor building orientation to the target
+    angle_series = np.degrees(np.arctan2(neighbor_y - target_y, neighbor_x - target_x))
+
+    # adjust the angle to correspond to a circle where 0/360 degrees is directly east, and the degrees increase
+    # counter-clockwise
+    return pd.Series(np.where(angle_series < 0,
+                              angle_series + Settings.DEGREES_IN_CIRCLE,
+                              angle_series),
+                     index=building_centroid_target.index)
+
+
+
+
+
