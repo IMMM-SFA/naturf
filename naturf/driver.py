@@ -19,7 +19,9 @@ class Model:
 
         # target parameters
         # target_parameter_list = ["target_crs"] + ["distance_to_neighbor"] + Settings.spatial_join_list
-        self.target_parameter_list = ["distance_to_neighbor", "angle_in_degrees_to_neighbor"]
+        self.target_parameter_list = ["distance_to_neighbor",
+                                      "angle_in_degrees_to_neighbor",
+                                      "orientation_to_neighbor"]
 
         # instantiate driver with function definitions
         self.dr = driver.Driver(self.input_parameters, nodes)

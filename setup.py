@@ -8,14 +8,13 @@ def readme():
         return f.read()
 
 
-version = re.search(r"__version__ = ['\"]([^'\"]*)['\"]", open('NATURF/__init__.py').read(), re.M).group(1)
+version = re.search(r"__version__ = ['\"]([^'\"]*)['\"]", open('naturf/__init__.py').read(), re.M).group(1)
 
 setup(
     name='naturf',
     version=version,
     packages=find_packages(),
     url='https://github.com/IMMM-SFA/naturf',
-    download_url=f'https://github.com/IMMM-SFA/naturf/archive/refs/tags/v{version}.tar.gz',
     license='MIT',
     author='Levi Sweet-Breu, Melissa Allen-Dumas, Emily Rexer',
     author_email='',

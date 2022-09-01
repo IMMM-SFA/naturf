@@ -215,6 +215,22 @@ def angle_in_degrees_to_neighbor(building_centroid_target: gpd.GeoSeries,
                      index=building_centroid_target.index)
 
 
+def orientation_to_neighbor(angle_in_degrees_to_neighbor: pd.Series) -> pd.Series:
+    """Determine the east-west or north-south orientation of the target building to its neighbors.
 
+    """
 
+    return pd.Series(
+            np.where(
+                (((Settings.SOUTHEAST_DEGREES <= angle_in_degrees_to_neighbor) &
+                    (angle_in_degrees_to_neighbor <= Settings.DEGREES_IN_CIRCLE))
+                | ((Settings.START_OF_CIRCLE_DEGREES <= angle_in_degrees_to_neighbor) &
+                    (angle_in_degrees_to_neighbor < Settings.NORTHEAST_DEGREES)))
+                | ((Settings.NORTHWEST_DEGREES <= angle_in_degrees_to_neighbor) &
+                    (angle_in_degrees_to_neighbor < Settings.SOUTHWEST_DEGREES)),
+                "east_west",
+                "north_south"
+            ),
+            index=angle_in_degrees_to_neighbor.index
+    )
 
