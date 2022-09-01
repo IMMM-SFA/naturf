@@ -17,7 +17,7 @@ Let us know if you are using **naturf** in your research in our `discussion thre
 
 
 Setting up a **naturf** run
--------------------------
+---------------------------
 
 The following with indroduce you to the input data required by **naturf** and how to set up a configuration file to run **naturf**.
 
@@ -51,16 +51,17 @@ The x-indices require an additional step. First, calculate the Let_To_Num field 
 Expression:
 LetToNum(!Columns!)
 
-Code Block:
-def LetToNum(feat):
-    letters = list(feat)
-    if len(letters) == 1:
-        number = ord(letters[0]) - 64
-    elif letters[0] == 'A':
-        number = 26 + ord(letters[1]) - 64
-    else:
-        number = 52 + ord(letters[1]) - 64
-    return number 
+Code Block::
+
+  def LetToNum(feat):
+      letters = list(feat)
+      if len(letters) == 1:
+          number = ord(letters[0]) - 64
+      elif letters[0] == 'A':
+          number = 26 + ord(letters[1]) - 64
+      else:
+          number = 52 + ord(letters[1]) - 64
+      return number 
 
 Then, calculate the X indices much the same as the Y indices.
 
@@ -158,7 +159,7 @@ where, *FAI* is frontal area index; *l* is the building wall length in m; *zh* i
 Complete Aspect Ratio (100)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ratio of building surface area and exposed ground area to the total building plan area. Because **naturf** does not include vegetation, this is the same as building surface area to plan area ratio. [Burian2003]_Eq. 15
+The ratio of building surface area and exposed ground area to the total building plan area. Because **naturf** does not include vegetation, this is the same as building surface area to plan area ratio. [Burian2003]_ Eq. 15
 
 Height-to-Width Ratio (101)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -170,7 +171,7 @@ Sky-View Factor (102)
 
 **Not yet implemented**
 
-The fraction of visible sky in a given area. (Dirksen et al. 2019, Eq. 1)
+The fraction of visible sky in a given area. [Dirksen2019]_ Eq. 1
 
 .. math::
 
