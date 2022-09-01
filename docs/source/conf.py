@@ -43,7 +43,6 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
     'sphinx.ext.napoleon',
-    'sphinx.ext.mathjax',
     'sphinx.ext.autosectionlabel',
     'sphinx_rtd_theme',
     'sphinx_panels',

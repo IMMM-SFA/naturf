@@ -10,6 +10,9 @@ The Neighborhood Adaptive Tissues for Urban Resilience Futures tool (**naturf**)
 
 Currently, **naturf** requires the shapefile inputs to first be separated into regular tiles, and it also requires a csv containing a index number for each of the tiles in the study area (todo: clarify). In tests of Los Angeles, regular tiles of 3.2 km x 3.2 km proved to be the most computationally efficient tile sizes, but any tile size that is a power of two is recommended.
 
+*Everything below is subject to change*
+---------------------------------------
+
 Python version support
 ----------------------
 
