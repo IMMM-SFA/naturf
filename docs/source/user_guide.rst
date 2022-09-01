@@ -89,7 +89,7 @@ The following are the urban parameters calculated by **naturf**.
 Frontal Area Density (1-60)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Frontal area density is the frontal area of a building at a certain height increment divided by the building plan area. **naturf** calculates frontal area density from the four cardinal directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters. Parameters 1-15 represent the north, paramters 16-30 represent the west, parameters 31-45 represent the south, and parameters 46-60 represent the east. (Burian 2003, Eq. 14)
+Frontal area density is the frontal area of a building at a certain height increment divided by the building plan area. **naturf** calculates frontal area density from the four cardinal directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters. Parameters 1-15 represent the north, paramters 16-30 represent the west, parameters 31-45 represent the south, and parameters 46-60 represent the east. [Burian2003]_ Eq. 14
 
 .. math::
 
@@ -100,7 +100,7 @@ where, *FAD* is Frontal area density; *FA* is the frontal area of the wall from 
 Plan Area Density (61-75)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Plan area density is the ratio of building footprint areas within the building plan area to the entire building plan area, calculated in 5 meter increments from ground level to 75 meters. **naturf** projects the building footprint vertically to the building height, meaning plan area density is the same at every vertical level. (Burian 2003, Eq. 7)
+Plan area density is the ratio of building footprint areas within the building plan area to the entire building plan area, calculated in 5 meter increments from ground level to 75 meters. **naturf** projects the building footprint vertically to the building height, meaning plan area density is the same at every vertical level. [Burian2003]_ Eq. 7
 
 .. math::
 
@@ -111,12 +111,12 @@ where, *PAD* is the plan area density; *TBA* is the total area of the buildings 
 Rooftop Area Density (76-90)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Rooftop area density is the ratio of building rooftop area to the building plan area, calculated in 5 meter increments from ground level to 75 meters. Because **naturf** projects building footprints vertically to the building height, these parameters are equal to the plan area density. (Burian 2003, Eq. 7)
+Rooftop area density is the ratio of building rooftop area to the building plan area, calculated in 5 meter increments from ground level to 75 meters. Because **naturf** projects building footprints vertically to the building height, these parameters are equal to the plan area density. [Burian2003]_ Eq. 7
 
 Plan Area Fraction (91)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Plan area fraction is the ratio of building footprint areas within the building plan area to the entire building plan area, calculated at ground level. For **naturf**, this is equal to plan area density at any height increment. (Burian 2003, Eq. 4)
+Plan area fraction is the ratio of building footprint areas within the building plan area to the entire building plan area, calculated at ground level. For **naturf**, this is equal to plan area density at any height increment. [Burian2003]_ Eq. 4
 
 Mean Building Height (92)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -131,7 +131,7 @@ The standard deviation of building heights for all buildings within the building
 Area Weighted Mean of Building Heights (94)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The average height of all buildings within the plan area weighted by the plan area. (Burian 2003, Eq. 3)
+The average height of all buildings within the plan area weighted by the plan area. [Burian2003]_ Eq. 3
 
 .. math::
 
@@ -142,12 +142,12 @@ where, *AWMH* is the area weighted mean height in m; *A*\ :subscript:'i' \ is th
 Building Surface Area to Plan Area Ratio (95)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ratio of all the surface areas of a building to the building plan area. (Burian 2003, Eq. 16)
+The ratio of all the surface areas of a building to the building plan area. [Burian2003]_ Eq. 16
 
 Frontal Area Index (96-99)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Frontal area index is the ratio of the entire frontal area of a building to the building plan area. **naturf** calculates the frontal area index from the four cardinal directions. Because buildings often do not face a cardinal direction head on, **naturf** uses the average alongwind and crosswind distance from the current building centroid to all other building centroids for the building plan area. (Burian 2003, Eq. 12)
+Frontal area index is the ratio of the entire frontal area of a building to the building plan area. **naturf** calculates the frontal area index from the four cardinal directions. Because buildings often do not face a cardinal direction head on, **naturf** uses the average alongwind and crosswind distance from the current building centroid to all other building centroids for the building plan area. [Burian2003]_ Eq. 12
 
 .. math::
 
@@ -158,12 +158,12 @@ where, *FAI* is frontal area index; *l* is the building wall length in m; *zh* i
 Complete Aspect Ratio (100)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ratio of building surface area and exposed ground area to the total building plan area. Because **naturf** does not include vegetation, this is the same as building surface area to plan area ratio. (Burian 2003, Eq. 15)
+The ratio of building surface area and exposed ground area to the total building plan area. Because **naturf** does not include vegetation, this is the same as building surface area to plan area ratio. [Burian2003]_Eq. 15
 
 Height-to-Width Ratio (101)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ratio of the building height to the street width. **naturf** generalizes this as the ratio of average height of buildings in the current plan area to average distance from the current building to all other buildings in the current plan area. (Burian 2003, Eq. 18)
+The ratio of the building height to the street width. **naturf** generalizes this as the ratio of average height of buildings in the current plan area to average distance from the current building to all other buildings in the current plan area. [Burian2003]_ Eq. 18
 
 Sky-View Factor (102)
 ~~~~~~~~~~~~~~~~~~~~~
@@ -181,7 +181,7 @@ where, *SVF* is the sky-view factor; *H* is the building height in m; *W* is the
 Grimmond & Oke Roughness Length (103)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(Grimmond & Oke 1999 Eq. 2)
+[GrimmondOke1999]_ Eq. 2
 
 .. math::
 
@@ -192,7 +192,7 @@ where, *GORL* is Grimmond & Oke rougness length in m; *zh* is the building heigh
 Grimmond & Oke Displacement Height (104)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(Grimmond & Oke 1999 Eq. 1)
+[GrimmondOke1999]_ Eq. 1
 
 .. math::
 
@@ -204,7 +204,7 @@ where, *GODH* is Grimmond & Oke displacement height in m; *zh* is building heigh
 Raupach Roughness Length (105, 107, 109, 111)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(Raupach 1994 Eq. 4)
+[Raupach1994]_ Eq. 4
 
 .. math::
 
@@ -216,7 +216,7 @@ where, *RRL* is the Raupach roughness length in m; *RDH* is the Raupach displace
 Raupach Displacment Height (106, 108, 110, 112)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(Raupach 1994 Eq. 8)
+[Raupach1994]_ Eq. 8
 
 .. math::
 
@@ -227,7 +227,7 @@ where, *RDH* is the Raupach displacement height in m; *c*\ :subscript:'d1' \ is 
 Macdonald et al. Roughness Length (113-116)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(Macdonald et al. 1998 Eq. 22)
+[Macdonald1998]_ Eq. 22
 
 .. math::
 
@@ -238,7 +238,7 @@ where, *MRL* is the Macdonald roughness length in m; *zh* is the building height
 Macdonald et al. Displacement Height (117)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(Macdonald et al. 1998 Eq. 23)
+[Macdonald1998]_ Eq. 23
 
 .. math::
 
@@ -249,20 +249,20 @@ where, *MDH* is the Macdonald displacement height in m; *zh* is the building hei
 Vertical Distribution of Building Heights (118-132)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The vertical distribution of building heights is a representation of where buildings are located at each vertical level. **naturf** represents buildings as arbitrary float values in an array, and each vertical dimension of the array shows how many buildings reach that height. (Burian 2003)
+The vertical distribution of building heights is a representation of where buildings are located at each vertical level. **naturf** represents buildings as arbitrary float values in an array, and each vertical dimension of the array shows how many buildings reach that height. [Burian2003]_
 
 References
 ----------
 
-Burian, S. J., Han, W. S., & Brown, M. J. (2003). Morphological analyses using 3D building databases: Houston, Texas. Department of Civil and Environmental Engineering, University of Utah.
+.. [Burian2003] Burian, S. J., Han, W. S., & Brown, M. J. (2003). Morphological analyses using 3D building databases: Houston, Texas. Department of Civil and Environmental Engineering, University of Utah.
 
-Dirksen, M., Ronda, R. J., Theeuwes, N. E., & Pagani, G. A. (2019). Sky view factor calculations and its application in urban heat island studies. Urban Climate, 30, 100498.
+.. [Dirksen2019] Dirksen, M., Ronda, R. J., Theeuwes, N. E., & Pagani, G. A. (2019). Sky view factor calculations and its application in urban heat island studies. Urban Climate, 30, 100498.
 
-Grimmond, C. S. B., & Oke, T. R. (1999). Aerodynamic properties of urban areas derived from analysis of surface form. Journal of Applied Meteorology and Climatology, 38(9), 1262-1292.
+.. [GrimmondOke1999] Grimmond, C. S. B., & Oke, T. R. (1999). Aerodynamic properties of urban areas derived from analysis of surface form. Journal of Applied Meteorology and Climatology, 38(9), 1262-1292.
 
-Macdonald, R. W., Griffiths, R. F., & Hall, D. J. (1998). An improved method for the estimation of surface roughness of obstacle arrays. Atmospheric environment, 32(11), 1857-1864.
+.. [Macdonald1998] Macdonald, R. W., Griffiths, R. F., & Hall, D. J. (1998). An improved method for the estimation of surface roughness of obstacle arrays. Atmospheric environment, 32(11), 1857-1864.
 
-Raupach, M. R. (1994). Simplified expressions for vegetation roughness length and zero-plane displacement as functions of canopy height and area index. Boundary-layer meteorology, 71(1), 211-216.
+.. [Raupach1994] Raupach, M. R. (1994). Simplified expressions for vegetation roughness length and zero-plane displacement as functions of canopy height and area index. Boundary-layer meteorology, 71(1), 211-216.
 
 *Everything below is subject to change*
 ---------------------------------------
