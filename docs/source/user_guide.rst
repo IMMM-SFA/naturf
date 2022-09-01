@@ -163,7 +163,7 @@ The ratio of building surface area and exposed ground area to the total building
 Height-to-Width Ratio (101)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
+The ratio of the building height to the street width. **naturf** generalizes this as the ratio of average height of buildings in the current plan area to average distance from the current building to all other buildings in the current plan area. (Burian 2003, Eq. 18)
 
 Sky-View Factor (102)
 ~~~~~~~~~~~~~~~~~~~~~
@@ -249,7 +249,7 @@ where, *MDH* is the Macdonald displacement height in m; *zh* is the building hei
 Vertical Distribution of Building Heights (118-132)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The vertical distribution of building heights is a representation of where buildings are located at each vertical level. **naturf** represents buildings as arbitrary float values in an array, and each vertical dimension of the array shows how many buildings reach that height.
+The vertical distribution of building heights is a representation of where buildings are located at each vertical level. **naturf** represents buildings as arbitrary float values in an array, and each vertical dimension of the array shows how many buildings reach that height. (Burian 2003)
 
 References
 ----------
