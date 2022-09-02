@@ -265,7 +265,7 @@ References
 
 .. [Raupach1994] Raupach, M. R. (1994). Simplified expressions for vegetation roughness length and zero-plane displacement as functions of canopy height and area index. Boundary-layer meteorology, 71(1), 211-216.
 
-*Everything below is subject to change*
+*Everything below will change*
 ---------------------------------------
 
 
