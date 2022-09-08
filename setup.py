@@ -16,7 +16,7 @@ setup(
     packages=find_packages(),
     url='https://github.com/IMMM-SFA/naturf',
     license='MIT',
-    author='Levi Sweet-Breu, Melissa Allen-Dumas, Emily Rexer',
+    author='Levi Sweet-Breu, Melissa Allen-Dumas, Chris R. Vernon, Emily Rexer',
     author_email='',
     description='An open-source Python package to address the effect of the geometry of a neighborhood on the local meteorology. ',
     long_description=readme(),
@@ -35,5 +35,6 @@ setup(
         'rtree>=1.0.0',
         'shapely>=1.8.2,<2',
         'geopandas>=0.10.2',
+        'sf-hamilton[visualization]>=1.10'
     ]
 )
