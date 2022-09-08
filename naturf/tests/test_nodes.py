@@ -11,7 +11,7 @@ class TestNodes(unittest.TestCase):
 
     OUTPUTS = ["distance_to_neighbor", "angle_in_degrees_to_neighbor", "orientation_to_neighbor"]
 
-    def test_something(self):
+    def test_fake(self):
 
         self.assertEqual(True, True)
 
