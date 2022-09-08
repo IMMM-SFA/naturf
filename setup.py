@@ -33,7 +33,7 @@ setup(
         'fiona>=1.8.19',
         'pyproj>=3.0.1',
         'rtree>=1.0.0',
-        'shapely>=1.8.2',
+        'shapely>=1.8.2,<2',
         'geopandas>=0.10.2',
     ]
 )
