@@ -350,6 +350,7 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
     zo_out_inc = []
     zd_out_inc = []
     car_out_inc = []
+    heights = []
 
     if bid != 0:
         layer2.ResetReading()
@@ -367,6 +368,7 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
             bs2par_out = []
             zo_out = []
             zd_out = []
+            car_out = []
 
             if ht != '':
                 ht = float(ht)
@@ -705,9 +707,6 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                 zo_out = []
                 zd_out = []
 
-                edist = 0
-                wdist = 0
-                sdist = 0
 
                 for asdf in range(0, 75, 5):
                     if (ht - asdf) >= 5:
@@ -726,6 +725,7 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                     zo = 0.1 * zh
                     zd = 0.67 * zh
 
+                    heights.append(zh)
                     zo_out.append(zo)
                     zd_out.append(zd)
 
@@ -754,6 +754,10 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                     mrle = []
                     mrlw = []
 
+                    bsa_west = []
+                    bsa_east = []
+                    bsa_north = []
+                    bsa_south = []
                     builfracs = []
                     mdhs = []
                     bs2pars = []
@@ -844,14 +848,14 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                                     #     dist += prevdist
 
                                     if 315 <= deg <= 360 or 0 <= deg < 45:
-                                        if ((dist / 10) - 1) > 0:
+                                        if dist > 0:
                                             edist = dist # Used for calculation of complete aspect ratio
-                                            wallarea = dist * nht # The area of the wall at the current 5m slice
+                                            east_wallarea = dist * nht # The area of the wall at the current 5m slice
 
                                             if dilarea == 0:
                                                     break
                                             
-                                            fad = wallarea / dilarea
+                                            fad = east_wallarea / dilarea
 
                                             if (cents_ns[counter] * cents_ew[counter]) != 0:
                                                 fai = (breadth * zh) / (cents_ns[counter] * cents_ew[counter])
@@ -862,11 +866,11 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                                                 rdh = 0
                                                 rrl = 0
 
-                                            zxcv = 0.5 * (1.12 / 0.4 ** 2) * (1 - rdh) * (wallarea / avgsa)
+                                            zxcv = 0.5 * (1.12 / 0.4 ** 2) * (1 - rdh) * (east_wallarea / avgsa)
 
                                             if zxcv >= 0:
                                                 mrl = zh * (1 - rdh) * math.exp(-1 / (math.sqrt(0.5 * (1.12 / 0.4 ** 2) *
-                                                                                            (1 - rdh) * (wallarea / avgsa))))
+                                                                                            (1 - rdh) * (east_wallarea / avgsa))))
                                             else:
                                                 mrl = 0
 
@@ -879,6 +883,7 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                                             rdhe.append(rdh)
                                             rrle.append(rrl)
                                             mrle.append(mrl)
+                                            bsa_east.append(east_wallarea)
 
                                             if float(fad) < 0.00000000000000000001:
                                                 fade.append(0)
@@ -886,15 +891,15 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                                                 fade.append(fad)
 
                                     if 45 <= deg < 135:
-                                        if ((dist / 10) - 1) > 0:
-                                            wallarea = dist * nht # The area of the wall at the current 5m slice
+                                        if dist > 0:
+                                            north_wallarea = dist * nht # The area of the wall at the current 5m slice
                                             #if asdf == 0:
                                                 #dilarea = 10000
 
                                             if dilarea == 0:
                                                     break
 
-                                            fad = wallarea / dilarea
+                                            fad = north_wallarea / dilarea
 
                                             if (cents_ns[counter] * cents_ew[counter]) != 0:
                                                 fai = (breadth * zh) / (cents_ns[counter] * cents_ew[counter])
@@ -905,11 +910,11 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                                                 rdh = 0
                                                 rrl = 0
 
-                                            zxcv = 0.5 * (1.12 / 0.4 ** 2) * (1 - rdh) * (wallarea / avgsa)
+                                            zxcv = 0.5 * (1.12 / 0.4 ** 2) * (1 - rdh) * (north_wallarea / avgsa)
 
                                             if zxcv >= 0:
                                                 mrl = zh * (1 - rdh) * math.exp(-1 / (math.sqrt(0.5 * (1.12 / 0.4 ** 2) *
-                                                                                            (1 - rdh) * (wallarea / avgsa))))
+                                                                                            (1 - rdh) * (north_wallarea / avgsa))))
                                             else:
                                                 mrl = 0
 
@@ -922,6 +927,7 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                                             rdhn.append(rdh)
                                             rrln.append(rrl)
                                             mrln.append(mrl)
+                                            bsa_north.append(north_wallarea)
 
                                             if float(fad) < 0.00000000000000000001:
                                                 fadn.append(0)
@@ -929,14 +935,14 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                                                 fadn.append(fad)
 
                                     if 135 <= deg < 225:
-                                        if ((dist / 10) - 1) > 0:
+                                        if dist > 0:
                                             wdist = dist # Used for calculation of complete aspect ratio
-                                            wallarea = dist * nht # The area of the wall at the current 5m slice
+                                            west_wallarea = dist * nht # The area of the wall at the current 5m slice
 
                                             if dilarea == 0:
                                                     break
                                             
-                                            fad = wallarea / dilarea
+                                            fad = west_wallarea / dilarea
 
                                             if (cents_ns[counter] * cents_ew[counter]) != 0:
                                                 fai = (breadth * zh) / (cents_ns[counter] * cents_ew[counter])
@@ -947,11 +953,11 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                                                 rdh = 0
                                                 rrl = 0
 
-                                            zxcv = 0.5 * (1.12 / 0.4 ** 2) * (1 - rdh) * (wallarea / avgsa)
+                                            zxcv = 0.5 * (1.12 / 0.4 ** 2) * (1 - rdh) * (west_wallarea / avgsa)
 
                                             if zxcv >= 0:
                                                 mrl = zh * (1 - rdh) * math.exp(-1 / (math.sqrt(0.5 * (1.12 / 0.4 ** 2) *
-                                                                                            (1 - rdh) * (wallarea / avgsa))))
+                                                                                            (1 - rdh) * (west_wallarea / avgsa))))
                                             else:
                                                 mrl = 0
 
@@ -964,6 +970,7 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                                             rdhw.append(rdh)
                                             rrlw.append(rrl)
                                             mrlw.append(mrl)
+                                            bsa_west.append(west_wallarea)
 
                                             if float(fad) < 0.00000000000000000001:
                                                 fadw.append(0)
@@ -971,15 +978,15 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                                                 fadw.append(fad)
 
                                     if (direc.lower() == 'south') and (225 <= deg < 315):
-                                        if ((dist / 10) - 1) > 0:
+                                        if dist > 0:
                                             sdist = dist # Used for calculation of complete aspect ratio
-                                            wallarea = dist * nht # The area of the wall at the current 5m slice
+                                            south_wallarea = dist * nht # The area of the wall at the current 5m slice
                                             
 
                                             if dilarea == 0:
                                                 break
                                             
-                                            fad = wallarea / dilarea
+                                            fad = south_wallarea / dilarea
 
 
                                             # print newbarea[counter][0], float(asdf), float(newbarea[counter][0]) > float(asdf)
@@ -1000,15 +1007,15 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                                                 rrl = 0
 
                                             mdh = zh * (1 + (1 / 3.59 ** builfrac) * (builfrac - 1))
-                                            zxcv = 0.5 * (1.12 / 0.4 ** 2) * (1 - rdh) * (wallarea / avgsa)
+                                            zxcv = 0.5 * (1.12 / 0.4 ** 2) * (1 - rdh) * (south_wallarea / avgsa)
 
                                             if zxcv >= 0:
                                                 mrl = zh * (1 - rdh) * math.exp(-1 / (math.sqrt(0.5 * (1.12 / 0.4 ** 2) *
-                                                                                            (1 - rdh) * (wallarea / avgsa))))
+                                                                                            (1 - rdh) * (south_wallarea / avgsa))))
                                             else:
                                                 mrl = 0
 
-                                            bs2par = newbarea[counter][1] / newbarea[counter][1]  # currently always 1
+                                            #bs2par = newbarea[counter][1] / newbarea[counter][1]  # currently always 1
 
                                             if rrl > 3 or rrl < 0:
                                                 rrl = 0
@@ -1025,7 +1032,8 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                                             rrls.append(rrl)
                                             mdhs.append(mdh)
                                             mrls.append(mrl)
-                                            bs2pars.append(bs2par)
+                                            bsa_south.append(south_wallarea)
+                                            #bs2pars.append(bs2par)
 
                     #print(newbarea[counter][1], dilarea)
                     fad_out['n'].append(fadn)
@@ -1055,7 +1063,10 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
 
                     builfrac_out.append(builfracs)
                     mdh_out.append(mdhs)
-                    bs2par_out.append(bs2pars)
+                    bsa_total = sum(bsa_east) + sum(bsa_north) + sum(bsa_west) + sum(bsa_south) + builarea
+                    bs2par = bsa_total / dilarea
+                    bs2par_out.append(bs2par)
+                    car_out.append(bs2par)
 
                 #  incremental arrays #
                 fad_out_inc.append(fad_out)
@@ -1071,12 +1082,12 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
 
                 # print sdist, edist, wdist
 
-                if edist != 0:
-                    car_out_inc.append(float(sdist) / float(edist)) # The ratio of the length of the south wall to the east wall
-                elif edist == 0 and wdist != 0:
-                    car_out_inc.append(float(sdist) / float(wdist)) # The ratio of the length of the south wall to the west wall
-                else:
-                    car_out_inc.append(1)
+                #if edist != 0:
+                    #car_out_inc.append(float(sdist) / float(edist)) # The ratio of the length of the south wall to the east wall
+                #elif edist == 0 and wdist != 0:
+                    #car_out_inc.append(float(sdist) / float(wdist)) # The ratio of the length of the south wall to the west wall
+                #else:
+                    #car_out_inc.append(1)
 
             counter += 1
 
