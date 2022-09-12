@@ -286,9 +286,13 @@ def angle_in_degrees_to_neighbor(building_centroid_target: gpd.GeoSeries,
 
 
 def orientation_to_neighbor(angle_in_degrees_to_neighbor: pd.Series) -> pd.Series:
-    """WORKING
+    """Determine the east-west or north-south orientation of the target building to its neighbors.
 
-    Determine the east-west or north-south orientation of the target building to its neighbors.
+    :param angle_in_degrees_to_neighbor:        Angle in degrees for each building interaction.
+    :type angle_in_degrees_to_neighbor:         pd.Series
+
+    :return:                                    Either the east-west or north-south orientation of the target building
+                                                to its neighbors.
 
     """
 
