@@ -188,6 +188,8 @@ def avg_building_dist(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids,  PIXEL_SIZE, heig
     stdht_out = []
     awmh1_out = []
     pareas = {}
+    height_width_ratios = []
+    svf_out = []
 
     layer2.ResetReading()
     feature_buil = layer2.GetNextFeature()
@@ -289,6 +291,14 @@ def avg_building_dist(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids,  PIXEL_SIZE, heig
                         # if parea > dilarea:
                         # print parea, dilarea
 
+                        avg_dist = sum(dist_total) / len(dist_total)
+                        height_to_width = float(ht) / avg_dist
+
+                        height_width_ratios.append(height_to_width)
+
+                        svf = math.cos(math.atan(float(ht) / 0.5 * avg_dist))
+                        svf_out.append(svf)
+
             if len(hts1) != 0:
                 hts1 = array(hts1)
                 meanht_out.append(hts1.mean())
@@ -312,7 +322,7 @@ def avg_building_dist(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids,  PIXEL_SIZE, heig
 
     avgsa = sumareas / cntr  # sum of all of the surface areas in shapefile (used in a parameter)
 
-    return cns_out, cew_out, avgsa, pareas, meanht_out, stdht_out, awmh1_out
+    return cns_out, cew_out, avgsa, pareas, meanht_out, stdht_out, awmh1_out, height_width_ratios, svf_out
 
 
 def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_field, direc, bid, newbarea, cents_ns, cents_ew, avgsa):  # if bid == 0, loops through all of the buildings
@@ -878,8 +888,8 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                                     if 45 <= deg < 135:
                                         if ((dist / 10) - 1) > 0:
                                             wallarea = dist * nht # The area of the wall at the current 5m slice
-                                            if asdf == 0:
-                                                dilarea = 10000
+                                            #if asdf == 0:
+                                                #dilarea = 10000
 
                                             if dilarea == 0:
                                                     break
