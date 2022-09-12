@@ -22,7 +22,7 @@ class TestNodes(unittest.TestCase):
                     outputs=["input_shapefile_df"])
 
         # generate the output data frame from the driver
-        df = dag.generate()
+        df = dag.execute()
 
         # check shape of data frame
         self.assertEqual((260, 3),
