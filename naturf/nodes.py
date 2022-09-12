@@ -254,12 +254,17 @@ def distance_to_neighbor_by_centroid(building_centroid_target: gpd.GeoSeries,
 
 def angle_in_degrees_to_neighbor(building_centroid_target: gpd.GeoSeries,
                                  building_centroid_neighbor: gpd.GeoSeries) -> pd.Series:
-    """WORKING
-
-    Calculate the angle in degrees of the neighbor building orientation to the target.
+    """Calculate the angle in degrees of the neighbor building orientation to the target.
     Adjust the angle to correspond to a circle where 0/360 degrees is directly east, and the
     degrees increase counter-clockwise.
 
+    :param building_centroid_target:            Centroid geometry from the target building geometry.
+    :type building_centroid_target:             gpd.GeoSeries
+
+    :param building_centroid_neighbor:          Centroid geometry from the neighbor building geometry.
+    :type building_centroid_neighbor:           gpd.GeoSeries
+
+    :return:                                    Angle in degrees for each building interaction.
 
     """
 
