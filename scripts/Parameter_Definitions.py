@@ -1368,4 +1368,4 @@ def h2w(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, xOrigin, yOrigin, pixelWidth, pixelH
 
         ratios.append(ratio)
 
-    return ratios, names
+    return names

@@ -100,7 +100,7 @@ def calculate_parameters(path, tifDir, outputDir, name, height_field, id_field):
 
     cents, hts, areas = get_cents_hts(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_field)
 
-    cents_ns, cents_ew, avgsa, nbarea, mean_ht_out, std_ht_out, awmh_out = avg_building_dist(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_field, hts, areas, cents)
+    cents_ns, cents_ew, avgsa, nbarea, mean_ht_out, std_ht_out, awmh_out, h2wratios, svf_out = avg_building_dist(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_field, hts, areas, cents)
 
     fad_out, builfrac_out, fai_out, rdh_out, rrl_out, mdh_out, mrl_out, bs2par_out,\
         zo_out, zd_out, car_out = parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_field, 'south', 0, nbarea, cents_ns, cents_ew, avgsa)
@@ -109,20 +109,20 @@ def calculate_parameters(path, tifDir, outputDir, name, height_field, id_field):
 
     # print fad_out, builfrac_out, fai_out
 
-    h2wratios, names = h2w(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, xOrigin, yOrigin, pixelWidth, pixelHeight, start_x_p, start_y_p, PIXEL_SIZE, height_field, id_field)
+    names = h2w(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, xOrigin, yOrigin, pixelWidth, pixelHeight, start_x_p, start_y_p, PIXEL_SIZE, height_field, id_field)
 
     paras_out = [['Name', 'Frontal Area Density', 'Plan Area Density', 'Roof Area Density',
                 'Plan Area Fraction', 'Mean Building Height', 'Standard Deviation of Building Heights',
                 'Area Weighted Mean of Building Heights', 'Building Surface to Plan Area Ratio',
                 'Frontal Area Index', 'Grimmond and Oke (GO) Roughness Length', 'GO Displacement Height',
                 'Raupach Roughness Length', 'Raupach Displacement Height', 'MacDonald et al. Roughness Length',
-                'MacDonald et al. Displacement Height', 'Height to Width Ratio', 'Complete Aspect Ratio']]
+                'MacDonald et al. Displacement Height', 'Height to Width Ratio', 'Complete Aspect Ratio', "Sky-View Factor"]]
 
     # #$%#$%#$%#$%#$%#$%#$%#$%#$%#$%#$%#$%#$%#$%
 
     names2, fad_out2, builfrac_out2, paf_out2, fai_out2, rdh_out2, rrl_out2, mdh_out2, mrl_out2, bs2par_out2, zo_out2,\
-        zd_out2, mean_ht_out2, std_ht_out2, awmh_out2, h2w_out2, car_out2 = [], [], [], [], [], [], [], [], [], [], [],\
-                                                                            [], [], [], [], [], []
+        zd_out2, mean_ht_out2, std_ht_out2, awmh_out2, h2w_out2, car_out2, svf_out2 = [], [], [], [], [], [], [], [], [], [], [],\
+                                                                            [], [], [], [], [], [], []
 
     # #$%#$%#$%#$%#$%#$%#$%#$%#$%#$%#$%#$%#$%#$%
 
@@ -191,7 +191,8 @@ def calculate_parameters(path, tifDir, outputDir, name, height_field, id_field):
                 zo1 = mean(zo_out[i])  # 1 grl
                 zd1 = mean(zd_out[i])  # 1 gdh
                 h2w1 = h2wratios[i]  # 1 h2w
-                car1 = car_out[i]
+                car1 = mean(car_out[i])
+                svf1 = svf_out[i]
 
                 # print n1, fad1, bui1, paf, mea1, std1, awm1, bs21, fai1, zo1, zd1, rrl1, rdh1, mrl1, mdh1, h2w1, car1
 
@@ -212,9 +213,10 @@ def calculate_parameters(path, tifDir, outputDir, name, height_field, id_field):
                 awmh_out2.append(awm1)
                 h2w_out2.append(h2w1)
                 car_out2.append(car1)
+                svf_out2.append(svf1)
 
                 paras_out.append([n1, fad1, bui1, bui1, paf, mea1, std1, awm1, bs21, fai1, zo1, zd1, rrl1, rdh1,
-                                mrl1, mdh1, h2w1, car1])
+                                mrl1, mdh1, h2w1, car1, svf1])
 
     
     c = open(outputDir/filename, 'w')
