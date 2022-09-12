@@ -200,9 +200,15 @@ def get_neighboring_buildings_df(building_id: pd.Series,
 
 def building_centroid_target(building_polygon_geometry_target: pd.Series,
                              target_crs: CRS) -> gpd.GeoSeries:
-    """WORKING
+    """Calculate the centroid geometry from the parent building geometry.
 
-    Calculate the centroid geometry from the parent building geometry.
+    :param building_polygon_geometry_target:    Polygon geometry field for the buildings from the spatially joined data.
+    :type building_polygon_geometry_target:     pd.Series
+
+    :param target_crs:                          Coordinate reference system field of the parent geometry.
+    :type target_crs:                           pd.Series
+
+    :return:                                    The centroid geometry from the parent building geometry  as a GeoSeries.
 
     """
 
@@ -210,7 +216,7 @@ def building_centroid_target(building_polygon_geometry_target: pd.Series,
 
 
 def building_centroid_neighbor(building_polygon_geometry_neighbor: pd.Series,
-                             target_crs: CRS) -> gpd.GeoSeries:
+                               target_crs: CRS) -> gpd.GeoSeries:
     """WORKING
 
     Calculate the centroid geometry from the neighbor building geometry.
