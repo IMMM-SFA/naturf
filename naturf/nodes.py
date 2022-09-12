@@ -235,16 +235,20 @@ def building_centroid_neighbor(building_polygon_geometry_neighbor: pd.Series,
     return gpd.GeoSeries(building_polygon_geometry_neighbor, crs=target_crs).centroid
 
 
-@tag(parameter="wrf", pii="true")
-def distance_to_neighbor(building_centroid_target: gpd.GeoSeries,
-                         building_centroid_neighbor: gpd.GeoSeries) -> pd.Series:
-    """WORKING
+def distance_to_neighbor_by_centroid(building_centroid_target: gpd.GeoSeries,
+                                     building_centroid_neighbor: gpd.GeoSeries) -> pd.Series:
+    """Calculate the distance from the target building neighbor to each neighbor building centroid.
 
-    Calculate the distance from the target building neighbor to each neighbor building centroid.
+    :param building_centroid_target:            Centroid geometry from the target building geometry.
+    :type building_centroid_target:             gpd.GeoSeries
+
+    :param building_centroid_neighbor:          Centroid geometry from the neighbor building geometry.
+    :type building_centroid_neighbor:           gpd.GeoSeries
+
+    :return:                                    Distance field in CRS units.
 
     """
 
-    # calculate the distance from the target building neighbor to each neighbor building centroid
     return building_centroid_target.distance(building_centroid_neighbor)
 
 
