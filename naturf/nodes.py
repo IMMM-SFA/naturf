@@ -98,7 +98,7 @@ def building_centroid(building_polygon_geometry: pd.Series) -> pd.Series:
 def building_buffered(building_polygon_geometry: pd.Series,
                       radius: int = 100,
                       cap_style: int = 3) -> pd.Series:
-    """Calculate the buffer of the building centroid for the desired radius and cap style.
+    """Calculate the buffer of the building polygon for the desired radius and cap style.
 
     :param building_polygon_geometry:               Polygon geometry of the building.
     :type building_polygon_geometry:                pd.Series
@@ -131,10 +131,47 @@ def get_neighboring_buildings_df(building_id: pd.Series,
                                  join_predicate: str = "intersects",
                                  join_lsuffix: str = "target",
                                  join_rsuffix: str = "neighbor") -> gpd.GeoDataFrame:
-    """WORKING
+    """Conduct a spatial join to get the building centroids that intersect the buffered target buildings.
 
-    Conduct a spatial join to get the building centroids that intersect
-    the buffered target buildings.
+    :param building_id:                         Building ID field.
+    :type building_id:                          pd.Series
+
+    :param building_height:                     Building height field.
+    :type building_height:                      pd.Series
+
+    :param building_polygon_geometry:           Polygon geometry field for the buildings.
+    :type building_polygon_geometry:            pd.Series
+
+    :param building_area:                       Building area field.
+    :type building_area:                        pd.Series
+
+    :param building_centroid:                   Point centroid geometry of the building.
+    :type building_centroid:                    pd.Series
+
+    :param building_buffered:                   Polygon geometry of the buffered building polygon.
+    :type building_buffered:                    pd.Series
+
+    :param target_crs:                          Coordinate reference system field of the parent geometry.
+    :type target_crs:                           pd.Series
+
+    :param join_type:                           Type of join desired.
+                                                DEFAULT: `left`
+    :type join_type:                            str
+
+    :param join_predicate:                      Selected topology of join.
+                                                DEFAULT: `intersects`
+    :type join_predicate:                       str
+
+    :param join_lsuffix:                        Suffix of the left object in the join.
+                                                DEFAULT: `target`
+    :type join_lsuffix:                         str
+
+    :param join_rsuffix:                        Suffix of the right object in the join.
+                                                DEFAULT: `neighbor`
+    :type join_rsuffix:                         str
+
+    :return:                                    GeoDataFrame of building centroids that intersect the buffered target
+                                                buildings and their attributes.
 
     """
 
@@ -151,13 +188,12 @@ def get_neighboring_buildings_df(building_id: pd.Series,
     right_gdf = gpd.GeoDataFrame(df, geometry=Settings.centroid_field, crs=target_crs)
 
     # spatially join the building centroids to the target buffered areas
-    xdf = gpd.sjoin(
-        left_df=left_gdf,
-        right_df=right_gdf,
-        how=join_type,
-        predicate=join_predicate,
-        lsuffix=join_lsuffix,
-        rsuffix=join_rsuffix)
+    xdf = gpd.sjoin(left_df=left_gdf,
+                    right_df=right_gdf,
+                    how=join_type,
+                    predicate=join_predicate,
+                    lsuffix=join_lsuffix,
+                    rsuffix=join_rsuffix)
 
     return xdf
 
