@@ -98,7 +98,7 @@ def building_centroid(building_polygon_geometry: pd.Series) -> pd.Series:
 def building_buffered(building_polygon_geometry: pd.Series,
                       radius: int = 100,
                       cap_style: int = 3) -> pd.Series:
-    """Calculate the buffer of the building centroid for the desired radius and cap style.
+    """Calculate the buffer of the building polygon for the desired radius and cap style.
 
     :param building_polygon_geometry:               Polygon geometry of the building.
     :type building_polygon_geometry:                pd.Series
@@ -131,10 +131,47 @@ def get_neighboring_buildings_df(building_id: pd.Series,
                                  join_predicate: str = "intersects",
                                  join_lsuffix: str = "target",
                                  join_rsuffix: str = "neighbor") -> gpd.GeoDataFrame:
-    """WORKING
+    """Conduct a spatial join to get the building centroids that intersect the buffered target buildings.
 
-    Conduct a spatial join to get the building centroids that intersect
-    the buffered target buildings.
+    :param building_id:                         Building ID field.
+    :type building_id:                          pd.Series
+
+    :param building_height:                     Building height field.
+    :type building_height:                      pd.Series
+
+    :param building_polygon_geometry:           Polygon geometry field for the buildings.
+    :type building_polygon_geometry:            pd.Series
+
+    :param building_area:                       Building area field.
+    :type building_area:                        pd.Series
+
+    :param building_centroid:                   Point centroid geometry of the building.
+    :type building_centroid:                    pd.Series
+
+    :param building_buffered:                   Polygon geometry of the buffered building polygon.
+    :type building_buffered:                    pd.Series
+
+    :param target_crs:                          Coordinate reference system field of the parent geometry.
+    :type target_crs:                           pd.Series
+
+    :param join_type:                           Type of join desired.
+                                                DEFAULT: `left`
+    :type join_type:                            str
+
+    :param join_predicate:                      Selected topology of join.
+                                                DEFAULT: `intersects`
+    :type join_predicate:                       str
+
+    :param join_lsuffix:                        Suffix of the left object in the join.
+                                                DEFAULT: `target`
+    :type join_lsuffix:                         str
+
+    :param join_rsuffix:                        Suffix of the right object in the join.
+                                                DEFAULT: `neighbor`
+    :type join_rsuffix:                         str
+
+    :return:                                    GeoDataFrame of building centroids that intersect the buffered target
+                                                buildings and their attributes.
 
     """
 
@@ -151,22 +188,28 @@ def get_neighboring_buildings_df(building_id: pd.Series,
     right_gdf = gpd.GeoDataFrame(df, geometry=Settings.centroid_field, crs=target_crs)
 
     # spatially join the building centroids to the target buffered areas
-    xdf = gpd.sjoin(
-        left_df=left_gdf,
-        right_df=right_gdf,
-        how=join_type,
-        predicate=join_predicate,
-        lsuffix=join_lsuffix,
-        rsuffix=join_rsuffix)
+    xdf = gpd.sjoin(left_df=left_gdf,
+                    right_df=right_gdf,
+                    how=join_type,
+                    predicate=join_predicate,
+                    lsuffix=join_lsuffix,
+                    rsuffix=join_rsuffix)
 
     return xdf
 
 
 def building_centroid_target(building_polygon_geometry_target: pd.Series,
                              target_crs: CRS) -> gpd.GeoSeries:
-    """WORKING
+    """Calculate the centroid geometry from the parent building geometry.
 
-    Calculate the centroid geometry from the parent building geometry.
+    :param building_polygon_geometry_target:    Polygon geometry field for the target buildings from the spatially
+                                                joined data.
+    :type building_polygon_geometry_target:     pd.Series
+
+    :param target_crs:                          Coordinate reference system field of the parent geometry.
+    :type target_crs:                           pd.Series
+
+    :return:                                    The centroid geometry from the target building geometry as a GeoSeries.
 
     """
 
@@ -174,37 +217,54 @@ def building_centroid_target(building_polygon_geometry_target: pd.Series,
 
 
 def building_centroid_neighbor(building_polygon_geometry_neighbor: pd.Series,
-                             target_crs: CRS) -> gpd.GeoSeries:
-    """WORKING
+                               target_crs: CRS) -> gpd.GeoSeries:
+    """Calculate the centroid geometry from the neighbor building geometry.
 
-    Calculate the centroid geometry from the neighbor building geometry.
+    :param building_polygon_geometry_neighbor:  Polygon geometry field for the neighboring buildings from the spatially
+                                                joined data.
+    :type building_polygon_geometry_neighbor:   pd.Series
+
+    :param target_crs:                          Coordinate reference system field of the parent geometry.
+    :type target_crs:                           pd.Series
+
+    :return:                                    The centroid geometry from the neighbor building geometry as a
+                                                GeoSeries.
 
     """
 
     return gpd.GeoSeries(building_polygon_geometry_neighbor, crs=target_crs).centroid
 
 
-@tag(parameter="wrf", pii="true")
-def distance_to_neighbor(building_centroid_target: gpd.GeoSeries,
-                         building_centroid_neighbor: gpd.GeoSeries) -> pd.Series:
-    """WORKING
+def distance_to_neighbor_by_centroid(building_centroid_target: gpd.GeoSeries,
+                                     building_centroid_neighbor: gpd.GeoSeries) -> pd.Series:
+    """Calculate the distance from the target building neighbor to each neighbor building centroid.
 
-    Calculate the distance from the target building neighbor to each neighbor building centroid.
+    :param building_centroid_target:            Centroid geometry from the target building geometry.
+    :type building_centroid_target:             gpd.GeoSeries
+
+    :param building_centroid_neighbor:          Centroid geometry from the neighbor building geometry.
+    :type building_centroid_neighbor:           gpd.GeoSeries
+
+    :return:                                    Distance field in CRS units.
 
     """
 
-    # calculate the distance from the target building neighbor to each neighbor building centroid
     return building_centroid_target.distance(building_centroid_neighbor)
 
 
 def angle_in_degrees_to_neighbor(building_centroid_target: gpd.GeoSeries,
                                  building_centroid_neighbor: gpd.GeoSeries) -> pd.Series:
-    """WORKING
-
-    Calculate the angle in degrees of the neighbor building orientation to the target.
+    """Calculate the angle in degrees of the neighbor building orientation to the target.
     Adjust the angle to correspond to a circle where 0/360 degrees is directly east, and the
     degrees increase counter-clockwise.
 
+    :param building_centroid_target:            Centroid geometry from the target building geometry.
+    :type building_centroid_target:             gpd.GeoSeries
+
+    :param building_centroid_neighbor:          Centroid geometry from the neighbor building geometry.
+    :type building_centroid_neighbor:           gpd.GeoSeries
+
+    :return:                                    Angle in degrees for each building interaction.
 
     """
 
@@ -226,9 +286,13 @@ def angle_in_degrees_to_neighbor(building_centroid_target: gpd.GeoSeries,
 
 
 def orientation_to_neighbor(angle_in_degrees_to_neighbor: pd.Series) -> pd.Series:
-    """WORKING
+    """Determine the east-west or north-south orientation of the target building to its neighbors.
 
-    Determine the east-west or north-south orientation of the target building to its neighbors.
+    :param angle_in_degrees_to_neighbor:        Angle in degrees for each building interaction.
+    :type angle_in_degrees_to_neighbor:         pd.Series
+
+    :return:                                    Either the east-west or north-south orientation of the target building
+                                                to its neighbors.
 
     """
 

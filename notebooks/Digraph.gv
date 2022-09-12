@@ -1,0 +1,69 @@
+// Dependency Graph
+digraph {
+	building_buffered [label=building_buffered]
+	building_area [label=building_area]
+	building_polygon_geometry [label=building_polygon_geometry]
+	building_centroid [label=building_centroid]
+	building_centroid_neighbor [label=building_centroid_neighbor]
+	radius [label=radius]
+	building_polygon_geometry_neighbor [label=building_polygon_geometry_neighbor]
+	building_id [label=building_id]
+	distance_to_neighbor_by_centroid [label=distance_to_neighbor_by_centroid]
+	angle_in_degrees_to_neighbor [label=angle_in_degrees_to_neighbor]
+	cap_style [label=cap_style]
+	target_crs [label=target_crs]
+	building_polygon_geometry_target [label=building_polygon_geometry_target]
+	get_neighboring_buildings_df [label=get_neighboring_buildings_df]
+	join_lsuffix [label=join_lsuffix]
+	building_centroid_target [label=building_centroid_target]
+	input_shapefile_df [label=input_shapefile_df]
+	join_predicate [label=join_predicate]
+	join_type [label=join_type]
+	building_height [label=building_height]
+	orientation_to_neighbor [label=orientation_to_neighbor]
+	input_shapefile [label=input_shapefile]
+	join_rsuffix [label=join_rsuffix]
+	filter_zero_height_df [label=filter_zero_height_df]
+	standardize_column_names_df [label=standardize_column_names_df]
+	join_predicate [label="UD: join_predicate"]
+	join_lsuffix [label="UD: join_lsuffix"]
+	join_type [label="UD: join_type"]
+	cap_style [label="UD: cap_style"]
+	input_shapefile [label="UD: input_shapefile"]
+	radius [label="UD: radius"]
+	join_rsuffix [label="UD: join_rsuffix"]
+	building_polygon_geometry -> building_buffered
+	radius -> building_buffered
+	cap_style -> building_buffered
+	building_polygon_geometry -> building_area
+	filter_zero_height_df -> building_polygon_geometry
+	building_polygon_geometry -> building_centroid
+	building_polygon_geometry_neighbor -> building_centroid_neighbor
+	target_crs -> building_centroid_neighbor
+	get_neighboring_buildings_df -> building_polygon_geometry_neighbor
+	filter_zero_height_df -> building_id
+	building_centroid_target -> distance_to_neighbor_by_centroid
+	building_centroid_neighbor -> distance_to_neighbor_by_centroid
+	building_centroid_target -> angle_in_degrees_to_neighbor
+	building_centroid_neighbor -> angle_in_degrees_to_neighbor
+	input_shapefile_df -> target_crs
+	get_neighboring_buildings_df -> building_polygon_geometry_target
+	building_id -> get_neighboring_buildings_df
+	building_height -> get_neighboring_buildings_df
+	building_polygon_geometry -> get_neighboring_buildings_df
+	building_area -> get_neighboring_buildings_df
+	building_centroid -> get_neighboring_buildings_df
+	building_buffered -> get_neighboring_buildings_df
+	target_crs -> get_neighboring_buildings_df
+	join_type -> get_neighboring_buildings_df
+	join_predicate -> get_neighboring_buildings_df
+	join_lsuffix -> get_neighboring_buildings_df
+	join_rsuffix -> get_neighboring_buildings_df
+	building_polygon_geometry_target -> building_centroid_target
+	target_crs -> building_centroid_target
+	input_shapefile -> input_shapefile_df
+	filter_zero_height_df -> building_height
+	angle_in_degrees_to_neighbor -> orientation_to_neighbor
+	standardize_column_names_df -> filter_zero_height_df
+	input_shapefile_df -> standardize_column_names_df
+}
