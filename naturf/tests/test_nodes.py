@@ -2,10 +2,16 @@ import os
 import pkg_resources
 import unittest
 
+from dataclasses import dataclass
 import numpy as np
 import geopandas as gpd
+import pandas as pd
+from shapely.geometry import Point
+from typing import List
+
 
 from naturf.driver import Model
+from naturf.nodes import angle_in_degrees_to_neighbor
 
 
 class TestNodes(unittest.TestCase):
@@ -41,6 +47,38 @@ class TestNodes(unittest.TestCase):
         self.assertEqual(type(fake_geodataframe),
                          type(df),
                          "`input_shapefile_df` data type not matching expected")
+
+    def test_angle_in_degrees_to_neighbor(self):
+        """Test that the returned angle is correct."""
+        @dataclass
+        class TestCase:
+            name: str
+            target_input: List[Point]
+            neighbor_input: List[Point]
+            expected: List[int]
+
+        testcases = [
+            TestCase(name="same_centroid", target_input=[Point(1, 1), Point(0, 0)], neighbor_input=[Point(1, 1), Point(0, 0)], expected=[0.0, 0.0]),
+            TestCase(name="east", target_input=[Point(0, 0)], neighbor_input=[Point(1, 0)], expected=[0.0]),
+            TestCase(name="west", target_input=[Point(0, 0)], neighbor_input=[Point(-1, 0)], expected=[180.0]),
+            TestCase(name="north", target_input=[Point(0, 0)], neighbor_input=[Point(0, 1)], expected=[90.0]),
+            TestCase(name="south", target_input=[Point(0, 0)], neighbor_input=[Point(0, -1)], expected=[270.0]),
+            TestCase(name="northeast", target_input=[Point(0, 0)], neighbor_input=[Point(10, 10*np.sqrt(3))], expected=[60.0]),
+            TestCase(name="northwest", target_input=[Point(0, 0)], neighbor_input=[Point(-10, 10*np.sqrt(3))], expected=[120.0]),
+            TestCase(name="southeast", target_input=[Point(0, 0)], neighbor_input=[Point(10, -10*np.sqrt(3))], expected=[300.0]),
+            TestCase(name="southwest", target_input=[Point(0, 0)], neighbor_input=[Point(-10, -10*np.sqrt(3))], expected=[240.0]),
+            ]
+
+        for case in testcases:
+            actual = angle_in_degrees_to_neighbor(gpd.GeoSeries(case.target_input), gpd.GeoSeries(case.neighbor_input))
+            expected = pd.Series(case.expected)
+            pd.testing.assert_series_equal(
+                expected,
+                actual,
+                "failed test {} expected {}, actual {}".format(
+                    case.name, expected, actual
+                ),
+            )
 
 
 if __name__ == '__main__':
