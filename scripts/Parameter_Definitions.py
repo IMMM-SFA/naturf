@@ -296,7 +296,7 @@ def avg_building_dist(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids,  PIXEL_SIZE, heig
 
                         height_width_ratios.append(height_to_width)
 
-                        svf = math.cos(math.atan(float(ht) / 0.5 * avg_dist))
+                        svf = math.cos(math.atan(float(ht) / (0.5 * avg_dist)))
                         svf_out.append(svf)
 
             if len(hts1) != 0:
