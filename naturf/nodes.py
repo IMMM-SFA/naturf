@@ -326,7 +326,15 @@ def _plan_area_dict(building_id: pd.Series,
 
 def _building_height_dict(building_id: pd.Series,
                           building_height: pd.Series) -> dict:
-    """asdf
+    """Calculate building height per building.
+
+    :param building_id:                         Building ID field.
+    :type building_id:                          pd.Series
+
+    :param building_height:                     Building height field.
+    :type building_height:                      pd.Series
+
+    :return:                                    Dictionary of building id to building height
 
     """
 
@@ -334,3 +342,4 @@ def _building_height_dict(building_id: pd.Series,
                        Settings.height_field: building_height})
 
     return df.groupby(Settings.id_field)[Settings.height_field].max().to_dict()
+
