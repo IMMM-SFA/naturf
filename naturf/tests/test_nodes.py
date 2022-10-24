@@ -81,7 +81,7 @@ class TestNodes(unittest.TestCase):
             )
 
     def test_orientation_to_neighbor(self):
-        """Test that the orientation is correct."""
+        """Test that the function `orientation_to_neighbor returns either `east_west` or `north_south` correctly."""
         @dataclass
         class TestCase:
             name: str
@@ -93,9 +93,8 @@ class TestNodes(unittest.TestCase):
 
         testcases = [
             TestCase(name="zero_degrees", input=[0.0, -0.0], expected=[east_west, east_west]),
-            TestCase(name="north", input=[45, 90, 135, 180], expected=[north_south, north_south, east_west, east_west]),
-            TestCase(name="north", input=[10, 20, 30, 40], expected=[east_west, east_west, east_west, east_west]),
-            TestCase(name="south", input=[225, 270, 315, 360], expected=[north_south, north_south, east_west, east_west]),
+            TestCase(name="north_south", input=[90, 270], expected=[north_south, north_south]),
+            TestCase(name="east_west", input=[45, 135, 225, 315, 360], expected=[east_west, east_west, east_west, east_west, east_west]),
             ]
 
         for case in testcases:
@@ -104,9 +103,7 @@ class TestNodes(unittest.TestCase):
             pd.testing.assert_series_equal(
                 expected,
                 actual,
-                "failed test {} expected {}, actual {}".format(
-                    case.name, expected, actual
-                ),
+                f"failed test {case.name} expected {expected}, actual {actual}"
             )
 
 
