@@ -310,3 +310,36 @@ def orientation_to_neighbor(angle_in_degrees_to_neighbor: pd.Series) -> pd.Serie
             index=angle_in_degrees_to_neighbor.index
     )
 
+
+def _plan_area_dict(building_id: pd.Series,
+                    building_area_neighbor: pd.Series) -> dict:
+    """Calculate the total area of all buildings within the plan area.
+
+
+    """
+
+    df = pd.DataFrame({Settings.id_field: building_id,
+                       Settings.neighbor_area_field: building_area_neighbor})
+
+    return df.groupby(Settings.id_field)[Settings.neighbor_area_field].sum().to_dict()
+
+
+def _building_height_dict(building_id: pd.Series,
+                          building_height: pd.Series) -> dict:
+    """Calculate building height per building.
+
+    :param building_id:                         Building ID field.
+    :type building_id:                          pd.Series
+
+    :param building_height:                     Building height field.
+    :type building_height:                      pd.Series
+
+    :return:                                    Dictionary of building id to building height
+
+    """
+
+    df = pd.DataFrame({Settings.id_field: building_id,
+                       Settings.height_field: building_height})
+
+    return df.groupby(Settings.id_field)[Settings.height_field].max().to_dict()
+
