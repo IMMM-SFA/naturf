@@ -443,6 +443,21 @@ def average_direction_distance(building_id: pd.Series,
     return df
 
 
+def _average_north_south_building_distances(building_id: pd.Series) -> dict:
+    """Create a dictionary with an initialization value of 0 present for each building id.
+
+    :param building_id:                         Building ID field.
+    :type building_id:                          pd.Series
+
+    :return:                                    Dictionary of with an initialization value of 0 present for each
+                                                building id.
+
+    """
+
+    return {i: 0 for i in building_id.unique()}
+
+
+
 
 
 
