@@ -435,7 +435,13 @@ def average_direction_distance(building_id: pd.Series,
                        "orientation": orientation_to_neighbor,
                        "distance": distance_to_neighbor_by_centroid})
 
-    return df.groupby([Settings.id_field, "orientation"])["distance"].mean().reset_index()
+    df = df.groupby([Settings.id_field, "orientation"])["distance"].mean().reset_index()
+
+    # exclude the target building to target building distance and direction (would be == 0)
+    df = df.loc[df["distance"] > 0]
+
+    return df
+
 
 
 
