@@ -369,3 +369,23 @@ def _footprint_building_areas(_building_height_dict: dict,
     return {i: [_building_height_dict[i], _plan_area_dict[i]] for i in _plan_area_dict.keys()}
 
 
+def average_building_heights(building_id: pd.Series,
+                             building_height_neighbor: pd.Series):
+    """Create a list of building heights for each target building when considering themselves
+    and those that are within their buffered area.
+
+    :param building_id:                         Building ID field.
+    :type building_id:                          pd.Series
+
+    :param building_height_neighbor:            Building height field for neighbors
+    :type building_height_neighbor:             pd.Series
+
+    :return:                                    List of building heights for each target building in the buffered area
+
+    """
+
+    df = pd.DataFrame({Settings.id_field: building_id,
+                       Settings.neighbor_height_field: building_height_neighbor})
+
+    return df.groupby(Settings.id_field)[Settings.neighbor_height_field].mean().fillna(0).tolist()
+
