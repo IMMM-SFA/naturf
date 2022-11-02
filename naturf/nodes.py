@@ -315,6 +315,13 @@ def _plan_area_dict(building_id: pd.Series,
                     building_area_neighbor: pd.Series) -> dict:
     """Calculate the total area of all buildings within the plan area.
 
+    :param building_id:                         Building ID field.
+    :type building_id:                          pd.Series
+
+    :param building_area_neighbor:              Building area neighbor field.
+    :type building_area_neighbor:               pd.Series
+
+    :return:                                    Dictionary of building id to the neighboring building areas
 
     """
 
@@ -342,4 +349,5 @@ def _building_height_dict(building_id: pd.Series,
                        Settings.height_field: building_height})
 
     return df.groupby(Settings.id_field)[Settings.height_field].max().to_dict()
+
 
