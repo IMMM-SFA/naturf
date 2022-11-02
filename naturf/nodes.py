@@ -351,3 +351,21 @@ def _building_height_dict(building_id: pd.Series,
     return df.groupby(Settings.id_field)[Settings.height_field].max().to_dict()
 
 
+def _footprint_building_areas(_building_height_dict: dict,
+                              _plan_area_dict: dict):
+    """Create a dictionary of the height and plan_area to a dictionary where the key is the
+    target building ID.
+
+    :param _building_height_dict:               Dictionary of building id to building height
+    :type _building_height_dict:                dict
+
+    :param _plan_area_dict:                     Dictionary of building id to the neighboring building areas.
+    :type _plan_area_dict:                      dict
+
+    :return:                                    Dictionary of building id to the height and plan area.
+
+    """
+
+    return {i: [_building_height_dict[i], _plan_area_dict[i]] for i in _plan_area_dict.keys()}
+
+
