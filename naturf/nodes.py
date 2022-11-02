@@ -409,3 +409,34 @@ def standard_deviation_building_heights(building_id: pd.Series,
                        Settings.neighbor_height_field: building_height_neighbor})
 
     return df.groupby(Settings.id_field)[Settings.neighbor_height_field].std().fillna(0)
+
+
+def average_direction_distance(building_id: pd.Series,
+                               orientation_to_neighbor: pd.Series,
+                               distance_to_neighbor_by_centroid: pd.Series) -> pd.Series:
+    """Calculate the average directional distances for each target building to its neighbors
+
+    :param building_id:                         Building ID field.
+    :type building_id:                          pd.Series
+
+    :param orientation_to_neighbor:             Either the east-west or north-south orientation of the target building
+                                                to its neighbors.
+    :type orientation_to_neighbor:              pd.Series
+
+    :param distance_to_neighbor_by_centroid:    Distance to neighbor from the target building using centroids.
+    :type distance_to_neighbor_by_centroid:     pd.Series
+
+    :return:                                    Series of average directional distances for each target building to its
+                                                neighbors.
+
+    """
+
+    df = pd.DataFrame({Settings.id_field: building_id,
+                       "orientation": orientation_to_neighbor,
+                       "distance": distance_to_neighbor_by_centroid})
+
+    return df.groupby([Settings.id_field, "orientation"])["distance"].mean().reset_index()
+
+
+
+
