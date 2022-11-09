@@ -11,7 +11,7 @@ from typing import List
 
 
 from naturf.driver import Model
-from naturf.nodes import angle_in_degrees_to_neighbor
+import naturf.nodes as nodes
 
 
 class TestNodes(unittest.TestCase):
@@ -70,7 +70,7 @@ class TestNodes(unittest.TestCase):
             ]
 
         for case in testcases:
-            actual = angle_in_degrees_to_neighbor(gpd.GeoSeries(case.target_input), gpd.GeoSeries(case.neighbor_input))
+            actual = nodes.angle_in_degrees_to_neighbor(gpd.GeoSeries(case.target_input), gpd.GeoSeries(case.neighbor_input))
             expected = pd.Series(case.expected)
             pd.testing.assert_series_equal(
                 expected,
@@ -78,6 +78,32 @@ class TestNodes(unittest.TestCase):
                 "failed test {} expected {}, actual {}".format(
                     case.name, expected, actual
                 ),
+            )
+
+    def test_orientation_to_neighbor(self):
+        """Test that the function `orientation_to_neighbor` returns either `east_west` or `north_south` correctly."""
+        @dataclass
+        class TestCase:
+            name: str
+            input: List[int]
+            expected: List[int]
+
+        east_west = "east_west"
+        north_south = "north_south"
+
+        testcases = [
+            TestCase(name="zero_degrees", input=[0.0, -0.0], expected=[east_west, east_west]),
+            TestCase(name="north_south", input=[90, 270], expected=[north_south, north_south]),
+            TestCase(name="east_west", input=[45, 135, 225, 315, 360], expected=[east_west, east_west, east_west, east_west, east_west]),
+            ]
+
+        for case in testcases:
+            actual = nodes.orientation_to_neighbor(pd.Series(case.input))
+            expected = pd.Series(case.expected)
+            pd.testing.assert_series_equal(
+                expected,
+                actual,
+                f"failed test {case.name} expected {expected}, actual {actual}"
             )
 
 
