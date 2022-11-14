@@ -159,7 +159,13 @@ where, *FAI* is frontal area index; *l* is the building wall length in m; *zh* i
 Complete Aspect Ratio (100)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ratio of building surface area and exposed ground area to the total building plan area. Because **naturf** does not include vegetation, this is the same as building surface area to plan area ratio. [Burian2003]_ Eq. 15
+The ratio of building surface area and exposed ground area to the total building plan area. [Burian2003]_ Eq. 15
+
+.. math::
+
+  CAR = \frac{BSA + (PA - TBA)}{PA}
+
+where, *BSA* is the building surface area in m\ :superscript:'2' \; *TBA* is the total area of the buildings within the current building plan area in m\ :superscript:'2' \ ; *PA* is the building plan area in m\ :superscript:'2' \ .
 
 Height-to-Width Ratio (101)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -168,8 +174,6 @@ The ratio of the building height to the street width. **naturf** generalizes thi
 
 Sky-View Factor (102)
 ~~~~~~~~~~~~~~~~~~~~~
-
-**Not yet implemented**
 
 The fraction of visible sky in a given area. [Dirksen2019]_ Eq. 1
 
