@@ -1066,7 +1066,8 @@ def parameters1(IMAGE_SIZE_X, IMAGE_SIZE_Y, layer2, ids, PIXEL_SIZE, height_fiel
                     bsa_total = sum(bsa_east) + sum(bsa_north) + sum(bsa_west) + sum(bsa_south) + builarea
                     bs2par = bsa_total / dilarea
                     bs2par_out.append(bs2par)
-                    car_out.append(bs2par)
+                    car = (bsa_total + (dilarea - newbarea[counter][1])) / dilarea
+                    car_out.append(car)
 
                 #  incremental arrays #
                 fad_out_inc.append(fad_out)
