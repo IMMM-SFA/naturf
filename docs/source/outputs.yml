@@ -261,11 +261,11 @@ macdonald_roughness_length:
 
 macdonald_displacement_height:
   equation_number: 23
-  # TODO: is there a name for the constant below (3.59)
+  # TODO: is there a name for the constant below (3.59) -> no, there's no name for it.
   formula: \text{building_height} \cdot (1 + \frac{1}{3.59^{\text{plan_area_density}}} \cdot (\text{plan_area_density} - 1))
   long_description: >
     Macdonald displacement height.
-  parameters: "23"
+  parameters: "117"
   reference: "Macdonald et al.1998"
   short_description: "Macdonald displacement height"
   units: m
