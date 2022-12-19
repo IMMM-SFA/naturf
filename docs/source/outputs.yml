@@ -160,6 +160,7 @@ complete_aspect_ratio:
 height_to_width_ratio:
   equation_number: 18
   # TODO: is this formula correct? The long_decscription makes it seem like its incorrect. 
+  # TODO: Discuss about description, current calculation method
   formula: \frac{\text{building_height}}{\text{street_width}}
   long_description: >
     The ratio of the building height to the street width. 
@@ -180,9 +181,10 @@ sky_view_factor:
   long_description: >
     For a point in the street canyon, the angle between 
     the building and the street
-  parameters: ""
+  parameters: "102"
   reference: "Dirksen et al.2019"
-  short_description: "The fraction of visible sky in a given area."
+  short_description: "For a point in the street canyon, the angle between 
+    the building and the street"
   # TODO: what should we list for no units
   units: frac
   values_100_meter_resolution: "0-1"
