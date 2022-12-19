@@ -90,6 +90,9 @@ standard_deviation_building_heights:
   formula: \sqrt{\frac{\sum{(bh_i-mbh)^2}}{n}}
   long_description: >
     The standard deviation of building heights for all buildings within the building plan area.
+    * bh = building height
+    * mbh = mean building height within the building plan area
+    * n = total number of buildings within the plan area
   parameters: "93"
   reference: "Burian et al.2003"
   short_description: "The standard deviation of building heights for all buildings within the building plan area."
