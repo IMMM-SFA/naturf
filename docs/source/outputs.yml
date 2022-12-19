@@ -76,6 +76,8 @@ mean_building_height:
   formula: \frac{bh_1+bh_2+...+bh_n}{n}
   long_description: >
     The average building height of all buildings within the building plan area.
+    * bh = building height for a given building
+    * n = total number of buildings within the plan area
   parameters: "92"
   reference: "Burian et al.2003"
   short_description: "The average building height of all buildings within the building plan area."
