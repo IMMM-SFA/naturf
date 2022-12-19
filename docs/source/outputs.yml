@@ -234,7 +234,7 @@ raupach_roughness_length:
 # TODO: better description
 raupach_displacement_height:
   equation_number: 8
-  formula: \text{building_height} \cdot (1 - (\frac{1 - \exp(-\sqrt(2 \text{raupach_displacement_height_constant} \cdot \text{frontal_area_index}))}{\sqrt(2 \text{raupach_displacement_height_constant} \cdot \text{frontal_area_index})}))
+  formula: \text{building_height} \cdot (1 - (\frac{1 - \exp(-\sqrt(2 \text{raupach_displacement_height_constant} \cdot \text{frontal_area_index}*2))}{\sqrt(2 \text{raupach_displacement_height_constant} \cdot \text{frontal_area_index}*2)}))
   long_description: >
     Raupach displacement height.
     * raupach_displacement_height_constant = 7.5
