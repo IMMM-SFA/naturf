@@ -126,6 +126,7 @@ frontal_area_index:
   equation_number: 12
   # TODO: do we need to specify that we're using building centroids to calculate distance or is that assumption mentioned elsewhere
   # TODO: `NATURF_Output_Documentation.pdf` says that the building_wall_length is MeanBreadthofBuilding, are these two vars different
+  # TODO: MeanBreadthofBuilding is the same thing as building_wall_length
   formula: \frac{\text{building_wall_length} \cdot \text{building_height}}{\text{average_alongwind_distance_between_building_centroids} \cdot \text{average_crosswind_distance_between_building_centroids}}
   long_description: >
     The ratio of the entire frontal area of a building to 
@@ -144,8 +145,7 @@ frontal_area_index:
 complete_aspect_ratio:
   equation_number:
   # TODO: formula varies depending on source
-  formula: \frac{\text{exposed_surface_area}}{\text{total_lot_area}}
-  # \frac{building_surface_area + (building_plan_area - total_buildings_area)}{building_plan_area}
+  formula: \frac{building_surface_area + (building_plan_area - total_buildings_area)}{building_plan_area}
   long_description: >
     The sum of the target building surface area and the 
     exposed ground area divided by the total plan area. 
