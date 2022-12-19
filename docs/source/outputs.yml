@@ -215,13 +215,15 @@ grimmond_oke_displacement_height:
 raupach_roughness_length:
   equation_number: 4
   # TODO: what is zh and lamba(lambda?)?
-  # TODO: double check formula: changed "^-1.5" to "^{-1.5}"
+  # TODO: double check formula: changed "^-0.5" to "^{-0.5}". This change is correct.
   formula: zh(1 - \text{raupach_displacement_height}) \cdot exp(-\text{von_karmans_constant}(\text{substrate_surface_drag_constant} + \text{roughness_element_drag_constant} \lamba)^{-0.5} - \text{roughness_sublayer_influence_function_constant}))
   long_description: >
     Raupach roughness length.
+    * zh = building height
     * von_karmans_constant = 0.4
     * substrate_surface_drag_constant = 0.003
     * roughness_element_drag_constant = 0.3
+    * lambda = frontal area index
     * roughness_sublayer_influence_function_constant = 0.193
   parameters: "105, 107, 109, 111"
   reference: "Raupach1994"
