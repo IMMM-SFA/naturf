@@ -111,7 +111,7 @@ Plan area density is the ratio of building footprint areas within the building p
 
 $PAD = \\frac{TBA}{PA}$
 
-where, *PAD* is the plan area density; *TBA* is the total area of the buildings within the current building plan area in m\ :superscript:'2' \ ; *PA* is the building plan area in m\ :superscript:'2' \ .
+where, *PAD* is the plan area density; *TBA* is the total area of the buildings within the current building plan area in $m^2$; *PA* is the building plan area in $m^2$.
 
 Rooftop Area Density (76-90)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -140,7 +140,7 @@ The average height of all buildings within the plan area weighted by the plan ar
 
 $AWMH = \\frac{\\Sigma{A_i zh_i}}{\\Sigma{A_i}}$
 
-where, *AWMH* is the area weighted mean height in m; *A*\ :subscript:'i' \ is the current building plan area in m\ :superscript:'2' \ ; *zh*\ :subscript:'i' \ is the current building height in m\ :superscript:'2' \ .
+where, *AWMH* is the area weighted mean height in m; $A_i$ is the current building plan area in $m^2$; $zh_i$ is the current building height in m.
 
 Building Surface Area to Plan Area Ratio (95)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -152,9 +152,7 @@ Frontal Area Index (96-99)
 
 Frontal area index is the ratio of the entire frontal area of a building to the building plan area. **naturf** calculates the frontal area index from the four cardinal directions. Because buildings often do not face a cardinal direction head on, **naturf** uses the average alongwind and crosswind distance from the current building centroid to all other building centroids for the building plan area. [Burian2003]_ Eq. 12
 
-.. math::
-
-  FAI = \frac{l * zh}{AW * CW}
+$FAI = \\frac{l * zh}{AW * CW}$
 
 where, *FAI* is frontal area index; *l* is the building wall length in m; *zh* is the building height in m; *AW* the average alongwind distance to other buildings in m; *CW* is the average crosswind distance to other buildings in m.
 
@@ -163,11 +161,9 @@ Complete Aspect Ratio (100)
 
 The ratio of building surface area and exposed ground area to the total building plan area. [Burian2003]_ Eq. 15
 
-.. math::
+$CAR = \\frac{BSA + (PA - TBA)}{PA}$
 
-  CAR = \frac{BSA + (PA - TBA)}{PA}
-
-where, *BSA* is the building surface area in m\ :superscript:'2' \; *TBA* is the total area of the buildings within the current building plan area in m\ :superscript:'2' \ ; *PA* is the building plan area in m\ :superscript:'2' \ .
+where, *BSA* is the building surface area in $m^2$; *TBA* is the total area of the buildings within the current building plan area in $m^2$; *PA* is the building plan area in $m^2$.
 
 Height-to-Width Ratio (101)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -179,9 +175,7 @@ Sky-View Factor (102)
 
 The fraction of visible sky in a given area. [Dirksen2019]_ Eq. 1
 
-.. math::
-
-  SVF = cos(arctan(\frac{H}{0.5W}))
+$SVF = cos(arctan(\\frac{H}{0.5W}))$
 
 where, *SVF* is the sky-view factor; *H* is the building height in m; *W* is the distance between buildings in m.
 
@@ -190,9 +184,7 @@ Grimmond & Oke Roughness Length (103)
 
 [GrimmondOke1999]_ Eq. 2
 
-.. math::
-
-  GORL = 0.1 * zh
+$GORL = 0.1 \\cdot zh$
 
 where, *GORL* is Grimmond & Oke rougness length in m; *zh* is the building height in m.
 
@@ -201,9 +193,7 @@ Grimmond & Oke Displacement Height (104)
 
 [GrimmondOke1999]_ Eq. 1
 
-.. math::
-
-  GODH = 0.67 * zh
+$GODH = 0.67 \\cdot zh$
 
 where, *GODH* is Grimmond & Oke displacement height in m; *zh* is building height in m.
 
@@ -213,11 +203,9 @@ Raupach Roughness Length (105, 107, 109, 111)
 
 [Raupach1994]_ Eq. 4
 
-.. math::
+$RRL = zh \\cdot (1 - RDH) \\cdot exp(-\\kappa \\cdot (C_{S} + C_{R} \\cdot \\lambda)^{-0.5} - \\Psi_{h}))$
 
-  RRL = zh * (1 - RDH) * exp(-\kappa * (C_{S} + C_{R} * \lamba)^-0.5 - \Psi_{h}))
-
-where, *RRL* is the Raupach roughness length in m; *RDH* is the Raupach displacement height in m; *\kappa* is von Kármán's constant = 0.4; *C*\ :subscript:'S' \ is the substrate-surface drag coefficient = 0.003; *C*\ :subscript:'R' \ is the roughness-element drag coefficient = 0.3; *\Psi*\ :subscript:'h' \ is the roughness-sublayer influence function = 0.193.
+where, *RRL* is the Raupach roughness length in m; *RDH* is the Raupach displacement height in m; $\\kappa$ is von Kármán's constant = 0.4; $C_S$ is the substrate-surface drag coefficient = 0.003; $C_R$ is the roughness-element drag coefficient = 0.3; $\\Psi_h$ is the roughness-sublayer influence function = 0.193.
 
 
 Raupach Displacment Height (106, 108, 110, 112)
@@ -225,33 +213,27 @@ Raupach Displacment Height (106, 108, 110, 112)
 
 [Raupach1994]_ Eq. 8
 
-.. math::
+$RDH = zh \\cdot (1 - (\\frac{1 - \\exp(-\\sqrt(c_{d1} \\cdot \\Lambda))}{\\sqrt(c_{d1} \\cdot \\Lambda)}))
 
-  RDH = zh * (1 - (\frac{1 - \exp(-\sqrt(c_{d1} * \Lambda))}{\sqrt(c_{d1} * \Lambda)}))
-
-where, *RDH* is the Raupach displacement height in m; *c*\ :subscript:'d1' \ is a constant = 7.5; *\Lambda* is frontal area index times 2.
+where, *RDH* is the Raupach displacement height in m; $c_{d1}$ is a constant = 7.5; $\\Lambda$ is frontal area index times 2.
 
 Macdonald et al. Roughness Length (113-116)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [Macdonald1998]_ Eq. 22
 
-.. math::
+$MRL = zh \\cdot (1 - RDH)\\exp(-(0.5\\frac{C_{D}}{\\kappa^2}(1 - RDH)\\frac{A_{f}}{A_{d}})^{-0.5})$
 
-  MRL = zh * (1 - RDH)\exp(-(0.5\frac{C_{D}}{\kappa^2}(1 - RDH)\frac{A_{f}}{A_{d}})^-0.5)
-
-where, *MRL* is the Macdonald roughness length in m; *zh* is the building height in m; *RDH* is the Raupach displacement height in m; *C*\ :subscript:'D' \ is the obstacle drag coefficient = 1.12; *\kappa* is von Kármán's constant = 0.4; *A*\ :subscript:'f' \ is the frontal area of the building in m^2; *A*\ :subscript:'d' \ is the total surface area of the buildings in the plan area divided by the number of buildings in m\ :superscript:'2' \ .
+where, *MRL* is the Macdonald roughness length in m; *zh* is the building height in m; *RDH* is the Raupach displacement height in m; $C_D$ is the obstacle drag coefficient = 1.12; $\\kappa$ is von Kármán's constant = 0.4; $A_f$ is the frontal area of the building in m^2; $A_d$ is the total surface area of the buildings in the plan area divided by the number of buildings in $m^2$.
 
 Macdonald et al. Displacement Height (117)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [Macdonald1998]_ Eq. 23
 
-.. math::
+$MDH = zh \\cdot (1 + \\frac{1}{A^\\lambda} \\cdot (\\lambda - 1))$
 
-    MDH = zh * (1 + \frac{1}{A^\lambda} * (\lambda - 1))
-
-where, *MDH* is the Macdonald displacement height in m; *zh* is the building height in; *A* is a constant = 3.59; *\lambda* is the plan area density. 
+where, *MDH* is the Macdonald displacement height in m; *zh* is the building height in; *A* is a constant = 3.59; $\\lambda$ is the plan area density. 
 
 Vertical Distribution of Building Heights (118-132)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
