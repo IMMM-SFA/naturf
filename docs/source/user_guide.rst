@@ -94,24 +94,7 @@ Frontal Area Density (1-60)
 
 Frontal area density is the frontal area of a building at a certain height increment divided by the building plan area. **naturf** calculates frontal area density from the four cardinal directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters. Parameters 1-15 represent the north, paramters 16-30 represent the west, parameters 31-45 represent the south, and parameters 46-60 represent the east. [Burian2003]_ Eq. 14
 
-.. math::
-
-    $FAD = \\frac{FA}{PA}$
-
-what 
-when $FAD = \\frac{FA}{PA}$
-
 $FAD = \\frac{FA}{PA}$
-
-`$FAD = \\frac{FA}{PA}$`
-
-
-.. code-block::
-
-  $FAD = \\frac{FA}{PA}$
-
-When $a \\ne 0$, there are two solutions to $(ax^2 + bx + c = 0)$ and they are 
-$$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $$
 
 where, *FAD* is Frontal area density; *FA* is the frontal area of the wall from the current direction and height level in m\ :superscript:'2' \ ; *PA* is the building plan area in m\ :superscript:'2' \ .
 
