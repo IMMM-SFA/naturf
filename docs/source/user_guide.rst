@@ -52,7 +52,6 @@ Expression:
 LetToNum(!Columns!)
 
 .. Code Block:: python
-
   def LetToNum(feat):
       letters = list(feat)
       if len(letters) == 1:
@@ -65,8 +64,9 @@ LetToNum(!Columns!)
 
 Then, calculate the X indices much the same as the Y indices.
 
-Second_Index_X = 32 * !Let_To_Num!
-First_Index_X = !Second_Index_X! - 31
+.. Code Block:: python
+  Second_Index_X = 32 * !Let_To_Num!
+  First_Index_X = !Second_Index_X! - 31
 
 The attribute table should then be exported to an Excel file using the "Table to Table" tool, and the rest of the indexing will be done in Excel.
 
