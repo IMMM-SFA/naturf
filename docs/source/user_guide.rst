@@ -38,20 +38,26 @@ After the tessellation is created, the next step is to use the "Calculate Field"
 
 First, split the IDs into fields representing their columns and rows:
 
-Columns = !GRID_ID!.split("-")[0]
-Rows = !GRID_ID!.split("-")[1] 
+.. code-block::
+
+  Columns = !GRID_ID!.split("-")[0]
+  Rows = !GRID_ID!.split("-")[1] 
 
 Next, assign the y-indices (Note: WRF requires the indexing to begin from the bottom left corner of the dataset):
 
-Second_Index_Y = 32 * ((Number of rows) - !Rows! + 1)
-First_Index_Y = !Second_Index_Y! - 31
+.. code-block::
+
+  Second_Index_Y = 32 * ((Number of rows) - !Rows! + 1)
+  First_Index_Y = !Second_Index_Y! - 31
 
 The x-indices require an additional step. First, calculate the Let_To_Num field by turning the letters in the Columns field into numbers using the code below, which can be adjusted to accomodated as many columns as needed:
 
-Expression:
-LetToNum(!Columns!)
+.. code-block::
 
-.. code-block:: python
+  Expression:
+  LetToNum(!Columns!)
+
+.. code-block::
 
   def LetToNum(feat):
       letters = list(feat)
@@ -65,7 +71,7 @@ LetToNum(!Columns!)
 
 Then, calculate the X indices much the same as the Y indices.
 
-.. code-block:: python
+.. code-block::
 
   Second_Index_X = 32 * !Let_To_Num!
   First_Index_X = !Second_Index_X! - 31
@@ -75,7 +81,7 @@ The attribute table should then be exported to an Excel file using the "Table to
 Create CSV file
 ^^^^^^^^^^^^^^^
 
-Now that the tessellation attribute table is an Excel file, all columns can be deleted except for the grid ID column and the indices columns. In new columns, use =TEXT(cell, "00000") to add leading zeroes to the indices (at least 5 digits are required, more can be added if necessary). In another column, concatenate the indices using =CONCAT(cell1,"-",cell2,".",cell3,"-",cell4). Copy the GRID_ID and concatenated index numbers(important: with headers) into a separate spreadsheet and save as a CSV. This CSV will allow **naturf** to assign the correct index name to the corresponsing binary file.
+Now that the tessellation attribute table is an Excel file, all columns can be deleted except for the grid ID column and the indices columns. In new columns, use `=TEXT(cell, "00000")` to add leading zeroes to the indices (at least 5 digits are required, more can be added if necessary). In another column, concatenate the indices using `=CONCAT(cell1,"-",cell2,".",cell3,"-",cell4)`. Copy the `GRID_ID` and concatenated index numbers(important: with headers) into a separate spreadsheet and save as a CSV. This CSV will allow **naturf** to assign the correct index name to the corresponsing binary file.
 
 Spatial join and split by attribute
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
