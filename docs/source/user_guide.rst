@@ -98,6 +98,7 @@ Frontal area density is the frontal area of a building at a certain height incre
 
     $FAD = \\frac{FA}{PA}$
 
+what 
 $ FAD = \\frac{FA}{PA} $
 
 When $a \\ne 0$, there are two solutions to $(ax^2 + bx + c = 0)$ and they are 
