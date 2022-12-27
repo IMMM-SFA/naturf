@@ -51,7 +51,12 @@ The x-indices require an additional step. First, calculate the Let_To_Num field 
 Expression:
 LetToNum(!Columns!)
 
-.. Code Block:: python
+.. code-block:: python
+  import cerf
+  sample_config = cerf.load_sample_config(yr=2010)
+
+
+.. code-block:: python
   def LetToNum(feat):
       letters = list(feat)
       if len(letters) == 1:
