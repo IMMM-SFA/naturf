@@ -53,12 +53,6 @@ LetToNum(!Columns!)
 
 .. code-block:: python
 
-  import cerf
-
-  sample_config = cerf.load_sample_config(yr=2010)
-
-.. code-block:: python
-
   def LetToNum(feat):
       letters = list(feat)
       if len(letters) == 1:
@@ -71,7 +65,8 @@ LetToNum(!Columns!)
 
 Then, calculate the X indices much the same as the Y indices.
 
-.. Code Block:: python
+.. code-block:: python
+
   Second_Index_X = 32 * !Let_To_Num!
   First_Index_X = !Second_Index_X! - 31
 
@@ -101,7 +96,7 @@ Frontal area density is the frontal area of a building at a certain height incre
 
 .. math::
 
-    FAD = \frac{FA}{PA}
+    $FAD = \frac{FA}{PA}$
 
 where, *FAD* is Frontal area density; *FA* is the frontal area of the wall from the current direction and height level in m\ :superscript:'2' \ ; *PA* is the building plan area in m\ :superscript:'2' \ .
 
