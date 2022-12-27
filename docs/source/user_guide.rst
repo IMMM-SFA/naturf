@@ -100,6 +100,9 @@ Frontal area density is the frontal area of a building at a certain height incre
 
 $ FAD = \\frac{FA}{PA} $
 
+When $a \\ne 0$, there are two solutions to $(ax^2 + bx + c = 0)$ and they are 
+$$ x = {-b \pm \sqrt{b^2-4ac} \over 2a} $$
+
 where, *FAD* is Frontal area density; *FA* is the frontal area of the wall from the current direction and height level in m\ :superscript:'2' \ ; *PA* is the building plan area in m\ :superscript:'2' \ .
 
 Plan Area Density (61-75)
