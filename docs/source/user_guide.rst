@@ -31,9 +31,10 @@ Splitting the building shapefile into tiles
 Generate a tessellation
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-The first step to splitting the input building shapefile into tiles is to load the shapefile into any GIS software (ArcPro, ArcMap, QGIS, etc.) and run the `Generate Tessellation_ tool (https://pro.arcgis.com/en/pro-app/2.8/tool-reference/data-management/generatetesellation.htm for ArcPro/ArcMap; https://docs.qgis.org/2.6/en/docs/user_manual/processing_algs/qgis/vector_creation_tools/creategrid.html for QGIS) with the desired tile size. After the tessellation is created, note the center latitude and longitude in decimal degrees as well as the coordinates of the bottom left corner of the tessellation. All of those coordinates will be needed to set the projection of the output data and to tell WRF where to start placing the data.
+The first step to splitting the input building shapefile into tiles is to load the shapefile into any GIS software (ArcPro, ArcMap, QGIS, etc.) and run the `Generate Tessellation`_ tool for ArcPro/ArcMap; `Create Grid`_ for QGIS) with the desired tile size. After the tessellation is created, note the center latitude and longitude in decimal degrees as well as the coordinates of the bottom left corner of the tessellation. All of those coordinates will be needed to set the projection of the output data and to tell WRF where to start placing the data.
 
 .. _Generate Tessellation: https://pro.arcgis.com/en/pro-app/2.8/tool-reference/data-management/generatetesellation.htm
+.. _Create Grid: https://docs.qgis.org/2.6/en/docs/user_manual/processing_algs/qgis/vector_creation_tools/creategrid.html
 
 Assign index numbers
 ^^^^^^^^^^^^^^^^^^^^
@@ -54,7 +55,7 @@ Next, assign the y-indices (Note: WRF requires the indexing to begin from the bo
   Second_Index_Y = 32 * ((Number of rows) - !Rows! + 1)
   First_Index_Y = !Second_Index_Y! - 31
 
-The x-indices require an additional step. First, calculate the Let_To_Num field by turning the letters in the Columns field into numbers using the code below, which can be adjusted to accomodated as many columns as needed:
+The x-indices require an additional step. First, calculate the ``Let_To_Num`` field by turning the letters in the Columns field into numbers using the code below, which can be adjusted to accomodated as many columns as needed:
 
 .. code-block::
 
