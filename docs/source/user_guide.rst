@@ -58,15 +58,24 @@ LetToNum(!Columns!)
   sample_config = cerf.load_sample_config(yr=2010)
 
 .. code-block:: python
-    def LetToNum(feat):
-        letters = list(feat)
-        if len(letters) == 1:
-            number = ord(letters[0]) - 64
-        elif letters[0] == 'A':
-            number = 26 + ord(letters[1]) - 64
-        else:
-            number = 52 + ord(letters[1]) - 64
-        return number 
+
+  def LetToNum(feat):
+
+      letters = list(feat)
+
+      if len(letters) == 1:
+
+          number = ord(letters[0]) - 64
+
+      elif letters[0] == 'A':
+
+          number = 26 + ord(letters[1]) - 64
+
+      else:
+
+          number = 52 + ord(letters[1]) - 64
+          
+      return number 
 
 Then, calculate the X indices much the same as the Y indices.
 
