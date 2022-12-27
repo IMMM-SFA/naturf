@@ -81,7 +81,7 @@ The attribute table should then be exported to an Excel file using the "Table to
 Create CSV file
 ^^^^^^^^^^^^^^^
 
-Now that the tessellation attribute table is an Excel file, all columns can be deleted except for the grid ID column and the indices columns. In new columns, use `=TEXT(cell, "00000")` to add leading zeroes to the indices (at least 5 digits are required, more can be added if necessary). In another column, concatenate the indices using `=CONCAT(cell1,"-",cell2,".",cell3,"-",cell4)`. Copy the `GRID_ID` and concatenated index numbers(important: with headers) into a separate spreadsheet and save as a CSV. This CSV will allow **naturf** to assign the correct index name to the corresponsing binary file.
+Now that the tessellation attribute table is an Excel file, all columns can be deleted except for the grid ID column and the indices columns. In new columns, use ``=TEXT(cell, "00000")`` to add leading zeroes to the indices (at least 5 digits are required, more can be added if necessary). In another column, concatenate the indices using ``=CONCAT(cell1,"-",cell2,".",cell3,"-",cell4)``. Copy the ``GRID_ID`` and concatenated index numbers(important: with headers) into a separate spreadsheet and save as a CSV. This CSV will allow **naturf** to assign the correct index name to the corresponsing binary file.
 
 Spatial join and split by attribute
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -109,9 +109,7 @@ Plan Area Density (61-75)
 
 Plan area density is the ratio of building footprint areas within the building plan area to the entire building plan area, calculated in 5 meter increments from ground level to 75 meters. **naturf** projects the building footprint vertically to the building height, meaning plan area density is the same at every vertical level. [Burian2003]_ Eq. 7
 
-.. math::
-
-    PAD = \frac{TBA}{PA}
+$PAD = \\frac{TBA}{PA}$
 
 where, *PAD* is the plan area density; *TBA* is the total area of the buildings within the current building plan area in m\ :superscript:'2' \ ; *PA* is the building plan area in m\ :superscript:'2' \ .
 
@@ -140,9 +138,7 @@ Area Weighted Mean of Building Heights (94)
 
 The average height of all buildings within the plan area weighted by the plan area. [Burian2003]_ Eq. 3
 
-.. math::
-
-  AWMH = \frac{\Sigma{A_i zh_i}}{\Sigma{A_i}}
+$AWMH = \\frac{\\Sigma{A_i zh_i}}{\\Sigma{A_i}}$
 
 where, *AWMH* is the area weighted mean height in m; *A*\ :subscript:'i' \ is the current building plan area in m\ :superscript:'2' \ ; *zh*\ :subscript:'i' \ is the current building height in m\ :superscript:'2' \ .
 
