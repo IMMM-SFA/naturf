@@ -315,6 +315,13 @@ def _plan_area_dict(building_id: pd.Series,
                     building_area_neighbor: pd.Series) -> dict:
     """Calculate the total area of all buildings within the plan area.
 
+    :param building_id:                         Building ID field.
+    :type building_id:                          pd.Series
+
+    :param building_area_neighbor:              Building area neighbor field.
+    :type building_area_neighbor:               pd.Series
+
+    :return:                                    Dictionary of building id to the neighboring building areas
 
     """
 
@@ -342,4 +349,115 @@ def _building_height_dict(building_id: pd.Series,
                        Settings.height_field: building_height})
 
     return df.groupby(Settings.id_field)[Settings.height_field].max().to_dict()
+
+
+def _footprint_building_areas(_building_height_dict: dict,
+                              _plan_area_dict: dict) -> dict:
+    """Create a dictionary of the height and plan_area to a dictionary where the key is the
+    target building ID.
+
+    :param _building_height_dict:               Dictionary of building id to building height
+    :type _building_height_dict:                dict
+
+    :param _plan_area_dict:                     Dictionary of building id to the neighboring building areas.
+    :type _plan_area_dict:                      dict
+
+    :return:                                    Dictionary of building id to the height and plan area.
+
+    """
+
+    return {i: [_building_height_dict[i], _plan_area_dict[i]] for i in _plan_area_dict.keys()}
+
+
+def average_building_heights(building_id: pd.Series,
+                             building_height_neighbor: pd.Series) -> pd.Series:
+    """Average building heights for each target building when considering themselves
+    and those that are within their buffered area.
+
+    :param building_id:                         Building ID field.
+    :type building_id:                          pd.Series
+
+    :param building_height_neighbor:            Building height field for neighbors
+    :type building_height_neighbor:             pd.Series
+
+    :return:                                    Series of building heights for each target building in the buffered area
+
+    """
+
+    df = pd.DataFrame({Settings.id_field: building_id,
+                       Settings.neighbor_height_field: building_height_neighbor})
+
+    return df.groupby(Settings.id_field)[Settings.neighbor_height_field].mean().fillna(0)
+
+
+def standard_deviation_building_heights(building_id: pd.Series,
+                                        building_height_neighbor: pd.Series) -> pd.Series:
+    """Standard deviation of building heights for each target building when considering themselves
+    and those that are within their buffered area.
+
+    :param building_id:                         Building ID field.
+    :type building_id:                          pd.Series
+
+    :param building_height_neighbor:            Building height field for neighbors
+    :type building_height_neighbor:             pd.Series
+
+    :return:                                    Series of building heights for each target building in the buffered area
+
+    """
+
+    df = pd.DataFrame({Settings.id_field: building_id,
+                       Settings.neighbor_height_field: building_height_neighbor})
+
+    return df.groupby(Settings.id_field)[Settings.neighbor_height_field].std().fillna(0)
+
+
+def average_direction_distance(building_id: pd.Series,
+                               orientation_to_neighbor: pd.Series,
+                               distance_to_neighbor_by_centroid: pd.Series) -> pd.Series:
+    """Calculate the average directional distances for each target building to its neighbors
+
+    :param building_id:                         Building ID field.
+    :type building_id:                          pd.Series
+
+    :param orientation_to_neighbor:             Either the east-west or north-south orientation of the target building
+                                                to its neighbors.
+    :type orientation_to_neighbor:              pd.Series
+
+    :param distance_to_neighbor_by_centroid:    Distance to neighbor from the target building using centroids.
+    :type distance_to_neighbor_by_centroid:     pd.Series
+
+    :return:                                    Series of average directional distances for each target building to its
+                                                neighbors.
+
+    """
+
+    df = pd.DataFrame({Settings.id_field: building_id,
+                       "orientation": orientation_to_neighbor,
+                       "distance": distance_to_neighbor_by_centroid})
+
+    df = df.groupby([Settings.id_field, "orientation"])["distance"].mean().reset_index()
+
+    # exclude the target building to target building distance and direction (would be == 0)
+    df = df.loc[df["distance"] > 0]
+
+    return df
+
+
+def _average_north_south_building_distances(building_id: pd.Series) -> dict:
+    """Create a dictionary with an initialization value of 0 present for each building id.
+
+    :param building_id:                         Building ID field.
+    :type building_id:                          pd.Series
+
+    :return:                                    Dictionary of with an initialization value of 0 present for each
+                                                building id.
+
+    """
+
+    return {i: 0 for i in building_id.unique()}
+
+
+
+
+
 

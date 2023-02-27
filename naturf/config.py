@@ -34,7 +34,7 @@ class Settings:
     ZXCV_FACTOR = 3.5
 
     data_id_field_name = "OBJECTID"
-    data_height_field_name = "Max_HOUSE_"
+    data_height_field_name = "HEIGHT"
     data_geometry_field_name = "geometry"
 
     id_field = "building_id"
