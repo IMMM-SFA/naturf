@@ -86,6 +86,14 @@ Fundamental equations and concepts
 
 The following are the urban parameters calculated by **naturf**.
 
+Concepts/Definitions
+~~~~~~~~~~~~~~~~~~~~
+
+Plan Area
+^^^^^^^^^
+
+When calculating parameters, **naturf** creates a buffer around each target building called the plan (or dilated) area. The plan area identifies neighbors to the target building that are important for the calculation of parameters. For the parameter definitions below, *total plan area* refers to the area of that buffer around the target building, while *building plan area* refers to the sum of building footprints within the *total plan area*. *Total plan area* should always be a larger values than the *building plan area*.
+
 
 Frontal Area Density (1-60)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
