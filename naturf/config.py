@@ -29,7 +29,9 @@ class Settings:
     RRL_THRESHOLD_MIN = 0
     SMALL_DECIMAL = 0.0000000000000000000000000000001
     SOUTHEAST_DEGREES = 315
+    SOUTHEAST_DEGREES_ARCTAN = -45
     SOUTHWEST_DEGREES = 225
+    SOUTHWEST_DEGREES_ARCTAN = -135
     START_OF_CIRCLE_DEGREES = 0
     ZXCV_FACTOR = 3.5
 
@@ -65,4 +67,11 @@ class Settings:
                          target_geometry_field,
                          neighbor_geometry_field]
 
+    wall_angle = "wall_angle"
+    wall_direction = "wall_direction"
+    wall_length = "wall_length"
+    north = "north"
+    east = "east"
+    south = "south"
+    west = "west"
 

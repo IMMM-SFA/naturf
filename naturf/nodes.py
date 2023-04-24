@@ -1,6 +1,6 @@
+import geopandas as gpd
 import numpy as np
 import pandas as pd
-import geopandas as gpd
 from pyproj.crs import CRS
 from hamilton.function_modifiers import extract_columns, tag
 
@@ -457,7 +457,50 @@ def _average_north_south_building_distances(building_id: pd.Series) -> dict:
     return {i: 0 for i in building_id.unique()}
 
 
+def wall_angle_direction_length(geometry: gpd.GeoSeries) -> pd.DataFrame:
+    """Calculate the wall angle, direction, and length for each building in a GeoPandas GeoSeries.
 
+    :param geometry:                    Geometry for a series of buildings.
+    :type geometry:                     gpd.GeoSeries
 
+    :return:                            Pandas DataFrame with wall angle, direction, and length for each building.
 
+    """
+    
+    wall_angle, wall_direction, wall_length = [[] for x in range(geometry.size)], [[] for x in range(geometry.size)], [[] for x in range(geometry.size)]
 
+    for building in range(geometry.size):
+        points_in_polygon = geometry.values[building].exterior.xy
+
+        # The origin point is the same as the end point.
+        n_sides = len(points_in_polygon[0]) - 1
+
+        for index, item in enumerate(zip(points_in_polygon[0], points_in_polygon[1])):
+
+            x, y = item
+
+            # Store the first set of coordinates.
+            if index == 0:
+                x1, y1 = x, y
+
+            else:
+                x2, y2 = x, y
+
+                wall_angle[building].append(np.degrees(np.arctan2(y2 - y1, x2 - x1)))
+
+                # For each direction, the start degree (from counterclockwise) is included (<=) and the end degree is not included (<).
+                if NORTHEAST_DEGREES <= wall_angle[building][index-1] < NORTHWEST_DEGREES:
+                    wall_direction[building].append(Settings.west)
+                elif SOUTHEAST_DEGREES_ARCTAN <= wall_angle[building][index-1] < NORTHEAST_DEGREES:
+                    wall_direction[building].append(Settings.north)
+                elif SOUTHWEST_DEGREES_ARCTAN <= wall_angle[building][index-1] < SOUTHEAST_DEGREES_ARCTAN:
+                    wall_direction[building].append(Settings.east)
+                else:
+                    wall_direction[building].append(Settings.south)
+
+                wall_length[building].append(np.sqrt((x2 - x1)**2 + (y2 - y1)**2))
+
+                # Reset start coordinates.
+                x1, y1 = x, y
+
+    return pd.concat([pd.Series(wall_angle, name=Settings.wall_angle), pd.Series(wall_direction, name=Settings.wall_direction), pd.Series(wall_length, name=Settings.wall_length)], axis=1)
