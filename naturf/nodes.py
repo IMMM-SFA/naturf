@@ -489,11 +489,11 @@ def wall_angle_direction_length(geometry: gpd.GeoSeries) -> pd.DataFrame:
                 wall_angle[building].append(np.degrees(np.arctan2(y2 - y1, x2 - x1)))
 
                 # For each direction, the start degree (from counterclockwise) is included (<=) and the end degree is not included (<).
-                if NORTHEAST_DEGREES <= wall_angle[building][index-1] < NORTHWEST_DEGREES:
+                if Settings.NORTHEAST_DEGREES <= wall_angle[building][index-1] < Settings.NORTHWEST_DEGREES:
                     wall_direction[building].append(Settings.west)
-                elif SOUTHEAST_DEGREES_ARCTAN <= wall_angle[building][index-1] < NORTHEAST_DEGREES:
+                elif Settings.SOUTHEAST_DEGREES_ARCTAN <= wall_angle[building][index-1] < Settings.NORTHEAST_DEGREES:
                     wall_direction[building].append(Settings.north)
-                elif SOUTHWEST_DEGREES_ARCTAN <= wall_angle[building][index-1] < SOUTHEAST_DEGREES_ARCTAN:
+                elif Settings.SOUTHWEST_DEGREES_ARCTAN <= wall_angle[building][index-1] < SSettings.OUTHEAST_DEGREES_ARCTAN:
                     wall_direction[building].append(Settings.east)
                 else:
                     wall_direction[building].append(Settings.south)
