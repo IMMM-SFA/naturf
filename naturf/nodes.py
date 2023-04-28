@@ -493,7 +493,7 @@ def wall_angle_direction_length(geometry: gpd.GeoSeries) -> pd.DataFrame:
                     wall_direction[building].append(Settings.west)
                 elif Settings.SOUTHEAST_DEGREES_ARCTAN <= wall_angle[building][index-1] < Settings.NORTHEAST_DEGREES:
                     wall_direction[building].append(Settings.north)
-                elif Settings.SOUTHWEST_DEGREES_ARCTAN <= wall_angle[building][index-1] < Settings.OUTHEAST_DEGREES_ARCTAN:
+                elif Settings.SOUTHWEST_DEGREES_ARCTAN <= wall_angle[building][index-1] < Settings.SOUTHEAST_DEGREES_ARCTAN:
                     wall_direction[building].append(Settings.east)
                 else:
                     wall_direction[building].append(Settings.south)
