@@ -362,6 +362,29 @@ def get_neighboring_buildings_df(building_id: pd.Series,
 
     return xdf
 
+def grimmond_oke_displacement_height(building_height: pd.Series) -> pd.Series:
+    """Calculate the Grimmond & Oke displacement height for each building
+    
+    :param building_height:                     Building height field.
+    :type building_height:                      pd.Series
+    
+    :return:                                    pd.Series
+    
+    """
+    
+    return building_height * Settings.DISPLACEMENT_HEIGHT_FACTOR
+
+def grimmond_oke_roughness_length(building_height: pd.Series) -> pd.Series:
+    """Calculate the Grimmond & Oke roughness length for each building
+    
+    :param building_height:                     Building height field.
+    :type building_height:                      pd.Series
+    
+    :return:                                    pd.Series
+    
+    """
+    
+    return building_height * Settings.ROUGHNESS_LENGTH_FACTOR
 
 def input_shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
     """Import shapefile to GeoDataFrame using only desired columns.
@@ -517,28 +540,4 @@ def wall_angle_direction_length(geometry: gpd.GeoSeries) -> pd.DataFrame:
                 x1, y1 = x, y
 
     return pd.concat([pd.Series(wall_angle, name=Settings.wall_angle), pd.Series(wall_direction, name=Settings.wall_direction), pd.Series(wall_length, name=Settings.wall_length)], axis=1)
-
-def grimmond_oke_roughness_length(building_height: pd.Series) -> pd.Series:
-    """Calculate the Grimmond & Oke roughness length for each building
-    
-    :param building_height:                     Building height field.
-    :type building_height:                      pd.Series
-    
-    :return:                                    pd.Series
-    
-    """
-    
-    return building_height * Settings.ROUGHNESS_LENGTH_FACTOR
-
-def grimmond_oke_displacement_height(building_height: pd.Series) -> pd.Series:
-    """Calculate the Grimmond & Oke displacement height for each building
-    
-    :param building_height:                     Building height field.
-    :type building_height:                      pd.Series
-    
-    :return:                                    pd.Series
-    
-    """
-    
-    return building_height * Settings.DISPLACEMENT_HEIGHT_FACTOR
 
