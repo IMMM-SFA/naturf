@@ -504,3 +504,16 @@ def wall_angle_direction_length(geometry: gpd.GeoSeries) -> pd.DataFrame:
                 x1, y1 = x, y
 
     return pd.concat([pd.Series(wall_angle, name=Settings.wall_angle), pd.Series(wall_direction, name=Settings.wall_direction), pd.Series(wall_length, name=Settings.wall_length)], axis=1)
+
+
+def total_plan_area(geometry: gpd.GeoSeries) -> pd.DataFrame:
+    """Calculate the total plan area for each building in a GeoPandas GeoSeries.
+
+    :param geometry:                    Geometry for a series of buildings.
+    :type geometry:                     gpd.GeoSeries
+
+    :return:                            Pandas DataFrame with total plan area for each building.
+
+    """
+    
+    return naturf.nodes.building_buffered(gdf.geometry).area
