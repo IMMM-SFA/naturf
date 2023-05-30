@@ -105,6 +105,50 @@ class TestNodes(unittest.TestCase):
                 actual,
                 f"failed test {case.name} expected {expected}, actual {actual}"
             )
+    
+    def test_wall_angle_direction_length(self):
+    """Test that the function wall_angle_direction_length returns the correct angle, direction, and length."""
+    
+    polyext = [[0,1], [1,1], [1,0], [0,0], [0,1]]
+    polyint = [[0.25, 0.25], [0.25, 0.75], [0.75, 0.75], [0.75, 0.25]]
+    
+    @dataclass
+    class Testcase:
+        name: str
+        input: List[Polygon]
+        expected: List[int]
+    
+    testcases = [
+        Testcase(name="square", input=[Polygon(polyext)], expected=[pd.concat(pd.Series([0.0, -90.0, 180.0, 90.0], name="wall_angle"),
+                                                                              pd.Series([north, east, south, west], name="wall_direction"),
+                                                                              pd.Series([1.0, 1.0, 1.0, 1.0], name="wall_length"))]),
+        Testcase(name="square with inner ring", input=[Polygon(polyext,[polyint], expected)], expected=[pd.concat(pd.Series([0.0, -90.0, 180.0, 90.0], name="wall_angle"),
+                                                                                                                   pd.Series([north, east, south, west], name="wall_direction"),
+                                                                                                                   pd.Series([1.0, 1.0, 1.0, 1.0], name="wall_length"))]),
+        Testcase(name="45 degree triangle", input=[Polygon([[0,0], [np.sqrt(2)/2,np.sqrt(2)/2], [0, np.sqrt(2)/2]])], expected=[pd.concat(pd.Series([45.0, -90.0, 180.0], name="wall_angle"),
+                                                                                                       pd.Series([west, east, south], name="wall_direction"),
+                                                                                                       pd.Series([1.0, 0.7071067811865476, 0.7071067811865476], name="wall_length"))]),
+        Testcase(name="135 degree triangle", input=[Polygon([[0,0], [-np.sqrt(2)/2,np.sqrt(2)/2], [0, np.sqrt(2)/2]])], expected=[pd.concat(pd.Series([135.0, 0.0, -90.0], name="wall_angle"),
+                                                                                                       pd.Series([south, north, east], name="wall_direction"),
+                                                                                                       pd.Series([1.0, 0.7071067811865476, 0.7071067811865476], name="wall_length"))]),
+        Testcase(name="225 degree triangle", input=[Polygon([[0,0], [-np.sqrt(2)/2,-np.sqrt(2)/2], [-np.sqrt(2)/2, 0]])], expected=[pd.concat(pd.Series([-135.0, 90.0, 0.0], name="wall_angle"),
+                                                                                                       pd.Series([east, west, north], name="wall_direction"),
+                                                                                                       pd.Series([1.0, 0.7071067811865476, 0.7071067811865476], name="wall_length"))]),
+        Testcase(name="325 degree triangle", input=[Polygon([[0,0], [np.sqrt(2)/2,-np.sqrt(2)/2], [0, -np.sqrt(2)/2]])], expected=[pd.concat(pd.Series([-45.0, 180.0, 90.0], name="wall_angle"),
+                                                                                                       pd.Series([north, south, west], name="wall_direction"),
+                                                                                                       pd.Series([1.0, 0.7071067811865476, 0.7071067811865476], name="wall_length"))]),
+    ]
+    
+    for case in testcases:
+            actual = nodes.wall_angle_direction_length(gpd.GeoSeries(case.target_input))
+            expected = pd.Series(case.expected)
+            pd.testing.assert_series_equal(
+                expected,
+                actual,
+                "failed test {} expected {}, actual {}".format(
+                    case.name, expected, actual
+                ),
+            )
 
 
 if __name__ == '__main__':
