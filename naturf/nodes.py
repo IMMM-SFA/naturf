@@ -178,30 +178,6 @@ def building_area(building_polygon_geometry: pd.Series) -> pd.Series:
     return building_polygon_geometry.area
 
 
-def building_buffered(building_polygon_geometry: pd.Series,
-                      radius: int = 100,
-                      cap_style: int = 3) -> pd.Series:
-    """Calculate the buffer of the building polygon for the desired radius and cap style.
-
-    :param building_polygon_geometry:               Polygon geometry of the building.
-    :type building_polygon_geometry:                pd.Series
-
-    :param radius:                                  The radius of the buffer.
-                                                    100 (default)
-    :type radius:                                   int
-
-    :param cap_style:                               The shape of the buffer.
-                                                    1 == Round
-                                                    2 == Flat
-                                                    3 == Square (default)
-
-    :return:                                        pd.Series
-
-    """
-
-    return building_polygon_geometry.buffer(distance=radius, cap_style=cap_style)
-
-
 def building_centroid(building_polygon_geometry: pd.Series) -> pd.Series:
     """Calculate the centroid of the polygon geometry.
 
@@ -290,7 +266,7 @@ def get_neighboring_buildings_df(building_id: pd.Series,
                                  building_polygon_geometry: pd.Series,
                                  building_area: pd.Series,
                                  building_centroid: pd.Series,
-                                 building_buffered: pd.Series,
+                                 total_plan_area_geometry: pd.Series,
                                  target_crs: CRS,
                                  join_type: str = "left",
                                  join_predicate: str = "intersects",
@@ -313,8 +289,8 @@ def get_neighboring_buildings_df(building_id: pd.Series,
     :param building_centroid:                   Point centroid geometry of the building.
     :type building_centroid:                    pd.Series
 
-    :param building_buffered:                   Polygon geometry of the buffered building polygon.
-    :type building_buffered:                    pd.Series
+    :param total_plan_area_geometry:            Polygon geometry of the buffered building polygon.
+    :type total_plan_area_geometry:             pd.Series
 
     :param target_crs:                          Coordinate reference system field of the parent geometry.
     :type target_crs:                           pd.Series
@@ -346,7 +322,7 @@ def get_neighboring_buildings_df(building_id: pd.Series,
                        Settings.area_field: building_area,
                        Settings.geometry_field: building_polygon_geometry,
                        Settings.centroid_field: building_centroid,
-                       Settings.buffered_field: building_buffered})
+                       Settings.buffered_field: total_plan_area_geometry})
 
     # create left and right geodataframes
     left_gdf = gpd.GeoDataFrame(df, geometry=Settings.buffered_field, crs=target_crs)
@@ -467,7 +443,31 @@ def total_plan_area(geometry: gpd.GeoSeries) -> pd.DataFrame:
 
     """
     
-    return naturf.nodes.building_buffered(gdf.geometry).area
+    return naturf.nodes.total_plan_area_geometry(gdf.geometry).area
+
+
+def total_plan_area_geometry(building_polygon_geometry: pd.Series,
+                             radius: int = 100,
+                             cap_style: int = 3) -> pd.Series:
+    """Calculate the geometry of the total plan area which is the buffer of the building polygon for the desired radius and cap style.
+
+    :param building_polygon_geometry:               Polygon geometry of the building.
+    :type building_polygon_geometry:                pd.Series
+
+    :param radius:                                  The radius of the buffer.
+                                                    100 (default)
+    :type radius:                                   int
+
+    :param cap_style:                               The shape of the buffer.
+                                                    1 == Round
+                                                    2 == Flat
+                                                    3 == Square (default)
+
+    :return:                                        pd.Series
+
+    """
+
+    return building_polygon_geometry.buffer(distance=radius, cap_style=cap_style)
 
 
 def wall_angle_direction_length(geometry: gpd.GeoSeries) -> pd.DataFrame:
