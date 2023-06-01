@@ -107,76 +107,76 @@ class TestNodes(unittest.TestCase):
             )
     
     def test_wall_angle_direction_length(self):
-    """Test that the function wall_angle_direction_length returns the correct angle, direction, and length."""
-    
-    polygon_exterior = [[0,1], [1,1], [1,0], [0,0], [0,1]]
-    polygon_interior = [[0.25, 0.25], [0.25, 0.75], [0.75, 0.75], [0.75, 0.25]]
+        """Test that the function wall_angle_direction_length returns the correct angle, direction, and length."""
+        
+        polygon_exterior = [[0,1], [1,1], [1,0], [0,0], [0,1]]
+        polygon_interior = [[0.25, 0.25], [0.25, 0.75], [0.75, 0.75], [0.75, 0.25]]
 
-    north = "north"
-    south = "south"
-    east = "east"
-    west = "west"
+        north = "north"
+        south = "south"
+        east = "east"
+        west = "west"
 
-    wall_angle = Settings.wall_angle
-    wall_direction = Settings.wall_direction
-    wall_length = Settings.wall_length
+        wall_angle = Settings.wall_angle
+        wall_direction = Settings.wall_direction
+        wall_length = Settings.wall_length
 
-    square_root_one_half = 0.7071067811865476
-    
-    @dataclass
-    class TestCase:
-        name: str
-        input: List[Polygon]
-        expected: List[int]
-    
-    testcases = [
-        TestCase(name="square",
-                 input=[Polygon(polygon_exterior)],
-                 expected=[pd.concat(pd.Series([0.0, -90.0, 180.0, 90.0], name=wall_angle),
-                                     pd.Series([north, east, south, west], name=wall_direction),
-                                     pd.Series([1.0, 1.0, 1.0, 1.0], name=wall_length))]),
+        square_root_one_half = 0.7071067811865476
+        
+        @dataclass
+        class TestCase:
+            name: str
+            input: List[Polygon]
+            expected: List[int]
+        
+        testcases = [
+            TestCase(name="square",
+                    input=[Polygon(polygon_exterior)],
+                    expected=[pd.concat(pd.Series([0.0, -90.0, 180.0, 90.0], name=wall_angle),
+                                        pd.Series([north, east, south, west], name=wall_direction),
+                                        pd.Series([1.0, 1.0, 1.0, 1.0], name=wall_length))]),
 
-        TestCase(name="square with inner ring",
-                 input=[Polygon(polygon_exterior,[polygon_interior])],
-                 expected=[pd.concat(pd.Series([0.0, -90.0, 180.0, 90.0], name=wall_angle),
-                                     pd.Series([north, east, south, west], name=wall_direction),
-                                     pd.Series([1.0, 1.0, 1.0, 1.0], name=wall_length))]),
+            TestCase(name="square with inner ring",
+                    input=[Polygon(polygon_exterior,[polygon_interior])],
+                    expected=[pd.concat(pd.Series([0.0, -90.0, 180.0, 90.0], name=wall_angle),
+                                        pd.Series([north, east, south, west], name=wall_direction),
+                                        pd.Series([1.0, 1.0, 1.0, 1.0], name=wall_length))]),
 
-        TestCase(name="45 degree triangle",
-                 input=[Polygon([[0,0], [square_root_one_half,square_root_one_half], [0, square_root_one_half]])],
-                 expected=[pd.concat(pd.Series([45.0, -90.0, 180.0], name=wall_angle),
-                                     pd.Series([west, east, south], name=wall_direction),
-                                     pd.Series([1.0, square_root_one_half, square_root_one_half], name=wall_length))]),
+            TestCase(name="45 degree triangle",
+                    input=[Polygon([[0,0], [square_root_one_half,square_root_one_half], [0, square_root_one_half]])],
+                    expected=[pd.concat(pd.Series([45.0, -90.0, 180.0], name=wall_angle),
+                                        pd.Series([west, east, south], name=wall_direction),
+                                        pd.Series([1.0, square_root_one_half, square_root_one_half], name=wall_length))]),
 
-        TestCase(name="135 degree triangle",
-                 input=[Polygon([[0,0], [-square_root_one_half,square_root_one_half], [0, square_root_one_half]])],
-                 expected=[pd.concat(pd.Series([135.0, 0.0, -90.0], name=wall_angle),
-                                     pd.Series([south, north, east], name=wall_direction),
-                                     pd.Series([1.0, square_root_one_half, square_root_one_half], name=wall_length))]),
+            TestCase(name="135 degree triangle",
+                    input=[Polygon([[0,0], [-square_root_one_half,square_root_one_half], [0, square_root_one_half]])],
+                    expected=[pd.concat(pd.Series([135.0, 0.0, -90.0], name=wall_angle),
+                                        pd.Series([south, north, east], name=wall_direction),
+                                        pd.Series([1.0, square_root_one_half, square_root_one_half], name=wall_length))]),
 
-        TestCase(name="225 degree triangle",
-                 input=[Polygon([[0,0], [-square_root_one_half,-square_root_one_half], [-square_root_one_half, 0]])],
-                 expected=[pd.concat(pd.Series([-135.0, 90.0, 0.0], name=wall_angle),
-                                     pd.Series([east, west, north], name=wall_direction),
-                                     pd.Series([1.0, square_root_one_half, square_root_one_half], name=wall_length))]),
+            TestCase(name="225 degree triangle",
+                    input=[Polygon([[0,0], [-square_root_one_half,-square_root_one_half], [-square_root_one_half, 0]])],
+                    expected=[pd.concat(pd.Series([-135.0, 90.0, 0.0], name=wall_angle),
+                                        pd.Series([east, west, north], name=wall_direction),
+                                        pd.Series([1.0, square_root_one_half, square_root_one_half], name=wall_length))]),
 
-        TestCase(name="325 degree triangle",
-                 input=[Polygon([[0,0], [square_root_one_half,-square_root_one_half], [0, -square_root_one_half]])],
-                 expected=[pd.concat(pd.Series([-45.0, 180.0, 90.0], name=wall_angle),
-                                     pd.Series([north, south, west], name=wall_direction),
-                                     pd.Series([1.0, square_root_one_half, square_root_one_half], name=wall_length))]),
-    ]
-    
-    for case in testcases:
-            actual = nodes.wall_angle_direction_length(gpd.GeoSeries(case.target_input))
-            expected = pd.Series(case.expected)
-            pd.testing.assert_series_equal(
-                expected,
-                actual,
-                "failed test {} expected {}, actual {}".format(
-                    case.name, expected, actual
-                ),
-            )
+            TestCase(name="325 degree triangle",
+                    input=[Polygon([[0,0], [square_root_one_half,-square_root_one_half], [0, -square_root_one_half]])],
+                    expected=[pd.concat(pd.Series([-45.0, 180.0, 90.0], name=wall_angle),
+                                        pd.Series([north, south, west], name=wall_direction),
+                                        pd.Series([1.0, square_root_one_half, square_root_one_half], name=wall_length))]),
+        ]
+        
+        for case in testcases:
+                actual = nodes.wall_angle_direction_length(gpd.GeoSeries(case.target_input))
+                expected = pd.Series(case.expected)
+                pd.testing.assert_series_equal(
+                    expected,
+                    actual,
+                    "failed test {} expected {}, actual {}".format(
+                        case.name, expected, actual
+                    ),
+                )
 
 
 if __name__ == '__main__':
