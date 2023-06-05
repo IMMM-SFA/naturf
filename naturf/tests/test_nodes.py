@@ -12,6 +12,7 @@ from typing import List
 
 from naturf.driver import Model
 import naturf.nodes as nodes
+from .config import Settings
 
 
 class TestNodes(unittest.TestCase):
@@ -112,10 +113,10 @@ class TestNodes(unittest.TestCase):
         polygon_exterior = [[0,1], [1,1], [1,0], [0,0], [0,1]]
         polygon_interior = [[0.25, 0.25], [0.25, 0.75], [0.75, 0.75], [0.75, 0.25]]
 
-        north = "north"
-        south = "south"
-        east = "east"
-        west = "west"
+        north = Settings.north
+        south = Settings.south
+        east = Settings.east
+        west = Settings.west
 
         wall_angle = Settings.wall_angle
         wall_direction = Settings.wall_direction
@@ -143,25 +144,25 @@ class TestNodes(unittest.TestCase):
                                         pd.Series([1.0, 1.0, 1.0, 1.0], name=wall_length))]),
 
             TestCase(name="45 degree triangle",
-                    input=[Polygon([[0,0], [square_root_one_half,square_root_one_half], [0, square_root_one_half]])],
+                    input=[Polygon([[0,0], [square_root_one_half, square_root_one_half], [0, square_root_one_half]])],
                     expected=[pd.concat(pd.Series([45.0, -90.0, 180.0], name=wall_angle),
                                         pd.Series([west, east, south], name=wall_direction),
                                         pd.Series([1.0, square_root_one_half, square_root_one_half], name=wall_length))]),
 
             TestCase(name="135 degree triangle",
-                    input=[Polygon([[0,0], [-square_root_one_half,square_root_one_half], [0, square_root_one_half]])],
+                    input=[Polygon([[0,0], [-square_root_one_half, square_root_one_half], [0, square_root_one_half]])],
                     expected=[pd.concat(pd.Series([135.0, 0.0, -90.0], name=wall_angle),
                                         pd.Series([south, north, east], name=wall_direction),
                                         pd.Series([1.0, square_root_one_half, square_root_one_half], name=wall_length))]),
 
             TestCase(name="225 degree triangle",
-                    input=[Polygon([[0,0], [-square_root_one_half,-square_root_one_half], [-square_root_one_half, 0]])],
+                    input=[Polygon([[0,0], [-square_root_one_half, -square_root_one_half], [-square_root_one_half, 0]])],
                     expected=[pd.concat(pd.Series([-135.0, 90.0, 0.0], name=wall_angle),
                                         pd.Series([east, west, north], name=wall_direction),
                                         pd.Series([1.0, square_root_one_half, square_root_one_half], name=wall_length))]),
 
             TestCase(name="325 degree triangle",
-                    input=[Polygon([[0,0], [square_root_one_half,-square_root_one_half], [0, -square_root_one_half]])],
+                    input=[Polygon([[0,0], [square_root_one_half, -square_root_one_half], [0, -square_root_one_half]])],
                     expected=[pd.concat(pd.Series([-45.0, 180.0, 90.0], name=wall_angle),
                                         pd.Series([north, south, west], name=wall_direction),
                                         pd.Series([1.0, square_root_one_half, square_root_one_half], name=wall_length))]),
