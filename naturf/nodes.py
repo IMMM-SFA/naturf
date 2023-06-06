@@ -338,6 +338,7 @@ def get_neighboring_buildings_df(building_id: pd.Series,
 
     return xdf
 
+
 def grimmond_oke_displacement_height(building_height: pd.Series) -> pd.Series:
     """Calculate the Grimmond & Oke displacement height for each building
     
@@ -350,6 +351,7 @@ def grimmond_oke_displacement_height(building_height: pd.Series) -> pd.Series:
     
     return building_height * Settings.DISPLACEMENT_HEIGHT_FACTOR
 
+
 def grimmond_oke_roughness_length(building_height: pd.Series) -> pd.Series:
     """Calculate the Grimmond & Oke roughness length for each building
     
@@ -361,6 +363,7 @@ def grimmond_oke_roughness_length(building_height: pd.Series) -> pd.Series:
     """
     
     return building_height * Settings.ROUGHNESS_LENGTH_FACTOR
+
 
 def input_shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
     """Import shapefile to GeoDataFrame using only desired columns.
@@ -456,7 +459,7 @@ def target_crs(input_shapefile_df: gpd.GeoDataFrame) -> CRS:
     return input_shapefile_df.crs
 
 
-def total_plan_area(geometry: gpd.GeoSeries) -> pd.DataFrame:
+def total_plan_area(total_plan_area_geometry: gpd.GeoSeries) -> pd.DataFrame:
     """Calculate the total plan area for each building in a GeoPandas GeoSeries.
 
     :param geometry:                    Geometry for a series of buildings.
@@ -466,7 +469,7 @@ def total_plan_area(geometry: gpd.GeoSeries) -> pd.DataFrame:
 
     """
     
-    return naturf.nodes.total_plan_area_geometry(gdf.geometry).area
+    return total_plan_area_geometry.area
 
 
 def total_plan_area_geometry(building_polygon_geometry: pd.Series,
@@ -503,7 +506,7 @@ def wall_angle_direction_length(geometry: gpd.GeoSeries) -> pd.DataFrame:
 
     """
     
-    wall_angle, wall_direction, wall_length = [[] for x in range(geometry.size)], [[] for x in range(geometry.size)], [[] for x in range(geometry.size)]
+    wall_angle, wall_direction, wall_length = [[]] * geometry.size, [[]] * geometry.size, [[]] * geometry.size
 
     for building in range(geometry.size):
         points_in_polygon = geometry.values[building].exterior.xy
