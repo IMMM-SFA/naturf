@@ -99,20 +99,33 @@ Fundamental equations and concepts
 
 The following are the urban parameters calculated by **naturf**.
 
+Concepts/Definitions
+~~~~~~~~~~~~~~~~~~~~
+
+Plan Area
+^^^^^^^^^
+
+When calculating parameters, **naturf** creates a buffer around each target building called the plan (or dilated) area. Each building has its own plan area which identifies neighbors to that target building which are important for the calculation of parameters. For the parameter definitions below, *total plan area* refers to the area of that buffer around the target building, while *building plan area* refers to the sum of building footprints within the *total plan area*. *Total plan area* should always be a larger values than the *building plan area*.
+
+Frontal Area
+^^^^^^^^^^^^
+
+For the urban parameters calculated by **naturf**, frontal area refers to the wall area perpendicular to a given direction for all buildings within the target building's total plan area. 
+
 
 Frontal Area Density (1-60)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Frontal area density is the frontal area of a building at a certain height increment divided by the building plan area. **naturf** calculates frontal area density from the four cardinal directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters. Parameters 1-15 represent the north, paramters 16-30 represent the west, parameters 31-45 represent the south, and parameters 46-60 represent the east. [Burian2003]_ Eq. 14
+Frontal area density is the frontal area of a building at a certain height increment divided by the total plan area. **naturf** calculates frontal area density from the four cardinal directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters. Parameters 1-15 represent the north, parameters 16-30 represent the west, parameters 31-45 represent the south, and parameters 46-60 represent the east. For instance, parameter 1 gives the north-facing wall area for each building and its neighbors divided by the total plan area. [Burian2003]_ Eq. 14
 
 $FAD = \\frac{FA}{PA}$
 
-where, *FAD* is Frontal area density; *FA* is the frontal area of the wall from the current direction and height level in $m^2$; *PA* is the building plan area in $m^2$.
+where *FAD* is Frontal area density; *FA* is the frontal area of the wall from the current direction and height level in $m^2$; *PA* is the building plan area in $m^2$.
 
 Plan Area Density (61-75)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Plan area density is the ratio of building footprint areas within the building plan area to the entire building plan area, calculated in 5 meter increments from ground level to 75 meters. **naturf** projects the building footprint vertically to the building height, meaning plan area density is the same at every vertical level. [Burian2003]_ Eq. 7
+Plan area density is the ratio of building plan area to the total plan area, calculated in 5 meter increments from ground level to 75 meters. **naturf** projects the building footprint vertically to the building height, meaning plan area density is the same at every vertical level. [Burian2003]_ Eq. 7
 
 $PAD = \\frac{TBA}{PA}$
 
@@ -121,27 +134,27 @@ where, *PAD* is the plan area density; *TBA* is the total area of the buildings 
 Rooftop Area Density (76-90)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Rooftop area density is the ratio of building rooftop area to the building plan area, calculated in 5 meter increments from ground level to 75 meters. Because **naturf** projects building footprints vertically to the building height, these parameters are equal to the plan area density. [Burian2003]_ Eq. 7
+Rooftop area density is the ratio of building rooftop area to the total plan area, calculated in 5 meter increments from ground level to 75 meters. Because **naturf** projects building footprints vertically to the building height, these parameters are equal to the plan area density. [Burian2003]_ Eq. 7
 
 Plan Area Fraction (91)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Plan area fraction is the ratio of building footprint areas within the building plan area to the entire building plan area, calculated at ground level. For **naturf**, this is equal to plan area density at any height increment. [Burian2003]_ Eq. 4
+Plan area fraction is the ratio of building plan area to the total plan area, calculated at ground level. For **naturf**, this is equal to plan area density at any height increment. [Burian2003]_ Eq. 4
 
 Mean Building Height (92)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The average building height of all buildings within the building plan area.
+The average building height of all buildings within the total plan area.
 
 Standard Deviation of Building Heights (93)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The standard deviation of building heights for all buildings within the building plan area.
+The standard deviation of building heights for all buildings within the total plan area.
 
 Area Weighted Mean of Building Heights (94)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The average height of all buildings within the plan area weighted by the plan area. [Burian2003]_ Eq. 3
+The average height of all buildings within the total plan area weighted by the total plan area. [Burian2003]_ Eq. 3
 
 $AWMH = \\frac{\\Sigma{A_i zh_i}}{\\Sigma{A_i}}$
 
@@ -155,7 +168,7 @@ The ratio of all the surface areas of a building to the building plan area. [Bur
 Frontal Area Index (96-99)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Frontal area index is the ratio of the entire frontal area of a building to the building plan area. **naturf** calculates the frontal area index from the four cardinal directions. Because buildings often do not face a cardinal direction head on, **naturf** uses the average alongwind and crosswind distance from the current building centroid to all other building centroids for the building plan area. [Burian2003]_ Eq. 12
+Frontal area index is the ratio of the entire frontal area of a building to the total plan area. **naturf** calculates the frontal area index from the four cardinal directions. Because buildings often do not face a cardinal direction head on, **naturf** uses the average alongwind and crosswind distance from the current building centroid to all other building centroids for the total plan area. [Burian2003]_ Eq. 12
 
 $FAI = \\frac{l \\cdot zh}{AW \\cdot CW}$
 
@@ -164,7 +177,7 @@ where, *FAI* is frontal area index; *l* is the building wall length in m; *zh* i
 Complete Aspect Ratio (100)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ratio of building surface area and exposed ground area to the total building plan area. [Burian2003]_ Eq. 15
+The ratio of building surface area and exposed ground area to the total plan area. [Burian2003]_ Eq. 15
 
 $CAR = \\frac{BSA + (PA - TBA)}{PA}$
 
@@ -173,7 +186,7 @@ where, *BSA* is the building surface area in $m^2$; *TBA* is the total area of t
 Height-to-Width Ratio (101)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ratio of the building height to the street width. **naturf** generalizes this as the ratio of average height of buildings in the current plan area to average distance from the current building to all other buildings in the current plan area. [Burian2003]_ Eq. 18
+The ratio of the building height to the street width. **naturf** generalizes this as the ratio of average height of buildings in the total plan area to average distance from the current building to all other buildings in the total plan area. [Burian2003]_ Eq. 18
 
 Sky-View Factor (102)
 ~~~~~~~~~~~~~~~~~~~~~
