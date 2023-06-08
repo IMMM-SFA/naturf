@@ -13,7 +13,9 @@ Though **naturf** is demonstrated for the conterminous United States (CONUS), th
 - A shapefile of square polygons tessellated over the study area.
 - A CSV file matching each tile name to its index number.
 
-Let us know if you are using **naturf** in your research in our `discussion thread <https://github.com/IMMM-SFA/naturf/discussions/61>`_!
+..
+  TODO: no discussion section yet
+  Let us know if you are using **naturf** in your research in our `discussion thread <https://github.com/IMMM-SFA/naturf/discussions/61>`_!
 
 
 Setting up a **naturf** run
@@ -24,12 +26,15 @@ The following with indroduce you to the input data required by **naturf** and ho
 Splitting the building shapefile into tiles
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**naturf** works optimally with inputs of building shapefiles as regular square tiles that can be processed in parallel. Experiments with Los Angeles found that tiles of 3.2 km by 3.2 km were the most computationally efficient (at 100 meter output resolution).
+**naturf** works optimally with inputs of building shapefiles as regular square tiles that can be processed in parallel. Experiments with Los Angeles found that tiles of 3.2 km by 3.2 km were the most computationally efficient at 100 meter output resolution.
 
 Generate a tessellation
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-The first step to splitting the input building shapefile into tiles is to load the shapefile into any GIS software (ArcPro, ArcMap, QGIS, etc.) and run the "Generate Tessellation" tool (https://pro.arcgis.com/en/pro-app/2.8/tool-reference/data-management/generatetesellation.htm for ArcPro/ArcMap; https://docs.qgis.org/2.6/en/docs/user_manual/processing_algs/qgis/vector_creation_tools/creategrid.html for QGIS) with the desired tile size. After the tessellation is created, note the center latitude and longitude in decimal degrees as well as the coordinates of the bottom left corner of the tessellation. All of those coordinates will be needed to set the projection of the output data and to tell WRF where to start placing the data.
+The first step to splitting the input building shapefile into tiles is to load the shapefile into any GIS software (ArcPro, ArcMap, QGIS, etc.) and run the `Generate Tessellation`_ tool for ArcPro/ArcMap; `Create Grid`_ for QGIS) with the desired tile size. After the tessellation is created, note the center latitude and longitude in decimal degrees as well as the coordinates of the bottom left corner of the tessellation. All of those coordinates will be needed to set the projection of the output data and to tell WRF where to start placing the data.
+
+.. _Generate Tessellation: https://pro.arcgis.com/en/pro-app/2.8/tool-reference/data-management/generatetesellation.htm
+.. _Create Grid: https://docs.qgis.org/2.6/en/docs/user_manual/processing_algs/qgis/vector_creation_tools/creategrid.html
 
 Assign index numbers
 ^^^^^^^^^^^^^^^^^^^^
@@ -38,20 +43,26 @@ After the tessellation is created, the next step is to use the "Calculate Field"
 
 First, split the IDs into fields representing their columns and rows:
 
-Columns = !GRID_ID!.split("-")[0]
-Rows = !GRID_ID!.split("-")[1] 
+.. code-block::
+
+  Columns = !GRID_ID!.split("-")[0]
+  Rows = !GRID_ID!.split("-")[1] 
 
 Next, assign the y-indices (Note: WRF requires the indexing to begin from the bottom left corner of the dataset):
 
-Second_Index_Y = 32 * ((Number of rows) - !Rows! + 1)
-First_Index_Y = !Second_Index_Y! - 31
+.. code-block::
 
-The x-indices require an additional step. First, calculate the Let_To_Num field by turning the letters in the Columns field into numbers using the code below, which can be adjusted to accomodated as many columns as needed:
+  Second_Index_Y = 32 * ((Number of rows) - !Rows! + 1)
+  First_Index_Y = !Second_Index_Y! - 31
 
-Expression:
-LetToNum(!Columns!)
+The x-indices require an additional step. First, calculate the ``Let_To_Num`` field by turning the letters in the Columns field into numbers using the code below, which can be adjusted to accomodated as many columns as needed:
 
-Code Block::
+.. code-block::
+
+  Expression:
+  LetToNum(!Columns!)
+
+.. code-block::
 
   def LetToNum(feat):
       letters = list(feat)
@@ -65,15 +76,17 @@ Code Block::
 
 Then, calculate the X indices much the same as the Y indices.
 
-Second_Index_X = 32 * !Let_To_Num!
-First_Index_X = !Second_Index_X! - 31
+.. code-block::
+
+  Second_Index_X = 32 * !Let_To_Num!
+  First_Index_X = !Second_Index_X! - 31
 
 The attribute table should then be exported to an Excel file using the "Table to Table" tool, and the rest of the indexing will be done in Excel.
 
 Create CSV file
 ^^^^^^^^^^^^^^^
 
-Now that the tessellation attribute table is an Excel file, all columns can be deleted except for the grid ID column and the indices columns. In new columns, use =TEXT(cell, "00000") to add leading zeroes to the indices (at least 5 digits are required, more can be added if necessary). In another column, concatenate the indices using =CONCAT(cell1,"-",cell2,".",cell3,"-",cell4). Copy the GRID_ID and concatenated index numbers(important: with headers) into a separate spreadsheet and save as a CSV. This CSV will allow **naturf** to assign the correct index name to the corresponsing binary file.
+Now that the tessellation attribute table is an Excel file, all columns can be deleted except for the grid ID column and the indices columns. In new columns, use ``=TEXT(cell, "00000")`` to add leading zeroes to the indices (at least 5 digits are required, more can be added if necessary). In another column, concatenate the indices using ``=CONCAT(cell1,"-",cell2,".",cell3,"-",cell4)``. Copy the ``GRID_ID`` and concatenated index numbers(important: with headers) into a separate spreadsheet and save as a CSV. This CSV will allow **naturf** to assign the correct index name to the corresponsing binary file.
 
 Spatial join and split by attribute
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -105,22 +118,18 @@ Frontal Area Density (1-60)
 
 Frontal area density is the frontal area of a building at a certain height increment divided by the total plan area. **naturf** calculates frontal area density from the four cardinal directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters. Parameters 1-15 represent the north, parameters 16-30 represent the west, parameters 31-45 represent the south, and parameters 46-60 represent the east. For instance, parameter 1 gives the north-facing wall area for each building and its neighbors divided by the total plan area. [Burian2003]_ Eq. 14
 
-.. math::
+$FAD = \\frac{FA}{PA}$
 
-    FAD = \\frac{FA}{PA}
-
-where, *FAD* is Frontal area density; *FA* is the frontal area of the wall from the current direction and height level in m\ :superscript:'2' \ ; *PA* is the building plan area in m\ :superscript:'2' \ .
+where *FAD* is Frontal area density; *FA* is the frontal area of the wall from the current direction and height level in $m^2$; *PA* is the building plan area in $m^2$.
 
 Plan Area Density (61-75)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Plan area density is the ratio of building plan area to the total plan area, calculated in 5 meter increments from ground level to 75 meters. **naturf** projects the building footprint vertically to the building height, meaning plan area density is the same at every vertical level. [Burian2003]_ Eq. 7
 
-.. math::
+$PAD = \\frac{TBA}{PA}$
 
-    PAD = \frac{TBA}{PA}
-
-where, *PAD* is the plan area density; *TBA* is the total area of the buildings within the current building plan area in m\ :superscript:'2' \ ; *PA* is the building plan area in m\ :superscript:'2' \ .
+where, *PAD* is the plan area density; *TBA* is the total area of the buildings within the current building plan area in $m^2$; *PA* is the building plan area in $m^2$.
 
 Rooftop Area Density (76-90)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -147,11 +156,9 @@ Area Weighted Mean of Building Heights (94)
 
 The average height of all buildings within the total plan area weighted by the total plan area. [Burian2003]_ Eq. 3
 
-.. math::
+$AWMH = \\frac{\\Sigma{A_i zh_i}}{\\Sigma{A_i}}$
 
-  AWMH = \frac{\Sigma{A_i zh_i}}{\Sigma{A_i}}
-
-where, *AWMH* is the area weighted mean height in m; *A*\ :subscript:'i' \ is the current building plan area in m\ :superscript:'2' \ ; *zh*\ :subscript:'i' \ is the current building height in m\ :superscript:'2' \ .
+where, *AWMH* is the area weighted mean height in m; $A_i$ is the current building plan area in $m^2$; $zh_i$ is the current building height in m.
 
 Building Surface Area to Plan Area Ratio (95)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -163,9 +170,7 @@ Frontal Area Index (96-99)
 
 Frontal area index is the ratio of the entire frontal area of a building to the total plan area. **naturf** calculates the frontal area index from the four cardinal directions. Because buildings often do not face a cardinal direction head on, **naturf** uses the average alongwind and crosswind distance from the current building centroid to all other building centroids for the total plan area. [Burian2003]_ Eq. 12
 
-.. math::
-
-  FAI = \frac{l * zh}{AW * CW}
+$FAI = \\frac{l \\cdot zh}{AW \\cdot CW}$
 
 where, *FAI* is frontal area index; *l* is the building wall length in m; *zh* is the building height in m; *AW* the average alongwind distance to other buildings in m; *CW* is the average crosswind distance to other buildings in m.
 
@@ -174,11 +179,9 @@ Complete Aspect Ratio (100)
 
 The ratio of building surface area and exposed ground area to the total plan area. [Burian2003]_ Eq. 15
 
-.. math::
+$CAR = \\frac{BSA + (PA - TBA)}{PA}$
 
-  CAR = \frac{BSA + (PA - TBA)}{PA}
-
-where, *BSA* is the building surface area in m\ :superscript:'2' \; *TBA* is the total area of the buildings within the current building plan area in m\ :superscript:'2' \ ; *PA* is the building plan area in m\ :superscript:'2' \ .
+where, *BSA* is the building surface area in $m^2$; *TBA* is the total area of the buildings within the current building plan area in $m^2$; *PA* is the building plan area in $m^2$.
 
 Height-to-Width Ratio (101)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -190,9 +193,7 @@ Sky-View Factor (102)
 
 The fraction of visible sky in a given area. [Dirksen2019]_ Eq. 1
 
-.. math::
-
-  SVF = cos(arctan(\frac{H}{0.5W}))
+$SVF = cos(arctan(\\frac{H}{0.5W}))$
 
 where, *SVF* is the sky-view factor; *H* is the building height in m; *W* is the distance between buildings in m.
 
@@ -201,9 +202,7 @@ Grimmond & Oke Roughness Length (103)
 
 [GrimmondOke1999]_ Eq. 2
 
-.. math::
-
-  GORL = 0.1 * zh
+$GORL = 0.1 \\cdot zh$
 
 where, *GORL* is Grimmond & Oke rougness length in m; *zh* is the building height in m.
 
@@ -212,9 +211,7 @@ Grimmond & Oke Displacement Height (104)
 
 [GrimmondOke1999]_ Eq. 1
 
-.. math::
-
-  GODH = 0.67 * zh
+$GODH = 0.67 \\cdot zh$
 
 where, *GODH* is Grimmond & Oke displacement height in m; *zh* is building height in m.
 
@@ -224,11 +221,9 @@ Raupach Roughness Length (105, 107, 109, 111)
 
 [Raupach1994]_ Eq. 4
 
-.. math::
+$RRL = zh \\cdot (1 - RDH) \\cdot exp(-\\kappa \\cdot (C_{S} + C_{R} \\cdot \\lambda)^{-0.5} - \\Psi_{h}))$
 
-  RRL = zh * (1 - RDH) * exp(-\kappa * (C_{S} + C_{R} * \lamba)^-0.5 - \Psi_{h}))
-
-where, *RRL* is the Raupach roughness length in m; *RDH* is the Raupach displacement height in m; *\kappa* is von Kármán's constant = 0.4; *C*\ :subscript:'S' \ is the substrate-surface drag coefficient = 0.003; *C*\ :subscript:'R' \ is the roughness-element drag coefficient = 0.3; *\Psi*\ :subscript:'h' \ is the roughness-sublayer influence function = 0.193.
+where, *RRL* is the Raupach roughness length in m; *RDH* is the Raupach displacement height in m; $\\kappa$ is von Kármán's constant = 0.4; $C_S$ is the substrate-surface drag coefficient = 0.003; $C_R$ is the roughness-element drag coefficient = 0.3; $\\Psi_h$ is the roughness-sublayer influence function = 0.193.
 
 
 Raupach Displacment Height (106, 108, 110, 112)
@@ -236,33 +231,27 @@ Raupach Displacment Height (106, 108, 110, 112)
 
 [Raupach1994]_ Eq. 8
 
-.. math::
+$RDH = zh \\cdot (1 - (\\frac{1 - \\exp(-\\sqrt(c_{d1} \\cdot \\Lambda))}{\\sqrt(c_{d1} \\cdot \\Lambda)}))$
 
-  RDH = zh * (1 - (\frac{1 - \exp(-\sqrt(c_{d1} * \Lambda))}{\sqrt(c_{d1} * \Lambda)}))
-
-where, *RDH* is the Raupach displacement height in m; *c*\ :subscript:'d1' \ is a constant = 7.5; *\Lambda* is frontal area index times 2.
+where, *RDH* is the Raupach displacement height in m; $c_{d1}$ is a constant = 7.5; $\\Lambda$ is frontal area index times 2.
 
 Macdonald et al. Roughness Length (113-116)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [Macdonald1998]_ Eq. 22
 
-.. math::
+$MRL = zh \\cdot (1 - RDH)\\exp(-(0.5\\frac{C_{D}}{\\kappa^2}(1 - RDH)\\frac{A_{f}}{A_{d}})^{-0.5})$
 
-  MRL = zh * (1 - RDH)\exp(-(0.5\frac{C_{D}}{\kappa^2}(1 - RDH)\frac{A_{f}}{A_{d}})^-0.5)
-
-where, *MRL* is the Macdonald roughness length in m; *zh* is the building height in m; *RDH* is the Raupach displacement height in m; *C*\ :subscript:'D' \ is the obstacle drag coefficient = 1.12; *\kappa* is von Kármán's constant = 0.4; *A*\ :subscript:'f' \ is the frontal area of the building in m^2; *A*\ :subscript:'d' \ is the total surface area of the buildings in the plan area divided by the number of buildings in m\ :superscript:'2' \ .
+where, *MRL* is the Macdonald roughness length in m; *zh* is the building height in m; *RDH* is the Raupach displacement height in m; $C_D$ is the obstacle drag coefficient = 1.12; $\\kappa$ is von Kármán's constant = 0.4; $A_f$ is the frontal area of the building in $m^2$; $A_d$ is the total surface area of the buildings in the plan area divided by the number of buildings in $m^2$.
 
 Macdonald et al. Displacement Height (117)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [Macdonald1998]_ Eq. 23
 
-.. math::
+$MDH = zh \\cdot (1 + \\frac{1}{A^\\lambda} \\cdot (\\lambda - 1))$
 
-    MDH = zh * (1 + \frac{1}{A^\lambda} * (\lambda - 1))
-
-where, *MDH* is the Macdonald displacement height in m; *zh* is the building height in; *A* is a constant = 3.59; *\lambda* is the plan area density. 
+where, *MDH* is the Macdonald displacement height in m; *zh* is the building height in m; *A* is a constant = 3.59; $\\lambda$ is the plan area density. 
 
 Vertical Distribution of Building Heights (118-132)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
