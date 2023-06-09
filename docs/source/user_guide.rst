@@ -92,7 +92,7 @@ Concepts/Definitions
 Plan Area
 ^^^^^^^^^
 
-When calculating parameters, **naturf** creates a buffer around each target building called the plan (or dilated) area. Each building has its own plan area which identifies neighbors to that target building which are important for the calculation of parameters. For the parameter definitions below, *total plan area* refers to the area of that buffer around the target building, while *building plan area* refers to the sum of building footprints within the *total plan area*. *Total plan area* should always be a larger values than the *building plan area*.
+When calculating parameters, **naturf** creates a buffer around each target building called the plan (or dilated) area. Each building has its own plan area which identifies neighbors to that target building which are important for the calculation of parameters. For the parameter definitions below, *total plan area* refers to the area of that buffer around the target building, while *building plan area* refers to the sum of building footprints within the *total plan area*. *Total plan area* should always be a larger value than the *building plan area*.
 
 Frontal Area
 ^^^^^^^^^^^^
@@ -107,9 +107,9 @@ Frontal area density is the frontal area of a building at a certain height incre
 
 .. math::
 
-    FAD = \\frac{FA}{PA}
+    FAD = \\frac{FA}{TPA}
 
-where, *FAD* is Frontal area density; *FA* is the frontal area of the wall from the current direction and height level in m\ :superscript:'2' \ ; *PA* is the building plan area in m\ :superscript:'2' \ .
+where, *FAD* is Frontal area density; *FA* is the frontal area of the wall from the current direction and height level in m\ :superscript:'2' \ ; *TPA* is the total plan area in m\ :superscript:'2' \ .
 
 Plan Area Density (61-75)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -118,9 +118,9 @@ Plan area density is the ratio of building plan area to the total plan area, cal
 
 .. math::
 
-    PAD = \frac{TBA}{PA}
+    PAD = \frac{BPA}{TPA}
 
-where, *PAD* is the plan area density; *TBA* is the total area of the buildings within the current building plan area in m\ :superscript:'2' \ ; *PA* is the building plan area in m\ :superscript:'2' \ .
+where, *PAD* is the plan area density; *BPA* is the building plan area in m\ :superscript:'2' \ ; *TPA* is the total plan area in m\ :superscript:'2' \ .
 
 Rooftop Area Density (76-90)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -176,9 +176,9 @@ The ratio of building surface area and exposed ground area to the total plan are
 
 .. math::
 
-  CAR = \frac{BSA + (PA - TBA)}{PA}
+  CAR = \frac{BSA + (PA - TBA)}{TPA}
 
-where, *BSA* is the building surface area in m\ :superscript:'2' \; *TBA* is the total area of the buildings within the current building plan area in m\ :superscript:'2' \ ; *PA* is the building plan area in m\ :superscript:'2' \ .
+where, *BSA* is the building surface area in m\ :superscript:'2' \; *BPA* is the building plan area in m\ :superscript:'2' \ ; *PA* is the total plan area in m\ :superscript:'2' \ .
 
 Height-to-Width Ratio (101)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
