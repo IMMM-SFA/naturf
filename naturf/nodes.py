@@ -2,7 +2,7 @@ import geopandas as gpd
 import numpy as np
 import pandas as pd
 from pyproj.crs import CRS
-from hamilton.function_modifiers import extract_columns, tag
+from hamilton.function_modifiers import extract_columns
 
 from .config import Settings
 
@@ -21,8 +21,7 @@ def _average_north_south_building_distances(building_id: pd.Series) -> dict:
     return {i: 0 for i in building_id.unique()}
 
 
-def _building_height_dict(building_id: pd.Series,
-                          building_height: pd.Series) -> dict:
+def _building_height_dict(building_id: pd.Series, building_height: pd.Series) -> dict:
     """Calculate building height per building.
 
     :param building_id:                         Building ID field.
@@ -35,14 +34,12 @@ def _building_height_dict(building_id: pd.Series,
 
     """
 
-    df = pd.DataFrame({Settings.id_field: building_id,
-                       Settings.height_field: building_height})
+    df = pd.DataFrame({Settings.id_field: building_id, Settings.height_field: building_height})
 
     return df.groupby(Settings.id_field)[Settings.height_field].max().to_dict()
 
 
-def _footprint_building_areas(_building_height_dict: dict,
-                              _plan_area_dict: dict) -> dict:
+def _footprint_building_areas(_building_height_dict: dict, _plan_area_dict: dict) -> dict:
     """Create a dictionary of the height and plan_area to a dictionary where the key is the
     target building ID.
 
@@ -59,8 +56,7 @@ def _footprint_building_areas(_building_height_dict: dict,
     return {i: [_building_height_dict[i], _plan_area_dict[i]] for i in _plan_area_dict.keys()}
 
 
-def _plan_area_dict(building_id: pd.Series,
-                    building_area_neighbor: pd.Series) -> dict:
+def _plan_area_dict(building_id: pd.Series, building_area_neighbor: pd.Series) -> dict:
     """Calculate the total area of all buildings within the plan area.
 
     :param building_id:                         Building ID field.
@@ -73,14 +69,16 @@ def _plan_area_dict(building_id: pd.Series,
 
     """
 
-    df = pd.DataFrame({Settings.id_field: building_id,
-                       Settings.neighbor_area_field: building_area_neighbor})
+    df = pd.DataFrame(
+        {Settings.id_field: building_id, Settings.neighbor_area_field: building_area_neighbor}
+    )
 
     return df.groupby(Settings.id_field)[Settings.neighbor_area_field].sum().to_dict()
 
 
-def angle_in_degrees_to_neighbor(building_centroid_target: gpd.GeoSeries,
-                                 building_centroid_neighbor: gpd.GeoSeries) -> pd.Series:
+def angle_in_degrees_to_neighbor(
+    building_centroid_target: gpd.GeoSeries, building_centroid_neighbor: gpd.GeoSeries
+) -> pd.Series:
     """Calculate the angle in degrees of the neighbor building orientation to the target.
     Adjust the angle to correspond to a circle where 0/360 degrees is directly east, and the
     degrees increase counter-clockwise.
@@ -106,14 +104,15 @@ def angle_in_degrees_to_neighbor(building_centroid_target: gpd.GeoSeries,
 
     # adjust the angle to correspond to a circle where 0/360 degrees is directly east, and the degrees increase
     # counter-clockwise
-    return pd.Series(np.where(angle_series < 0,
-                              angle_series + Settings.DEGREES_IN_CIRCLE,
-                              angle_series),
-                     index=building_centroid_target.index)
+    return pd.Series(
+        np.where(angle_series < 0, angle_series + Settings.DEGREES_IN_CIRCLE, angle_series),
+        index=building_centroid_target.index,
+    )
 
 
-def average_building_heights(building_id: pd.Series,
-                             building_height_neighbor: pd.Series) -> pd.Series:
+def average_building_heights(
+    building_id: pd.Series, building_height_neighbor: pd.Series
+) -> pd.Series:
     """Average building heights for each target building when considering themselves
     and those that are within their buffered area.
 
@@ -127,15 +126,18 @@ def average_building_heights(building_id: pd.Series,
 
     """
 
-    df = pd.DataFrame({Settings.id_field: building_id,
-                       Settings.neighbor_height_field: building_height_neighbor})
+    df = pd.DataFrame(
+        {Settings.id_field: building_id, Settings.neighbor_height_field: building_height_neighbor}
+    )
 
     return df.groupby(Settings.id_field)[Settings.neighbor_height_field].mean().fillna(0)
 
 
-def average_direction_distance(building_id: pd.Series,
-                               orientation_to_neighbor: pd.Series,
-                               distance_to_neighbor_by_centroid: pd.Series) -> pd.Series:
+def average_direction_distance(
+    building_id: pd.Series,
+    orientation_to_neighbor: pd.Series,
+    distance_to_neighbor_by_centroid: pd.Series,
+) -> pd.Series:
     """Calculate the average directional distances for each target building to its neighbors
 
     :param building_id:                         Building ID field.
@@ -153,9 +155,13 @@ def average_direction_distance(building_id: pd.Series,
 
     """
 
-    df = pd.DataFrame({Settings.id_field: building_id,
-                       "orientation": orientation_to_neighbor,
-                       "distance": distance_to_neighbor_by_centroid})
+    df = pd.DataFrame(
+        {
+            Settings.id_field: building_id,
+            "orientation": orientation_to_neighbor,
+            "distance": distance_to_neighbor_by_centroid,
+        }
+    )
 
     df = df.groupby([Settings.id_field, "orientation"])["distance"].mean().reset_index()
 
@@ -191,8 +197,9 @@ def building_centroid(building_polygon_geometry: pd.Series) -> pd.Series:
     return building_polygon_geometry.centroid
 
 
-def building_centroid_neighbor(building_polygon_geometry_neighbor: pd.Series,
-                               target_crs: CRS) -> gpd.GeoSeries:
+def building_centroid_neighbor(
+    building_polygon_geometry_neighbor: pd.Series, target_crs: CRS
+) -> gpd.GeoSeries:
     """Calculate the centroid geometry from the neighbor building geometry.
 
     :param building_polygon_geometry_neighbor:  Polygon geometry field for the neighboring buildings from the spatially
@@ -210,8 +217,9 @@ def building_centroid_neighbor(building_polygon_geometry_neighbor: pd.Series,
     return gpd.GeoSeries(building_polygon_geometry_neighbor, crs=target_crs).centroid
 
 
-def building_centroid_target(building_polygon_geometry_target: pd.Series,
-                             target_crs: CRS) -> gpd.GeoSeries:
+def building_centroid_target(
+    building_polygon_geometry_target: pd.Series, target_crs: CRS
+) -> gpd.GeoSeries:
     """Calculate the centroid geometry from the parent building geometry.
 
     :param building_polygon_geometry_target:    Polygon geometry field for the target buildings from the spatially
@@ -228,8 +236,9 @@ def building_centroid_target(building_polygon_geometry_target: pd.Series,
     return gpd.GeoSeries(building_polygon_geometry_target, crs=target_crs).centroid
 
 
-def distance_to_neighbor_by_centroid(building_centroid_target: gpd.GeoSeries,
-                                     building_centroid_neighbor: gpd.GeoSeries) -> pd.Series:
+def distance_to_neighbor_by_centroid(
+    building_centroid_target: gpd.GeoSeries, building_centroid_neighbor: gpd.GeoSeries
+) -> pd.Series:
     """Calculate the distance from the target building neighbor to each neighbor building centroid.
 
     :param building_centroid_target:            Centroid geometry from the target building geometry.
@@ -257,21 +266,25 @@ def filter_zero_height_df(standardize_column_names_df: gpd.GeoDataFrame) -> gpd.
 
     """
 
-    return standardize_column_names_df.loc[standardize_column_names_df[Settings.height_field] > 0].reset_index(drop=True)
+    return standardize_column_names_df.loc[
+        standardize_column_names_df[Settings.height_field] > 0
+    ].reset_index(drop=True)
 
 
 @extract_columns(*Settings.spatial_join_list)
-def get_neighboring_buildings_df(building_id: pd.Series,
-                                 building_height: pd.Series,
-                                 building_polygon_geometry: pd.Series,
-                                 building_area: pd.Series,
-                                 building_centroid: pd.Series,
-                                 total_plan_area_geometry: pd.Series,
-                                 target_crs: CRS,
-                                 join_type: str = "left",
-                                 join_predicate: str = "intersects",
-                                 join_lsuffix: str = "target",
-                                 join_rsuffix: str = "neighbor") -> gpd.GeoDataFrame:
+def get_neighboring_buildings_df(
+    building_id: pd.Series,
+    building_height: pd.Series,
+    building_polygon_geometry: pd.Series,
+    building_area: pd.Series,
+    building_centroid: pd.Series,
+    total_plan_area_geometry: pd.Series,
+    target_crs: CRS,
+    join_type: str = "left",
+    join_predicate: str = "intersects",
+    join_lsuffix: str = "target",
+    join_rsuffix: str = "neighbor",
+) -> gpd.GeoDataFrame:
     """Conduct a spatial join to get the building centroids that intersect the buffered target buildings.
 
     :param building_id:                         Building ID field.
@@ -317,51 +330,57 @@ def get_neighboring_buildings_df(building_id: pd.Series,
     """
 
     # assemble a pandas data frame
-    df = pd.DataFrame({Settings.id_field: building_id,
-                       Settings.height_field: building_height,
-                       Settings.area_field: building_area,
-                       Settings.geometry_field: building_polygon_geometry,
-                       Settings.centroid_field: building_centroid,
-                       Settings.buffered_field: total_plan_area_geometry})
+    df = pd.DataFrame(
+        {
+            Settings.id_field: building_id,
+            Settings.height_field: building_height,
+            Settings.area_field: building_area,
+            Settings.geometry_field: building_polygon_geometry,
+            Settings.centroid_field: building_centroid,
+            Settings.buffered_field: total_plan_area_geometry,
+        }
+    )
 
     # create left and right geodataframes
     left_gdf = gpd.GeoDataFrame(df, geometry=Settings.buffered_field, crs=target_crs)
     right_gdf = gpd.GeoDataFrame(df, geometry=Settings.centroid_field, crs=target_crs)
 
     # spatially join the building centroids to the target buffered areas
-    xdf = gpd.sjoin(left_df=left_gdf,
-                    right_df=right_gdf,
-                    how=join_type,
-                    predicate=join_predicate,
-                    lsuffix=join_lsuffix,
-                    rsuffix=join_rsuffix)
+    xdf = gpd.sjoin(
+        left_df=left_gdf,
+        right_df=right_gdf,
+        how=join_type,
+        predicate=join_predicate,
+        lsuffix=join_lsuffix,
+        rsuffix=join_rsuffix,
+    )
 
     return xdf
 
 
 def grimmond_oke_displacement_height(building_height: pd.Series) -> pd.Series:
     """Calculate the Grimmond & Oke displacement height for each building
-    
+
     :param building_height:                     Building height field.
     :type building_height:                      pd.Series
-    
+
     :return:                                    pd.Series
-    
+
     """
-    
+
     return building_height * Settings.DISPLACEMENT_HEIGHT_FACTOR
 
 
 def grimmond_oke_roughness_length(building_height: pd.Series) -> pd.Series:
     """Calculate the Grimmond & Oke roughness length for each building
-    
+
     :param building_height:                     Building height field.
     :type building_height:                      pd.Series
-    
+
     :return:                                    pd.Series
-    
+
     """
-    
+
     return building_height * Settings.ROUGHNESS_LENGTH_FACTOR
 
 
@@ -375,9 +394,13 @@ def input_shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
 
     """
 
-    return gpd.read_file(input_shapefile)[[Settings.data_id_field_name,
-                                           Settings.data_height_field_name,
-                                           Settings.data_geometry_field_name]]
+    return gpd.read_file(input_shapefile)[
+        [
+            Settings.data_id_field_name,
+            Settings.data_height_field_name,
+            Settings.data_geometry_field_name,
+        ]
+    ]
 
 
 def orientation_to_neighbor(angle_in_degrees_to_neighbor: pd.Series) -> pd.Series:
@@ -392,22 +415,31 @@ def orientation_to_neighbor(angle_in_degrees_to_neighbor: pd.Series) -> pd.Serie
     """
 
     return pd.Series(
-            np.where(
-                (((Settings.SOUTHEAST_DEGREES <= angle_in_degrees_to_neighbor) &
-                    (angle_in_degrees_to_neighbor <= Settings.DEGREES_IN_CIRCLE))
-                | ((Settings.START_OF_CIRCLE_DEGREES <= angle_in_degrees_to_neighbor) &
-                    (angle_in_degrees_to_neighbor <= Settings.NORTHEAST_DEGREES)))
-                | ((Settings.NORTHWEST_DEGREES <= angle_in_degrees_to_neighbor) &
-                    (angle_in_degrees_to_neighbor <= Settings.SOUTHWEST_DEGREES)),
-                "east_west",
-                "north_south"
+        np.where(
+            (
+                (
+                    (Settings.SOUTHEAST_DEGREES <= angle_in_degrees_to_neighbor)
+                    & (angle_in_degrees_to_neighbor <= Settings.DEGREES_IN_CIRCLE)
+                )
+                | (
+                    (Settings.START_OF_CIRCLE_DEGREES <= angle_in_degrees_to_neighbor)
+                    & (angle_in_degrees_to_neighbor <= Settings.NORTHEAST_DEGREES)
+                )
+            )
+            | (
+                (Settings.NORTHWEST_DEGREES <= angle_in_degrees_to_neighbor)
+                & (angle_in_degrees_to_neighbor <= Settings.SOUTHWEST_DEGREES)
             ),
-            index=angle_in_degrees_to_neighbor.index
+            "east_west",
+            "north_south",
+        ),
+        index=angle_in_degrees_to_neighbor.index,
     )
 
 
-def standard_deviation_building_heights(building_id: pd.Series,
-                                        building_height_neighbor: pd.Series) -> pd.Series:
+def standard_deviation_building_heights(
+    building_id: pd.Series, building_height_neighbor: pd.Series
+) -> pd.Series:
     """Standard deviation of building heights for each target building when considering themselves
     and those that are within their buffered area.
 
@@ -421,8 +453,9 @@ def standard_deviation_building_heights(building_id: pd.Series,
 
     """
 
-    df = pd.DataFrame({Settings.id_field: building_id,
-                       Settings.neighbor_height_field: building_height_neighbor})
+    df = pd.DataFrame(
+        {Settings.id_field: building_id, Settings.neighbor_height_field: building_height_neighbor}
+    )
 
     return df.groupby(Settings.id_field)[Settings.neighbor_height_field].std().fillna(0)
 
@@ -438,10 +471,14 @@ def standardize_column_names_df(input_shapefile_df: gpd.GeoDataFrame) -> gpd.Geo
     """
 
     # standardize field names from data to reference names in code
-    input_shapefile_df.rename(columns={Settings.data_id_field_name: Settings.id_field,
-                                       Settings.data_height_field_name: Settings.height_field,
-                                       Settings.data_geometry_field_name: Settings.geometry_field},
-                              inplace=True)
+    input_shapefile_df.rename(
+        columns={
+            Settings.data_id_field_name: Settings.id_field,
+            Settings.data_height_field_name: Settings.height_field,
+            Settings.data_geometry_field_name: Settings.geometry_field,
+        },
+        inplace=True,
+    )
 
     return input_shapefile_df
 
@@ -468,13 +505,13 @@ def total_plan_area(total_plan_area_geometry: gpd.GeoSeries) -> pd.DataFrame:
     :return:                            Pandas DataFrame with total plan area for each building.
 
     """
-    
+
     return total_plan_area_geometry.area
 
 
-def total_plan_area_geometry(building_polygon_geometry: pd.Series,
-                             radius: int = 100,
-                             cap_style: int = 3) -> pd.Series:
+def total_plan_area_geometry(
+    building_polygon_geometry: pd.Series, radius: int = 100, cap_style: int = 3
+) -> pd.Series:
     """Calculate the geometry of the total plan area which is the buffer of the building polygon for the desired radius and cap style.
 
     :param building_polygon_geometry:               Polygon geometry of the building.
@@ -505,17 +542,20 @@ def wall_angle_direction_length(geometry: gpd.GeoSeries) -> pd.DataFrame:
     :return:                            Pandas DataFrame with wall angle, direction, and length for each building.
 
     """
-    
-    wall_angle, wall_direction, wall_length = [[]] * geometry.size, [[]] * geometry.size, [[]] * geometry.size
+
+    wall_angle, wall_direction, wall_length = (
+        [[]] * geometry.size,
+        [[]] * geometry.size,
+        [[]] * geometry.size,
+    )
 
     for building in range(geometry.size):
         points_in_polygon = geometry.values[building].exterior.xy
 
         # The origin point is the same as the end point.
-        n_sides = len(points_in_polygon[0]) - 1
+        len(points_in_polygon[0]) - 1
 
         for index, item in enumerate(zip(points_in_polygon[0], points_in_polygon[1])):
-
             x, y = item
 
             # Store the first set of coordinates.
@@ -528,19 +568,37 @@ def wall_angle_direction_length(geometry: gpd.GeoSeries) -> pd.DataFrame:
                 wall_angle[building].append(np.degrees(np.arctan2(y2 - y1, x2 - x1)))
 
                 # For each direction, the start degree (from counterclockwise) is included (<=) and the end degree is not included (<).
-                if Settings.NORTHEAST_DEGREES <= wall_angle[building][index-1] < Settings.NORTHWEST_DEGREES:
+                if (
+                    Settings.NORTHEAST_DEGREES
+                    <= wall_angle[building][index - 1]
+                    < Settings.NORTHWEST_DEGREES
+                ):
                     wall_direction[building].append(Settings.west)
-                elif Settings.SOUTHEAST_DEGREES_ARCTAN <= wall_angle[building][index-1] < Settings.NORTHEAST_DEGREES:
+                elif (
+                    Settings.SOUTHEAST_DEGREES_ARCTAN
+                    <= wall_angle[building][index - 1]
+                    < Settings.NORTHEAST_DEGREES
+                ):
                     wall_direction[building].append(Settings.north)
-                elif Settings.SOUTHWEST_DEGREES_ARCTAN <= wall_angle[building][index-1] < Settings.SOUTHEAST_DEGREES_ARCTAN:
+                elif (
+                    Settings.SOUTHWEST_DEGREES_ARCTAN
+                    <= wall_angle[building][index - 1]
+                    < Settings.SOUTHEAST_DEGREES_ARCTAN
+                ):
                     wall_direction[building].append(Settings.east)
                 else:
                     wall_direction[building].append(Settings.south)
 
-                wall_length[building].append(np.sqrt((x2 - x1)**2 + (y2 - y1)**2))
+                wall_length[building].append(np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2))
 
                 # Reset start coordinates.
                 x1, y1 = x, y
 
-    return pd.concat([pd.Series(wall_angle, name=Settings.wall_angle), pd.Series(wall_direction, name=Settings.wall_direction), pd.Series(wall_length, name=Settings.wall_length)], axis=1)
-
+    return pd.concat(
+        [
+            pd.Series(wall_angle, name=Settings.wall_angle),
+            pd.Series(wall_direction, name=Settings.wall_direction),
+            pd.Series(wall_length, name=Settings.wall_length),
+        ],
+        axis=1,
+    )

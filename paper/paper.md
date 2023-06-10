@@ -27,7 +27,7 @@ We present the `naturf` Python package... [Figure 1].
 ![This is a figure.](figure_1.png)
 
 # Statement of Need
-You really need `naturf` because of something that was published in @vernon2018cerf and other reasons.  
+You really need `naturf` because of something that was published in @vernon2018cerf and other reasons.
 
 # Design and Functionality
 We have a quickstarter and some documentation here for you [documentation](https://immm-sfa.github.io/naturf/).

@@ -1,7 +1,4 @@
-
-
 class Settings:
-
     BUILDING_HEIGHT_INTERVAL = 5
     CONSTANT_NEG_04 = -0.4
     CONSTANT_0193 = 0.193
@@ -51,14 +48,16 @@ class Settings:
     target_centroid_field = f"{centroid_field}_target"
     neighbor_centroid_field = f"{centroid_field}_neighbor"
 
-    spatial_join_list = [target_height_field,
-                         neighbor_height_field,
-                         target_id_field,
-                         neighbor_id_field,
-                         target_area_field,
-                         neighbor_area_field,
-                         target_geometry_field,
-                         neighbor_geometry_field]
+    spatial_join_list = [
+        target_height_field,
+        neighbor_height_field,
+        target_id_field,
+        neighbor_id_field,
+        target_area_field,
+        neighbor_area_field,
+        target_geometry_field,
+        neighbor_geometry_field,
+    ]
 
     wall_angle = "wall_angle"
     wall_direction = "wall_direction"
@@ -67,4 +66,3 @@ class Settings:
     east = "east"
     south = "south"
     west = "west"
-

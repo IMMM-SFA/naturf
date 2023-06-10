@@ -7,12 +7,7 @@ import naturf.nodes as nodes
 
 
 class Model:
-
-    def __init__(self,
-                 inputs: dict,
-                 outputs: List[str],
-                 **kwargs):
-
+    def __init__(self, inputs: dict, outputs: List[str], **kwargs):
         # dictionary of parameter inputs required to construct the DAG
         self.inputs = inputs
 
@@ -30,18 +25,14 @@ class Model:
 
         return df
 
-    def graph(self,
-              view: bool = True,
-              output_file_path: Union[str, None] = None):
+    def graph(self, view: bool = True, output_file_path: Union[str, None] = None):
         """Show the DAG."""
 
-        self.dr.visualize_execution(final_vars=self.outputs,
-                                    output_file_path=output_file_path,
-                                    render_kwargs={'view': view})
+        self.dr.visualize_execution(
+            final_vars=self.outputs, output_file_path=output_file_path, render_kwargs={"view": view}
+        )
 
     def list_parameters(self):
         """List all available parameters."""
 
         return self.dr.list_available_variables()
-
-
