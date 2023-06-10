@@ -12,7 +12,7 @@ from typing import List
 
 from naturf.driver import Model
 import naturf.nodes as nodes
-from .config import Settings
+from naturf.config import Settings
 
 
 class TestNodes(unittest.TestCase):
@@ -65,7 +65,7 @@ class TestNodes(unittest.TestCase):
             name: str
             target_input: List[Point]
             neighbor_input: List[Point]
-            expected: List[int]
+            expected: List[int | float | str]
 
         testcases = [
             TestCase(
@@ -132,7 +132,6 @@ class TestNodes(unittest.TestCase):
             pd.testing.assert_series_equal(
                 expected,
                 actual,
-                "failed test {} expected {}, actual {}".format(case.name, expected, actual),
             )
 
     def test_orientation_to_neighbor(self):
@@ -141,8 +140,8 @@ class TestNodes(unittest.TestCase):
         @dataclass
         class TestCase:
             name: str
-            input: List[int]
-            expected: List[int]
+            input: List[int | float]
+            expected: List[int | str]
 
         east_west = "east_west"
         north_south = "north_south"
@@ -160,9 +159,7 @@ class TestNodes(unittest.TestCase):
         for case in testcases:
             actual = nodes.orientation_to_neighbor(pd.Series(case.input))
             expected = pd.Series(case.expected)
-            pd.testing.assert_series_equal(
-                expected, actual, f"failed test {case.name} expected {expected}, actual {actual}"
-            )
+            pd.testing.assert_series_equal(expected, actual)
 
     def test_wall_angle_direction_length(self):
         """Test that the function wall_angle_direction_length returns the correct angle, direction, and length."""
@@ -191,24 +188,26 @@ class TestNodes(unittest.TestCase):
             TestCase(
                 name="square",
                 input=[Polygon(polygon_exterior)],
-                expected=[
-                    pd.concat(
-                        pd.Series([0.0, -90.0, 180.0, 90.0], name=wall_angle),
-                        pd.Series([north, east, south, west], name=wall_direction),
-                        pd.Series([1.0, 1.0, 1.0, 1.0], name=wall_length),
-                    )
-                ],
+                expected=pd.concat(
+                    [
+                        pd.Series([[0.0, -90.0, 180.0, 90.0]], name=wall_angle),
+                        pd.Series([[north, east, south, west]], name=wall_direction),
+                        pd.Series([[1.0, 1.0, 1.0, 1.0]], name=wall_length),
+                    ],
+                    axis=1,
+                ),
             ),
             TestCase(
                 name="square with inner ring",
                 input=[Polygon(polygon_exterior, [polygon_interior])],
-                expected=[
-                    pd.concat(
-                        pd.Series([0.0, -90.0, 180.0, 90.0], name=wall_angle),
-                        pd.Series([north, east, south, west], name=wall_direction),
-                        pd.Series([1.0, 1.0, 1.0, 1.0], name=wall_length),
-                    )
-                ],
+                expected=pd.concat(
+                    [
+                        pd.Series([[0.0, -90.0, 180.0, 90.0]], name=wall_angle),
+                        pd.Series([[north, east, south, west]], name=wall_direction),
+                        pd.Series([[1.0, 1.0, 1.0, 1.0]], name=wall_length),
+                    ],
+                    axis=1,
+                ),
             ),
             TestCase(
                 name="45 degree triangle",
@@ -221,15 +220,16 @@ class TestNodes(unittest.TestCase):
                         ]
                     )
                 ],
-                expected=[
-                    pd.concat(
-                        pd.Series([45.0, -90.0, 180.0], name=wall_angle),
-                        pd.Series([west, east, south], name=wall_direction),
+                expected=pd.concat(
+                    [
+                        pd.Series([[45.0, 180.0, -90.0]], name=wall_angle),
+                        pd.Series([[west, south, east]], name=wall_direction),
                         pd.Series(
-                            [1.0, square_root_one_half, square_root_one_half], name=wall_length
+                            [[1.0, square_root_one_half, square_root_one_half]], name=wall_length
                         ),
-                    )
-                ],
+                    ],
+                    axis=1,
+                ),
             ),
             TestCase(
                 name="135 degree triangle",
@@ -242,15 +242,16 @@ class TestNodes(unittest.TestCase):
                         ]
                     )
                 ],
-                expected=[
-                    pd.concat(
-                        pd.Series([135.0, 0.0, -90.0], name=wall_angle),
-                        pd.Series([south, north, east], name=wall_direction),
+                expected=pd.concat(
+                    [
+                        pd.Series([[135.0, 0.0, -90.0]], name=wall_angle),
+                        pd.Series([[south, north, east]], name=wall_direction),
                         pd.Series(
-                            [1.0, square_root_one_half, square_root_one_half], name=wall_length
+                            [[1.0, square_root_one_half, square_root_one_half]], name=wall_length
                         ),
-                    )
-                ],
+                    ],
+                    axis=1,
+                ),
             ),
             TestCase(
                 name="225 degree triangle",
@@ -263,15 +264,16 @@ class TestNodes(unittest.TestCase):
                         ]
                     )
                 ],
-                expected=[
-                    pd.concat(
-                        pd.Series([-135.0, 90.0, 0.0], name=wall_angle),
-                        pd.Series([east, west, north], name=wall_direction),
+                expected=pd.concat(
+                    [
+                        pd.Series([[-135.0, 90.0, 0.0]], name=wall_angle),
+                        pd.Series([[east, west, north]], name=wall_direction),
                         pd.Series(
-                            [1.0, square_root_one_half, square_root_one_half], name=wall_length
+                            [[1.0, square_root_one_half, square_root_one_half]], name=wall_length
                         ),
-                    )
-                ],
+                    ],
+                    axis=1,
+                ),
             ),
             TestCase(
                 name="325 degree triangle",
@@ -284,26 +286,23 @@ class TestNodes(unittest.TestCase):
                         ]
                     )
                 ],
-                expected=[
-                    pd.concat(
-                        pd.Series([-45.0, 180.0, 90.0], name=wall_angle),
-                        pd.Series([north, south, west], name=wall_direction),
+                expected=pd.concat(
+                    [
+                        pd.Series([[-45.0, 180.0, 90.0]], name=wall_angle),
+                        pd.Series([[north, south, west]], name=wall_direction),
                         pd.Series(
-                            [1.0, square_root_one_half, square_root_one_half], name=wall_length
+                            [[1.0, square_root_one_half, square_root_one_half]], name=wall_length
                         ),
-                    )
-                ],
+                    ],
+                    axis=1,
+                ),
             ),
         ]
 
         for case in testcases:
-            actual = nodes.wall_angle_direction_length(gpd.GeoSeries(case.target_input))
-            expected = pd.Series(case.expected)
-            pd.testing.assert_series_equal(
-                expected,
-                actual,
-                "failed test {} expected {}, actual {}".format(case.name, expected, actual),
-            )
+            actual = nodes.wall_angle_direction_length(gpd.GeoSeries(case.input))
+            expected = case.expected
+            pd.testing.assert_frame_equal(expected, actual)
 
 
 if __name__ == "__main__":
