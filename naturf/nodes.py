@@ -511,7 +511,7 @@ def total_plan_area(total_plan_area_geometry: gpd.GeoSeries) -> pd.DataFrame:
 
 def total_plan_area_geometry(
     building_polygon_geometry: pd.Series, radius: int = 100, cap_style: int = 3
-) -> pd.Series:
+) -> gpd.GeoSeries:
     """Calculate the geometry of the total plan area which is the buffer of the building polygon for the desired radius and cap style.
 
     :param building_polygon_geometry:               Polygon geometry of the building.
