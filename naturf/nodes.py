@@ -171,6 +171,35 @@ def average_direction_distance(
     return df
 
 
+def average_distance_between_buildings(
+    building_id: pd.Series, distance_to_neighbor_by_centroid: pd.Series
+) -> pd.Series:
+    """Calculate the average distance from the target building to all neighboring buildings.
+
+    :param building_id:                         Building ID field.
+    :type building_id:                          pd.Series
+
+    :param distance_to_neighbor_by_centroid:        distance from the target building neighbor to each
+                                                    neighbor building centroid.
+    :type distance_to_neighbor_by_centroid:         pd.Series
+
+    :return:                                        float
+
+    """
+
+    df = pd.DataFrame({"id": building_id, "distance": distance_to_neighbor_by_centroid})
+
+    df = (
+        df.replace(0, np.nan)
+        .groupby("id")["distance"]
+        .mean()
+        .reset_index()
+        .replace(np.nan, Settings.DEFAULT_STREET_WIDTH)
+    )
+
+    return df
+
+
 def building_area(building_polygon_geometry: pd.Series) -> pd.Series:
     """Calculate the area of the polygon geometry.
 
@@ -384,6 +413,24 @@ def grimmond_oke_roughness_length(building_height: pd.Series) -> pd.Series:
     return building_height * Settings.ROUGHNESS_LENGTH_FACTOR
 
 
+def height_to_width_ratio(
+    average_building_heights: pd.Series, average_distance_between_buildings: pd.Series
+) -> pd.Series:
+    """Calculate the height to width ratio for each building.
+
+    :param average_building_heights:           Series of building heights for each target building in the buffered area
+    :type average_building_heights:            pd.Series
+
+    :param average_distance_between_buildings: Series of average distance from each building to all neighboring buildings
+    :type average_distance_between_buildings:  pd.Series
+
+    :return:                                   pd.Series
+
+    """
+
+    return average_building_heights / average_distance_between_buildings
+
+
 def input_shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
     """Import shapefile to GeoDataFrame using only desired columns.
 
@@ -435,6 +482,24 @@ def orientation_to_neighbor(angle_in_degrees_to_neighbor: pd.Series) -> pd.Serie
         ),
         index=angle_in_degrees_to_neighbor.index,
     )
+
+
+def sky_view_factor(
+    building_height: pd.Series, average_distance_between_buildings: pd.Series
+) -> pd.Series:
+    """Calculate the 2D sky view factor for each building.
+
+    :param building_height:                     Building height field.
+    :type building_height:                      pd.Series
+
+    :param average_distance_between_buildings:  Average distance between the target building and all neighboring buildings.
+    :type average_distance_between_buildings:   float
+
+    :return:                                    pd.Series
+
+    """
+
+    return np.cos(np.arctan(building_height / (0.5 * average_distance_between_buildings)))
 
 
 def standard_deviation_building_heights(
