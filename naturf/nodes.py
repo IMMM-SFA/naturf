@@ -277,7 +277,7 @@ def buildings_intersecting_plan_area(
     join_lsuffix: str = "target",
     join_rsuffix: str = "neighbor",
 ) -> gpd.GeoDataFrame:
-    """Conduct a spatial join to get the building centroids that intersect the buffered target buildings.
+    """Conduct a spatial join to get the building areas that intersect the buffered target buildings.
 
     :param building_id:                         Building ID field.
     :type building_id:                          pd.Series
