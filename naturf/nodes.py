@@ -265,7 +265,7 @@ def building_centroid_target(
     return gpd.GeoSeries(building_polygon_geometry_target, crs=target_crs).centroid
 
 
-def buildings_inside_plan_area(
+def buildings_intersecting_plan_area(
     building_id: pd.Series,
     building_height: pd.Series,
     building_polygon_geometry: pd.Series,
