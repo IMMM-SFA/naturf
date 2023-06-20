@@ -265,6 +265,86 @@ def building_centroid_target(
     return gpd.GeoSeries(building_polygon_geometry_target, crs=target_crs).centroid
 
 
+def buildings_inside_plan_area(
+    building_id: pd.Series,
+    building_height: pd.Series,
+    building_polygon_geometry: pd.Series,
+    building_area: pd.Series,
+    total_plan_area_geometry: pd.Series,
+    target_crs: CRS,
+    join_type: str = "left",
+    join_predicate: str = "intersects",
+    join_lsuffix: str = "target",
+    join_rsuffix: str = "neighbor",
+) -> gpd.GeoDataFrame:
+    """Conduct a spatial join to get the building centroids that intersect the buffered target buildings.
+
+    :param building_id:                         Building ID field.
+    :type building_id:                          pd.Series
+
+    :param building_height:                     Building height field.
+    :type building_height:                      pd.Series
+
+    :param building_polygon_geometry:           Polygon geometry field for the buildings.
+    :type building_polygon_geometry:            pd.Series
+
+    :param building_area:                       Building area field.
+    :type building_area:                        pd.Series
+
+    :param total_plan_area_geometry:            Polygon geometry of the buffered building polygon.
+    :type total_plan_area_geometry:             pd.Series
+
+    :param target_crs:                          Coordinate reference system field of the parent geometry.
+    :type target_crs:                           pd.Series
+
+    :param join_type:                           Type of join desired.
+                                                DEFAULT: `left`
+    :type join_type:                            str
+
+    :param join_predicate:                      Selected topology of join.
+                                                DEFAULT: `intersects`
+    :type join_predicate:                       str
+
+    :param join_lsuffix:                        Suffix of the left object in the join.
+                                                DEFAULT: `target`
+    :type join_lsuffix:                         str
+
+    :param join_rsuffix:                        Suffix of the right object in the join.
+                                                DEFAULT: `neighbor`
+    :type join_rsuffix:                         str
+
+    :return:                                    GeoDataFrame of building areas that intersect the buffered target
+                                                buildings and their attributes.
+
+    """
+
+    df = pd.DataFrame(
+        {
+            Settings.id_field: building_id,
+            Settings.height_field: building_height,
+            Settings.area_field: building_area,
+            Settings.geometry_field: building_polygon_geometry,
+            Settings.buffered_field: total_plan_area_geometry,
+        }
+    )
+
+    # create left and right geodataframes
+    left_gdf = gpd.GeoDataFrame(df, geometry=Settings.buffered_field, crs=target_crs)
+    right_gdf = gpd.GeoDataFrame(df, geometry=Settings.geometry_field, crs=target_crs)
+
+    # spatially join the building centroids to the target buffered areas
+    xdf = gpd.sjoin(
+        left_df=left_gdf,
+        right_df=right_gdf,
+        how=join_type,
+        predicate=join_predicate,
+        lsuffix=join_lsuffix,
+        rsuffix=join_rsuffix,
+    )
+
+    return xdf
+
+
 def distance_to_neighbor_by_centroid(
     building_centroid_target: gpd.GeoSeries, building_centroid_neighbor: gpd.GeoSeries
 ) -> pd.Series:
