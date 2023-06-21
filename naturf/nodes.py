@@ -189,9 +189,10 @@ def average_distance_between_buildings(
 
     df = pd.DataFrame({"id": building_id, "distance": distance_to_neighbor_by_centroid})
 
+    df["distance"] = df.distance.replace(0, np.nan)
+
     df = (
-        df.replace(0, np.nan)
-        .groupby("id")["distance"]
+        df.groupby("id")["distance"]
         .mean()
         .reset_index()
         .replace(np.nan, Settings.DEFAULT_STREET_WIDTH)
