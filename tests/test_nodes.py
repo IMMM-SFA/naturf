@@ -304,6 +304,23 @@ class TestNodes(unittest.TestCase):
             expected = case.expected
             pd.testing.assert_frame_equal(expected, actual)
 
+    def test_average_distance_between_buildings(self):
+        "Test that the function average_distance_between_buildings returns the correct distance."
+
+        ids = pd.Series([0, 1, 2, 3, 4])
+        index = pd.Index([0, 0, 1, 1, 2, 2, 3, 3, 3, 4])
+        distance = pd.Series([1, 2, 1, 3, 1, 1, 3, 0, 3, 0], index)
+
+        default_street_width = Settings.DEFAULT_STREET_WIDTH
+
+        expected = pd.DataFrame(
+            {"id": ids, "distance": pd.Series([1.5, 2.0, 1.0, 3.0, default_street_width])}
+        )
+
+        actual = nodes.average_distance_between_buildings(ids, distance)
+
+        pd.testing.assert_frame_equal(expected, actual)
+
 
 if __name__ == "__main__":
     unittest.main()
