@@ -32,7 +32,7 @@ class Settings:
 
     id_field = "building_id"
     height_field = "building_height"
-    geometry_field = "building_polygon_geometry"
+    geometry_field = "building_geometry"
     area_field = "building_area"
     centroid_field = "building_centroid"
     buffered_field = "building_buffered"
