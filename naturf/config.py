@@ -49,6 +49,8 @@ class Settings:
     target_centroid_field = f"{centroid_field}_target"
     neighbor_centroid_field = f"{centroid_field}_neighbor"
 
+    target_buffered_field = f"{buffered_field}_target"
+
     spatial_join_list = [
         target_height_field,
         neighbor_height_field,

@@ -355,6 +355,62 @@ def buildings_intersecting_plan_area(
     return gpd.GeoDataFrame(xdf).set_geometry(Settings.geometry_field)
 
 
+def building_plan_area(
+    buildings_intersecting_plan_area: gpd.GeoDataFrame,
+    join_predicate: str = "intersection",
+    join_rsuffix: str = "neighbor",
+) -> pd.Series:
+    """Calculate the building plan area from the GeoDataFrame of buildings intersecting the plan area.
+
+    :param buildings_intersecting_plan_area:    Geometry field for the neighboring buildings from the spatially
+                                                joined data.
+    :type buildings_intersecting_plan_area:     gpd.GeoDataFrame
+
+    :param join_predicate:                      Selected topology of join.
+                                                DEFAULT: `intersection`
+    :type join_predicate:                       str
+
+    :param join_rsuffix:                        Suffix of the right object in the join.
+                                                DEFAULT: `neighbor`
+    :type join_rsuffix:                         str
+
+    :return:                                    The building plan area for each unique building in the
+                                                `buildings_intersecting_plan_area` GeoDataFrame.
+
+    """
+
+    building_plan_area = []
+    index = 0
+
+    for target_building_id in np.sort(buildings_intersecting_plan_area.building_id_target.unique()):
+        # get dataframe with any building that intersects the target_building_id plan area.
+        target_building_gdf = buildings_intersecting_plan_area.loc[
+            buildings_intersecting_plan_area[Settings.target_id_field] == target_building_id
+        ].reset_index()
+
+        # create GeoDataFrames with building and neighbor info
+        target_gdf = (
+            target_building_gdf[[Settings.target_id_field, Settings.target_buffered_field]]
+            .set_geometry(Settings.target_buffered_field)
+            .drop_duplicates()
+        )
+        neighbor_gdf = target_building_gdf[
+            [f"index_{join_rsuffix}", Settings.neighbor_geometry_field]
+        ].set_geometry(Settings.neighbor_geometry_field)
+
+        # create new GeoDataFrame with area of intersection
+        intersection_gdf = gpd.overlay(
+            target_gdf, neighbor_gdf, how=join_predicate, keep_geom_type=False
+        )
+
+        # sum up area of intersection and add to output list
+        building_plan_area.append(intersection_gdf[Settings.data_geometry_field_name].area.sum())
+
+        index += 1
+
+    return pd.Series(building_plan_area)
+
+
 def distance_to_neighbor_by_centroid(
     building_centroid_target: gpd.GeoSeries, building_centroid_neighbor: gpd.GeoSeries
 ) -> pd.Series:
