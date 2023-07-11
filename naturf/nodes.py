@@ -187,15 +187,27 @@ def average_distance_between_buildings(
 
     """
 
-    df = pd.DataFrame({"id": building_id, "distance": distance_to_neighbor_by_centroid})
+    df = pd.DataFrame(
+        {
+            Settings.id_field: building_id,
+            Settings.distance_to_neighbor_by_centroid: distance_to_neighbor_by_centroid,
+        }
+    )
 
-    df["distance"] = df.distance.replace(0, np.nan)
+    df[Settings.distance_to_neighbor_by_centroid] = df[
+        Settings.distance_to_neighbor_by_centroid
+    ].replace(0, np.nan)
 
     df = (
-        df.groupby("id")["distance"]
+        df.groupby(Settings.id_field)[Settings.distance_to_neighbor_by_centroid]
         .mean()
         .reset_index()
         .replace(np.nan, Settings.DEFAULT_STREET_WIDTH)
+        .rename(
+            columns={
+                Settings.distance_to_neighbor_by_centroid: Settings.average_distance_between_buildings
+            }
+        )
     )
 
     return df
@@ -721,7 +733,7 @@ def total_plan_area(total_plan_area_geometry: gpd.GeoSeries) -> pd.DataFrame:
 
 
 def total_plan_area_geometry(
-    building_geometry: pd.Series, radius: int = 100, cap_style: int = 3
+    building_geometry: pd.Series, radius: int = Settings.RADIUS, cap_style: int = 3
 ) -> gpd.GeoSeries:
     """Calculate the geometry of the total plan area which is the buffer of the building for the desired radius and cap style.
 
@@ -729,7 +741,7 @@ def total_plan_area_geometry(
     :type building_geometry:                        pd.Series
 
     :param radius:                                  The radius of the buffer.
-                                                    100 (default)
+                                                    100 (default, set in config.py)
     :type radius:                                   int
 
     :param cap_style:                               The shape of the buffer.

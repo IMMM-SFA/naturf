@@ -34,9 +34,9 @@ class Settings:
     height_field = "building_height"
     geometry_field = "building_geometry"
     area_field = "building_area"
+    building_plan_area_field = "building_plan_area"
     centroid_field = "building_centroid"
     buffered_field = "building_buffered"
-    radius = 100
 
     target_height_field = f"{height_field}_target"
     neighbor_height_field = f"{height_field}_neighbor"
@@ -50,6 +50,9 @@ class Settings:
     neighbor_centroid_field = f"{centroid_field}_neighbor"
 
     target_buffered_field = f"{buffered_field}_target"
+
+    distance_to_neighbor_by_centroid = "distance_to_neighbor_by_centroid"
+    average_distance_between_buildings = "average_distance_between_buildings"
 
     spatial_join_list = [
         target_height_field,
@@ -69,3 +72,7 @@ class Settings:
     east = "east"
     south = "south"
     west = "west"
+
+    grimmond_oke_displacement_height = "grimmond_oke_displacement_height"
+    grimmond_oke_roughness_length = "grimmond_oke_roughness_length"
+    sky_view_factor = "sky_view_factor"
