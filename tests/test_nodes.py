@@ -475,7 +475,7 @@ class TestNodes(unittest.TestCase):
 
         for case in testcases:
             actual = nodes.buildings_intersecting_plan_area(
-                building_id, building_height, building_area, case.input, crs
+                building_id, building_height, building_geometry, building_area, case.input, crs
             )
             expected = case.expected
             pd.testing.assert_series_equal(
