@@ -326,6 +326,164 @@ class TestNodes(unittest.TestCase):
 
         pd.testing.assert_frame_equal(expected, actual)
 
+    def test_buildings_intersecting_plan_area(self):
+        """Test that the function buildings_intersecting_plan_area returns the correct intersecting buildings."""
+
+        polygon1 = Polygon([[0, 0], [0, 1], [1, 1], [1, 0]])
+        polygon2 = Polygon([[3, 3], [3, 4], [4, 4], [4, 3]])
+        building_id = pd.Series([0, 1])
+        building_height = pd.Series([5, 10])
+        building_geometry = pd.Series([polygon1, polygon2])
+        building_area = pd.Series([polygon1.area, polygon2.area])
+        crs = "epsg:3857"
+
+        total_plan_area_geometry_no_overlap = pd.Series([polygon1.buffer(1), polygon2.buffer(1)])
+        total_plan_area_geometry_some_overlap = pd.Series(
+            [polygon1.buffer(3.5), polygon2.buffer(3.5)]
+        )
+        total_plan_area_geometry_total_overlap = pd.Series([polygon1.buffer(5), polygon2.buffer(5)])
+
+        no_overlap_output_gdf = gpd.GeoDataFrame(
+            {
+                "building_id_neighbor": building_id,
+                "building_id_target": building_id,
+                "building_height_target": building_height,
+                "building_area_target": building_area,
+                "building_geometry": building_geometry,
+                "building_buffered_target": gpd.GeoSeries(total_plan_area_geometry_no_overlap),
+                "index_neighbor": building_id,
+                "building_height_neighbor": building_height,
+                "building_area_neighbor": building_area,
+                "building_buffered_neighbor": total_plan_area_geometry_no_overlap,
+                "building_geometry_neighbor": gpd.GeoSeries(building_geometry),
+            },
+            geometry="building_geometry",
+        ).set_index("building_id_neighbor")
+
+        some_overlap_output_gdf = gpd.GeoDataFrame(
+            {
+                "building_id_neighbor": pd.Series([0, 0, 1, 1]),
+                "building_id_target": pd.Series([0, 1, 0, 1]),
+                "building_height_target": pd.Series([5, 10, 5, 10]),
+                "building_area_target": pd.Series([1.0, 1.0, 1.0, 1.0]),
+                "building_geometry": gpd.GeoSeries(
+                    [
+                        building_geometry[0],
+                        building_geometry[1],
+                        building_geometry[0],
+                        building_geometry[1],
+                    ]
+                ),
+                "building_buffered_target": gpd.GeoSeries(
+                    [
+                        total_plan_area_geometry_some_overlap[0],
+                        total_plan_area_geometry_some_overlap[1],
+                        total_plan_area_geometry_some_overlap[0],
+                        total_plan_area_geometry_some_overlap[1],
+                    ]
+                ),
+                "index_neighbor": pd.Series([0, 0, 1, 1]),
+                "building_height_neighbor": pd.Series([5, 5, 10, 10]),
+                "building_area_neighbor": pd.Series([1.0, 1.0, 1.0, 1.0]),
+                "building_buffered_neighbor": pd.Series(
+                    [
+                        total_plan_area_geometry_some_overlap[0],
+                        total_plan_area_geometry_some_overlap[0],
+                        total_plan_area_geometry_some_overlap[1],
+                    ]
+                ),
+                "building_geometry_neighbor": gpd.GeoSeries(
+                    [
+                        building_geometry[0],
+                        building_geometry[0],
+                        building_geometry[1],
+                        building_geometry[1],
+                    ]
+                ),
+            },
+            geometry="building_geometry",
+        ).set_index("building_id_neighbor")
+
+        total_overlap_output_gdf = gpd.GeoDataFrame(
+            {
+                "building_id_neighbor": pd.Series([0, 0, 1, 1]),
+                "building_id_target": pd.Series([0, 1, 0, 1]),
+                "building_height_target": pd.Series([5, 10, 5, 10]),
+                "building_area_target": pd.Series([1.0, 1.0, 1.0, 1.0]),
+                "building_geometry": gpd.GeoSeries(
+                    [
+                        building_geometry[0],
+                        building_geometry[1],
+                        building_geometry[0],
+                        building_geometry[1],
+                    ]
+                ),
+                "building_buffered_target": gpd.GeoSeries(
+                    [
+                        total_plan_area_geometry_total_overlap[0],
+                        total_plan_area_geometry_total_overlap[1],
+                        total_plan_area_geometry_total_overlap[0],
+                        total_plan_area_geometry_total_overlap[1],
+                    ]
+                ),
+                "index_neighbor": pd.Series([0, 0, 1, 1]),
+                "building_height_neighbor": pd.Series([5, 5, 10, 10]),
+                "building_area_neighbor": pd.Series([1.0, 1.0, 1.0, 1.0]),
+                "building_buffered_neighbor": pd.Series(
+                    [
+                        total_plan_area_geometry_total_overlap[0],
+                        total_plan_area_geometry_total_overlap[0],
+                        total_plan_area_geometry_total_overlap[1],
+                        total_plan_area_geometry_total_overlap[1],
+                    ]
+                ),
+                "building_geometry_neighbor": gpd.GeoSeries(
+                    [
+                        building_geometry[0],
+                        building_geometry[0],
+                        building_geometry[1],
+                        building_geometry[1],
+                    ]
+                ),
+            },
+            geometry="building_geometry",
+        ).set_index("building_id_neighbor")
+
+        @dataclass
+        class TestCase:
+            name: str
+            input: pd.Series
+            expected: gpd.GeoDataFrame
+
+        testcases = [
+            TestCase(
+                name="no overlap",
+                input=total_plan_area_geometry_no_overlap,
+                expected=no_overlap_output_gdf,
+            ),
+            TestCase(
+                name="some overlap",
+                input=total_plan_area_geometry_some_overlap,
+                expected=some_overlap_output_gdf,
+            ),
+            TestCase(
+                name="total overlap",
+                input=total_plan_area_geometry_total_overlap,
+                expected=total_overlap_output_gdf,
+            ),
+        ]
+
+        for case in testcases:
+            actual = nodes.buildings_intersecting_plan_area(
+                building_id, building_height, building_area, case.input, crs
+            )
+            expected = case.expected
+            pd.testing.assert_series_equal(
+                expected,
+                actual,
+                "failed test {} expected {}, actual {}".format(case.name, expected, actual),
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
