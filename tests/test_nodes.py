@@ -478,7 +478,7 @@ class TestNodes(unittest.TestCase):
                 building_id, building_height, building_geometry, building_area, case.input, crs
             )
             expected = case.expected
-            pd.testing.assert_series_equal(
+            pd.testing.assert_frame_equal(
                 expected,
                 actual,
                 "failed test {} expected {}, actual {}".format(case.name, expected, actual),
