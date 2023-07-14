@@ -6,7 +6,7 @@ from dataclasses import dataclass
 import numpy as np
 import geopandas as gpd
 import pandas as pd
-from shapely.geometry import Point, Polygon, BufferJoinStyle
+from shapely import Point, Polygon, BufferJoinStyle
 from typing import List
 
 
