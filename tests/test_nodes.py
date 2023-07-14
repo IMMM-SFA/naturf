@@ -6,7 +6,7 @@ from dataclasses import dataclass
 import numpy as np
 import geopandas as gpd
 import pandas as pd
-from shapely.geometry import Point, Polygon
+from shapely.geometry import Point, Polygon, BufferJoinStyle
 from typing import List
 
 
@@ -496,7 +496,10 @@ class TestNodes(unittest.TestCase):
 
         total_plan_area_geometry_no_overlap = pd.Series([polygon1.buffer(1), polygon2.buffer(1)])
         total_plan_area_geometry_some_overlap = pd.Series(
-            [polygon1.buffer(2.5, join_style="mitre"), polygon2.buffer(2.5, join_style="mitre")]
+            [
+                polygon1.buffer(2.5, join_style=BufferJoinStyle.mitre),
+                polygon2.buffer(2.5, join_style=BufferJoinStyle.mitre),
+            ]
         )
         total_plan_area_geometry_total_overlap = pd.Series([polygon1.buffer(5), polygon2.buffer(5)])
 
