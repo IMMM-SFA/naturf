@@ -187,54 +187,66 @@ def average_distance_between_buildings(
 
     """
 
-    df = pd.DataFrame({"id": building_id, "distance": distance_to_neighbor_by_centroid})
+    df = pd.DataFrame(
+        {
+            Settings.id_field: building_id,
+            Settings.distance_to_neighbor_by_centroid: distance_to_neighbor_by_centroid,
+        }
+    )
 
-    df["distance"] = df.distance.replace(0, np.nan)
+    df[Settings.distance_to_neighbor_by_centroid] = df[
+        Settings.distance_to_neighbor_by_centroid
+    ].replace(0, np.nan)
 
     df = (
-        df.groupby("id")["distance"]
+        df.groupby(Settings.id_field)[Settings.distance_to_neighbor_by_centroid]
         .mean()
         .reset_index()
         .replace(np.nan, Settings.DEFAULT_STREET_WIDTH)
+        .rename(
+            columns={
+                Settings.distance_to_neighbor_by_centroid: Settings.average_distance_between_buildings
+            }
+        )
     )
 
     return df
 
 
-def building_area(building_polygon_geometry: pd.Series) -> pd.Series:
-    """Calculate the area of the polygon geometry.
+def building_area(building_geometry: pd.Series) -> pd.Series:
+    """Calculate the area of the building geometry.
 
-    :param building_polygon_geometry:               Polygon geometry.
-    :type building_polygon_geometry:                pd.Series
-
-    :return:                                        pd.Series
-
-    """
-
-    return building_polygon_geometry.area
-
-
-def building_centroid(building_polygon_geometry: pd.Series) -> pd.Series:
-    """Calculate the centroid of the polygon geometry.
-
-    :param building_polygon_geometry:               Polygon geometry of the building.
-    :type building_polygon_geometry:                pd.Series
+    :param building_geometry:                       Building Geometry.
+    :type building_geometry:                        pd.Series
 
     :return:                                        pd.Series
 
     """
 
-    return building_polygon_geometry.centroid
+    return building_geometry.area
+
+
+def building_centroid(building_geometry: pd.Series) -> pd.Series:
+    """Calculate the centroid of the building geometry.
+
+    :param building_geometry:                       Geometry of the building.
+    :type building_geometry:                        pd.Series
+
+    :return:                                        pd.Series
+
+    """
+
+    return building_geometry.centroid
 
 
 def building_centroid_neighbor(
-    building_polygon_geometry_neighbor: pd.Series, target_crs: CRS
+    building_geometry_neighbor: pd.Series, target_crs: CRS
 ) -> gpd.GeoSeries:
     """Calculate the centroid geometry from the neighbor building geometry.
 
-    :param building_polygon_geometry_neighbor:  Polygon geometry field for the neighboring buildings from the spatially
+    :param building_geometry_neighbor:          Geometry field for the neighboring buildings from the spatially
                                                 joined data.
-    :type building_polygon_geometry_neighbor:   pd.Series
+    :type building_geometry_neighbor:           pd.Series
 
     :param target_crs:                          Coordinate reference system field of the parent geometry.
     :type target_crs:                           pd.Series
@@ -244,17 +256,15 @@ def building_centroid_neighbor(
 
     """
 
-    return gpd.GeoSeries(building_polygon_geometry_neighbor, crs=target_crs).centroid
+    return gpd.GeoSeries(building_geometry_neighbor, crs=target_crs).centroid
 
 
-def building_centroid_target(
-    building_polygon_geometry_target: pd.Series, target_crs: CRS
-) -> gpd.GeoSeries:
+def building_centroid_target(building_geometry_target: pd.Series, target_crs: CRS) -> gpd.GeoSeries:
     """Calculate the centroid geometry from the parent building geometry.
 
-    :param building_polygon_geometry_target:    Polygon geometry field for the target buildings from the spatially
+    :param building_geometry_target:            Geometry field for the target buildings from the spatially
                                                 joined data.
-    :type building_polygon_geometry_target:     pd.Series
+    :type building_geometry_target:             pd.Series
 
     :param target_crs:                          Coordinate reference system field of the parent geometry.
     :type target_crs:                           pd.Series
@@ -263,13 +273,13 @@ def building_centroid_target(
 
     """
 
-    return gpd.GeoSeries(building_polygon_geometry_target, crs=target_crs).centroid
+    return gpd.GeoSeries(building_geometry_target, crs=target_crs).centroid
 
 
 def buildings_intersecting_plan_area(
     building_id: pd.Series,
     building_height: pd.Series,
-    building_polygon_geometry: pd.Series,
+    building_geometry: pd.Series,
     building_area: pd.Series,
     total_plan_area_geometry: pd.Series,
     target_crs: CRS,
@@ -286,13 +296,13 @@ def buildings_intersecting_plan_area(
     :param building_height:                     Building height field.
     :type building_height:                      pd.Series
 
-    :param building_polygon_geometry:           Polygon geometry field for the buildings.
-    :type building_polygon_geometry:            pd.Series
+    :param building_geometry:                   Geometry field for the buildings.
+    :type building_geometry:                    pd.Series
 
     :param building_area:                       Building area field.
     :type building_area:                        pd.Series
 
-    :param total_plan_area_geometry:            Polygon geometry of the buffered building polygon.
+    :param total_plan_area_geometry:            Geometry of the buffered building.
     :type total_plan_area_geometry:             pd.Series
 
     :param target_crs:                          Coordinate reference system field of the parent geometry.
@@ -324,7 +334,7 @@ def buildings_intersecting_plan_area(
             Settings.id_field: building_id,
             Settings.height_field: building_height,
             Settings.area_field: building_area,
-            Settings.geometry_field: building_polygon_geometry,
+            Settings.geometry_field: building_geometry,
             Settings.buffered_field: total_plan_area_geometry,
         }
     )
@@ -333,7 +343,7 @@ def buildings_intersecting_plan_area(
     left_gdf = gpd.GeoDataFrame(df, geometry=Settings.buffered_field, crs=target_crs)
     right_gdf = gpd.GeoDataFrame(df, geometry=Settings.geometry_field, crs=target_crs)
 
-    # spatially join the building centroids to the target buffered areas
+    # spatially join the building areas to the target buffered areas
     xdf = gpd.sjoin(
         left_df=left_gdf,
         right_df=right_gdf,
@@ -343,7 +353,74 @@ def buildings_intersecting_plan_area(
         rsuffix=join_rsuffix,
     )
 
-    return xdf
+    # Add neighbor building geometry
+    xdf = (
+        xdf.set_index(f"{Settings.id_field}_{join_rsuffix}")
+        .join(
+            right_gdf.set_index(Settings.id_field)[Settings.geometry_field].rename(
+                Settings.neighbor_geometry_field
+            )
+        )
+        .sort_index()
+    )
+
+    return gpd.GeoDataFrame(xdf).set_geometry(Settings.geometry_field)
+
+
+def building_plan_area(
+    buildings_intersecting_plan_area: gpd.GeoDataFrame,
+    join_predicate: str = "intersection",
+    join_rsuffix: str = "neighbor",
+) -> pd.Series:
+    """Calculate the building plan area from the GeoDataFrame of buildings intersecting the plan area.
+
+    :param buildings_intersecting_plan_area:    Geometry field for the neighboring buildings from the spatially
+                                                joined data.
+    :type buildings_intersecting_plan_area:     gpd.GeoDataFrame
+
+    :param join_predicate:                      Selected topology of join.
+                                                DEFAULT: `intersection`
+    :type join_predicate:                       str
+
+    :param join_rsuffix:                        Suffix of the right object in the join.
+                                                DEFAULT: `neighbor`
+    :type join_rsuffix:                         str
+
+    :return:                                    The building plan area for each unique building in the
+                                                `buildings_intersecting_plan_area` GeoDataFrame.
+
+    """
+
+    building_plan_area = []
+    index = 0
+
+    for target_building_id in np.sort(buildings_intersecting_plan_area.building_id_target.unique()):
+        # get dataframe with any building that intersects the target_building_id plan area.
+        target_building_gdf = buildings_intersecting_plan_area.loc[
+            buildings_intersecting_plan_area[Settings.target_id_field] == target_building_id
+        ].reset_index()
+
+        # create GeoDataFrames with building and neighbor info
+        target_gdf = (
+            target_building_gdf[[Settings.target_id_field, Settings.target_buffered_field]]
+            .set_geometry(Settings.target_buffered_field)
+            .drop_duplicates()
+        )
+        neighbor_gdf = target_building_gdf[
+            [f"index_{join_rsuffix}", Settings.neighbor_geometry_field]
+        ].set_geometry(Settings.neighbor_geometry_field)
+
+        # create new GeoDataFrame with area of intersection
+        intersection_gdf = gpd.overlay(
+            target_gdf, neighbor_gdf, how=join_predicate, keep_geom_type=False
+        )
+
+        # sum up area of intersection and add to output list
+        building_plan_area.append(intersection_gdf[Settings.data_geometry_field_name].area.sum())
+
+        index += 1
+
+    return pd.Series(building_plan_area)
 
 
 def distance_to_neighbor_by_centroid(
@@ -367,7 +444,7 @@ def distance_to_neighbor_by_centroid(
 @extract_columns(*[Settings.id_field, Settings.height_field, Settings.geometry_field])
 def filter_zero_height_df(standardize_column_names_df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     """Filter out any zero height buildings and reindex the data frame.  Extract the building_id,
-    building_height, and polygon geometry fields to nodes.
+    building_height, and geometry fields to nodes.
 
     :param standardize_column_names_df:             GeoDataFrame of the input shapefile with renamed columns.
     :type standardize_column_names_df:              gpd.GeoDataFrame
@@ -385,7 +462,7 @@ def filter_zero_height_df(standardize_column_names_df: gpd.GeoDataFrame) -> gpd.
 def get_neighboring_buildings_df(
     building_id: pd.Series,
     building_height: pd.Series,
-    building_polygon_geometry: pd.Series,
+    building_geometry: pd.Series,
     building_area: pd.Series,
     building_centroid: pd.Series,
     total_plan_area_geometry: pd.Series,
@@ -403,8 +480,8 @@ def get_neighboring_buildings_df(
     :param building_height:                     Building height field.
     :type building_height:                      pd.Series
 
-    :param building_polygon_geometry:           Polygon geometry field for the buildings.
-    :type building_polygon_geometry:            pd.Series
+    :param building_geometry:                   Geometry field for the buildings.
+    :type building_geometry:                    pd.Series
 
     :param building_area:                       Building area field.
     :type building_area:                        pd.Series
@@ -412,7 +489,7 @@ def get_neighboring_buildings_df(
     :param building_centroid:                   Point centroid geometry of the building.
     :type building_centroid:                    pd.Series
 
-    :param total_plan_area_geometry:            Polygon geometry of the buffered building polygon.
+    :param total_plan_area_geometry:            Geometry of the buffered building.
     :type total_plan_area_geometry:             pd.Series
 
     :param target_crs:                          Coordinate reference system field of the parent geometry.
@@ -445,7 +522,7 @@ def get_neighboring_buildings_df(
             Settings.id_field: building_id,
             Settings.height_field: building_height,
             Settings.area_field: building_area,
-            Settings.geometry_field: building_polygon_geometry,
+            Settings.geometry_field: building_geometry,
             Settings.centroid_field: building_centroid,
             Settings.buffered_field: total_plan_area_geometry,
         }
@@ -626,7 +703,7 @@ def standardize_column_names_df(input_shapefile_df: gpd.GeoDataFrame) -> gpd.Geo
         inplace=True,
     )
 
-    return input_shapefile_df
+    return input_shapefile_df.set_geometry(Settings.geometry_field)
 
 
 def target_crs(input_shapefile_df: gpd.GeoDataFrame) -> CRS:
@@ -656,15 +733,15 @@ def total_plan_area(total_plan_area_geometry: gpd.GeoSeries) -> pd.DataFrame:
 
 
 def total_plan_area_geometry(
-    building_polygon_geometry: pd.Series, radius: int = 100, cap_style: int = 3
+    building_geometry: pd.Series, radius: int = Settings.RADIUS, cap_style: int = 3
 ) -> gpd.GeoSeries:
-    """Calculate the geometry of the total plan area which is the buffer of the building polygon for the desired radius and cap style.
+    """Calculate the geometry of the total plan area which is the buffer of the building for the desired radius and cap style.
 
-    :param building_polygon_geometry:               Polygon geometry of the building.
-    :type building_polygon_geometry:                pd.Series
+    :param building_geometry:                       Geometry of the building.
+    :type building_geometry:                        pd.Series
 
     :param radius:                                  The radius of the buffer.
-                                                    100 (default)
+                                                    100 (default, set in config.py)
     :type radius:                                   int
 
     :param cap_style:                               The shape of the buffer.
@@ -676,7 +753,7 @@ def total_plan_area_geometry(
 
     """
 
-    return building_polygon_geometry.buffer(distance=radius, cap_style=cap_style)
+    return building_geometry.buffer(distance=radius, cap_style=cap_style)
 
 
 def wall_angle_direction_length(geometry: gpd.GeoSeries) -> pd.DataFrame:
