@@ -319,7 +319,12 @@ class TestNodes(unittest.TestCase):
         default_street_width = Settings.DEFAULT_STREET_WIDTH
 
         expected = pd.DataFrame(
-            {"id": ids, "distance": pd.Series([1.5, 2.0, 1.0, 3.0, default_street_width])}
+            {
+                Settings.id_field: ids,
+                Settings.average_distance_between_buildings: pd.Series(
+                    [1.5, 2.0, 1.0, 3.0, default_street_width]
+                ),
+            }
         )
 
         actual = nodes.average_distance_between_buildings(ids, distance)
@@ -389,6 +394,7 @@ class TestNodes(unittest.TestCase):
                     [
                         total_plan_area_geometry_some_overlap[0],
                         total_plan_area_geometry_some_overlap[0],
+                        total_plan_area_geometry_some_overlap[1],
                         total_plan_area_geometry_some_overlap[1],
                     ]
                 ),
