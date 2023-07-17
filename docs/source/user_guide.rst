@@ -120,13 +120,7 @@ Frontal area density is the frontal area of a building at a certain height incre
 
 $FAD = \\frac{FA}{PA}$
 
-<<<<<<< HEAD
-    FAD = \\frac{FA}{TPA}
-
-where, *FAD* is Frontal area density; *FA* is the frontal area of the wall from the current direction and height level in m\ :superscript:'2' \ ; *TPA* is the total plan area in m\ :superscript:'2' \ .
-=======
 where *FAD* is Frontal area density; *FA* is the frontal area of the wall from the current direction and height level in $m^2$; *PA* is the building plan area in $m^2$.
->>>>>>> da39305f4fd2b3fb180a7c30bf6adc89c8f85249
 
 Plan Area Density (61-75)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
