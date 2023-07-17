@@ -13,12 +13,20 @@ Contributors
 Additional Developers
 ^^^^^^^^^^^^^^^^^^^^^
 
+* **Emily Rexer (@erexer)**
+* **Chris R. Vernon (@crvernon)**
 * **Matthew Seals**
 * **Andy Berres (@q-rai)**
-* **Chris R. Vernon (@crvernon)**
-* **Emily Rexer (@erexer)**
+* **Stefan Krawczyk (@skrawcz)**
+* **Elijah ben Izzy**
 
 Product Tester
 ^^^^^^^^^^^^^^
 
 * **Pouya Vahmani** 
+
+Code Formatting
+^^^^^^^^^^^^^^^
+
+* **black (`<https://black.readthedocs.io/en/stable/>`_)**
+* **ruff (`<https://beta.ruff.rs/docs/>`_)**
