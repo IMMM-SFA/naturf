@@ -135,13 +135,7 @@ Plan area density is the ratio of building plan area to the total plan area, cal
 
 $PAD = \\frac{TBA}{PA}$
 
-<<<<<<< HEAD
-    PAD = \frac{BPA}{TPA}
-
-where, *PAD* is the plan area density; *BPA* is the building plan area in m\ :superscript:'2' \ ; *TPA* is the total plan area in m\ :superscript:'2' \ .
-=======
 where, *PAD* is the plan area density; *TBA* is the total area of the buildings within the current building plan area in $m^2$; *PA* is the building plan area in $m^2$.
->>>>>>> da39305f4fd2b3fb180a7c30bf6adc89c8f85249
 
 Rooftop Area Density (76-90)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -193,13 +187,7 @@ The ratio of building surface area and exposed ground area to the total plan are
 
 $CAR = \\frac{BSA + (PA - TBA)}{PA}$
 
-<<<<<<< HEAD
-  CAR = \frac{BSA + (PA - TBA)}{TPA}
-
-where, *BSA* is the building surface area in m\ :superscript:'2' \; *BPA* is the building plan area in m\ :superscript:'2' \ ; *PA* is the total plan area in m\ :superscript:'2' \ .
-=======
 where, *BSA* is the building surface area in $m^2$; *TBA* is the total area of the buildings within the current building plan area in $m^2$; *PA* is the building plan area in $m^2$.
->>>>>>> da39305f4fd2b3fb180a7c30bf6adc89c8f85249
 
 Height-to-Width Ratio (101)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -288,103 +276,3 @@ References
 .. [Macdonald1998] Macdonald, R. W., Griffiths, R. F., & Hall, D. J. (1998). An improved method for the estimation of surface roughness of obstacle arrays. Atmospheric environment, 32(11), 1857-1864.
 
 .. [Raupach1994] Raupach, M. R. (1994). Simplified expressions for vegetation roughness length and zero-plane displacement as functions of canopy height and area index. Boundary-layer meteorology, 71(1), 211-216.
-
-*Everything below will change*
----------------------------------------
-
-
-Key outputs
------------
-
-The following are the outputs and their descriptions from the Pandas DataFrame that is generated when calling ``run()`` to site power plant for all regions in the CONUS for all technologies:
-
-.. list-table::
-    :header-rows: 1
-
-    * - Name
-      - Description
-      - Units
-    * - region_name
-      - Name of region
-      - NA
-    * - tech_id
-      - Technology ID
-      - NA
-    * - tech_name
-      - Technology name
-      - NA
-    * - unit_size_mw
-      - Power plant unit size
-      - MW
-    * - xcoord
-      - X coordinate in the default `CRS <https://spatialreference.org/ref/esri/usa-contiguous-albers-equal-area-conic/>`_
-      - meters
-    * - ycoord
-      - Y coordinate in the default `CRS <https://spatialreference.org/ref/esri/usa-contiguous-albers-equal-area-conic/>`_
-      - meters
-    * - index
-      - Index position in the flattend 2D array
-      - NA
-    * - buffer_in_km
-      - Exclusion buffer around site
-      - km
-    * - sited_year
-      - Year of siting
-      - year
-    * - retirement_year
-      - Year of retirement
-      - year
-    * - lmp_zone
-      - LMP zone ID
-      - NA
-    * - locational_marginal_price_usd_per_mwh
-      - See :ref:`Locational marginal price (LMP)`
-      - $/MWh
-    * - generation_mwh_per_year
-      - See :ref:`Generation (G)`
-      - MWh/yr
-    * - operating_cost_usd_per_year
-      - See :ref:`Operating cost (OC)`
-      - $/yr
-    * - net_operational_value
-      - See :ref:`Net Operating Value`
-      - $/yr
-    * - interconnection_cost
-      - See :ref:`Interconnection Cost`
-      - $/yr
-    * - net_locational_cost
-      - See :ref:`Net Locational Cost`
-      - $/yr
-    * - capacity_factor_fraction
-      - Capacity factor
-      - fraction
-    * - carbon_capture_rate_fraction
-      - Carbon capture rate
-      - fraction
-    * - fuel_co2_content_tons_per_btu
-      - Fuel CO2 content
-      - tons/Btu
-    * - fuel_price_usd_per_mmbtu
-      - Fuel price
-      - $/MMBtu
-    * - fuel_price_esc_rate_fraction
-      - Fuel price escalation rate
-      - fraction
-    * - heat_rate_btu_per_kWh
-      - Heat rate
-      - Btu/kWh
-    * - lifetime_yrs
-      - Technology lifetime
-      - years
-    * - variable_om_usd_per_mwh
-      - Variable operation and maintenance costs of yearly capacity use
-      - $/mWh
-    * - variable_om_esc_rate_fraction
-      - Variable operation and maintenance costs escalation rate
-      - fraction
-    * - carbon_tax_usd_per_ton
-      - Carbon tax
-      - $/ton
-    * - carbon_tax_esc_rate_fraction
-      - Carbon tax escalation rate
-      - fraction
