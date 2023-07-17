@@ -58,37 +58,16 @@ Dependencies
 =============   ================
 Dependency      Minimum Version
 =============   ================
-numpy           1.19.4
-pandas          1.1.4
-rasterio        1.2.3
-xarray          0.16.1
-PyYAML          5.4.1
-requests        2.25.1
+numpy           1.22.4
+pandas          1.4.2
+geocube         0.3.1
+rasterio        1.2.10
+xarray          2022.3.0
 joblib          1.0.1
-matplotlib      3.3.3
-seaborn         0.11.1
-whitebox        1.5.1
 fiona           1.8.19
 pyproj          3.0.1
-rtree           0.9.7
-shapely         1.7.1
-geopandas       0.9.0
+rtree           1.0.0
+shapely         1.8.2, <2
+geopandas       0.10.2
+sf-hamilton[visualization]  1.10
 =============   ================
-
-
-Optional dependencies
----------------------
-
-==================    ================
-Dependency            Minimum Version
-==================    ================
-build                 0.5.1
-nbsphinx              0.8.6
-setuptools            57.0.0
-sphinx                4.0.2
-sphinx-panels         0.6.0
-sphinx-rtd-theme      0.5.2
-twine                 3.4.1
-pytest                6.2.4
-pytest-cov            2.12.1
-==================    ================
