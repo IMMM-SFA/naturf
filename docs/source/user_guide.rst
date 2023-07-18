@@ -112,6 +112,11 @@ Frontal Area
 
 For the urban parameters calculated by **naturf**, frontal area refers to the wall area perpendicular to a given direction for all buildings within the target building's total plan area. 
 
+Assumptions
+^^^^^^^^^^^
+
+Following NUDAPT, **naturf** bins building heights into five meter increments from 0 to 75 meters. Any building with a height greater than 75 meters is considered as ending at 75 meters.
+
 
 Frontal Area Density (1-60)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -186,12 +191,16 @@ where, *BSA* is the building surface area in $m^2$; *TBA* is the total area of t
 Height-to-Width Ratio (101)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ratio of the building height to the street width. **naturf** generalizes this as the ratio of average height of buildings in the total plan area to average distance from the current building to all other buildings in the total plan area. [Burian2003]_ Eq. 18
+The ratio of the building height to the street width. **naturf** generalizes this as the ratio of average height of buildings in the total plan area to average distance from the current building to all other buildings in the total plan area. If a building has no other buildings in its total plan area, the average distance is set to a default value. [Burian2003]_ Eq. 18
+
+$\\overline{\\lambda_s} = \\frac{\\overline{z_h}}{\\overline{W}}
+
+where, $\\overline{\\lambda_s}$ is the average height-to-width ration; $\\overline{z_h}$ is the average building height in m; $\\overline{W}$ is the average distance between buildings.
 
 Sky-View Factor (102)
 ~~~~~~~~~~~~~~~~~~~~~
 
-The fraction of visible sky in a given area. [Dirksen2019]_ Eq. 1
+The fraction of visible sky in a given area. **naturf** generalizes the distance between buildings to be the average distance between the current building and all other buildings in the total plan area.  [Dirksen2019]_ Eq. 1
 
 $SVF = cos(arctan(\\frac{H}{0.5W}))$
 
