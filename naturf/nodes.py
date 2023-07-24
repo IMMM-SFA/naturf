@@ -822,3 +822,42 @@ def wall_angle_direction_length(geometry: gpd.GeoSeries) -> pd.DataFrame:
         ],
         axis=1,
     )
+
+
+def wall_area(wall_angle_direction_length: pd.DataFrame) -> pd.DataFrame:
+    """Calculate the wall angle, direction, and length for each building in a GeoPandas GeoSeries.
+
+    :param wall_angle_direction_length:                Wall angle, direction, and length for a series of buildings.
+    :type wall_angle_direction_length:                 pd.DataFrame
+
+    :return:                                           Pandas DataFrame with wall area for each cardinal direction for each building.
+
+    """
+
+    wall_area_north, wall_area_east, wall_area_south, wall_area_west = (
+        [0] * len(wall_angle_direction_length.index),
+        [0] * len(wall_angle_direction_length.index),
+        [0] * len(wall_angle_direction_length.index),
+        [0] * len(wall_angle_direction_length.index),
+    )
+
+    for index, row in wall_angle_direction_length.iterrows():
+        for j in range(len(row[Settings.wall_direction])):
+            if row[Settings.wall_direction][j] == Settings.north:
+                wall_area_north[index] += row[Settings.wall_length][j]
+            elif row[Settings.wall_direction][j] == Settings.east:
+                wall_area_east[index] += row[Settings.wall_length][j]
+            elif row[Settings.wall_direction][j] == Settings.south:
+                wall_area_south[index] += row[Settings.wall_length][j]
+            else:
+                wall_area_west[index] += row[Settings.wall_length][j]
+
+    return pd.concat(
+        [
+            pd.Series(wall_area_north, name=Settings.wall_area_north),
+            pd.Series(wall_area_east, name=Settings.wall_area_east),
+            pd.Series(wall_area_south, name=Settings.wall_area_south),
+            pd.Series(wall_area_west, name=Settings.wall_area_west),
+        ],
+        axis=1,
+    )
