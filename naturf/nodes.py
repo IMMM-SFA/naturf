@@ -767,16 +767,13 @@ def wall_angle_direction_length(geometry: gpd.GeoSeries) -> pd.DataFrame:
     """
 
     wall_angle, wall_direction, wall_length = (
-        [[]] * geometry.size,
-        [[]] * geometry.size,
-        [[]] * geometry.size,
+        [[] for x in range(geometry.size)],
+        [[] for x in range(geometry.size)],
+        [[] for x in range(geometry.size)],
     )
 
     for building in range(geometry.size):
         points_in_polygon = geometry.values[building].exterior.xy
-
-        # The origin point is the same as the end point.
-        len(points_in_polygon[0]) - 1
 
         for index, item in enumerate(zip(points_in_polygon[0], points_in_polygon[1])):
             x, y = item
