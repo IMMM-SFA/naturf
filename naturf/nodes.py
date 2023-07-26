@@ -282,6 +282,10 @@ def buildings_intersecting_plan_area(
     building_geometry: pd.Series,
     building_area: pd.Series,
     total_plan_area_geometry: pd.Series,
+    wall_length_north: pd.Series,
+    wall_length_east: pd.Series,
+    wall_length_south: pd.Series,
+    wall_length_west: pd.Series,
     target_crs: CRS,
     join_type: str = "left",
     join_predicate: str = "intersects",
@@ -336,14 +340,18 @@ def buildings_intersecting_plan_area(
             Settings.area_field: building_area,
             Settings.geometry_field: building_geometry,
             Settings.buffered_field: total_plan_area_geometry,
+            Settings.wall_length_north: wall_length_north,
+            Settings.wall_length_east: wall_length_east,
+            Settings.wall_length_south: wall_length_south,
+            Settings.wall_length_west: wall_length_west,
         }
     )
 
-    # create left and right geodataframes
+    # Create left and right GeoDataFrames.
     left_gdf = gpd.GeoDataFrame(df, geometry=Settings.buffered_field, crs=target_crs)
     right_gdf = gpd.GeoDataFrame(df, geometry=Settings.geometry_field, crs=target_crs)
 
-    # spatially join the building areas to the target buffered areas
+    # Spatially join the building areas to the target buffered areas.
     xdf = gpd.sjoin(
         left_df=left_gdf,
         right_df=right_gdf,
@@ -353,7 +361,7 @@ def buildings_intersecting_plan_area(
         rsuffix=join_rsuffix,
     )
 
-    # Add neighbor building geometry
+    # Add the neighbor building geometry.
     xdf = (
         xdf.set_index(f"{Settings.id_field}_{join_rsuffix}")
         .join(
@@ -395,12 +403,12 @@ def building_plan_area(
     index = 0
 
     for target_building_id in np.sort(buildings_intersecting_plan_area.building_id_target.unique()):
-        # get dataframe with any building that intersects the target_building_id plan area.
+        # Get DataFrame with any building that intersects the target_building_id plan area.
         target_building_gdf = buildings_intersecting_plan_area.loc[
             buildings_intersecting_plan_area[Settings.target_id_field] == target_building_id
         ].reset_index()
 
-        # create GeoDataFrames with building and neighbor info
+        # Create GeoDataFrames with building and neighbor info.
         target_gdf = (
             target_building_gdf[[Settings.target_id_field, Settings.target_buffered_field]]
             .set_geometry(Settings.target_buffered_field)
@@ -410,12 +418,12 @@ def building_plan_area(
             [f"index_{join_rsuffix}", Settings.neighbor_geometry_field]
         ].set_geometry(Settings.neighbor_geometry_field)
 
-        # create new GeoDataFrame with area of intersection
+        # Create a new GeoDataFrame with the area of intersection.
         intersection_gdf = gpd.overlay(
             target_gdf, neighbor_gdf, how=join_predicate, keep_geom_type=False
         )
 
-        # sum up area of intersection and add to output list
+        # Sum up the area of intersection and add to the output list.
         building_plan_area.append(intersection_gdf[Settings.data_geometry_field_name].area.sum())
 
         index += 1
@@ -456,6 +464,63 @@ def filter_zero_height_df(standardize_column_names_df: gpd.GeoDataFrame) -> gpd.
     return standardize_column_names_df.loc[
         standardize_column_names_df[Settings.height_field] > 0
     ].reset_index(drop=True)
+
+
+def frontal_length(
+    buildings_intersecting_plan_area: gpd.GeoDataFrame,
+) -> pd.Series:
+    """Calculate the frontal length for each cardinal direction from the GeoDataFrame of buildings intersecting the plan area.
+    `buildings_intersecting_plan_area()` needs to include `wall_length`.
+
+    :param buildings_intersecting_plan_area:    Geometry field for the neighboring buildings from the spatially
+                                                joined data.
+    :type buildings_intersecting_plan_area:     gpd.GeoDataFrame
+
+    :return:                                    The frontal area for each cardinal direction for each unique building in the
+                                                `buildings_intersecting_plan_area` GeoDataFrame.
+
+    """
+
+    number_target_buildings = len(buildings_intersecting_plan_area.building_id_target.unique())
+    frontal_length_north, frontal_length_east, frontal_length_south, frontal_length_west = (
+        [0] * number_target_buildings,
+        [0] * number_target_buildings,
+        [0] * number_target_buildings,
+        [0] * number_target_buildings,
+    )
+    index = 0
+
+    for target_building_id in np.sort(buildings_intersecting_plan_area.building_id_target.unique()):
+        # Get DataFrame with any building that intersects the target_building_id plan area.
+        target_building_gdf = buildings_intersecting_plan_area.loc[
+            buildings_intersecting_plan_area[Settings.target_id_field] == target_building_id
+        ].reset_index()
+
+        # Sum frontal length for each cardinal direction
+        frontal_length_north[index] = target_building_gdf[
+            f"{Settings.wall_length_north}_{Settings.neighbor}"
+        ].sum()
+        frontal_length_east[index] = target_building_gdf[
+            f"{Settings.wall_length_east}_{Settings.neighbor}"
+        ].sum()
+        frontal_length_south[index] = target_building_gdf[
+            f"{Settings.wall_length_south}_{Settings.neighbor}"
+        ].sum()
+        frontal_length_west[index] = target_building_gdf[
+            f"{Settings.wall_length_west}_{Settings.neighbor}"
+        ].sum()
+
+        index += 1
+
+    return pd.concat(
+        [
+            pd.Series(frontal_length_north, name=Settings.frontal_length_north),
+            pd.Series(frontal_length_east, name=Settings.frontal_length_east),
+            pd.Series(frontal_length_south, name=Settings.frontal_length_south),
+            pd.Series(frontal_length_west, name=Settings.frontal_length_west),
+        ],
+        axis=1,
+    )
 
 
 @extract_columns(*Settings.spatial_join_list)
@@ -824,7 +889,7 @@ def wall_angle_direction_length(geometry: gpd.GeoSeries) -> pd.DataFrame:
     )
 
 
-def wall_area(wall_angle_direction_length: pd.DataFrame) -> pd.DataFrame:
+def wall_length(wall_angle_direction_length: pd.DataFrame) -> pd.DataFrame:
     """Calculate the wall angle, direction, and length for each building in a GeoPandas GeoSeries.
 
     :param wall_angle_direction_length:                Wall angle, direction, and length for a series of buildings.
@@ -834,7 +899,7 @@ def wall_area(wall_angle_direction_length: pd.DataFrame) -> pd.DataFrame:
 
     """
 
-    wall_area_north, wall_area_east, wall_area_south, wall_area_west = (
+    wall_length_north, wall_length_east, wall_length_south, wall_length_west = (
         [0] * len(wall_angle_direction_length.index),
         [0] * len(wall_angle_direction_length.index),
         [0] * len(wall_angle_direction_length.index),
@@ -844,20 +909,20 @@ def wall_area(wall_angle_direction_length: pd.DataFrame) -> pd.DataFrame:
     for index, row in wall_angle_direction_length.iterrows():
         for j in range(len(row[Settings.wall_direction])):
             if row[Settings.wall_direction][j] == Settings.north:
-                wall_area_north[index] += row[Settings.wall_length][j]
+                wall_length_north[index] += row[Settings.wall_length][j]
             elif row[Settings.wall_direction][j] == Settings.east:
-                wall_area_east[index] += row[Settings.wall_length][j]
+                wall_length_east[index] += row[Settings.wall_length][j]
             elif row[Settings.wall_direction][j] == Settings.south:
-                wall_area_south[index] += row[Settings.wall_length][j]
+                wall_length_south[index] += row[Settings.wall_length][j]
             else:
-                wall_area_west[index] += row[Settings.wall_length][j]
+                wall_length_west[index] += row[Settings.wall_length][j]
 
     return pd.concat(
         [
-            pd.Series(wall_area_north, name=Settings.wall_area_north),
-            pd.Series(wall_area_east, name=Settings.wall_area_east),
-            pd.Series(wall_area_south, name=Settings.wall_area_south),
-            pd.Series(wall_area_west, name=Settings.wall_area_west),
+            pd.Series(wall_length_north, name=Settings.wall_length_north),
+            pd.Series(wall_length_east, name=Settings.wall_length_east),
+            pd.Series(wall_length_south, name=Settings.wall_length_south),
+            pd.Series(wall_length_west, name=Settings.wall_length_west),
         ],
         axis=1,
     )
