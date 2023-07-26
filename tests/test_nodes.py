@@ -708,7 +708,7 @@ class TestNodes(unittest.TestCase):
                 input=triangle_input,
                 expected=pd.concat(
                     [
-                        pd.Series([0.0], name=wall_area_north),
+                        pd.Series([0], name=wall_area_north),
                         pd.Series([square_root_one_half], name=wall_area_east),
                         pd.Series([square_root_one_half], name=wall_area_south),
                         pd.Series([1.0], name=wall_area_west),
