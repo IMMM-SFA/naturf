@@ -637,6 +637,109 @@ class TestNodes(unittest.TestCase):
                 "failed test {} expected {}, actual {}".format(case.name, expected, actual),
             )
 
+    def test_wall_area(self):
+        """Test that the function wall_area returns the correct wall area."""
+
+        north = Settings.north
+        south = Settings.south
+        east = Settings.east
+        west = Settings.west
+
+        wall_angle = Settings.wall_angle
+        wall_direction = Settings.wall_direction
+        wall_length = Settings.wall_length
+
+        wall_area_north = Settings.wall_area_north
+        wall_area_south = Settings.wall_area_south
+        wall_area_east = Settings.wall_area_east
+        wall_area_west = Settings.wall_area_west
+
+        square_root_one_half = 0.7071067811865476
+
+        square_input = pd.concat(
+            [
+                pd.Series([[0.0, -90.0, 180.0, 90.0]], name=wall_angle),
+                pd.Series([[north, east, south, west]], name=wall_direction),
+                pd.Series([[1.0, 1.0, 1.0, 1.0]], name=wall_length),
+            ],
+            axis=1,
+        )
+        triangle_input = pd.concat(
+            [
+                pd.Series([[45.0, 180.0, -90.0]], name=wall_angle),
+                pd.Series([[west, south, east]], name=wall_direction),
+                pd.Series([[1.0, square_root_one_half, square_root_one_half]], name=wall_length),
+            ],
+            axis=1,
+        )
+        eight_sided_input = pd.concat(
+            [
+                pd.Series([[0.0, -90.0, 180.0, 90.0, -45.0, -135.0, 135.0, 45.0]], name=wall_angle),
+                pd.Series(
+                    [[north, east, south, west, north, east, south, west]], name=wall_direction
+                ),
+                pd.Series([[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]], name=wall_length),
+            ],
+            axis=1,
+        )
+
+        @dataclass
+        class TestCase:
+            name: str
+            input: pd.DataFrame
+            expected: pd.DataFrame
+
+        testcases = [
+            TestCase(
+                name="square",
+                input=square_input,
+                expected=pd.concat(
+                    [
+                        pd.Series([1.0], name=wall_area_north),
+                        pd.Series([1.0], name=wall_area_east),
+                        pd.Series([1.0], name=wall_area_south),
+                        pd.Series([1.0], name=wall_area_west),
+                    ],
+                    axis=1,
+                ),
+            ),
+            TestCase(
+                name="triangle",
+                input=triangle_input,
+                expected=pd.concat(
+                    [
+                        pd.Series([0.0], name=wall_area_north),
+                        pd.Series([square_root_one_half], name=wall_area_east),
+                        pd.Series([square_root_one_half], name=wall_area_south),
+                        pd.Series([1.0], name=wall_area_west),
+                    ],
+                    axis=1,
+                ),
+            ),
+            TestCase(
+                name="eight sided",
+                input=eight_sided_input,
+                expected=pd.concat(
+                    [
+                        pd.Series([6.0], name=wall_area_north),
+                        pd.Series([8.0], name=wall_area_east),
+                        pd.Series([10.0], name=wall_area_south),
+                        pd.Series([12.0], name=wall_area_west),
+                    ],
+                    axis=1,
+                ),
+            ),
+        ]
+
+        for case in testcases:
+            actual = nodes.wall_area(case.input)
+            expected = case.expected
+            pd.testing.assert_frame_equal(
+                expected,
+                actual,
+                "failed test {} expected {}, actual {}".format(case.name, expected, actual),
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
