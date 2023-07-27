@@ -778,6 +778,60 @@ class TestNodes(unittest.TestCase):
                 "failed test {} expected {}, actual {}".format(case.name, expected, actual),
             )
 
+    def test_frontal_length(self):
+        """Test that the function frontal_length returns the correct frontal length."""
+
+        polygon1 = Polygon([[0, 0], [0, 1], [1, 1], [1, 0]])
+        polygon2 = Polygon([[3, 3], [3, 4], [4, 4], [4, 3]])
+        building_id = pd.Series([0, 1])
+        building_height = pd.Series([5, 10])
+        building_geometry = pd.Series([polygon1, polygon2])
+        building_area = pd.Series([polygon1.area, polygon2.area])
+        crs = "epsg:3857"
+
+        # The wall lengths listed below are the test cases.
+        # wall_length_north and wall_length_east test that the addition is working correctly.
+        # wall_length_south tests that addition works correctly when one building does not have a wall facing a given direction.
+        # wall_length_west tests that addition works correctly when neither building has a wall facing a given direction.
+
+        wall_length_north = pd.Series([1.0, 1.0])
+        wall_length_east = pd.Series([1.0, 3.0])
+        wall_length_south = pd.Series([0, 1.0])
+        wall_length_west = pd.Series([0, 0])
+
+        frontal_length_north = Settings.frontal_length_north
+        frontal_length_east = Settings.frontal_length_east
+        frontal_length_south = Settings.frontal_length_south
+        frontal_length_west = Settings.frontal_length_west
+
+        total_plan_area_geometry = pd.Series([polygon1.buffer(5), polygon2.buffer(5)])
+
+        input_gdf = nodes.buildings_intersecting_plan_area(
+            building_id,
+            building_height,
+            building_geometry,
+            building_area,
+            total_plan_area_geometry,
+            wall_length_north,
+            wall_length_east,
+            wall_length_south,
+            wall_length_west,
+            crs,
+        )
+
+        actual = nodes.frontal_length(input_gdf)
+        expected = pd.concat(
+            [
+                pd.Series([2.0, 2.0], name=frontal_length_north),
+                pd.Series([4.0, 4.0], name=frontal_length_east),
+                pd.Series([1.0, 1.0], name=frontal_length_south),
+                pd.Series([0, 0], name=frontal_length_west),
+            ],
+            axis=1,
+        )
+
+        pd.testing.assert_frame_equal(expected, actual)
+
 
 if __name__ == "__main__":
     unittest.main()
