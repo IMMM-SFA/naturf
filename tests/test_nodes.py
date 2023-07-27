@@ -342,6 +342,11 @@ class TestNodes(unittest.TestCase):
         building_area = pd.Series([polygon1.area, polygon2.area])
         crs = "epsg:3857"
 
+        wall_length_north = pd.Series([1.0, 1.0])
+        wall_length_east = pd.Series([1.0, 1.0])
+        wall_length_south = pd.Series([1.0, 1.0])
+        wall_length_west = pd.Series([1.0, 1.0])
+
         total_plan_area_geometry_no_overlap = pd.Series([polygon1.buffer(1), polygon2.buffer(1)])
         total_plan_area_geometry_some_overlap = pd.Series(
             [polygon1.buffer(3.5), polygon2.buffer(3.5)]
@@ -356,10 +361,18 @@ class TestNodes(unittest.TestCase):
                 "building_area_target": building_area,
                 "building_geometry": building_geometry,
                 "building_buffered_target": gpd.GeoSeries(total_plan_area_geometry_no_overlap),
+                "wall_length_north_target": wall_length_north,
+                "wall_length_east_target": wall_length_east,
+                "wall_length_south_target": wall_length_south,
+                "wall_length_west_target": wall_length_west,
                 "index_neighbor": building_id,
                 "building_height_neighbor": building_height,
                 "building_area_neighbor": building_area,
                 "building_buffered_neighbor": total_plan_area_geometry_no_overlap,
+                "wall_length_north_neighbor": wall_length_north,
+                "wall_length_east_neighbor": wall_length_east,
+                "wall_length_south_neighbor": wall_length_south,
+                "wall_length_west_neighbor": wall_length_west,
                 "building_geometry_neighbor": gpd.GeoSeries(building_geometry),
             },
             geometry="building_geometry",
@@ -387,6 +400,10 @@ class TestNodes(unittest.TestCase):
                         total_plan_area_geometry_some_overlap[1],
                     ]
                 ),
+                "wall_length_north_target": pd.Series([1.0, 1.0, 1.0, 1.0]),
+                "wall_length_east_target": pd.Series([1.0, 1.0, 1.0, 1.0]),
+                "wall_length_south_target": pd.Series([1.0, 1.0, 1.0, 1.0]),
+                "wall_length_west_target": pd.Series([1.0, 1.0, 1.0, 1.0]),
                 "index_neighbor": pd.Series([0, 0, 1, 1]),
                 "building_height_neighbor": pd.Series([5, 5, 10, 10]),
                 "building_area_neighbor": pd.Series([1.0, 1.0, 1.0, 1.0]),
@@ -398,6 +415,10 @@ class TestNodes(unittest.TestCase):
                         total_plan_area_geometry_some_overlap[1],
                     ]
                 ),
+                "wall_length_north_neighbor": pd.Series([1.0, 1.0, 1.0, 1.0]),
+                "wall_length_east_neighbor": pd.Series([1.0, 1.0, 1.0, 1.0]),
+                "wall_length_south_neighbor": pd.Series([1.0, 1.0, 1.0, 1.0]),
+                "wall_length_west_neighbor": pd.Series([1.0, 1.0, 1.0, 1.0]),
                 "building_geometry_neighbor": gpd.GeoSeries(
                     [
                         building_geometry[0],
@@ -432,6 +453,10 @@ class TestNodes(unittest.TestCase):
                         total_plan_area_geometry_total_overlap[1],
                     ]
                 ),
+                "wall_length_north_target": pd.Series([1.0, 1.0, 1.0, 1.0]),
+                "wall_length_east_target": pd.Series([1.0, 1.0, 1.0, 1.0]),
+                "wall_length_south_target": pd.Series([1.0, 1.0, 1.0, 1.0]),
+                "wall_length_west_target": pd.Series([1.0, 1.0, 1.0, 1.0]),
                 "index_neighbor": pd.Series([0, 0, 1, 1]),
                 "building_height_neighbor": pd.Series([5, 5, 10, 10]),
                 "building_area_neighbor": pd.Series([1.0, 1.0, 1.0, 1.0]),
@@ -443,6 +468,10 @@ class TestNodes(unittest.TestCase):
                         total_plan_area_geometry_total_overlap[1],
                     ]
                 ),
+                "wall_length_north_neighbor": pd.Series([1.0, 1.0, 1.0, 1.0]),
+                "wall_length_east_neighbor": pd.Series([1.0, 1.0, 1.0, 1.0]),
+                "wall_length_south_neighbor": pd.Series([1.0, 1.0, 1.0, 1.0]),
+                "wall_length_west_neighbor": pd.Series([1.0, 1.0, 1.0, 1.0]),
                 "building_geometry_neighbor": gpd.GeoSeries(
                     [
                         building_geometry[0],
@@ -481,7 +510,16 @@ class TestNodes(unittest.TestCase):
 
         for case in testcases:
             actual = nodes.buildings_intersecting_plan_area(
-                building_id, building_height, building_geometry, building_area, case.input, crs
+                building_id,
+                building_height,
+                building_geometry,
+                building_area,
+                case.input,
+                wall_length_north,
+                wall_length_east,
+                wall_length_south,
+                wall_length_west,
+                crs,
             )
             expected = case.expected
             pd.testing.assert_frame_equal(
