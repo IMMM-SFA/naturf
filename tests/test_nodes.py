@@ -637,8 +637,8 @@ class TestNodes(unittest.TestCase):
                 "failed test {} expected {}, actual {}".format(case.name, expected, actual),
             )
 
-    def test_wall_area(self):
-        """Test that the function wall_area returns the correct wall area."""
+    def test_wall_length(self):
+        """Test that the function wall_length returns the correct wall area."""
 
         north = Settings.north
         south = Settings.south
@@ -649,10 +649,10 @@ class TestNodes(unittest.TestCase):
         wall_direction = Settings.wall_direction
         wall_length = Settings.wall_length
 
-        wall_area_north = Settings.wall_area_north
-        wall_area_south = Settings.wall_area_south
-        wall_area_east = Settings.wall_area_east
-        wall_area_west = Settings.wall_area_west
+        wall_length_north = Settings.wall_length_north
+        wall_length_south = Settings.wall_length_south
+        wall_length_east = Settings.wall_length_east
+        wall_length_west = Settings.wall_length_west
 
         square_root_one_half = 0.7071067811865476
 
@@ -695,10 +695,10 @@ class TestNodes(unittest.TestCase):
                 input=square_input,
                 expected=pd.concat(
                     [
-                        pd.Series([1.0], name=wall_area_north),
-                        pd.Series([1.0], name=wall_area_east),
-                        pd.Series([1.0], name=wall_area_south),
-                        pd.Series([1.0], name=wall_area_west),
+                        pd.Series([1.0], name=wall_length_north),
+                        pd.Series([1.0], name=wall_length_east),
+                        pd.Series([1.0], name=wall_length_south),
+                        pd.Series([1.0], name=wall_length_west),
                     ],
                     axis=1,
                 ),
@@ -708,10 +708,10 @@ class TestNodes(unittest.TestCase):
                 input=triangle_input,
                 expected=pd.concat(
                     [
-                        pd.Series([0], name=wall_area_north),
-                        pd.Series([square_root_one_half], name=wall_area_east),
-                        pd.Series([square_root_one_half], name=wall_area_south),
-                        pd.Series([1.0], name=wall_area_west),
+                        pd.Series([0], name=wall_length_north),
+                        pd.Series([square_root_one_half], name=wall_length_east),
+                        pd.Series([square_root_one_half], name=wall_length_south),
+                        pd.Series([1.0], name=wall_length_west),
                     ],
                     axis=1,
                 ),
@@ -721,10 +721,10 @@ class TestNodes(unittest.TestCase):
                 input=eight_sided_input,
                 expected=pd.concat(
                     [
-                        pd.Series([6.0], name=wall_area_north),
-                        pd.Series([8.0], name=wall_area_east),
-                        pd.Series([10.0], name=wall_area_south),
-                        pd.Series([12.0], name=wall_area_west),
+                        pd.Series([6.0], name=wall_length_north),
+                        pd.Series([8.0], name=wall_length_east),
+                        pd.Series([10.0], name=wall_length_south),
+                        pd.Series([12.0], name=wall_length_west),
                     ],
                     axis=1,
                 ),
@@ -732,7 +732,7 @@ class TestNodes(unittest.TestCase):
         ]
 
         for case in testcases:
-            actual = nodes.wall_area(case.input)
+            actual = nodes.wall_length(case.input)
             expected = case.expected
             pd.testing.assert_frame_equal(
                 expected,
