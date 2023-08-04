@@ -110,6 +110,23 @@ def angle_in_degrees_to_neighbor(
     )
 
 
+def apply_max_building_height(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    """Cap building height at MAX_BUILDING_HEIGHT, specified in config.py.
+
+    :param gdf:             GeoDataFrame of the input shapefile with renamed columns.
+    :type gdf:              gpd.GeoDataFrame
+
+    :return:                GeoDataFrame
+
+    """
+
+    gdf.loc[
+        gdf[Settings.height_field] > Settings.MAX_BUILDING_HEIGHT, Settings.height_field
+    ] = Settings.MAX_BUILDING_HEIGHT
+
+    return gdf
+
+
 def average_building_heights(
     building_id: pd.Series, building_height_neighbor: pd.Series
 ) -> pd.Series:
