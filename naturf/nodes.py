@@ -1,4 +1,5 @@
 import geopandas as gpd
+import math
 import numpy as np
 import pandas as pd
 from pyproj.crs import CRS
@@ -481,6 +482,97 @@ def filter_zero_height_df(standardize_column_names_df: gpd.GeoDataFrame) -> gpd.
     return standardize_column_names_df.loc[
         standardize_column_names_df[Settings.height_field] > 0
     ].reset_index(drop=True)
+
+
+def frontal_area_density(frontal_length: pd.DataFrame, building_height: pd.Series) -> pd.DataFrame:
+    """Calculate the frontal area density for each building in a GeoPandas GeoSeries. Frontal area density is the frontal area of a
+    building at a specific height increment divided by the total plan area. naturf calculates frontal area density from the four cardinal
+    directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters.
+
+    :param frontal_length:                Frontal length in each cardinal direction for each building.
+    :type frontal_length:                 pd.DataFrame
+
+    :param building_height:               Building height for each building.
+    :type building_height:                pd.Series
+
+    :return:                              Pandas DataFrame with frontal area density for each cardinal direction and
+                                          each BUILDING_HEIGHT_INTERVAL for each building.
+    """
+
+    rows, cols = (
+        len(building_height.index),
+        int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL),
+    )
+    frontal_area_north, frontal_area_east, frontal_area_south, frontal_area_west = (
+        [[0 for i in range(cols)] for j in range(rows)],
+        [[0 for i in range(cols)] for j in range(rows)],
+        [[0 for i in range(cols)] for j in range(rows)],
+        [[0 for i in range(cols)] for j in range(rows)],
+    )
+
+    # Go through each building.
+    for index, row in frontal_length.iterrows():
+        building_height_counter = Settings.BUILDING_HEIGHT_INTERVAL
+
+        # Go from ground level to building height by the building height interval and calculate frontal area density.
+        for i in range(0, math.ceil(building_height[index]), Settings.BUILDING_HEIGHT_INTERVAL):
+            if building_height_counter <= building_height[index]:
+                frontal_area_north[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = (
+                    row["frontal_length_north"] * Settings.BUILDING_HEIGHT_INTERVAL
+                )
+                frontal_area_east[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = (
+                    row["frontal_length_east"] * Settings.BUILDING_HEIGHT_INTERVAL
+                )
+                frontal_area_south[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = (
+                    row["frontal_length_south"] * Settings.BUILDING_HEIGHT_INTERVAL
+                )
+                frontal_area_west[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = (
+                    row["frontal_length_west"] * Settings.BUILDING_HEIGHT_INTERVAL
+                )
+            else:
+                frontal_area_north[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = row[
+                    "frontal_length_north"
+                ] * (building_height_counter - building_height[index])
+                frontal_area_east[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = row[
+                    "frontal_length_east"
+                ] * (building_height_counter - building_height[index])
+                frontal_area_south[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = row[
+                    "frontal_length_south"
+                ] * (building_height_counter - building_height[index])
+                frontal_area_west[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = row[
+                    "frontal_length_west"
+                ] * (building_height_counter - building_height[index])
+                break
+            building_height_counter += Settings.BUILDING_HEIGHT_INTERVAL
+
+    columns_north, columns_east, columns_south, columns_west = (
+        [
+            f"{Settings.frontal_area_north}_{i}"
+            for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
+        ],
+        [
+            f"{Settings.frontal_area_east}_{i}"
+            for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
+        ],
+        [
+            f"{Settings.frontal_area_south}_{i}"
+            for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
+        ],
+        [
+            f"{Settings.frontal_area_west}_{i}"
+            for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
+        ],
+    )
+
+    return pd.concat(
+        [
+            pd.DataFrame(frontal_area_north, columns=columns_north),
+            pd.DataFrame(frontal_area_east, columns=columns_east),
+            pd.DataFrame(frontal_area_south, columns=columns_south),
+            pd.DataFrame(frontal_area_west, columns=columns_west),
+        ],
+        axis=1,
+    )
 
 
 def frontal_length(

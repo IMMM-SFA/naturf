@@ -82,6 +82,10 @@ class Settings:
     frontal_length_east = "frontal_length_east"
     frontal_length_south = "frontal_length_south"
     frontal_length_west = "frontal_length_west"
+    frontal_area_north = "frontal_area_north"
+    frontal_area_east = "frontal_area_east"
+    frontal_area_south = "frontal_area_south"
+    frontal_area_west = "frontal_area_west"
 
     grimmond_oke_displacement_height = "grimmond_oke_displacement_height"
     grimmond_oke_roughness_length = "grimmond_oke_roughness_length"
