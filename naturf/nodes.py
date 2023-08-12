@@ -484,7 +484,9 @@ def filter_zero_height_df(standardize_column_names_df: gpd.GeoDataFrame) -> gpd.
     ].reset_index(drop=True)
 
 
-def frontal_area_density(frontal_length: pd.DataFrame, building_height: pd.Series) -> pd.DataFrame:
+def frontal_area_density(
+    frontal_length: pd.DataFrame, building_height: pd.Series, total_plan_area: pd.Series
+) -> pd.DataFrame:
     """Calculate the frontal area density for each building in a GeoPandas GeoSeries. Frontal area density is the frontal area of a
     building at a specific height increment divided by the total plan area. naturf calculates frontal area density from the four cardinal
     directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters.
@@ -494,6 +496,9 @@ def frontal_area_density(frontal_length: pd.DataFrame, building_height: pd.Serie
 
     :param building_height:               Building height for each building.
     :type building_height:                pd.Series
+
+    :param total_plan_area:               Total plan area for each building.
+    :type total_plan_area:                pd.Series
 
     :return:                              Pandas DataFrame with frontal area density for each cardinal direction and
                                           each BUILDING_HEIGHT_INTERVAL for each building.
@@ -518,30 +523,62 @@ def frontal_area_density(frontal_length: pd.DataFrame, building_height: pd.Serie
         for i in range(0, math.ceil(building_height[index]), Settings.BUILDING_HEIGHT_INTERVAL):
             if building_height_counter <= building_height[index]:
                 frontal_area_north[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = (
-                    row["frontal_length_north"] * Settings.BUILDING_HEIGHT_INTERVAL
+                    row["frontal_length_north"]
+                    * Settings.BUILDING_HEIGHT_INTERVAL
+                    / total_plan_area[index]
                 )
                 frontal_area_east[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = (
-                    row["frontal_length_east"] * Settings.BUILDING_HEIGHT_INTERVAL
+                    row["frontal_length_east"]
+                    * Settings.BUILDING_HEIGHT_INTERVAL
+                    / total_plan_area[index]
                 )
                 frontal_area_south[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = (
-                    row["frontal_length_south"] * Settings.BUILDING_HEIGHT_INTERVAL
+                    row["frontal_length_south"]
+                    * Settings.BUILDING_HEIGHT_INTERVAL
+                    / total_plan_area[index]
                 )
                 frontal_area_west[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = (
-                    row["frontal_length_west"] * Settings.BUILDING_HEIGHT_INTERVAL
+                    row["frontal_length_west"]
+                    * Settings.BUILDING_HEIGHT_INTERVAL
+                    / total_plan_area[index]
                 )
             else:
-                frontal_area_north[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = row[
-                    "frontal_length_north"
-                ] * (building_height_counter - building_height[index])
-                frontal_area_east[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = row[
-                    "frontal_length_east"
-                ] * (building_height_counter - building_height[index])
-                frontal_area_south[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = row[
-                    "frontal_length_south"
-                ] * (building_height_counter - building_height[index])
-                frontal_area_west[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = row[
-                    "frontal_length_west"
-                ] * (building_height_counter - building_height[index])
+                frontal_area_north[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = (
+                    row["frontal_length_north"]
+                    * (
+                        Settings.BUILDING_HEIGHT_INTERVAL
+                        - building_height_counter
+                        + building_height[index]
+                    )
+                    / total_plan_area[index]
+                )
+                frontal_area_east[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = (
+                    row["frontal_length_east"]
+                    * (
+                        Settings.BUILDING_HEIGHT_INTERVAL
+                        - building_height_counter
+                        + building_height[index]
+                    )
+                    / total_plan_area[index]
+                )
+                frontal_area_south[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = (
+                    row["frontal_length_south"]
+                    * (
+                        Settings.BUILDING_HEIGHT_INTERVAL
+                        - building_height_counter
+                        + building_height[index]
+                    )
+                    / total_plan_area[index]
+                )
+                frontal_area_west[index][int(i / Settings.BUILDING_HEIGHT_INTERVAL)] = (
+                    row["frontal_length_west"]
+                    * (
+                        Settings.BUILDING_HEIGHT_INTERVAL
+                        - building_height_counter
+                        + building_height[index]
+                    )
+                    / total_plan_area[index]
+                )
                 break
             building_height_counter += Settings.BUILDING_HEIGHT_INTERVAL
 

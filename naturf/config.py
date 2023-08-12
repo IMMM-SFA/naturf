@@ -43,6 +43,8 @@ class Settings:
     building_plan_area_field = "building_plan_area"
     centroid_field = "building_centroid"
     buffered_field = "building_buffered"
+    total_plan_area = "total_plan_area"
+    total_plan_area_geometry = "total_plan_area_geometry"
 
     target_height_field = f"{height_field}_{target}"
     neighbor_height_field = f"{height_field}_{neighbor}"
