@@ -835,6 +835,12 @@ class TestNodes(unittest.TestCase):
     def test_frontal_area_density(self):
         """Test that the function frontal_area_density() returns the correct frontal area density."""
 
+        # This uses different heights to test the function.
+        # Building 1 is 5m tall to test that using one height bin works correctly.
+        # Building 2 is 4m tall to test that using a height less than a full bin works correctly.
+        # Building 3 is 21m tall to test that using a height >5m but less than a full bin works correctly.
+        # Building 4 is 75m tall to test that a full-height building works correctly.
+
         frontal_length_north = Settings.frontal_length_north
         frontal_length_east = Settings.frontal_length_east
         frontal_length_south = Settings.frontal_length_south
