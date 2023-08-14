@@ -947,13 +947,13 @@ def target_crs(input_shapefile_df: gpd.GeoDataFrame) -> CRS:
     return input_shapefile_df.crs
 
 
-def total_plan_area(total_plan_area_geometry: gpd.GeoSeries) -> pd.DataFrame:
+def total_plan_area(total_plan_area_geometry: gpd.GeoSeries) -> pd.Series:
     """Calculate the total plan area for each building in a GeoPandas GeoSeries.
 
     :param geometry:                    Geometry for a series of buildings.
     :type geometry:                     gpd.GeoSeries
 
-    :return:                            Pandas DataFrame with total plan area for each building.
+    :return:                            Pandas Series with total plan area for each building.
 
     """
 
