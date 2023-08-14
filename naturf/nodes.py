@@ -631,7 +631,7 @@ def frontal_area_density(
 
 def frontal_length(
     buildings_intersecting_plan_area: gpd.GeoDataFrame,
-) -> pd.Series:
+) -> pd.DataFrame:
     """Calculate the frontal length for each cardinal direction from the GeoDataFrame of buildings intersecting the plan area.
     `buildings_intersecting_plan_area()` needs to include `wall_length`.
 
