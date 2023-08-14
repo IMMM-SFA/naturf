@@ -870,6 +870,48 @@ def orientation_to_neighbor(angle_in_degrees_to_neighbor: pd.Series) -> pd.Serie
     )
 
 
+def plan_area_density(
+    building_plan_area: pd.Series, building_height: pd.Series, total_plan_area: pd.Series
+) -> pd.DataFrame:
+    """Calculate the plan area density for each building in a GeoPandas GeoSeries. Plan area density is the building plan area
+    at a specific height increment divided by the total plan area. naturf calculates plan area density from the four cardinal
+    directions (north, east, south, west) and at 5-meter increments from ground level to 75 meters unless otherwise specified.
+
+    :param building_plan_area:            Building plan area for each building.
+    :type building_plan_area:             pd.Series
+
+    :param building_height:               Building height for each building.
+    :type building_height:                pd.Series
+
+    :param total_plan_area:               Total plan area for each building.
+    :type total_plan_area:                pd.Series
+
+    :return:                              Pandas DataFrame with plan area density for each BUILDING_HEIGHT_INTERVAL for each building.
+    """
+
+    rows, cols = (
+        len(building_height.index),
+        int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL),
+    )
+    plan_area_density = [[0 for i in range(cols)] for j in range(rows)]
+
+    for building in range(building_plan_area.size):
+        building_height_counter = 0
+
+        # Go from ground level to building height by the building height interval and calculate plan area density.
+        while building_height_counter < building_height[building]:
+            plan_area_density[building][
+                int(building_height_counter / Settings.BUILDING_HEIGHT_INTERVAL)
+            ] = (building_plan_area[building] / total_plan_area[building])
+            building_height_counter += Settings.BUILDING_HEIGHT_INTERVAL
+
+    columns_plan_area_density = [
+        f"{Settings.plan_area_density}_{i}"
+        for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
+    ]
+    return pd.DataFrame(plan_area_density, columns=columns_plan_area_density)
+
+
 def sky_view_factor(
     building_height: pd.Series, average_distance_between_buildings: pd.Series
 ) -> pd.Series:

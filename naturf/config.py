@@ -88,6 +88,7 @@ class Settings:
     frontal_area_east = "frontal_area_east"
     frontal_area_south = "frontal_area_south"
     frontal_area_west = "frontal_area_west"
+    plan_area_density = "plan_area_density"
 
     grimmond_oke_displacement_height = "grimmond_oke_displacement_height"
     grimmond_oke_roughness_length = "grimmond_oke_roughness_length"
