@@ -505,7 +505,7 @@ def frontal_area_density(
     """
 
     rows, cols = (
-        len(building_height.building),
+        len(building_height.index),
         int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL),
     )
     frontal_area_north, frontal_area_east, frontal_area_south, frontal_area_west = (
