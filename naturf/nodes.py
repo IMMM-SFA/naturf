@@ -601,19 +601,19 @@ def frontal_area_density(
 
     columns_north, columns_east, columns_south, columns_west = (
         [
-            f"{Settings.frontal_area_north}_{building_height_index}"
+            f"{Settings.frontal_area_north}_{i}"
             for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
         ],
         [
-            f"{Settings.frontal_area_east}_{building_height_index}"
+            f"{Settings.frontal_area_east}_{i}"
             for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
         ],
         [
-            f"{Settings.frontal_area_south}_{building_height_index}"
+            f"{Settings.frontal_area_south}_{i}"
             for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
         ],
         [
-            f"{Settings.frontal_area_west}_{building_height_index}"
+            f"{Settings.frontal_area_west}_{i}"
             for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
         ],
     )
