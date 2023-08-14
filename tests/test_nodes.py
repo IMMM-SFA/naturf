@@ -832,6 +832,129 @@ class TestNodes(unittest.TestCase):
 
         pd.testing.assert_frame_equal(expected, actual)
 
+    def test_frontal_area_density(self):
+        """Test that the function frontal_area_density() returns the correct frontal area density."""
+
+        frontal_length_north = Settings.frontal_length_north
+        frontal_length_east = Settings.frontal_length_east
+        frontal_length_south = Settings.frontal_length_south
+        frontal_length_west = Settings.frontal_length_west
+
+        frontal_lengths = pd.concat(
+            [
+                pd.Series([2.0, 2.0, 2.0, 2.0], name=frontal_length_north),
+                pd.Series([4.0, 4.0, 4.0, 4.0], name=frontal_length_east),
+                pd.Series([1.0, 1.0, 1.0, 1.0], name=frontal_length_south),
+                pd.Series([3.0, 3.0, 3.0, 3.0], name=frontal_length_west),
+            ],
+            axis=1,
+        )
+        heights = pd.Series([5, 4, 21, 75])
+
+        total_plan_area = pd.Series([100.0, 100.0, 100.0, 100.0])
+
+        rows = 4
+        cols = 15
+
+        frontal_area_north, frontal_area_east, frontal_area_south, frontal_area_west = (
+            [[0 for i in range(cols)] for j in range(rows)],
+            [[0 for i in range(cols)] for j in range(rows)],
+            [[0 for i in range(cols)] for j in range(rows)],
+            [[0 for i in range(cols)] for j in range(rows)],
+        )
+
+        frontal_area_north[0][0] = 0.1
+        frontal_area_north[0][1] = 0.0
+
+        frontal_area_east[0][0] = 0.2
+        frontal_area_east[0][1] = 0.0
+
+        frontal_area_south[0][0] = 0.05
+        frontal_area_south[0][1] = 0.0
+
+        frontal_area_west[0][0] = 0.15
+        frontal_area_west[0][1] = 0.0
+
+        frontal_area_north[1][0] = 0.08
+        frontal_area_north[1][1] = 0.0
+
+        frontal_area_east[1][0] = 0.16
+        frontal_area_east[1][1] = 0.0
+
+        frontal_area_south[1][0] = 0.04
+        frontal_area_south[1][1] = 0.0
+
+        frontal_area_west[1][0] = 0.12
+        frontal_area_west[1][1] = 0.0
+
+        for i in range(0, 4):
+            frontal_area_north[2][i] = 0.1
+        frontal_area_north[2][4] = 0.02
+
+        for i in range(0, 4):
+            frontal_area_east[2][i] = 0.20
+        frontal_area_east[2][4] = 0.04
+
+        for i in range(0, 4):
+            frontal_area_south[2][i] = 0.05
+        frontal_area_south[2][4] = 0.01
+
+        for i in range(0, 4):
+            frontal_area_west[2][i] = 0.15
+        frontal_area_west[2][4] = 0.03
+
+        for i in range(0, 15):
+            frontal_area_north[3][i] = 0.1
+
+        for i in range(0, 15):
+            frontal_area_east[3][i] = 0.2
+
+        for i in range(0, 15):
+            frontal_area_south[3][i] = 0.05
+
+        for i in range(0, 15):
+            frontal_area_west[3][i] = 0.15
+
+        columns_north, columns_east, columns_south, columns_west = (
+            [
+                f"{Settings.frontal_area_north}_{i}"
+                for i in range(
+                    int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL)
+                )
+            ],
+            [
+                f"{Settings.frontal_area_east}_{i}"
+                for i in range(
+                    int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL)
+                )
+            ],
+            [
+                f"{Settings.frontal_area_south}_{i}"
+                for i in range(
+                    int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL)
+                )
+            ],
+            [
+                f"{Settings.frontal_area_west}_{i}"
+                for i in range(
+                    int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL)
+                )
+            ],
+        )
+
+        actual = nodes.frontal_area_density(frontal_lengths, heights, total_plan_area)
+        expected = pd.concat(
+            [
+                pd.DataFrame(frontal_area_north, columns=columns_north),
+                pd.DataFrame(frontal_area_east, columns=columns_east),
+                pd.DataFrame(frontal_area_south, columns=columns_south),
+                pd.DataFrame(frontal_area_west, columns=columns_west),
+            ],
+            axis=1,
+        )
+
+        pd.testing.assert_frame_equal(expected, actual)
+
 
 if __name__ == "__main__":
     unittest.main()

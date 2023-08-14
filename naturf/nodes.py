@@ -631,7 +631,7 @@ def frontal_area_density(
 
 def frontal_length(
     buildings_intersecting_plan_area: gpd.GeoDataFrame,
-) -> pd.Series:
+) -> pd.DataFrame:
     """Calculate the frontal length for each cardinal direction from the GeoDataFrame of buildings intersecting the plan area.
     `buildings_intersecting_plan_area()` needs to include `wall_length`.
 
@@ -947,13 +947,13 @@ def target_crs(input_shapefile_df: gpd.GeoDataFrame) -> CRS:
     return input_shapefile_df.crs
 
 
-def total_plan_area(total_plan_area_geometry: gpd.GeoSeries) -> pd.DataFrame:
+def total_plan_area(total_plan_area_geometry: gpd.GeoSeries) -> pd.Series:
     """Calculate the total plan area for each building in a GeoPandas GeoSeries.
 
     :param geometry:                    Geometry for a series of buildings.
     :type geometry:                     gpd.GeoSeries
 
-    :return:                            Pandas DataFrame with total plan area for each building.
+    :return:                            Pandas Series with total plan area for each building.
 
     """
 
