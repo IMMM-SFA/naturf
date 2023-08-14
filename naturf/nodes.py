@@ -526,28 +526,28 @@ def frontal_area_density(
                 frontal_area_north[building][
                     int(building_height_index / Settings.BUILDING_HEIGHT_INTERVAL)
                 ] = (
-                    building_frontal_length[Settings.frontal_area_north]
+                    building_frontal_length[Settings.frontal_length_north]
                     * Settings.BUILDING_HEIGHT_INTERVAL
                     / total_plan_area[building]
                 )
                 frontal_area_east[building][
                     int(building_height_index / Settings.BUILDING_HEIGHT_INTERVAL)
                 ] = (
-                    building_frontal_length[Settings.frontal_area_east]
+                    building_frontal_length[Settings.frontal_length_east]
                     * Settings.BUILDING_HEIGHT_INTERVAL
                     / total_plan_area[building]
                 )
                 frontal_area_south[building][
                     int(building_height_index / Settings.BUILDING_HEIGHT_INTERVAL)
                 ] = (
-                    building_frontal_length[Settings.frontal_area_south]
+                    building_frontal_length[Settings.frontal_length_south]
                     * Settings.BUILDING_HEIGHT_INTERVAL
                     / total_plan_area[building]
                 )
                 frontal_area_west[building][
                     int(building_height_index / Settings.BUILDING_HEIGHT_INTERVAL)
                 ] = (
-                    building_frontal_length[Settings.frontal_area_west]
+                    building_frontal_length[Settings.frontal_length_west]
                     * Settings.BUILDING_HEIGHT_INTERVAL
                     / total_plan_area[building]
                 )
@@ -555,7 +555,7 @@ def frontal_area_density(
                 frontal_area_north[building][
                     int(building_height_index / Settings.BUILDING_HEIGHT_INTERVAL)
                 ] = (
-                    building_frontal_length[Settings.frontal_area_north]
+                    building_frontal_length[Settings.frontal_length_north]
                     * (
                         Settings.BUILDING_HEIGHT_INTERVAL
                         - building_height_counter
@@ -566,7 +566,7 @@ def frontal_area_density(
                 frontal_area_east[building][
                     int(building_height_index / Settings.BUILDING_HEIGHT_INTERVAL)
                 ] = (
-                    building_frontal_length[Settings.frontal_area_east]
+                    building_frontal_length[Settings.frontal_length_east]
                     * (
                         Settings.BUILDING_HEIGHT_INTERVAL
                         - building_height_counter
@@ -577,7 +577,7 @@ def frontal_area_density(
                 frontal_area_south[building][
                     int(building_height_index / Settings.BUILDING_HEIGHT_INTERVAL)
                 ] = (
-                    building_frontal_length[Settings.frontal_area_south]
+                    building_frontal_length[Settings.frontal_length_south]
                     * (
                         Settings.BUILDING_HEIGHT_INTERVAL
                         - building_height_counter
@@ -588,7 +588,7 @@ def frontal_area_density(
                 frontal_area_west[building][
                     int(building_height_index / Settings.BUILDING_HEIGHT_INTERVAL)
                 ] = (
-                    building_frontal_length[Settings.frontal_area_west]
+                    building_frontal_length[Settings.frontal_length_west]
                     * (
                         Settings.BUILDING_HEIGHT_INTERVAL
                         - building_height_counter
