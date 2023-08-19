@@ -961,6 +961,44 @@ class TestNodes(unittest.TestCase):
 
         pd.testing.assert_frame_equal(expected, actual)
 
+    def test_plan_area_density(self):
+        """Test that the function plan_area_density() returns the correct plan area density."""
+
+        # This uses different heights to test the function.
+        # Plan area density should be the same whether the building height falls at or within the bins, which all buildings test.
+        # Height bins that are greater than the building height should have a plan area density of zero.
+
+        building_plan_area = pd.Series([20, 25, 30, 35])
+        building_height = pd.Series([5, 4, 21, 75])
+        total_plan_area = pd.Series([100, 100, 100, 100])
+
+        rows, cols = (
+            len(building_height.index),
+            int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL),
+        )
+        plan_area_density = [[0 for i in range(cols)] for j in range(rows)]
+
+        plan_area_density[0][0] = 0.2
+
+        plan_area_density[1][0] = 0.25
+
+        for i in range(0, 4):
+            plan_area_density[2][i] = 0.3
+        plan_area_density[2][4] = 0.3
+
+        for i in range(0, 15):
+            plan_area_density[3][i] = 0.35
+
+        columns_plan_area_density = [
+            f"{Settings.plan_area_density}_{i}"
+            for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
+        ]
+
+        actual = nodes.plan_area_density(building_plan_area, building_height, total_plan_area)
+        expected = pd.DataFrame(plan_area_density, columns=columns_plan_area_density)
+
+        pd.testing.assert_frame_equal(expected, actual)
+
 
 if __name__ == "__main__":
     unittest.main()
