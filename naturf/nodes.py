@@ -918,8 +918,8 @@ def rooftop_area_density(plan_area_density: pd.DataFrame) -> pd.DataFrame:
     projects building footprints vertically to the building height, meaning that rooftop area density is equal to the plan area
     density.
 
-    :param building_plan_area:            Plan area density at each specified height increment.
-    :type building_plan_area:             pd.DataFrame
+    :param plan_area_density:            Plan area density at each specified height increment.
+    :type plan_area_density:             pd.DataFrame
 
     :return:                              Pandas DataFrame with rooftop area density for each BUILDING_HEIGHT_INTERVAL for each building.
     """
