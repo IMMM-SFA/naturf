@@ -1004,6 +1004,23 @@ def standard_deviation_building_heights(
     return df.groupby(Settings.id_field)[Settings.neighbor_height_field].std().fillna(0)
 
 
+def standard_deviation_of_building_heights(
+    buildings_intersecting_plan_area: gpd.GeoDataFrame,
+) -> pd.Series:
+    """Calculate the standard deviation of building heights for all buildings within the target building's total plan area.
+
+    :param buildings_intersecting_plan_area:    Geometry field for the neighboring buildings from the spatially
+                                                joined data.
+    :type buildings_intersecting_plan_area:     gpd.GeoDataFrame
+
+    :return:                                    The tandard deviation of building heights for all buildings within the target building's plan area.
+    """
+
+    return buildings_intersecting_plan_area.groupby(Settings.target_id_field)[
+        Settings.neighbor_height_field
+    ].std()
+
+
 def standardize_column_names_df(input_shapefile_df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     """Standardize field names so use throughout code will be consistent throughout.
 
