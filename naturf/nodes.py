@@ -836,6 +836,21 @@ def input_shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
     ]
 
 
+def mean_building_height(buildings_intersecting_plan_area: gpd.GeoDataFrame) -> pd.Series:
+    """Calculate the mean building height for all buildings within the target building's total plan area.
+
+    :param buildings_intersecting_plan_area:    Geometry field for the neighboring buildings from the spatially
+                                                joined data.
+    :type buildings_intersecting_plan_area:     gpd.GeoDataFrame
+
+    :return:                                    The mean building height for all buildings within the target building's plan area.
+    """
+
+    return buildings_intersecting_plan_area.groupby(Settings.target_id_field)[
+        Settings.neighbor_height_field
+    ].mean()
+
+
 def orientation_to_neighbor(angle_in_degrees_to_neighbor: pd.Series) -> pd.Series:
     """Determine the east-west or north-south orientation of the target building to its neighbors.
 
