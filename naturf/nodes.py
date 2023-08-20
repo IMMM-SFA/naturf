@@ -912,6 +912,26 @@ def plan_area_density(
     return pd.DataFrame(plan_area_density, columns=columns_plan_area_density)
 
 
+def rooftop_area_density(plan_area_density: pd.DataFrame) -> pd.DataFrame:
+    """Calculate the rooftop area density for each building in a Pandas DataFrame. Rooftop area density is the roof area
+    of all buildings within the total plan area  at a specified height increment divided by the total plan area. naturf
+    projects building footprints vertically to the building height, meaning that rooftop area density is equal to the plan area
+    density.
+
+    :param building_plan_area:            Plan area density at each specified height increment.
+    :type building_plan_area:             pd.DataFrame
+
+    :return:                              Pandas DataFrame with rooftop area density for each BUILDING_HEIGHT_INTERVAL for each building.
+    """
+
+    columns_rooftop_area_density = [
+        f"{Settings.rooftop_area_density}_{i}"
+        for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
+    ]
+
+    return pd.DataFrame(plan_area_density.values.tolist(), columns=columns_rooftop_area_density)
+
+
 def sky_view_factor(
     building_height: pd.Series, average_distance_between_buildings: pd.Series
 ) -> pd.Series:
