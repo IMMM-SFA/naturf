@@ -912,6 +912,22 @@ def plan_area_density(
     return pd.DataFrame(plan_area_density, columns=columns_plan_area_density)
 
 
+def plan_area_fraction(building_plan_area: pd.Series, total_plan_area: pd.Series) -> pd.Series:
+    """Calculate the plan area fraction for each building in a Pandas Series. Plan area fraction is the building plan area at ground level
+    for each building divided by the total plan area.
+
+    :param building_plan_area:            Building plan area for each building.
+    :type building_plan_area:             pd.Series
+
+    :param total_plan_area:               Total plan area for each building.
+    :type total_plan_area:                pd.Series
+
+    :return:                              Pandas Series with plan area fraction for each building.
+    """
+
+    return building_plan_area / total_plan_area
+
+
 def rooftop_area_density(plan_area_density: pd.DataFrame) -> pd.DataFrame:
     """Calculate the rooftop area density for each building in a Pandas DataFrame. Rooftop area density is the roof area
     of all buildings within the total plan area  at a specified height increment divided by the total plan area. naturf
