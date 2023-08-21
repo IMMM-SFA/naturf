@@ -128,6 +128,35 @@ def apply_max_building_height(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     return gdf
 
 
+def area_weighted_mean_of_building_heights(
+    buildings_intersecting_plan_area: gpd.GeoDataFrame,
+) -> pd.Series:
+    """Calculate the area weighted mean of building heights for each target building in a GeoPandas GeoDataFrame.
+    The entire area of buildings considered to be neighbors are included in the calculation.
+
+    :param buildings_intersecting_plan_area:    Geometry field for the neighboring buildings from the spatially
+                                                joined data.
+    :type buildings_intersecting_plan_area:     gpd.GeoDataFrame
+
+    :return:                                    The area weighted mean of building heights for all buildings within the target
+                                                building's plan area.
+    """
+
+    buildings_intersecting_plan_area[Settings.neighbor_volume_field] = (
+        buildings_intersecting_plan_area[Settings.neighbor_height_field]
+        * buildings_intersecting_plan_area[Settings.neighbor_area_field]
+    )
+
+    volume_sum = buildings_intersecting_plan_area.groupby(Settings.target_id_field)[
+        Settings.neighbor_volume_field
+    ].sum()
+    area_sum = buildings_intersecting_plan_area.groupby(Settings.target_id_field)[
+        Settings.neighbor_area_field
+    ].sum()
+
+    return volume_sum / area_sum
+
+
 def average_building_heights(
     building_id: pd.Series, building_height_neighbor: pd.Series
 ) -> pd.Series:
@@ -952,7 +981,7 @@ def rooftop_area_density(plan_area_density: pd.DataFrame) -> pd.DataFrame:
     :param plan_area_density:            Plan area density at each specified height increment.
     :type plan_area_density:             pd.DataFrame
 
-    :return:                              Pandas DataFrame with rooftop area density for each BUILDING_HEIGHT_INTERVAL for each building.
+    :return:                             Pandas DataFrame with rooftop area density for each BUILDING_HEIGHT_INTERVAL for each building.
     """
 
     columns_rooftop_area_density = [
@@ -1013,7 +1042,7 @@ def standard_deviation_of_building_heights(
                                                 joined data.
     :type buildings_intersecting_plan_area:     gpd.GeoDataFrame
 
-    :return:                                    The tandard deviation of building heights for all buildings within the target building's plan area.
+    :return:                                    The standard deviation of building heights for all buildings within the target building's plan area.
     """
 
     return buildings_intersecting_plan_area.groupby(Settings.target_id_field)[

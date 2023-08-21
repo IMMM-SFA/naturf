@@ -45,6 +45,7 @@ class Settings:
     buffered_field = "building_buffered"
     total_plan_area = "total_plan_area"
     total_plan_area_geometry = "total_plan_area_geometry"
+    volume_field = "volume_field"
 
     target_height_field = f"{height_field}_{target}"
     neighbor_height_field = f"{height_field}_{neighbor}"
@@ -56,6 +57,7 @@ class Settings:
     neighbor_geometry_field = f"{geometry_field}_{neighbor}"
     target_centroid_field = f"{centroid_field}_{target}"
     neighbor_centroid_field = f"{centroid_field}_{neighbor}"
+    neighbor_volume_field = f"{volume_field}_{neighbor}"
 
     target_buffered_field = f"{buffered_field}_{target}"
 
