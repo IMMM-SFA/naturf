@@ -478,6 +478,29 @@ def building_plan_area(
     return pd.Series(building_plan_area)
 
 
+def building_surface_area(
+    wall_length: pd.DataFrame, building_height: pd.Series, building_area: pd.Series
+) -> pd.Series:
+    """Calculate the building surface area for each building in a Panda Series. In naturf, the building footprint area is the
+    same as the roof area.
+
+    :param wall_length:                   Wall length in each cardinal direction for each building.
+    :type wall_length:                    pd.DataFrame
+
+    :param building_height:               Building height for each building.
+    :type building_height:                pd.Series
+
+    :param building_area:                 Building area field.
+    :type building_area:                  pd.Series
+
+    :return:                              Panda Series with building surface area.
+    """
+
+    wall_area = wall_length.mul(building_height, axis=0).sum(axis=1)
+
+    return wall_area + building_area
+
+
 def distance_to_neighbor_by_centroid(
     building_centroid_target: gpd.GeoSeries, building_centroid_neighbor: gpd.GeoSeries
 ) -> pd.Series:
