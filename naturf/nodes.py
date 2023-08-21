@@ -501,6 +501,24 @@ def building_surface_area(
     return wall_area + building_area
 
 
+def building_surface_area_to_plan_area_ratio(
+    building_surface_area: pd.Series, total_plan_area: pd.Series
+) -> pd.Series:
+    """Calculate the building surface area to plan area ratio for each building in a Pandas Series. In naturf, the building footprint area is the
+    same as the roof area.
+
+    :param building_surface_area:         Building surface area for each building.
+    :type building_surface_area:          pd.Series
+
+    :param total_plan_area:               Total plan area for each building.
+    :type total_plan_area:                pd.Series
+
+    :return:                              Panda Series with building surface area to plan area ratio.
+    """
+
+    return building_surface_area / total_plan_area
+
+
 def distance_to_neighbor_by_centroid(
     building_centroid_target: gpd.GeoSeries, building_centroid_neighbor: gpd.GeoSeries
 ) -> pd.Series:
