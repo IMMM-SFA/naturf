@@ -699,6 +699,42 @@ def frontal_area_density(
     )
 
 
+def frontal_area_index(
+    frontal_lengths: pd.DataFrame, building_height: pd.Series, total_plan_area: pd.Series
+) -> pd.DataFrame:
+    """Calculate the frontal area index for each building in a Pandas DataFrame in each cardinal direction.
+
+    :param frontal_length:                Frontal length in each cardinal direction for each building.
+    :type frontal_length:                 pd.DataFrame
+
+    :param building_height:               Building height for each building.
+    :type building_height:                pd.Series
+
+    :param total_plan_area:               Total plan area for each building.
+    :type total_plan_area:                pd.Series
+
+    :return:                              Pandas DataFrame with frontal length in each cardinal direction.
+    """
+
+    frontal_area_index_north = Settings.frontal_area_index_north
+    frontal_area_index_east = Settings.frontal_area_index_east
+    frontal_area_index_south = Settings.frontal_area_index_south
+    frontal_area_index_west = Settings.frontal_area_index_west
+
+    frontal_area_index = frontal_lengths.mul(building_height, axis=0).div(total_plan_area, axis=0)
+
+    cols = [
+        frontal_area_index_north,
+        frontal_area_index_east,
+        frontal_area_index_south,
+        frontal_area_index_west,
+    ]
+
+    frontal_area_index.columns = cols
+
+    return frontal_area_index
+
+
 def frontal_length(
     buildings_intersecting_plan_area: gpd.GeoDataFrame,
 ) -> pd.DataFrame:
