@@ -519,6 +519,29 @@ def building_surface_area_to_plan_area_ratio(
     return building_surface_area / total_plan_area
 
 
+def complete_aspect_ratio(
+    building_surface_area: pd.Series, total_plan_area: pd.Series, building_plan_area: pd.Series
+) -> pd.Series:
+    """Calculate the complete aspect ratio for each building in a Pandas Series. In naturf, the building footprint area is the
+    same as the roof area, and the exposed ground is the difference between total plan area and building plan area.
+
+    :param building_surface_area:         Building surface area for each building.
+    :type building_surface_area:          pd.Series
+
+    :param total_plan_area:               Total plan area for each building.
+    :type total_plan_area:                pd.Series
+
+    :param building_plan_area:            Building plan area for each building.
+    :type building_plan_area:             pd.Series
+
+    :return:                              Panda Series with complete aspect ratio.
+    """
+
+    exposed_ground = total_plan_area - building_plan_area
+
+    return (building_surface_area + exposed_ground) / total_plan_area
+
+
 def distance_to_neighbor_by_centroid(
     building_centroid_target: gpd.GeoSeries, building_centroid_neighbor: gpd.GeoSeries
 ) -> pd.Series:
