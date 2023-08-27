@@ -1089,6 +1089,48 @@ def plan_area_fraction(building_plan_area: pd.Series, total_plan_area: pd.Series
     return building_plan_area / total_plan_area
 
 
+def raupach_displacement_height(
+    building_height: pd.Series, frontal_area_index: pd.DataFrame
+) -> pd.DataFrame:
+    """Calculate the Raupach displacement height for each building in each cardinal direction in a Panda Series. Default values for constants are set
+    in the config file.
+
+    :param building_height:               Building height for each building.
+    :type building_height:                pd.Series
+
+    :param frontal_area_index:            Frontal area index for each building in each cardinal direction.
+    :type frontal_area_index:             pd.DataFrame
+
+    :return:                              Pandas DataFrame with Raupach displacement height in each cardinal direction.
+    """
+
+    raupach_displacement_height_north = Settings.raupach_displacement_height_north
+    raupach_displacement_height_east = Settings.raupach_displacement_height_east
+    raupach_displacement_height_south = Settings.raupach_displacement_height_south
+    raupach_displacement_height_west = Settings.raupach_displacement_height_west
+
+    cols = [
+        raupach_displacement_height_north,
+        raupach_displacement_height_east,
+        raupach_displacement_height_south,
+        raupach_displacement_height_west,
+    ]
+
+    constant_75 = Settings.CONSTANT_75
+    capital_lambda = frontal_area_index.mul(2, axis=0)
+
+    sqrt_constant_lambda = np.sqrt(capital_lambda.mul(constant_75, axis=0))
+    numerator = 1 - np.exp(-sqrt_constant_lambda)
+
+    raupach_displacement_height = (1 - numerator / sqrt_constant_lambda).mul(
+        building_height, axis=0
+    )
+
+    raupach_displacement_height.columns = cols
+
+    return raupach_displacement_height
+
+
 def rooftop_area_density(plan_area_density: pd.DataFrame) -> pd.DataFrame:
     """Calculate the rooftop area density for each building in a Pandas DataFrame. Rooftop area density is the roof area
     of all buildings within the total plan area  at a specified height increment divided by the total plan area. naturf
