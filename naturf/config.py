@@ -1,9 +1,11 @@
 class Settings:
     BUILDING_HEIGHT_INTERVAL = 5
-    CONSTANT_04 = 0.4
+    VONKARMANCONSTANT = 0.4
+    OBSTACLEDRAGCOEFFICIENT = 1.12
     CONSTANT_0193 = 0.193
     CONSTANT_0303 = 0.303
-    CONSTANT_359 = 3.59
+    ALPHACOEFFICIENT = 3.59
+    BETACOEFFICIENT = 1.0
     CONSTANT_15 = 15
     CONSTANT_75 = 7.5
     DEGREES_IN_CIRCLE = 360
@@ -98,6 +100,18 @@ class Settings:
     frontal_area_index_east = "frontal_area_index_east"
     frontal_area_index_south = "frontal_area_index_south"
     frontal_area_index_west = "frontal_area_index_west"
+    raupach_displacement_height_north = "raupach_displacement_height_north"
+    raupach_displacement_height_east = "raupach_displacement_height_east"
+    raupach_displacement_height_south = "raupach_displacement_height_south"
+    raupach_displacement_height_west = "raupach_displacement_height_west"
+    raupach_roughness_length_north = "raupach_roughness_length_north"
+    raupach_roughness_length_east = "raupach_roughness_length_east"
+    raupach_roughness_length_south = "raupach_roughness_length_south"
+    raupach_roughness_length_west = "raupach_roughness_length_west"
+    macdonald_roughness_length_north = "macdonald_roughness_length_north"
+    macdonald_roughness_length_east = "macdonald_roughness_length_east"
+    macdonald_roughness_length_south = "macdonald_roughness_length_south"
+    macdonald_roughness_length_west = "macdonald_roughness_length_west"
 
     grimmond_oke_displacement_height = "grimmond_oke_displacement_height"
     grimmond_oke_roughness_length = "grimmond_oke_roughness_length"
