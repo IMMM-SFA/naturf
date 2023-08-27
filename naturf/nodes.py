@@ -982,6 +982,29 @@ def input_shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
     ]
 
 
+def macdonald_displacement_height(
+    building_height: pd.Series, plan_area_fraction: pd.Series
+) -> pd.Series:
+    """Calculate the Macdonald et al. displacement height for each building in a Pandas Series.
+
+    :param building_height:               Building height for each building.
+    :type building_height:                pd.Series
+
+    :param plan_area_fraction:            Plan area fraction for each building.
+    :type plan_area_fraction:             pd.Series
+    """
+
+    alpha_coefficient = Settings.ALPHACOEFFICIENT
+
+    plan_area_minus_one = plan_area_fraction - 1
+
+    alpha_exponent = alpha_coefficient ** (-plan_area_fraction)
+
+    right_side = 1 + alpha_exponent * plan_area_minus_one
+
+    return right_side * building_height
+
+
 def mean_building_height(buildings_intersecting_plan_area: gpd.GeoDataFrame) -> pd.Series:
     """Calculate the mean building height for all buildings within the target building's total plan area.
 
