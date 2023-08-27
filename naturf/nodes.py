@@ -246,7 +246,7 @@ def average_distance_between_buildings(
     )
 
     df = (
-        df.groupby(Settings.id_field)[Settings.between_buildings]
+        df.groupby(Settings.id_field)[Settings.distance_between_buildings]
         .mean()
         .reset_index()
         .replace(np.nan, Settings.DEFAULT_STREET_WIDTH)
