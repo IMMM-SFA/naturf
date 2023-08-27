@@ -325,7 +325,7 @@ class TestNodes(unittest.TestCase):
 
         actual = nodes.average_distance_between_buildings(ids, distance)
 
-        pd.testing.assert_frame_equal(expected, actual)
+        pd.testing.assert_series_equal(expected, actual)
 
     def test_buildings_intersecting_plan_area(self):
         """Test that the function buildings_intersecting_plan_area returns the correct intersecting buildings."""
