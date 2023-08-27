@@ -1131,6 +1131,59 @@ def raupach_displacement_height(
     return raupach_displacement_height
 
 
+def raupach_roughness_length(
+    building_height: pd.Series,
+    frontal_area_index: pd.DataFrame,
+    raupach_displacement_height: pd.DataFrame,
+) -> pd.DataFrame:
+    """Calculate the Raupach roughness length for each building in each cardinal direction in a Panda Series. Default values for constants are set
+    in the config file.
+
+    :param building_height:               Building height for each building.
+    :type building_height:                pd.Series
+
+    :param frontal_area_index:            Frontal area index for each building in each cardinal direction.
+    :type frontal_area_index:             pd.DataFrame
+
+    :param raupach_displacment_height:    Raupach displacment height for each building in each cardinal direction.
+    :type raupach_displacment_height:     pd.DataFrame
+
+    :return:                              Pandas DataFrame with Raupach roughness length in each cardinal direction.
+    """
+
+    raupach_roughness_length_north = Settings.raupach_roughness_length_north
+    raupach_roughness_length_east = Settings.raupach_roughness_length_east
+    raupach_roughness_length_south = Settings.raupach_roughness_length_south
+    raupach_roughness_length_west = Settings.raupach_roughness_length_west
+
+    cols = [
+        raupach_roughness_length_north,
+        raupach_roughness_length_east,
+        raupach_roughness_length_south,
+        raupach_roughness_length_west,
+    ]
+
+    von_karman_constant = Settings.VONKARMANCONSTANT
+    drag_coefficient_03 = Settings.DRAGCOEFFICIENT_03
+    drag_coefficient_0003 = Settings.DRAGCOEFFICIENT_0003
+    psi_k = Settings.PSI_K
+
+    frontal_area_index.columns = cols
+    raupach_displacement_height.columns = cols
+
+    denominator = np.sqrt(drag_coefficient_0003 + drag_coefficient_03 * frontal_area_index)
+
+    one_minus_displacement_height = 1 - raupach_displacement_height.div(building_height, axis=0)
+
+    exponential = np.exp(-von_karman_constant / denominator - psi_k)
+
+    raupach_roughness_length = exponential.mul(one_minus_displacement_height, axis=0).mul(
+        building_height, axis=0
+    )
+
+    return raupach_roughness_length
+
+
 def rooftop_area_density(plan_area_density: pd.DataFrame) -> pd.DataFrame:
     """Calculate the rooftop area density for each building in a Pandas DataFrame. Rooftop area density is the roof area
     of all buildings within the total plan area  at a specified height increment divided by the total plan area. naturf
