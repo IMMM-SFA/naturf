@@ -63,6 +63,7 @@ class Settings:
     target_buffered_field = f"{buffered_field}_{target}"
 
     distance_to_neighbor_by_centroid = f"distance_to_{neighbor}_by_centroid"
+    distance_between_buildings = "distance_between_buildings"
     average_distance_between_buildings = "average_distance_between_buildings"
 
     spatial_join_list = [
