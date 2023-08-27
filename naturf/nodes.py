@@ -219,13 +219,12 @@ def average_direction_distance(
 
 
 def average_distance_between_buildings(
-    buildings_intersecting_plan_area: gpd.GeoDataFrame, distance_between_buildings: pd.Series
+    building_id: pd.Series, distance_between_buildings: pd.Series
 ) -> pd.Series:
     """Calculate the average distance from the target building to all neighboring buildings.
 
-    param buildings_intersecting_plan_area:     Geometry field for the neighboring buildings from the spatially
-                                                joined data.
-    :type buildings_intersecting_plan_area:     gpd.GeoDataFrame
+    :param building_id:                         Building ID field.
+    :type building_id:                          pd.Series
 
     :param distance_between_buildings:          distance from the target building to each
                                                 neighbor building.
@@ -235,12 +234,19 @@ def average_distance_between_buildings(
 
     """
 
-    id_field = buildings_intersecting_plan_area[Settings.target_id_field]
+    df = pd.DataFrame(
+        {
+            Settings.id_field: building_id,
+            Settings.distance_between_buildings: distance_between_buildings,
+        }
+    )
 
-    distance_between_buildings = distance_between_buildings.replace(0, np.nan)
+    df[Settings.distance_between_buildings] = df[Settings.distance_between_buildings].replace(
+        0, np.nan
+    )
 
-    (
-        distance_between_buildings.groupby(id_field)
+    df = (
+        df.groupby(Settings.id_field)[Settings.between_buildings]
         .mean()
         .reset_index()
         .replace(np.nan, Settings.DEFAULT_STREET_WIDTH)
@@ -251,7 +257,7 @@ def average_distance_between_buildings(
         )
     )
 
-    return average_distance_between_buildings
+    return df[Settings.average_distance_between_buildings]
 
 
 def building_area(building_geometry: pd.Series) -> pd.Series:
