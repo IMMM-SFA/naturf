@@ -946,12 +946,12 @@ def grimmond_oke_roughness_length(building_height: pd.Series) -> pd.Series:
 
 
 def height_to_width_ratio(
-    average_building_heights: pd.Series, average_distance_between_buildings: pd.Series
+    mean_building_heights: pd.Series, average_distance_between_buildings: pd.Series
 ) -> pd.Series:
     """Calculate the height to width ratio for each building.
 
-    :param average_building_heights:           Series of building heights for each target building in the buffered area
-    :type average_building_heights:            pd.Series
+    :param mean_building_heights:           Series of mean building height for all buildings within the target building's plan area
+    :type mean_building_heights:            pd.Series
 
     :param average_distance_between_buildings: Series of average distance from each building to all neighboring buildings
     :type average_distance_between_buildings:  pd.Series
