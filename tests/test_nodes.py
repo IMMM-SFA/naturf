@@ -318,13 +318,9 @@ class TestNodes(unittest.TestCase):
 
         default_street_width = Settings.DEFAULT_STREET_WIDTH
 
-        expected = pd.DataFrame(
-            {
-                Settings.id_field: ids,
-                Settings.average_distance_between_buildings: pd.Series(
-                    [1.5, 2.0, 1.0, 3.0, default_street_width]
-                ),
-            }
+        expected = pd.Series(
+            [1.5, 2.0, 1.0, 3.0, default_street_width],
+            name=Settings.average_distance_between_buildings,
         )
 
         actual = nodes.average_distance_between_buildings(ids, distance)
