@@ -1005,6 +1005,58 @@ def macdonald_displacement_height(
     return right_side * building_height
 
 
+def macdonald_roughness_length(
+    building_height: pd.Series,
+    macdonald_displacement_height: pd.Series,
+    frontal_area_index: pd.DataFrame,
+) -> pd.DataFrame:
+    """Calculate the Macdonald et al. roughness length for each building in a Pandas Series.
+
+    :param building_height:               Building height for each building.
+    :type building_height:                pd.Series
+
+    :param macdonald_displacement_height: Macdonald displacement height for each building.
+    :type macdonald_displacement_height:  pd.Series
+
+    :param frontal_area_index:            Frontal area index for each building in each cardinal direction.
+    :type frontal_area_index:             pd.DataFrame
+    """
+
+    macdonald_roughness_length_north = Settings.macdonald_roughness_length_north
+    macdonald_roughness_length_east = Settings.macdonald_roughness_length_east
+    macdonald_roughness_length_south = Settings.macdonald_roughness_length_south
+    macdonald_roughness_length_west = Settings.macdonald_roughness_length_west
+
+    cols = [
+        macdonald_roughness_length_north,
+        macdonald_roughness_length_east,
+        macdonald_roughness_length_south,
+        macdonald_roughness_length_west,
+    ]
+
+    obstacle_drag_coefficient = Settings.OBSTACLEDRAGCOEFFICIENT
+    von_karman_constant = Settings.VONKARMANCONSTANT
+    beta_coefficient = Settings.BETACOEFFICIENT
+
+    one_minus_height_ratio = 1 - macdonald_displacement_height / building_height
+
+    drag_over_von_karman = obstacle_drag_coefficient / von_karman_constant**2
+
+    inside_exponential = -frontal_area_index.mul(
+        0.5 * beta_coefficient * drag_over_von_karman * one_minus_height_ratio, axis=0
+    ) ** (-0.5)
+
+    exponential = np.exp(inside_exponential)
+
+    right_side = exponential.mul(one_minus_height_ratio, axis=0)
+
+    macdonald_roughness_length = right_side.mul(building_height, axis=0)
+
+    macdonald_roughness_length.columns = cols
+
+    return macdonald_roughness_length
+
+
 def mean_building_height(buildings_intersecting_plan_area: gpd.GeoDataFrame) -> pd.Series:
     """Calculate the mean building height for all buildings within the target building's total plan area.
 
