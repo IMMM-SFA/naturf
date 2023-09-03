@@ -1410,6 +1410,43 @@ def total_plan_area_geometry(
     return building_geometry.buffer(distance=radius, cap_style=cap_style)
 
 
+def vertical_distribution_of_building_heights(building_height: pd.Series) -> pd.DataFrame:
+    """Represent the location of buildings at 5m increments from ground level to 75m unless otherwise specified. If is within a
+    given height bin, it will be given a 1 and it will be given a 0 otherwise."
+
+    :param building_height:               Building height for each building.
+    :type building_height:                pd.Series
+
+    :return:                              Pandas DataFrame with the distribtution of building heights at each
+                                          BUILDING_HEIGHT_INTERVAL for each building.
+    """
+
+    rows, cols = (
+        len(building_height.index),
+        int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL),
+    )
+    vertical_distribution_of_building_heights = [[0 for i in range(cols)] for j in range(rows)]
+
+    for building in range(building_height.size):
+        building_height_counter = 0
+
+        while building_height_counter < building_height[building]:
+            vertical_distribution_of_building_heights[building][
+                int(building_height_counter / Settings.BUILDING_HEIGHT_INTERVAL)
+            ] = 1.0
+            building_height_counter += Settings.BUILDING_HEIGHT_INTERVAL
+
+    columns_vertical_distribution_of_building_heights = [
+        f"{Settings.vertical_distribution_of_building_heights}_{i}"
+        for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
+    ]
+
+    return pd.DataFrame(
+        vertical_distribution_of_building_heights,
+        columns=columns_vertical_distribution_of_building_heights,
+    )
+
+
 def wall_angle_direction_length(geometry: gpd.GeoSeries) -> pd.DataFrame:
     """Calculate the wall angle, direction, and length for each building in a GeoPandas GeoSeries.
 

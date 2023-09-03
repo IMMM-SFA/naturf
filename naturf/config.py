@@ -113,6 +113,7 @@ class Settings:
     macdonald_roughness_length_east = "macdonald_roughness_length_east"
     macdonald_roughness_length_south = "macdonald_roughness_length_south"
     macdonald_roughness_length_west = "macdonald_roughness_length_west"
+    vertical_distribution_of_building_heights = "vertical_distribution_of_building_heights"
 
     grimmond_oke_displacement_height = "grimmond_oke_displacement_height"
     grimmond_oke_roughness_length = "grimmond_oke_roughness_length"
