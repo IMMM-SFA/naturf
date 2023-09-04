@@ -349,7 +349,8 @@ class TestNodes(unittest.TestCase):
                 wall_length_east,
                 wall_length_south,
                 wall_length_west,
-            ]
+            ],
+            axis=1,
         )
 
         total_plan_area_geometry_no_overlap = pd.Series([polygon1.buffer(1), polygon2.buffer(1)])
@@ -796,10 +797,20 @@ class TestNodes(unittest.TestCase):
         # wall_length_south tests that addition works correctly when one building does not have a wall facing a given direction.
         # wall_length_west tests that addition works correctly when neither building has a wall facing a given direction.
 
-        wall_length_north = pd.Series([1.0, 1.0])
-        wall_length_east = pd.Series([1.0, 3.0])
-        wall_length_south = pd.Series([0, 1.0])
-        wall_length_west = pd.Series([0, 0])
+        wall_length_north = pd.Series([1.0, 1.0], name=Settings.wall_length_north)
+        wall_length_east = pd.Series([1.0, 3.0], name=Settings.wall_length_east)
+        wall_length_south = pd.Series([0, 1.0], name=Settings.wall_length_south)
+        wall_length_west = pd.Series([0, 0], name=Settings.wall_length_west)
+
+        wall_length = pd.concat(
+            [
+                wall_length_north,
+                wall_length_east,
+                wall_length_south,
+                wall_length_west,
+            ],
+            axis=1,
+        )
 
         frontal_length_north = Settings.frontal_length_north
         frontal_length_east = Settings.frontal_length_east
@@ -814,10 +825,7 @@ class TestNodes(unittest.TestCase):
             building_geometry,
             building_area,
             total_plan_area_geometry,
-            wall_length_north,
-            wall_length_east,
-            wall_length_south,
-            wall_length_west,
+            wall_length,
             crs,
         )
 
