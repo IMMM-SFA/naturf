@@ -329,10 +329,7 @@ def buildings_intersecting_plan_area(
     building_geometry: pd.Series,
     building_area: pd.Series,
     total_plan_area_geometry: pd.Series,
-    wall_length_north: pd.Series,
-    wall_length_east: pd.Series,
-    wall_length_south: pd.Series,
-    wall_length_west: pd.Series,
+    wall_length: pd.DataFrame,
     target_crs: CRS,
     join_type: str = "left",
     join_predicate: str = "intersects",
@@ -387,10 +384,10 @@ def buildings_intersecting_plan_area(
             Settings.area_field: building_area,
             Settings.geometry_field: building_geometry,
             Settings.buffered_field: total_plan_area_geometry,
-            Settings.wall_length_north: wall_length_north,
-            Settings.wall_length_east: wall_length_east,
-            Settings.wall_length_south: wall_length_south,
-            Settings.wall_length_west: wall_length_west,
+            Settings.wall_length_north: wall_length[Settings.wall_length_north],
+            Settings.wall_length_east: wall_length[Settings.wall_length_east],
+            Settings.wall_length_south: wall_length[Settings.wall_length_south],
+            Settings.wall_length_west: wall_length[Settings.wall_length_west],
         }
     )
 

@@ -338,10 +338,19 @@ class TestNodes(unittest.TestCase):
         building_area = pd.Series([polygon1.area, polygon2.area])
         crs = "epsg:3857"
 
-        wall_length_north = pd.Series([1.0, 1.0])
-        wall_length_east = pd.Series([1.0, 1.0])
-        wall_length_south = pd.Series([1.0, 1.0])
-        wall_length_west = pd.Series([1.0, 1.0])
+        wall_length_north = pd.Series([1.0, 1.0], name=Settings.wall_length_north)
+        wall_length_east = pd.Series([1.0, 1.0], name=Settings.wall_length_east)
+        wall_length_south = pd.Series([1.0, 1.0], name=Settings.wall_length_south)
+        wall_length_west = pd.Series([1.0, 1.0], name=Settings.wall_length_west)
+
+        wall_length = pd.concat(
+            [
+                wall_length_north,
+                wall_length_east,
+                wall_length_south,
+                wall_length_west,
+            ]
+        )
 
         total_plan_area_geometry_no_overlap = pd.Series([polygon1.buffer(1), polygon2.buffer(1)])
         total_plan_area_geometry_some_overlap = pd.Series(
@@ -511,10 +520,7 @@ class TestNodes(unittest.TestCase):
                 building_geometry,
                 building_area,
                 case.input,
-                wall_length_north,
-                wall_length_east,
-                wall_length_south,
-                wall_length_west,
+                wall_length,
                 crs,
             )
             expected = case.expected
