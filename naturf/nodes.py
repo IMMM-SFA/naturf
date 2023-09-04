@@ -976,7 +976,7 @@ def input_shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
             Settings.data_height_field_name,
             Settings.data_geometry_field_name,
         ]
-    ]
+    ].set_geometry(Settings.data_geometry_field_name)
 
 
 def macdonald_displacement_height(
