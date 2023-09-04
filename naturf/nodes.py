@@ -943,12 +943,12 @@ def grimmond_oke_roughness_length(building_height: pd.Series) -> pd.Series:
 
 
 def height_to_width_ratio(
-    mean_building_heights: pd.Series, average_distance_between_buildings: pd.Series
+    mean_building_height: pd.Series, average_distance_between_buildings: pd.Series
 ) -> pd.Series:
     """Calculate the height to width ratio for each building.
 
-    :param mean_building_heights:           Series of mean building height for all buildings within the target building's plan area
-    :type mean_building_heights:            pd.Series
+    :param mean_building_height:           Series of mean building height for all buildings within the target building's plan area
+    :type mean_building_height:            pd.Series
 
     :param average_distance_between_buildings: Series of average distance from each building to all neighboring buildings
     :type average_distance_between_buildings:  pd.Series
@@ -957,7 +957,7 @@ def height_to_width_ratio(
 
     """
 
-    return average_building_heights / average_distance_between_buildings
+    return mean_building_height / average_distance_between_buildings
 
 
 def input_shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
@@ -1069,6 +1069,152 @@ def mean_building_height(buildings_intersecting_plan_area: gpd.GeoDataFrame) -> 
     return buildings_intersecting_plan_area.groupby(Settings.target_id_field)[
         Settings.neighbor_height_field
     ].mean()
+
+
+def merge_parameters(
+    frontal_area_density: pd.DataFrame,
+    plan_area_density: pd.DataFrame,
+    rooftop_area_density: pd.DataFrame,
+    plan_area_fraction: pd.Series,
+    mean_building_height: pd.Series,
+    standard_deviation_of_building_heights: pd.Series,
+    area_weighted_mean_of_building_heights: pd.Series,
+    building_surface_area_to_plan_area_ratio: pd.Series,
+    frontal_area_index: pd.DataFrame,
+    complete_aspect_ratio: pd.Series,
+    height_to_width_ratio: pd.Series,
+    sky_view_factor: pd.Series,
+    grimmond_oke_roughness_length: pd.Series,
+    grimmond_oke_displacement_height: pd.Series,
+    raupach_roughness_length: pd.DataFrame,
+    raupach_displacement_height: pd.DataFrame,
+    macdonald_roughness_length: pd.DataFrame,
+    macdonald_displacement_height: pd.Series,
+    vertical_distribution_of_building_heights: pd.DataFrame,
+    building_geometry: pd.Series,
+    target_crs: CRS,
+) -> gpd.GeoDataFrame:
+    """Merge all parameters into one Pandas DataFrame.
+
+    :param frontal_area_density:                       Frontal area density at each specified height increment and each cardinal direction.
+    :type frontal_area_density:                        pd.DataFrame
+
+    :param plan_area_density:                          Plan area density at each specified height increment.
+    :type plan_area_density:                           pd.DataFrame
+
+    :param rooftop_area_density:                       Rooftop area density at each specified height increment.
+    :type rooftop_area_density:                        pd.DataFrame
+
+    :param plan_area_fraction:                         Plan area fraction for each building.
+    :type plan_area_fraction:                          pd.Series
+
+    :param mean_building_height:                      Series of mean building height for all buildings within the target building's total plan area.
+    :type mean_building_height:                       pd.Series
+
+    :param standard_deviation_of_building_heights:     Series of standard deviation of building height for all buildings within the target building's
+                                                       total plan area.
+    :type standard_deviation_of_building_heights:      pd.Series
+
+    :param area_weighted_mean_of_building_heights:     Series of area weighted mean building heights for each building.
+    :type area_weighted_mean_of_building_heights:      pd.Series
+
+    :param building_surface_area_to_plan_area_ratio:   Series of building surface area to plan area ratio for each building.
+    :type building_surface_area_to_plan_area_ratio:    pd.Series
+
+    :param frontal_area_index:                         Frontal area index for each building in each cardinal direction.
+    :type frontal_area_index:                          pd.DataFrame
+
+    :param complete_aspect_ratio:                      Complete aspect ratio for each building.
+    :type complete_aspect_ratio:                       pd.Series
+
+    :param height_to_width_ratio:                      Height-to-width ratio for each building.
+    :type height_to_width_ratio:                       pd.Series
+
+    :param sky_view_factor:                            Sky view factor for each building.
+    :type sky_view_factor:                             pd.Series
+
+    :param grimmond_oke_roughness_length:              Grimmond & Oke roughness length for each building.
+    :type grimmond_oke_roughness_length:               pd.Series
+
+    :param grimmond_oke_displacement_height:           Grimmond & Oke displacement height for each building.
+    :type grimmond_oke_displacement_height:            pd.Series
+
+    :param raupach_roughness_length:                   Raupach roughness length for each building in each cardinal direction.
+    :type raupach_roughness_length:                    pd.DataFrame
+
+    :param raupach_displacment_height:                 Raupach displacment height for each building in each cardinal direction.
+    :type raupach_displacment_height:                  pd.DataFrame
+
+    :param macdonald_roughness_length:                 Macdonald roughness_length for each building in each cardinal direction.
+    :type macdonald_roughness_length:                  pd.DataFrame
+
+    :param macdonald_displacement_height:              Macdonald displacement height for each building.
+    :type macdonald_displacement_height:               pd.Series
+
+    :param vertical_distribution_of_building_heights:  Distribution of building heights for each building ata each height increment.
+    :type vertical_distribution_of_building_heights:   pd.DataFrame
+
+    :param building_geometry:                          Geometry field for the buildings.
+    :type building_geometry:                           pd.Series
+
+    :param target_crs:                                 Coordinate reference system field of the parent geometry.
+    :type target_crs:                                  pd.Series
+
+    :return:                                           Pandas DataFrame with all parameters merged together.
+    """
+
+    df = pd.concat([frontal_area_density, plan_area_density, rooftop_area_density], axis=1)
+
+    df[Settings.plan_area_fraction] = plan_area_fraction
+    df[Settings.mean_building_height] = mean_building_height
+    df[Settings.standard_deviation_of_building_heights] = standard_deviation_of_building_heights
+    df[Settings.area_weighted_mean_of_building_heights] = area_weighted_mean_of_building_heights
+    df[Settings.building_surface_area_to_plan_area_ratio] = building_surface_area_to_plan_area_ratio
+
+    df = pd.concat([df, frontal_area_index], axis=1)
+
+    df[Settings.complete_aspect_ratio] = complete_aspect_ratio
+    df[Settings.height_to_width_ratio] = height_to_width_ratio
+    df[Settings.sky_view_factor] = sky_view_factor
+    df[Settings.grimmond_oke_roughness_length] = grimmond_oke_roughness_length
+    df[Settings.grimmond_oke_displacement_height] = grimmond_oke_displacement_height
+
+    df[Settings.raupach_roughness_length_north] = raupach_roughness_length[
+        Settings.raupach_roughness_length_north
+    ]
+    df[Settings.raupach_displacement_height_north] = raupach_displacement_height[
+        Settings.raupach_displacement_height_north
+    ]
+    df[Settings.raupach_roughness_length_east] = raupach_roughness_length[
+        Settings.raupach_roughness_length_east
+    ]
+    df[Settings.raupach_displacement_height_east] = raupach_displacement_height[
+        Settings.raupach_displacement_height_east
+    ]
+    df[Settings.raupach_roughness_length_south] = raupach_roughness_length[
+        Settings.raupach_roughness_length_south
+    ]
+    df[Settings.raupach_displacement_height_south] = raupach_displacement_height[
+        Settings.raupach_displacement_height_south
+    ]
+    df[Settings.raupach_roughness_length_west] = raupach_roughness_length[
+        Settings.raupach_roughness_length_west
+    ]
+    df[Settings.raupach_displacement_height_west] = raupach_displacement_height[
+        Settings.raupach_displacement_height_west
+    ]
+
+    df = pd.concat([df, macdonald_roughness_length], axis=1)
+
+    df[Settings.macdonald_displacement_height] = macdonald_displacement_height
+
+    df = pd.concat([df, vertical_distribution_of_building_heights], axis=1)
+
+    df[Settings.geometry_field] = building_geometry
+
+    gdf = gpd.GeoDataFrame(df, crs=target_crs)
+
+    return gdf
 
 
 def orientation_to_neighbor(angle_in_degrees_to_neighbor: pd.Series) -> pd.Series:
