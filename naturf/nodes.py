@@ -1444,24 +1444,24 @@ def vertical_distribution_of_building_heights(building_height: pd.Series) -> pd.
     )
 
 
-def wall_angle_direction_length(geometry: gpd.GeoSeries) -> pd.DataFrame:
+def wall_angle_direction_length(building_geometry: pd.Series) -> pd.DataFrame:
     """Calculate the wall angle, direction, and length for each building in a GeoPandas GeoSeries.
 
     :param geometry:                    Geometry for a series of buildings.
-    :type geometry:                     gpd.GeoSeries
+    :type geometry:                     pd.Series
 
     :return:                            Pandas DataFrame with wall angle, direction, and length for each building.
 
     """
 
     wall_angle, wall_direction, wall_length = (
-        [[] for x in range(geometry.size)],
-        [[] for x in range(geometry.size)],
-        [[] for x in range(geometry.size)],
+        [[] for x in range(building_geometry.size)],
+        [[] for x in range(building_geometry.size)],
+        [[] for x in range(building_geometry.size)],
     )
 
-    for building in range(geometry.size):
-        points_in_polygon = geometry.values[building].exterior.xy
+    for building in range(building_geometry.size):
+        points_in_polygon = building_geometry.values[building].exterior.xy
 
         for index, item in enumerate(zip(points_in_polygon[0], points_in_polygon[1])):
             x, y = item
