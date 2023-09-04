@@ -970,13 +970,15 @@ def input_shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
 
     """
 
-    return gpd.read_file(input_shapefile)[
+    gdf = gpd.read_file(input_shapefile)[
         [
             Settings.data_id_field_name,
             Settings.data_height_field_name,
             Settings.data_geometry_field_name,
         ]
     ].set_geometry(Settings.data_geometry_field_name)
+
+    return gdf
 
 
 def macdonald_displacement_height(
@@ -1367,7 +1369,7 @@ def target_crs(input_shapefile_df: gpd.GeoDataFrame) -> CRS:
 
     """
 
-    return input_shapefile_df.crs
+    return input_shapefile_df.set_geometry(Settings.geometry_field).crs
 
 
 def total_plan_area(total_plan_area_geometry: gpd.GeoSeries) -> pd.Series:
