@@ -1371,6 +1371,9 @@ def raupach_roughness_length(
         raupach_roughness_length_west,
     ]
 
+    cols_fai = frontal_area_index.columns
+    cols_rdh = raupach_displacement_height.columns
+
     von_karman_constant = Settings.VONKARMANCONSTANT
     drag_coefficient_03 = Settings.DRAGCOEFFICIENT_03
     drag_coefficient_0003 = Settings.DRAGCOEFFICIENT_0003
@@ -1388,6 +1391,9 @@ def raupach_roughness_length(
     raupach_roughness_length = exponential.mul(one_minus_displacement_height, axis=0).mul(
         building_height, axis=0
     )
+
+    frontal_area_index.columns = cols_fai
+    raupach_displacement_height.columns = cols_rdh
 
     return raupach_roughness_length
 
