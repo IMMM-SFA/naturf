@@ -1050,9 +1050,11 @@ def mean_building_height(buildings_intersecting_plan_area: gpd.GeoDataFrame) -> 
     :return:                                    The mean building height for all buildings within the target building's plan area.
     """
 
-    return buildings_intersecting_plan_area.groupby(Settings.target_id_field)[
+    df = buildings_intersecting_plan_area.groupby(Settings.target_id_field)[
         Settings.neighbor_height_field
     ].mean()
+
+    return pd.Series(df.values)
 
 
 def merge_parameters(
