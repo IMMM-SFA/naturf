@@ -154,7 +154,9 @@ def area_weighted_mean_of_building_heights(
         Settings.neighbor_area_field
     ].sum()
 
-    return volume_sum / area_sum
+    df = volume_sum / area_sum
+
+    return pd.Series(df.values)
 
 
 def average_building_heights(
