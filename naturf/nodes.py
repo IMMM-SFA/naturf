@@ -1463,9 +1463,15 @@ def standard_deviation_of_building_heights(
     :return:                                    The standard deviation of building heights for all buildings within the target building's plan area.
     """
 
-    return buildings_intersecting_plan_area.groupby(Settings.target_id_field)[
-        Settings.neighbor_height_field
-    ].std()
+    df = (
+        buildings_intersecting_plan_area.groupby(Settings.target_id_field)[
+            Settings.neighbor_height_field
+        ]
+        .std()
+        .fillna(0)
+    )
+
+    return pd.Series(df.values)
 
 
 def standardize_column_names_df(input_shapefile_df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
