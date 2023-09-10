@@ -218,13 +218,8 @@ def average_direction_distance(
     return df
 
 
-def average_distance_between_buildings(
-    building_id: pd.Series, distance_between_buildings: pd.Series
-) -> pd.Series:
+def average_distance_between_buildings(distance_between_buildings: pd.Series) -> pd.Series:
     """Calculate the average distance from the target building to all neighboring buildings.
-
-    :param building_id:                         Building ID field.
-    :type building_id:                          pd.Series
 
     :param distance_between_buildings:          distance from the target building to each
                                                 neighbor building.
@@ -234,19 +229,9 @@ def average_distance_between_buildings(
 
     """
 
-    df = pd.DataFrame(
-        {
-            Settings.id_field: building_id,
-            Settings.distance_between_buildings: distance_between_buildings,
-        }
-    )
-
-    df[Settings.distance_between_buildings] = df[Settings.distance_between_buildings].replace(
-        0, np.nan
-    )
-
+    df = distance_between_buildings.replace(0, np.nan)
     df = (
-        df.groupby(Settings.id_field)[Settings.distance_between_buildings]
+        df.groupby(Settings.neighbor_id_field)
         .mean()
         .reset_index()
         .replace(np.nan, Settings.DEFAULT_STREET_WIDTH)
@@ -256,7 +241,6 @@ def average_distance_between_buildings(
             }
         )
     )
-
     return df[Settings.average_distance_between_buildings]
 
 
