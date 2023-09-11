@@ -1315,6 +1315,28 @@ def plan_area_fraction(building_plan_area: pd.Series, total_plan_area: pd.Series
     return building_plan_area / total_plan_area
 
 
+def raster_to_numpy(aggregate_rasters: xr.Dataset) -> np.ndarray:
+    """Stack all 132 rasterized parameters into one numpy array for conversion to a binary file.
+
+    :param aggregate_rasters:                 Dataset with rasterized parameter values averaged at the defined resolution.
+    :type aggregate_rasters:                  xr.Dataset
+
+    :return:                                  132 level numpy array with each level being an aggregated parameter.
+    """
+
+    parameters = list(aggregate_rasters.keys())
+    parameters.remove("building_count")
+    rows = aggregate_rasters.dims["y"]
+    cols = aggregate_rasters.dims["x"]
+    master = np.zeros((132, rows, cols), dtype=np.float32)
+    i = 0
+    for parameter in parameters:
+        master[i] = aggregate_rasters[parameter].to_numpy()
+        i += 1
+
+    return master
+
+
 def rasterize_parameters(merge_parameters: gpd.GeoDataFrame) -> xr.Dataset:
     """Rasterize parameters in preparation for conversion to numpy arrays. Raster will be of resolution Settings.DEFAULT_OUTPUT_RESOLUTION
     and each cell will be the sum of each parameter value within. By default all_touched is True so that every building that is within a cell is
