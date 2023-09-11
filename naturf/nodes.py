@@ -1,3 +1,4 @@
+import os
 import geopandas as gpd
 import math
 import numpy as np
@@ -1793,3 +1794,34 @@ def wall_length(wall_angle_direction_length: pd.DataFrame) -> pd.DataFrame:
         ],
         axis=1,
     )
+
+
+def write_binary(numpy_to_binary: bytes, raster_to_numpy: np.ndarray):
+    """Write the binary file that will be input to WRF.
+
+    :param numpy_to_binary:                 Binary object containing the parameter data.
+    :type numpy_to_binary:                  bytes
+
+    :param raster_to_numpy:                 132 level numpy array with each level being an aggregated parameter.
+    :type raster_to_numpy:                  np.ndarray
+    """
+
+    np.save("temporary.npy", numpy_to_binary)
+
+    rows = raster_to_numpy.shape[1]
+    cols = raster_to_numpy.shape[2]
+
+    first_y_index = "{:05d}".format(1)
+    second_y_index = "{:05d}".format(rows)
+
+    first_x_index = "{:05d}".format(1)
+    second_x_index = "{:05d}".format(cols)
+
+    out_binary_name = (
+        first_x_index + "-" + second_x_index + "." + first_y_index + "-" + second_y_index
+    )
+
+    with open("temporary.npy", "rb") as tile, open(out_binary_name, "wb") as tile2:
+        tile2.write(tile.read()[20 * 4 :])
+
+    os.remove("temporary.npy")
