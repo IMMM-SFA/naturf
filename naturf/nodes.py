@@ -5,6 +5,7 @@ import pandas as pd
 from pyproj.crs import CRS
 from hamilton.function_modifiers import extract_columns
 import xarray as xr
+import struct
 
 from functools import partial
 from rasterio.enums import MergeAlg
@@ -1221,6 +1222,34 @@ def merge_parameters(
     gdf = gpd.GeoDataFrame(df, geometry=Settings.geometry_field, crs=target_crs)
 
     return gdf
+
+
+def numpy_to_binary(raster_to_numpy: np.ndarray) -> bytes:
+    """Turn the master numpy array containing all 132 aggregated parameters into a binary stream.
+
+    :param raster_to_numpy:         132 level numpy array with each level being an aggregated parameter.
+    :type raster_to_numpy:          np.ndarray
+
+    :return:                        Binary object containing the parameter data.
+    """
+
+    master_out = []
+
+    for i in range(len(raster_to_numpy)):
+        master_outi = bytes()
+        for j in range(len(raster_to_numpy[i])):
+            for k in range(len(raster_to_numpy[i][j])):
+                master_outi += struct.pack(
+                    ">i", int(raster_to_numpy[i][len(raster_to_numpy[i]) - j - 1][k])
+                )
+        master_out.append(master_outi)
+
+    master_out_final = bytes()
+
+    for i in range(len(master_out)):
+        master_out_final += master_out[i]
+
+    return master_out_final
 
 
 def orientation_to_neighbor(angle_in_degrees_to_neighbor: pd.Series) -> pd.Series:
