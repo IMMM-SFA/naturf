@@ -1825,3 +1825,61 @@ def write_binary(numpy_to_binary: bytes, raster_to_numpy: np.ndarray):
         tile2.write(tile.read()[20 * 4 :])
 
     os.remove("temporary.npy")
+
+
+def write_index(raster_to_numpy: np.ndarray, building_geometry: pd.Series, target_crs):
+    """Write the index file that will accompany the output binary file.
+
+    :param raster_to_numpy:                 132 level numpy array with each level being an aggregated parameter.
+    :type raster_to_numpy:                  np.ndarray
+
+    :param building_geometry:               Geometry field for the buildings.
+    :type building_geometry:                pd.Series
+
+    :param target_crs:                      Coordinate reference system field of the parent geometry.
+    :type target_crs:                       crs
+    """
+
+    dy = float(Settings.DEFAULT_OUTPUT_RESOLUTION[0])
+    dx = float(Settings.DEFAULT_OUTPUT_RESOLUTION[1])
+
+    building_geometry = gpd.GeoSeries(building_geometry, crs=target_crs)
+
+    building_geometry_project = building_geometry.to_crs(crs=4326)
+
+    bounds = building_geometry_project.total_bounds
+
+    known_lat = bounds[1]
+    known_lon = bounds[0]
+
+    stdlon = (bounds[0] + bounds[2]) / 2
+
+    tile_x = raster_to_numpy.shape[2]
+    tile_y = raster_to_numpy.shape[1]
+
+    with open("index", "w") as index:
+        index.writelines(
+            [
+                "type=continuous\n",
+                "  projection=albers_nad83\n",
+                "  missing_value=-999900.\n",
+                "  dy=" + str(dy) + "\n",
+                "  dx=" + str(dx) + "\n",
+                "  known_x=1\n",
+                "  known_y=1\n",
+                "  known_lat=" + str(known_lat) + "\n",
+                "  known_lon=" + str(known_lon) + "\n",
+                "  truelat1=45.5\n",
+                "  truelat2=29.5\n",
+                "  stdlon=" + str(stdlon) + "\n",
+                "  wordsize=4\n",
+                "  endian=big\n",
+                "  signed=no\n",
+                "  tile_x=" + str(tile_x) + "\n",
+                "  tile_y=" + str(tile_y) + "\n",
+                "  tile_z=132\n",
+                '  units="dimensionless"\n',
+                "  scale_factor=0.0001\n",
+                '  description="Urban_Parameters"\n',
+            ]
+        )
