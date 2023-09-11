@@ -29,6 +29,8 @@ class Settings:
     START_OF_CIRCLE_DEGREES = 0
     ZXCV_FACTOR = 3.5
     DEFAULT_STREET_WIDTH = 15
+    DEFAULT_OUTPUT_RESOLUTION = [100, 100]
+    DEFAULT_FILL_VALUE = 0
 
     data_id_field_name = "OBJECTID"
     data_height_field_name = "Max_HOUSE_"

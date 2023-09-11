@@ -4,6 +4,12 @@ import numpy as np
 import pandas as pd
 from pyproj.crs import CRS
 from hamilton.function_modifiers import extract_columns
+import xarray as xr
+
+from functools import partial
+from rasterio.enums import MergeAlg
+from geocube.api.core import make_geocube
+from geocube.rasterize import rasterize_image
 
 from .config import Settings
 
@@ -1295,6 +1301,33 @@ def plan_area_fraction(building_plan_area: pd.Series, total_plan_area: pd.Series
     """
 
     return building_plan_area / total_plan_area
+
+
+def rasterize_parameters(merge_parameters: gpd.GeoDataFrame) -> xr.Dataset:
+    """Rasterize parameters in preparation for conversion to numpy arrays. Raster will be of resolution Settings.DEFAULT_OUTPUT_RESOLUTION
+    and each cell will be the sum of each parameter value within. By default all_touched is True so that every building that is within a cell is
+    included in the sum.
+
+    :param merge_parameters:             Pandas.GeoDataFrame with all selected urban parameters for each building.
+    :type merge_parameters:              Pandas.GeoDataFrame
+
+    :return:                             Xr.Dataset containing rasterization of selected urban parameters.
+    """
+
+    merge_parameters["building_count"] = 1
+    measurements = merge_parameters.columns[merge_parameters.columns != Settings.geometry_field]
+    resolution = Settings.DEFAULT_OUTPUT_RESOLUTION
+    fill = Settings.DEFAULT_FILL_VALUE
+
+    return make_geocube(
+        vector_data=merge_parameters.rename(
+            columns={Settings.geometry_field: "geometry"}
+        ).set_geometry("geometry"),
+        measurements=measurements,
+        resolution=resolution,
+        fill=fill,
+        rasterize_function=partial(rasterize_image, all_touched=True, merge_alg=MergeAlg.add),
+    )
 
 
 def raupach_displacement_height(
