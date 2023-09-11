@@ -83,6 +83,18 @@ def _plan_area_dict(building_id: pd.Series, building_area_neighbor: pd.Series) -
     return df.groupby(Settings.id_field)[Settings.neighbor_area_field].sum().to_dict()
 
 
+def aggregate_rasters(rasterize_parameters: xr.Dataset) -> xr.Dataset:
+    """Divide each raster by the number of buildings in the cell to get the average parameter value for each cell.
+
+    :param rasterize_parameters:                    Xr.Dataset with rasterized parameters summed at the defined resolution.
+    :type rasterize_parameters:                     Xr.Dataset
+
+    :return:                                        Xr.Dataset containing rasterized parameter values averaged at the defined resolution.
+    """
+
+    return (rasterize_parameters / rasterize_parameters["building_count"]).fillna(0)
+
+
 def angle_in_degrees_to_neighbor(
     building_centroid_target: gpd.GeoSeries, building_centroid_neighbor: gpd.GeoSeries
 ) -> pd.Series:
