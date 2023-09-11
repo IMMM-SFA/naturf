@@ -1200,7 +1200,7 @@ def merge_parameters(
 
     df[Settings.geometry_field] = building_geometry
 
-    gdf = gpd.GeoDataFrame(df, crs=target_crs)
+    gdf = gpd.GeoDataFrame(df, geometry=Settings.geometry_field, crs=target_crs)
 
     return gdf
 
