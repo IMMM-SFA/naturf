@@ -1280,8 +1280,8 @@ def orientation_to_neighbor(angle_in_degrees_to_neighbor: pd.Series) -> pd.Serie
                 (Settings.NORTHWEST_DEGREES <= angle_in_degrees_to_neighbor)
                 & (angle_in_degrees_to_neighbor <= Settings.SOUTHWEST_DEGREES)
             ),
-            "east_west",
-            "north_south",
+            Settings.east_west,
+            Settings.north_south,
         ),
         index=angle_in_degrees_to_neighbor.index,
     )

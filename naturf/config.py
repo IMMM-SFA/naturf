@@ -41,6 +41,8 @@ class Settings:
     east = "east"
     south = "south"
     west = "west"
+    north_south = "north_south"
+    east_west = "east_west"
 
     id_field = "building_id"
     height_field = "building_height"
