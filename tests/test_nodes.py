@@ -1,3 +1,4 @@
+import math
 import os
 import pkg_resources
 import unittest
@@ -23,39 +24,6 @@ class TestNodes(unittest.TestCase):
         "radius": 100,
         "cap_style": 1,
     }
-
-    def test_input_shapefile_df(self):
-        """Test the functionality of the input_shapefile_df function."""
-
-        # instantiate DAG asking for the output of input_shapefile_df()
-        dag = Model(inputs=TestNodes.INPUTS, outputs=["input_shapefile_df"])
-
-        # generate the output data frame from the driver
-        df = dag.execute()
-
-        # check shape of data frame
-        self.assertEqual((260, 3), df.shape, "`input_shapefile_df` shape does not match expected")
-
-        # check data types
-        fake_geodataframe = gpd.GeoDataFrame(
-            {
-                "a": np.array([], dtype=np.int64),
-                "b": np.array([], dtype=np.float64),
-                "geometry": np.array([], dtype=gpd.array.GeometryDtype),
-            }
-        )
-
-        np.testing.assert_array_equal(
-            fake_geodataframe.dtypes.values,
-            df.dtypes.values,
-            "`input_shapefile_df` column data types do not match expected",
-        )
-
-        self.assertEqual(
-            type(fake_geodataframe),
-            type(df),
-            "`input_shapefile_df` data type not matching expected",
-        )
 
     def test_angle_in_degrees_to_neighbor(self):
         """Test that the returned angle is correct."""
@@ -133,176 +101,6 @@ class TestNodes(unittest.TestCase):
                 expected,
                 actual,
             )
-
-    def test_orientation_to_neighbor(self):
-        """Test that the function `orientation_to_neighbor` returns either `east_west` or `north_south` correctly."""
-
-        @dataclass
-        class TestCase:
-            name: str
-            input: List[int | float]
-            expected: List[int | str]
-
-        east_west = "east_west"
-        north_south = "north_south"
-
-        testcases = [
-            TestCase(name="zero_degrees", input=[0.0, -0.0], expected=[east_west, east_west]),
-            TestCase(name="north_south", input=[90, 270], expected=[north_south, north_south]),
-            TestCase(
-                name="east_west",
-                input=[45, 135, 225, 315, 360],
-                expected=[east_west, east_west, east_west, east_west, east_west],
-            ),
-        ]
-
-        for case in testcases:
-            actual = nodes.orientation_to_neighbor(pd.Series(case.input))
-            expected = pd.Series(case.expected)
-            pd.testing.assert_series_equal(expected, actual)
-
-    def test_wall_angle_direction_length(self):
-        """Test that the function wall_angle_direction_length returns the correct angle, direction, and length."""
-
-        polygon_exterior = [[0, 1], [1, 1], [1, 0], [0, 0], [0, 1]]
-        polygon_interior = [[0.25, 0.25], [0.25, 0.75], [0.75, 0.75], [0.75, 0.25]]
-
-        north = Settings.north
-        south = Settings.south
-        east = Settings.east
-        west = Settings.west
-
-        wall_angle = Settings.wall_angle
-        wall_direction = Settings.wall_direction
-        wall_length = Settings.wall_length
-
-        square_root_one_half = 0.7071067811865476
-
-        @dataclass
-        class TestCase:
-            name: str
-            input: List[Polygon]
-            expected: List[int]
-
-        testcases = [
-            TestCase(
-                name="square",
-                input=[Polygon(polygon_exterior)],
-                expected=pd.concat(
-                    [
-                        pd.Series([[0.0, -90.0, 180.0, 90.0]], name=wall_angle),
-                        pd.Series([[north, east, south, west]], name=wall_direction),
-                        pd.Series([[1.0, 1.0, 1.0, 1.0]], name=wall_length),
-                    ],
-                    axis=1,
-                ),
-            ),
-            TestCase(
-                name="square with inner ring",
-                input=[Polygon(polygon_exterior, [polygon_interior])],
-                expected=pd.concat(
-                    [
-                        pd.Series([[0.0, -90.0, 180.0, 90.0]], name=wall_angle),
-                        pd.Series([[north, east, south, west]], name=wall_direction),
-                        pd.Series([[1.0, 1.0, 1.0, 1.0]], name=wall_length),
-                    ],
-                    axis=1,
-                ),
-            ),
-            TestCase(
-                name="45 degree triangle",
-                input=[
-                    Polygon(
-                        [
-                            [0, 0],
-                            [square_root_one_half, square_root_one_half],
-                            [0, square_root_one_half],
-                        ]
-                    )
-                ],
-                expected=pd.concat(
-                    [
-                        pd.Series([[45.0, 180.0, -90.0]], name=wall_angle),
-                        pd.Series([[west, south, east]], name=wall_direction),
-                        pd.Series(
-                            [[1.0, square_root_one_half, square_root_one_half]], name=wall_length
-                        ),
-                    ],
-                    axis=1,
-                ),
-            ),
-            TestCase(
-                name="135 degree triangle",
-                input=[
-                    Polygon(
-                        [
-                            [0, 0],
-                            [-square_root_one_half, square_root_one_half],
-                            [0, square_root_one_half],
-                        ]
-                    )
-                ],
-                expected=pd.concat(
-                    [
-                        pd.Series([[135.0, 0.0, -90.0]], name=wall_angle),
-                        pd.Series([[south, north, east]], name=wall_direction),
-                        pd.Series(
-                            [[1.0, square_root_one_half, square_root_one_half]], name=wall_length
-                        ),
-                    ],
-                    axis=1,
-                ),
-            ),
-            TestCase(
-                name="225 degree triangle",
-                input=[
-                    Polygon(
-                        [
-                            [0, 0],
-                            [-square_root_one_half, -square_root_one_half],
-                            [-square_root_one_half, 0],
-                        ]
-                    )
-                ],
-                expected=pd.concat(
-                    [
-                        pd.Series([[-135.0, 90.0, 0.0]], name=wall_angle),
-                        pd.Series([[east, west, north]], name=wall_direction),
-                        pd.Series(
-                            [[1.0, square_root_one_half, square_root_one_half]], name=wall_length
-                        ),
-                    ],
-                    axis=1,
-                ),
-            ),
-            TestCase(
-                name="325 degree triangle",
-                input=[
-                    Polygon(
-                        [
-                            [0, 0],
-                            [square_root_one_half, -square_root_one_half],
-                            [0, -square_root_one_half],
-                        ]
-                    )
-                ],
-                expected=pd.concat(
-                    [
-                        pd.Series([[-45.0, 180.0, 90.0]], name=wall_angle),
-                        pd.Series([[north, south, west]], name=wall_direction),
-                        pd.Series(
-                            [[1.0, square_root_one_half, square_root_one_half]], name=wall_length
-                        ),
-                    ],
-                    axis=1,
-                ),
-            ),
-        ]
-
-        for case in testcases:
-            actual = nodes.wall_angle_direction_length(gpd.GeoSeries(case.input))
-            expected = case.expected
-            pd.testing.assert_frame_equal(expected, actual)
 
     def test_average_distance_between_buildings(self):
         "Test that the function average_distance_between_buildings returns the correct distance."
@@ -677,169 +475,38 @@ class TestNodes(unittest.TestCase):
                 "failed test {} expected {}, actual {}".format(case.name, expected, actual),
             )
 
-    def test_wall_length(self):
-        """Test that the function wall_length returns the correct wall area."""
+    def test_input_shapefile_df(self):
+        """Test the functionality of the input_shapefile_df function."""
 
-        north = Settings.north
-        south = Settings.south
-        east = Settings.east
-        west = Settings.west
+        # instantiate DAG asking for the output of input_shapefile_df()
+        dag = Model(inputs=TestNodes.INPUTS, outputs=["input_shapefile_df"])
 
-        wall_angle = Settings.wall_angle
-        wall_direction = Settings.wall_direction
-        wall_length = Settings.wall_length
+        # generate the output data frame from the driver
+        df = dag.execute()
 
-        wall_length_north = Settings.wall_length_north
-        wall_length_south = Settings.wall_length_south
-        wall_length_east = Settings.wall_length_east
-        wall_length_west = Settings.wall_length_west
+        # check shape of data frame
+        self.assertEqual((260, 3), df.shape, "`input_shapefile_df` shape does not match expected")
 
-        square_root_one_half = 0.7071067811865476
-
-        square_input = pd.concat(
-            [
-                pd.Series([[0.0, -90.0, 180.0, 90.0]], name=wall_angle),
-                pd.Series([[north, east, south, west]], name=wall_direction),
-                pd.Series([[1.0, 1.0, 1.0, 1.0]], name=wall_length),
-            ],
-            axis=1,
-        )
-        triangle_input = pd.concat(
-            [
-                pd.Series([[45.0, 180.0, -90.0]], name=wall_angle),
-                pd.Series([[west, south, east]], name=wall_direction),
-                pd.Series([[1.0, square_root_one_half, square_root_one_half]], name=wall_length),
-            ],
-            axis=1,
-        )
-        eight_sided_input = pd.concat(
-            [
-                pd.Series([[0.0, -90.0, 180.0, 90.0, -45.0, -135.0, 135.0, 45.0]], name=wall_angle),
-                pd.Series(
-                    [[north, east, south, west, north, east, south, west]], name=wall_direction
-                ),
-                pd.Series([[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]], name=wall_length),
-            ],
-            axis=1,
+        # check data types
+        fake_geodataframe = gpd.GeoDataFrame(
+            {
+                "a": np.array([], dtype=np.int64),
+                "b": np.array([], dtype=np.float64),
+                "geometry": np.array([], dtype=gpd.array.GeometryDtype),
+            }
         )
 
-        @dataclass
-        class TestCase:
-            name: str
-            input: pd.DataFrame
-            expected: pd.DataFrame
-
-        testcases = [
-            TestCase(
-                name="square",
-                input=square_input,
-                expected=pd.concat(
-                    [
-                        pd.Series([1.0], name=wall_length_north),
-                        pd.Series([1.0], name=wall_length_east),
-                        pd.Series([1.0], name=wall_length_south),
-                        pd.Series([1.0], name=wall_length_west),
-                    ],
-                    axis=1,
-                ),
-            ),
-            TestCase(
-                name="triangle",
-                input=triangle_input,
-                expected=pd.concat(
-                    [
-                        pd.Series([0], name=wall_length_north),
-                        pd.Series([square_root_one_half], name=wall_length_east),
-                        pd.Series([square_root_one_half], name=wall_length_south),
-                        pd.Series([1.0], name=wall_length_west),
-                    ],
-                    axis=1,
-                ),
-            ),
-            TestCase(
-                name="eight sided",
-                input=eight_sided_input,
-                expected=pd.concat(
-                    [
-                        pd.Series([6.0], name=wall_length_north),
-                        pd.Series([8.0], name=wall_length_east),
-                        pd.Series([10.0], name=wall_length_south),
-                        pd.Series([12.0], name=wall_length_west),
-                    ],
-                    axis=1,
-                ),
-            ),
-        ]
-
-        for case in testcases:
-            actual = nodes.wall_length(case.input)
-            expected = case.expected
-            pd.testing.assert_frame_equal(
-                expected,
-                actual,
-                "failed test {} expected {}, actual {}".format(case.name, expected, actual),
-            )
-
-    def test_frontal_length(self):
-        """Test that the function frontal_length returns the correct frontal length."""
-
-        polygon1 = Polygon([[0, 0], [0, 1], [1, 1], [1, 0]])
-        polygon2 = Polygon([[3, 3], [3, 4], [4, 4], [4, 3]])
-        building_id = pd.Series([0, 1])
-        building_height = pd.Series([5, 10])
-        building_geometry = pd.Series([polygon1, polygon2])
-        building_area = pd.Series([polygon1.area, polygon2.area])
-        crs = "epsg:3857"
-
-        # The wall lengths listed below are the test cases.
-        # wall_length_north and wall_length_east test that the addition is working correctly.
-        # wall_length_south tests that addition works correctly when one building does not have a wall facing a given direction.
-        # wall_length_west tests that addition works correctly when neither building has a wall facing a given direction.
-
-        wall_length_north = pd.Series([1.0, 1.0], name=Settings.wall_length_north)
-        wall_length_east = pd.Series([1.0, 3.0], name=Settings.wall_length_east)
-        wall_length_south = pd.Series([0, 1.0], name=Settings.wall_length_south)
-        wall_length_west = pd.Series([0, 0], name=Settings.wall_length_west)
-
-        wall_length = pd.concat(
-            [
-                wall_length_north,
-                wall_length_east,
-                wall_length_south,
-                wall_length_west,
-            ],
-            axis=1,
+        np.testing.assert_array_equal(
+            fake_geodataframe.dtypes.values,
+            df.dtypes.values,
+            "`input_shapefile_df` column data types do not match expected",
         )
 
-        frontal_length_north = Settings.frontal_length_north
-        frontal_length_east = Settings.frontal_length_east
-        frontal_length_south = Settings.frontal_length_south
-        frontal_length_west = Settings.frontal_length_west
-
-        total_plan_area_geometry = pd.Series([polygon1.buffer(5), polygon2.buffer(5)])
-
-        input_gdf = nodes.buildings_intersecting_plan_area(
-            building_id,
-            building_height,
-            building_geometry,
-            building_area,
-            total_plan_area_geometry,
-            wall_length,
-            crs,
+        self.assertEqual(
+            type(fake_geodataframe),
+            type(df),
+            "`input_shapefile_df` data type not matching expected",
         )
-
-        actual = nodes.frontal_length(input_gdf)
-        expected = pd.concat(
-            [
-                pd.Series([2.0, 2.0], name=frontal_length_north),
-                pd.Series([4.0, 4.0], name=frontal_length_east),
-                pd.Series([1.0, 1.0], name=frontal_length_south),
-                pd.Series([0, 0], name=frontal_length_west),
-            ],
-            axis=1,
-        )
-
-        pd.testing.assert_frame_equal(expected, actual)
 
     def test_frontal_area_density(self):
         """Test that the function frontal_area_density() returns the correct frontal area density."""
@@ -970,6 +637,116 @@ class TestNodes(unittest.TestCase):
 
         pd.testing.assert_frame_equal(expected, actual)
 
+    def test_frontal_length(self):
+        """Test that the function frontal_length returns the correct frontal length."""
+
+        polygon1 = Polygon([[0, 0], [0, 1], [1, 1], [1, 0]])
+        polygon2 = Polygon([[3, 3], [3, 4], [4, 4], [4, 3]])
+        building_id = pd.Series([0, 1])
+        building_height = pd.Series([5, 10])
+        building_geometry = pd.Series([polygon1, polygon2])
+        building_area = pd.Series([polygon1.area, polygon2.area])
+        crs = "epsg:3857"
+
+        # The wall lengths listed below are the test cases.
+        # wall_length_north and wall_length_east test that the addition is working correctly.
+        # wall_length_south tests that addition works correctly when one building does not have a wall facing a given direction.
+        # wall_length_west tests that addition works correctly when neither building has a wall facing a given direction.
+
+        wall_length_north = pd.Series([1.0, 1.0], name=Settings.wall_length_north)
+        wall_length_east = pd.Series([1.0, 3.0], name=Settings.wall_length_east)
+        wall_length_south = pd.Series([0, 1.0], name=Settings.wall_length_south)
+        wall_length_west = pd.Series([0, 0], name=Settings.wall_length_west)
+
+        wall_length = pd.concat(
+            [
+                wall_length_north,
+                wall_length_east,
+                wall_length_south,
+                wall_length_west,
+            ],
+            axis=1,
+        )
+
+        frontal_length_north = Settings.frontal_length_north
+        frontal_length_east = Settings.frontal_length_east
+        frontal_length_south = Settings.frontal_length_south
+        frontal_length_west = Settings.frontal_length_west
+
+        total_plan_area_geometry = pd.Series([polygon1.buffer(5), polygon2.buffer(5)])
+
+        input_gdf = nodes.buildings_intersecting_plan_area(
+            building_id,
+            building_height,
+            building_geometry,
+            building_area,
+            total_plan_area_geometry,
+            wall_length,
+            crs,
+        )
+
+        actual = nodes.frontal_length(input_gdf)
+        expected = pd.concat(
+            [
+                pd.Series([2.0, 2.0], name=frontal_length_north),
+                pd.Series([4.0, 4.0], name=frontal_length_east),
+                pd.Series([1.0, 1.0], name=frontal_length_south),
+                pd.Series([0, 0], name=frontal_length_west),
+            ],
+            axis=1,
+        )
+
+        pd.testing.assert_frame_equal(expected, actual)
+
+    def test_macdonald_displacement_height(self):
+        """Test that the function `macdonald_displacement_height()` returns the correct calculation"""
+        alpha_coefficient = Settings.ALPHACOEFFICIENT
+        building_height = pd.Series([0, 10, 10, 10, 75], copy=False)
+        plan_area_fraction = pd.Series([0.5, 0.5, 0, 1, 0.5], copy=False)
+        expected = pd.Series(
+            [
+                0,
+                10 - (5 / math.pow(alpha_coefficient, 0.5)),
+                0,
+                10,
+                75 - (37.5 / math.pow(alpha_coefficient, 0.5)),
+            ],
+            copy=False,
+        )
+        actual = nodes.macdonald_displacement_height(building_height, plan_area_fraction)
+        pd.testing.assert_series_equal(
+            expected,
+            actual,
+            f"macdonald_displacement_height test failed, expected {expected}, actual {actual}",
+        )
+
+    def test_orientation_to_neighbor(self):
+        """Test that the function `orientation_to_neighbor` returns either `east_west` or `north_south` correctly."""
+
+        @dataclass
+        class TestCase:
+            name: str
+            input: List[int | float]
+            expected: List[int | str]
+
+        east_west = "east_west"
+        north_south = "north_south"
+
+        testcases = [
+            TestCase(name="zero_degrees", input=[0.0, -0.0], expected=[east_west, east_west]),
+            TestCase(name="north_south", input=[90, 270], expected=[north_south, north_south]),
+            TestCase(
+                name="east_west",
+                input=[45, 135, 225, 315, 360],
+                expected=[east_west, east_west, east_west, east_west, east_west],
+            ),
+        ]
+
+        for case in testcases:
+            actual = nodes.orientation_to_neighbor(pd.Series(case.input))
+            expected = pd.Series(case.expected)
+            pd.testing.assert_series_equal(expected, actual)
+
     def test_plan_area_density(self):
         """Test that the function plan_area_density() returns the correct plan area density."""
 
@@ -1007,6 +784,252 @@ class TestNodes(unittest.TestCase):
         expected = pd.DataFrame(plan_area_density, columns=columns_plan_area_density)
 
         pd.testing.assert_frame_equal(expected, actual)
+
+    def test_wall_angle_direction_length(self):
+        """Test that the function wall_angle_direction_length returns the correct angle, direction, and length."""
+
+        polygon_exterior = [[0, 1], [1, 1], [1, 0], [0, 0], [0, 1]]
+        polygon_interior = [[0.25, 0.25], [0.25, 0.75], [0.75, 0.75], [0.75, 0.25]]
+
+        north = Settings.north
+        south = Settings.south
+        east = Settings.east
+        west = Settings.west
+
+        wall_angle = Settings.wall_angle
+        wall_direction = Settings.wall_direction
+        wall_length = Settings.wall_length
+
+        square_root_one_half = 0.7071067811865476
+
+        @dataclass
+        class TestCase:
+            name: str
+            input: List[Polygon]
+            expected: List[int]
+
+        testcases = [
+            TestCase(
+                name="square",
+                input=[Polygon(polygon_exterior)],
+                expected=pd.concat(
+                    [
+                        pd.Series([[0.0, -90.0, 180.0, 90.0]], name=wall_angle),
+                        pd.Series([[north, east, south, west]], name=wall_direction),
+                        pd.Series([[1.0, 1.0, 1.0, 1.0]], name=wall_length),
+                    ],
+                    axis=1,
+                ),
+            ),
+            TestCase(
+                name="square with inner ring",
+                input=[Polygon(polygon_exterior, [polygon_interior])],
+                expected=pd.concat(
+                    [
+                        pd.Series([[0.0, -90.0, 180.0, 90.0]], name=wall_angle),
+                        pd.Series([[north, east, south, west]], name=wall_direction),
+                        pd.Series([[1.0, 1.0, 1.0, 1.0]], name=wall_length),
+                    ],
+                    axis=1,
+                ),
+            ),
+            TestCase(
+                name="45 degree triangle",
+                input=[
+                    Polygon(
+                        [
+                            [0, 0],
+                            [square_root_one_half, square_root_one_half],
+                            [0, square_root_one_half],
+                        ]
+                    )
+                ],
+                expected=pd.concat(
+                    [
+                        pd.Series([[45.0, 180.0, -90.0]], name=wall_angle),
+                        pd.Series([[west, south, east]], name=wall_direction),
+                        pd.Series(
+                            [[1.0, square_root_one_half, square_root_one_half]], name=wall_length
+                        ),
+                    ],
+                    axis=1,
+                ),
+            ),
+            TestCase(
+                name="135 degree triangle",
+                input=[
+                    Polygon(
+                        [
+                            [0, 0],
+                            [-square_root_one_half, square_root_one_half],
+                            [0, square_root_one_half],
+                        ]
+                    )
+                ],
+                expected=pd.concat(
+                    [
+                        pd.Series([[135.0, 0.0, -90.0]], name=wall_angle),
+                        pd.Series([[south, north, east]], name=wall_direction),
+                        pd.Series(
+                            [[1.0, square_root_one_half, square_root_one_half]], name=wall_length
+                        ),
+                    ],
+                    axis=1,
+                ),
+            ),
+            TestCase(
+                name="225 degree triangle",
+                input=[
+                    Polygon(
+                        [
+                            [0, 0],
+                            [-square_root_one_half, -square_root_one_half],
+                            [-square_root_one_half, 0],
+                        ]
+                    )
+                ],
+                expected=pd.concat(
+                    [
+                        pd.Series([[-135.0, 90.0, 0.0]], name=wall_angle),
+                        pd.Series([[east, west, north]], name=wall_direction),
+                        pd.Series(
+                            [[1.0, square_root_one_half, square_root_one_half]], name=wall_length
+                        ),
+                    ],
+                    axis=1,
+                ),
+            ),
+            TestCase(
+                name="325 degree triangle",
+                input=[
+                    Polygon(
+                        [
+                            [0, 0],
+                            [square_root_one_half, -square_root_one_half],
+                            [0, -square_root_one_half],
+                        ]
+                    )
+                ],
+                expected=pd.concat(
+                    [
+                        pd.Series([[-45.0, 180.0, 90.0]], name=wall_angle),
+                        pd.Series([[north, south, west]], name=wall_direction),
+                        pd.Series(
+                            [[1.0, square_root_one_half, square_root_one_half]], name=wall_length
+                        ),
+                    ],
+                    axis=1,
+                ),
+            ),
+        ]
+
+        for case in testcases:
+            actual = nodes.wall_angle_direction_length(gpd.GeoSeries(case.input))
+            expected = case.expected
+            pd.testing.assert_frame_equal(expected, actual)
+
+    def test_wall_length(self):
+        """Test that the function wall_length returns the correct wall area."""
+
+        north = Settings.north
+        south = Settings.south
+        east = Settings.east
+        west = Settings.west
+
+        wall_angle = Settings.wall_angle
+        wall_direction = Settings.wall_direction
+        wall_length = Settings.wall_length
+
+        wall_length_north = Settings.wall_length_north
+        wall_length_south = Settings.wall_length_south
+        wall_length_east = Settings.wall_length_east
+        wall_length_west = Settings.wall_length_west
+
+        square_root_one_half = 0.7071067811865476
+
+        square_input = pd.concat(
+            [
+                pd.Series([[0.0, -90.0, 180.0, 90.0]], name=wall_angle),
+                pd.Series([[north, east, south, west]], name=wall_direction),
+                pd.Series([[1.0, 1.0, 1.0, 1.0]], name=wall_length),
+            ],
+            axis=1,
+        )
+        triangle_input = pd.concat(
+            [
+                pd.Series([[45.0, 180.0, -90.0]], name=wall_angle),
+                pd.Series([[west, south, east]], name=wall_direction),
+                pd.Series([[1.0, square_root_one_half, square_root_one_half]], name=wall_length),
+            ],
+            axis=1,
+        )
+        eight_sided_input = pd.concat(
+            [
+                pd.Series([[0.0, -90.0, 180.0, 90.0, -45.0, -135.0, 135.0, 45.0]], name=wall_angle),
+                pd.Series(
+                    [[north, east, south, west, north, east, south, west]], name=wall_direction
+                ),
+                pd.Series([[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0]], name=wall_length),
+            ],
+            axis=1,
+        )
+
+        @dataclass
+        class TestCase:
+            name: str
+            input: pd.DataFrame
+            expected: pd.DataFrame
+
+        testcases = [
+            TestCase(
+                name="square",
+                input=square_input,
+                expected=pd.concat(
+                    [
+                        pd.Series([1.0], name=wall_length_north),
+                        pd.Series([1.0], name=wall_length_east),
+                        pd.Series([1.0], name=wall_length_south),
+                        pd.Series([1.0], name=wall_length_west),
+                    ],
+                    axis=1,
+                ),
+            ),
+            TestCase(
+                name="triangle",
+                input=triangle_input,
+                expected=pd.concat(
+                    [
+                        pd.Series([0], name=wall_length_north),
+                        pd.Series([square_root_one_half], name=wall_length_east),
+                        pd.Series([square_root_one_half], name=wall_length_south),
+                        pd.Series([1.0], name=wall_length_west),
+                    ],
+                    axis=1,
+                ),
+            ),
+            TestCase(
+                name="eight sided",
+                input=eight_sided_input,
+                expected=pd.concat(
+                    [
+                        pd.Series([6.0], name=wall_length_north),
+                        pd.Series([8.0], name=wall_length_east),
+                        pd.Series([10.0], name=wall_length_south),
+                        pd.Series([12.0], name=wall_length_west),
+                    ],
+                    axis=1,
+                ),
+            ),
+        ]
+
+        for case in testcases:
+            actual = nodes.wall_length(case.input)
+            expected = case.expected
+            pd.testing.assert_frame_equal(
+                expected,
+                actual,
+                "failed test {} expected {}, actual {}".format(case.name, expected, actual),
+            )
 
 
 if __name__ == "__main__":
