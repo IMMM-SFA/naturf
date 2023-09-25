@@ -729,8 +729,8 @@ class TestNodes(unittest.TestCase):
             input: List[int | float]
             expected: List[int | str]
 
-        east_west = "east_west"
-        north_south = "north_south"
+        east_west = Settings.east_west
+        north_south = Settings.north_south
 
         testcases = [
             TestCase(name="zero_degrees", input=[0.0, -0.0], expected=[east_west, east_west]),
