@@ -1166,7 +1166,7 @@ def merge_parameters(
     :type building_geometry:                           pd.Series
 
     :param target_crs:                                 Coordinate reference system field of the parent geometry.
-    :type target_crs:                                  pd.Series
+    :type target_crs:                                  CRS
 
     :return:                                           Pandas DataFrame with all parameters merged together.
     """
@@ -1827,7 +1827,7 @@ def write_binary(numpy_to_binary: bytes, raster_to_numpy: np.ndarray) -> str:
     os.remove("temporary.npy")
 
 
-def write_index(raster_to_numpy: np.ndarray, building_geometry: pd.Series, target_crs) -> str:
+def write_index(raster_to_numpy: np.ndarray, building_geometry: pd.Series, target_crs: CRS) -> str:
     """Write the index file that will accompany the output binary file.
 
     :param raster_to_numpy:                 132 level numpy array with each level being an aggregated parameter.
