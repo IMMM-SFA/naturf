@@ -110,8 +110,10 @@ class TestNodes(unittest.TestCase):
         # Building 3 tests that a distance of zero (representing a building considered its own neighbor) does not affect the mean.
         # Building 4 tests that a building with only itself as a neighbor returns the default street width.
 
-        index = pd.Index([0, 0, 1, 1, 2, 2, 3, 3, 3, 4])
-        distance = pd.Series([1, 2, 1, 3, 1, 1, 3, 0, 3, 0], index)
+        index = pd.Index([0, 0, 1, 1, 2, 2, 3, 3, 3, 4], name=Settings.neighbor_id_field)
+        distance = pd.Series(
+            [1, 2, 1, 3, 1, 1, 3, 0, 3, 0], index, name=Settings.distance_between_buildings
+        )
 
         default_street_width = Settings.DEFAULT_STREET_WIDTH
 
