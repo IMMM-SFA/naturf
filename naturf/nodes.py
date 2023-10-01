@@ -1796,7 +1796,7 @@ def wall_length(wall_angle_direction_length: pd.DataFrame) -> pd.DataFrame:
     )
 
 
-def write_binary(numpy_to_binary: bytes, raster_to_numpy: np.ndarray):
+def write_binary(numpy_to_binary: bytes, raster_to_numpy: np.ndarray) -> str:
     """Write the binary file that will be input to WRF.
 
     :param numpy_to_binary:                 Binary object containing the parameter data.
@@ -1827,7 +1827,7 @@ def write_binary(numpy_to_binary: bytes, raster_to_numpy: np.ndarray):
     os.remove("temporary.npy")
 
 
-def write_index(raster_to_numpy: np.ndarray, building_geometry: pd.Series, target_crs):
+def write_index(raster_to_numpy: np.ndarray, building_geometry: pd.Series, target_crs) -> str:
     """Write the index file that will accompany the output binary file.
 
     :param raster_to_numpy:                 132 level numpy array with each level being an aggregated parameter.
