@@ -121,20 +121,20 @@ Following NUDAPT, **naturf** bins building heights into five meter increments fr
 Frontal Area Density (1-60)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Frontal area density is the frontal area of a building at a certain height increment divided by the total plan area. **naturf** calculates frontal area density from the four cardinal directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters. Parameters 1-15 represent the north, parameters 16-30 represent the west, parameters 31-45 represent the south, and parameters 46-60 represent the east. For instance, parameter 1 gives the north-facing wall area for each building and its neighbors divided by the total plan area. [Burian2003]_ Eq. 14
+Frontal area density is the frontal area at a certain height increment divided by the total plan area. **naturf** calculates frontal area density from the four cardinal directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters. Parameters 1-15 represent the north, parameters 16-30 represent the west, parameters 31-45 represent the south, and parameters 46-60 represent the east. For instance, parameter 1 gives the north-facing wall area for each building and its neighbors divided by the total plan area. [Burian2003]_ Eq. 14
 
-$FAD = \\frac{FA}{PA}$
+$FAD = \\frac{FA}{TPA}$
 
-where *FAD* is Frontal area density; *FA* is the frontal area of the wall from the current direction and height level in $m^2$; *PA* is the building plan area in $m^2$.
+where *FAD* is Frontal area density; *FA* is the frontal area of the wall from the current direction and height level in $m^2$; *TPA* is the total plan area in $m^2$.
 
 Plan Area Density (61-75)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Plan area density is the ratio of building plan area to the total plan area, calculated in 5 meter increments from ground level to 75 meters. **naturf** projects the building footprint vertically to the building height, meaning plan area density is the same at every vertical level. [Burian2003]_ Eq. 7
 
-$PAD = \\frac{TBA}{PA}$
+$PAD = \\frac{BPA}{TPA}$
 
-where, *PAD* is the plan area density; *TBA* is the total area of the buildings within the current building plan area in $m^2$; *PA* is the building plan area in $m^2$.
+where, *PAD* is the plan area density; *BPA* is the building plan area in $m^2$; *TPA* is the total plan area in $m^2$.
 
 Rooftop Area Density (76-90)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -168,25 +168,25 @@ where, *AWMH* is the area weighted mean height in m; $A_i$ is the current buildi
 Building Surface Area to Plan Area Ratio (95)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ratio of all the surface areas of a building to the building plan area. [Burian2003]_ Eq. 16
+The ratio of all the surface areas of a building to the total plan area. [Burian2003]_ Eq. 16
 
 Frontal Area Index (96-99)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Frontal area index is the ratio of the entire frontal area of a building to the total plan area. **naturf** calculates the frontal area index from the four cardinal directions. Because buildings often do not face a cardinal direction head on, **naturf** uses the average alongwind and crosswind distance from the current building centroid to all other building centroids for the total plan area. [Burian2003]_ Eq. 12
 
-$FAI = \\frac{l \\cdot zh}{AW \\cdot CW}$
+$FAI = \\frac{FA}{TPA}$
 
-where, *FAI* is frontal area index; *l* is the building wall length in m; *zh* is the building height in m; *AW* the average alongwind distance to other buildings in m; *CW* is the average crosswind distance to other buildings in m.
+where, *FAI* is frontal area index; *FA* is the frontal area of the wall from the current direction in $m^2$; *TPA* is the total plan area in $m^2$.
 
 Complete Aspect Ratio (100)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ratio of building surface area and exposed ground area to the total plan area. [Burian2003]_ Eq. 15
 
-$CAR = \\frac{BSA + (PA - TBA)}{PA}$
+$CAR = \\frac{BSA + (PA - BPA)}{TPA}$
 
-where, *BSA* is the building surface area in $m^2$; *TBA* is the total area of the buildings within the current building plan area in $m^2$; *PA* is the building plan area in $m^2$.
+where, *BSA* is the building surface area in $m^2$; *BPA* is the building plan area in $m^2$; *TPA* is the total plan area in $m^2$.
 
 Height-to-Width Ratio (101)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -249,9 +249,9 @@ Macdonald et al. Roughness Length (113-116)
 
 [Macdonald1998]_ Eq. 22
 
-$MRL = zh \\cdot (1 - RDH)\\exp(-(0.5\\frac{C_{D}}{\\kappa^2}(1 - RDH)\\frac{A_{f}}{A_{d}})^{-0.5})$
+$MRL = zh \\cdot (1 - MDH)\\exp(-(0.5\\frac{C_{D}}{\\kappa^2}(1 - RDH)\\frac{A_{f}}{A_{d}})^{-0.5})$
 
-where, *MRL* is the Macdonald roughness length in m; *zh* is the building height in m; *RDH* is the Raupach displacement height in m; $C_D$ is the obstacle drag coefficient = 1.12; $\\kappa$ is von Kármán's constant = 0.4; $A_f$ is the frontal area of the building in $m^2$; $A_d$ is the total surface area of the buildings in the plan area divided by the number of buildings in $m^2$.
+where, *MRL* is the Macdonald roughness length in m; *zh* is the building height in m; *MDH* is the Macdonald displacement height in m; $C_D$ is the obstacle drag coefficient = 1.12; $\\kappa$ is von Kármán's constant = 0.4; $A_f$ is the frontal area of the building in $m^2$; $A_d$ is the total surface area of the buildings in the plan area divided by the number of buildings in $m^2$.
 
 Macdonald et al. Displacement Height (117)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
