@@ -26,7 +26,7 @@ class TestNodes(unittest.TestCase):
     }
 
     def test_angle_in_degrees_to_neighbor(self):
-        """Test that the returned angle is correct."""
+        "Test that the function `angle_in_degrees_to_neighbor()` returns the correct angle."
 
         @dataclass
         class TestCase:
@@ -102,8 +102,27 @@ class TestNodes(unittest.TestCase):
                 actual,
             )
 
+    def test_area_weighted_mean_of_building_heights(self):
+        "Test that the function `area_weighted_mean_of_building_heights()` returns the correct value."
+        # ID 0: one building
+        # ID 1: two buildings
+        # ID 2: multiple buildings, decimal values
+        data = [[0, 10, 10], [1, 2, 10], [1, 1, 10], [2, 0.1, 10], [2, 0.9, 30], [2, 12, 0.25]]
+        buildings_intersecting_plan_area = pd.DataFrame(
+            data,
+            columns=[
+                Settings.target_id_field,
+                Settings.neighbor_height_field,
+                Settings.neighbor_area_field,
+            ],
+        )
+        expected = pd.Series([10.0, 1.5, 0.7701863354037267])
+        actual = nodes.area_weighted_mean_of_building_heights(buildings_intersecting_plan_area)
+        pd.testing.assert_series_equal(expected, actual)
+
+    # TODO: KeyError: 'building_id_neighbor'
     def test_average_distance_between_buildings(self):
-        "Test that the function average_distance_between_buildings returns the correct distance."
+        "Test that the function `average_distance_between_buildings()` returns the correct distance."
 
         # Each ID number refers to a particular building and test case.
         # Buildings 0, 1, and 2 test that the mean function is working correctly.
@@ -127,7 +146,7 @@ class TestNodes(unittest.TestCase):
         pd.testing.assert_series_equal(expected, actual)
 
     def test_buildings_intersecting_plan_area(self):
-        """Test that the function buildings_intersecting_plan_area returns the correct intersecting buildings."""
+        """Test that the function `buildings_intersecting_plan_area()` returns the correct intersecting buildings."""
 
         polygon1 = Polygon([[0, 0], [0, 1], [1, 1], [1, 0]])
         polygon2 = Polygon([[3, 3], [3, 4], [4, 4], [4, 3]])
@@ -331,7 +350,7 @@ class TestNodes(unittest.TestCase):
             )
 
     def test_building_plan_area(self):
-        """Test that the function building_plan_area returns the correct building plan area."""
+        """Test that the function `building_plan_area()` returns the correct area."""
 
         polygon1 = Polygon([[0, 0], [0, 1], [1, 1], [1, 0]])
         polygon2 = Polygon([[3, 3], [3, 4], [4, 4], [4, 3]])
@@ -477,8 +496,9 @@ class TestNodes(unittest.TestCase):
                 "failed test {} expected {}, actual {}".format(case.name, expected, actual),
             )
 
+    # TODO: ValueError: Missing type hint for return value in function write_binary.
     def test_input_shapefile_df(self):
-        """Test the functionality of the input_shapefile_df function."""
+        """Test that the function `input_shapefile_df()` creates the right shape and type of DataFrame."""
 
         # instantiate DAG asking for the output of input_shapefile_df()
         dag = Model(inputs=TestNodes.INPUTS, outputs=["input_shapefile_df"])
@@ -511,7 +531,7 @@ class TestNodes(unittest.TestCase):
         )
 
     def test_frontal_area_density(self):
-        """Test that the function frontal_area_density() returns the correct frontal area density."""
+        """Test that the function `frontal_area_density()` returns the correct value."""
 
         # This uses different heights to test the function.
         # Building 1 is 5m tall to test that using one height bin works correctly.
@@ -640,7 +660,7 @@ class TestNodes(unittest.TestCase):
         pd.testing.assert_frame_equal(expected, actual)
 
     def test_frontal_length(self):
-        """Test that the function frontal_length returns the correct frontal length."""
+        """Test that the function `frontal_length()` returns the correct length."""
 
         polygon1 = Polygon([[0, 0], [0, 1], [1, 1], [1, 0]])
         polygon2 = Polygon([[3, 3], [3, 4], [4, 4], [4, 3]])
@@ -701,7 +721,7 @@ class TestNodes(unittest.TestCase):
         pd.testing.assert_frame_equal(expected, actual)
 
     def test_macdonald_displacement_height(self):
-        """Test that the function `macdonald_displacement_height()` returns the correct calculation"""
+        """Test that the function `macdonald_displacement_height()` returns the correct height."""
         alpha_coefficient = Settings.ALPHACOEFFICIENT
         building_height = pd.Series([0, 10, 10, 10, 75], copy=False)
         plan_area_fraction = pd.Series([0.5, 0.5, 0, 1, 0.5], copy=False)
@@ -723,7 +743,7 @@ class TestNodes(unittest.TestCase):
         )
 
     def test_orientation_to_neighbor(self):
-        """Test that the function `orientation_to_neighbor` returns either `east_west` or `north_south` correctly."""
+        """Test that the function `orientation_to_neighbor()` returns either `north_south` or `east_west` correctly."""
 
         @dataclass
         class TestCase:
@@ -750,7 +770,7 @@ class TestNodes(unittest.TestCase):
             pd.testing.assert_series_equal(expected, actual)
 
     def test_plan_area_density(self):
-        """Test that the function plan_area_density() returns the correct plan area density."""
+        """Test that the function `plan_area_density()` returns the correct value."""
 
         # This uses different heights to test the function.
         # Plan area density should be the same whether the building height falls at or within the bins, which all buildings test.
@@ -788,7 +808,7 @@ class TestNodes(unittest.TestCase):
         pd.testing.assert_frame_equal(expected, actual)
 
     def test_wall_angle_direction_length(self):
-        """Test that the function wall_angle_direction_length returns the correct angle, direction, and length."""
+        """Test that the function `wall_angle_direction_length()` returns the correct angle, direction, and length."""
 
         polygon_exterior = [[0, 1], [1, 1], [1, 0], [0, 0], [0, 1]]
         polygon_interior = [[0.25, 0.25], [0.25, 0.75], [0.75, 0.75], [0.75, 0.25]]
@@ -931,7 +951,7 @@ class TestNodes(unittest.TestCase):
             pd.testing.assert_frame_equal(expected, actual)
 
     def test_wall_length(self):
-        """Test that the function wall_length returns the correct wall area."""
+        """Test that the function `wall_length()` returns the correct length."""
 
         north = Settings.north
         south = Settings.south
