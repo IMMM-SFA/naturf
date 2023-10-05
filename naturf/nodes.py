@@ -1796,7 +1796,7 @@ def wall_length(wall_angle_direction_length: pd.DataFrame) -> pd.DataFrame:
     )
 
 
-def write_binary(numpy_to_binary: bytes, raster_to_numpy: np.ndarray) -> str:
+def write_binary(numpy_to_binary: bytes, raster_to_numpy: np.ndarray) -> None:
     """Write the binary file that will be input to WRF.
 
     :param numpy_to_binary:                 Binary object containing the parameter data.
