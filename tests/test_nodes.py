@@ -11,6 +11,7 @@ from shapely.geometry import Point, Polygon, JOIN_STYLE
 from typing import List
 
 
+from naturf.driver import Model
 import naturf.nodes as nodes
 from naturf.config import Settings
 
@@ -101,25 +102,25 @@ class TestNodes(unittest.TestCase):
                 actual,
             )
 
-    # TODO
     def test_area_weighted_mean_of_building_heights(self):
         "Test that the function `area_weighted_mean_of_building_heights()` returns the correct value."
-
-        data = [[0, 10, 10, 10], [1, 10, 10, 10], [1, 10, 10, 10]]
+        # ID 0: one building
+        # ID 1: two buildings
+        # ID 2: multiple buildings, decimal values
+        data = [[0, 10, 10], [1, 2, 10], [1, 1, 10], [2, 0.1, 10], [2, 0.9, 30], [2, 12, 0.25]]
         buildings_intersecting_plan_area = pd.DataFrame(
             data,
             columns=[
                 Settings.target_id_field,
-                Settings.neighbor_volume_field,
                 Settings.neighbor_height_field,
                 Settings.neighbor_area_field,
             ],
         )
-
-        expected = pd.Series([10.0, 10.0])
+        expected = pd.Series([10.0, 1.5, 0.7701863354037267])
         actual = nodes.area_weighted_mean_of_building_heights(buildings_intersecting_plan_area)
         pd.testing.assert_series_equal(expected, actual)
 
+    # TODO: KeyError: 'building_id_neighbor'
     def test_average_distance_between_buildings(self):
         "Test that the function `average_distance_between_buildings()` returns the correct distance."
 
@@ -494,38 +495,38 @@ class TestNodes(unittest.TestCase):
             )
 
     # TODO: ValueError: Missing type hint for return value in function write_binary.
-    # def test_input_shapefile_df(self):
-    #     """Test that the function `input_shapefile_df()` creates the right shape and type of DataFrame."""
+    def test_input_shapefile_df(self):
+        """Test that the function `input_shapefile_df()` creates the right shape and type of DataFrame."""
 
-    #     # instantiate DAG asking for the output of input_shapefile_df()
-    #     dag = Model(inputs=TestNodes.INPUTS, outputs=["input_shapefile_df"])
+        # instantiate DAG asking for the output of input_shapefile_df()
+        dag = Model(inputs=TestNodes.INPUTS, outputs=["input_shapefile_df"])
 
-    #     # generate the output data frame from the driver
-    #     df = dag.execute()
+        # generate the output data frame from the driver
+        df = dag.execute()
 
-    #     # check shape of data frame
-    #     self.assertEqual((260, 3), df.shape, "`input_shapefile_df` shape does not match expected")
+        # check shape of data frame
+        self.assertEqual((260, 3), df.shape, "`input_shapefile_df` shape does not match expected")
 
-    #     # check data types
-    #     fake_geodataframe = gpd.GeoDataFrame(
-    #         {
-    #             "a": np.array([], dtype=np.int64),
-    #             "b": np.array([], dtype=np.float64),
-    #             "geometry": np.array([], dtype=gpd.array.GeometryDtype),
-    #         }
-    #     )
+        # check data types
+        fake_geodataframe = gpd.GeoDataFrame(
+            {
+                "a": np.array([], dtype=np.int64),
+                "b": np.array([], dtype=np.float64),
+                "geometry": np.array([], dtype=gpd.array.GeometryDtype),
+            }
+        )
 
-    #     np.testing.assert_array_equal(
-    #         fake_geodataframe.dtypes.values,
-    #         df.dtypes.values,
-    #         "`input_shapefile_df` column data types do not match expected",
-    #     )
+        np.testing.assert_array_equal(
+            fake_geodataframe.dtypes.values,
+            df.dtypes.values,
+            "`input_shapefile_df` column data types do not match expected",
+        )
 
-    #     self.assertEqual(
-    #         type(fake_geodataframe),
-    #         type(df),
-    #         "`input_shapefile_df` data type not matching expected",
-    #     )
+        self.assertEqual(
+            type(fake_geodataframe),
+            type(df),
+            "`input_shapefile_df` data type not matching expected",
+        )
 
     def test_frontal_area_density(self):
         """Test that the function `frontal_area_density()` returns the correct value."""
