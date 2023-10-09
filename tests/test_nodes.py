@@ -10,7 +10,6 @@ import pandas as pd
 from shapely.geometry import Point, Polygon, JOIN_STYLE
 from typing import List
 
-
 from naturf.driver import Model
 import naturf.nodes as nodes
 from naturf.config import Settings
@@ -120,7 +119,6 @@ class TestNodes(unittest.TestCase):
         actual = nodes.area_weighted_mean_of_building_heights(buildings_intersecting_plan_area)
         pd.testing.assert_series_equal(expected, actual)
 
-    # TODO: KeyError: 'building_id_neighbor'
     def test_average_distance_between_buildings(self):
         "Test that the function `average_distance_between_buildings()` returns the correct distance."
 
@@ -496,7 +494,6 @@ class TestNodes(unittest.TestCase):
                 "failed test {} expected {}, actual {}".format(case.name, expected, actual),
             )
 
-    # TODO: ValueError: Missing type hint for return value in function write_binary.
     def test_input_shapefile_df(self):
         """Test that the function `input_shapefile_df()` creates the right shape and type of DataFrame."""
 
@@ -949,6 +946,32 @@ class TestNodes(unittest.TestCase):
             actual = nodes.wall_angle_direction_length(gpd.GeoSeries(case.input))
             expected = case.expected
             pd.testing.assert_frame_equal(expected, actual)
+
+    def test_vertical_distribution_of_building_heights(self):
+        """Test that the function `vertical_distribution_of_building_heights()` returns the correct dataframe."""
+        building_height = pd.Series([0, 5, 5, 6, 7.5, 75])
+        [
+            f"{Settings.vertical_distribution_of_building_heights}_{i}"
+            for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
+        ]
+        expected = pd.DataFrame(
+            [
+                [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                [1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                [1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            ],
+            columns=[
+                f"{Settings.vertical_distribution_of_building_heights}_{i}"
+                for i in range(
+                    int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL)
+                )
+            ],
+        )
+        actual = nodes.vertical_distribution_of_building_heights(building_height)
+        pd.testing.assert_frame_equal(expected, actual)
 
     def test_wall_length(self):
         """Test that the function `wall_length()` returns the correct length."""
