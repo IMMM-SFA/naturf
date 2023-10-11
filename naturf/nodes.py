@@ -1659,7 +1659,7 @@ def vertical_distribution_of_building_heights(building_height: pd.Series) -> pd.
     :param building_height:               Building height for each building.
     :type building_height:                pd.Series
 
-    :return:                              Pandas DataFrame with the distribtution of building heights at each
+    :return:                              Pandas DataFrame with the distribution of building heights at each
                                           BUILDING_HEIGHT_INTERVAL for each building.
     """
 
