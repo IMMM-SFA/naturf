@@ -865,6 +865,35 @@ class TestNodes(unittest.TestCase):
             f"macdonald_displacement_height test failed, expected {expected}, actual {actual}",
         )
 
+    # TODO
+    def test_macdonald_roughness_length(self):
+        """Test that the function `macdonald_roughness_length()` returns the correct values."""
+        building_height = pd.Series([1, 75])
+        macdonald_displacement_height = pd.Series([1, 0.5])
+        frontal_area_index = pd.DataFrame(
+            [[1, 1, 1, 1], [1, 1, 1, 1]],
+            columns=[
+                Settings.frontal_area_index_north,
+                Settings.frontal_area_index_east,
+                Settings.frontal_area_index_south,
+                Settings.frontal_area_index_west,
+            ],
+        )
+        Settings.BETACOEFFICIENT * Settings.OBSTACLEDRAGCOEFFICIENT / (
+            Settings.VONKARMANCONSTANT**2
+        )
+        expected = pd.DataFrame([[0.0, 0.0, 0.0, 0.0], [1.0, 1.0, 1.0, 1.0]])
+        expected.columns = [
+            Settings.macdonald_roughness_length_north,
+            Settings.macdonald_roughness_length_east,
+            Settings.macdonald_roughness_length_south,
+            Settings.macdonald_roughness_length_west,
+        ]
+        actual = nodes.macdonald_roughness_length(
+            building_height, macdonald_displacement_height, frontal_area_index
+        )
+        pd.testing.assert_frame_equal(expected, actual)
+
     def test_orientation_to_neighbor(self):
         """Test that the function `orientation_to_neighbor()` returns either `north_south` or `east_west` correctly."""
 
