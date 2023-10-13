@@ -804,6 +804,49 @@ class TestNodes(unittest.TestCase):
 
         pd.testing.assert_frame_equal(expected, actual)
 
+    def test_raupach_displacement_height(self):
+        """Test that the function `raupach_displacement_height()` returns the correct value for each cardinal direction."""
+
+        constant_75 = Settings.CONSTANT_75
+        building_height = pd.Series([1, 75])
+        frontal_area_index = pd.DataFrame([[0.5, 0.0, 1, 10], [0.5, 0.0, 1, 10]])
+        expected = pd.DataFrame(
+            [
+                [
+                    1 - ((1 - math.exp(-math.sqrt(constant_75))) / math.sqrt(constant_75)),
+                    float("nan"),
+                    1 - ((1 - math.exp(-math.sqrt(constant_75 * 2))) / math.sqrt(constant_75 * 2)),
+                    1
+                    - ((1 - math.exp(-math.sqrt(constant_75 * 20))) / math.sqrt(constant_75 * 20)),
+                ],
+                [
+                    75 * (1 - ((1 - math.exp(-math.sqrt(constant_75))) / math.sqrt(constant_75))),
+                    float("nan"),
+                    75
+                    * (
+                        1
+                        - ((1 - math.exp(-math.sqrt(constant_75 * 2))) / math.sqrt(constant_75 * 2))
+                    ),
+                    75
+                    * (
+                        1
+                        - (
+                            (1 - math.exp(-math.sqrt(constant_75 * 20)))
+                            / math.sqrt(constant_75 * 20)
+                        )
+                    ),
+                ],
+            ]
+        )
+        expected.columns = [
+            Settings.raupach_displacement_height_north,
+            Settings.raupach_displacement_height_east,
+            Settings.raupach_displacement_height_south,
+            Settings.raupach_displacement_height_west,
+        ]
+        actual = nodes.raupach_displacement_height(building_height, frontal_area_index)
+        pd.testing.assert_frame_equal(expected, actual)
+
     def test_wall_angle_direction_length(self):
         """Test that the function `wall_angle_direction_length()` returns the correct angle, direction, and length."""
 
