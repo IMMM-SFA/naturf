@@ -1065,7 +1065,7 @@ def macdonald_displacement_height(
 def macdonald_roughness_length(
     building_height: pd.Series,
     macdonald_displacement_height: pd.Series,
-    frontal_area_index: pd.DataFrame,
+    frontal_area: pd.DataFrame,
     lot_area: pd.Series,
 ) -> pd.DataFrame:
     """Calculate the Macdonald et al. roughness length for each building in a Pandas Series.
@@ -1076,8 +1076,8 @@ def macdonald_roughness_length(
     :param macdonald_displacement_height: Macdonald displacement height for each building.
     :type macdonald_displacement_height:  pd.Series
 
-    :param frontal_area_index:            Frontal area index for each building in each cardinal direction.
-    :type frontal_area_index:             pd.DataFrame
+    :param frontal_area:                  Frontal area  for each building in each cardinal direction.
+    :type frontal_area:                   pd.DataFrame
 
     :param lot_area:                      Lot area for each building.
     :type lot_area:                       pd.Series
@@ -1105,7 +1105,9 @@ def macdonald_roughness_length(
 
     drag_over_von_karman = obstacle_drag_coefficient / von_karman_constant**2
 
-    inside_exponential = -frontal_area_index.mul(
+    frontal_divided_by_lot = frontal_area.div(lot_area, axis=0)
+
+    inside_exponential = -frontal_divided_by_lot.mul(
         0.5 * beta_coefficient * drag_over_von_karman * one_minus_height_ratio, axis=0
     ) ** (-0.5)
 
