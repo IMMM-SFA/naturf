@@ -597,6 +597,37 @@ def filter_zero_height_df(standardize_column_names_df: gpd.GeoDataFrame) -> gpd.
     ].reset_index(drop=True)
 
 
+def frontal_area(frontal_length: pd.DataFrame, building_height: pd.Series) -> pd.DataFrame:
+    """Calculate the frontal area for each building in a Pandas DataFrame in each cardinal direction.
+
+    :param frontal_length:                Frontal length in each cardinal direction for each building.
+    :type frontal_length:                 pd.DataFrame
+
+    :param building_height:               Building height for each building.
+    :type building_height:                pd.Series
+
+    :return:                              Pandas DataFrame with frontal area in each cardinal direction.
+    """
+
+    frontal_area_north = Settings.frontal_area_north
+    frontal_area_east = Settings.frontal_area_east
+    frontal_area_south = Settings.frontal_area_south
+    frontal_area_west = Settings.frontal_area_west
+
+    frontal_area = frontal_length.mul(building_height, axis=0)
+
+    cols = [
+        frontal_area_north,
+        frontal_area_east,
+        frontal_area_south,
+        frontal_area_west,
+    ]
+
+    frontal_area.columns = cols
+
+    return frontal_area
+
+
 def frontal_area_density(
     frontal_length: pd.DataFrame, building_height: pd.Series, total_plan_area: pd.Series
 ) -> pd.DataFrame:
@@ -1040,6 +1071,7 @@ def macdonald_roughness_length(
     building_height: pd.Series,
     macdonald_displacement_height: pd.Series,
     frontal_area_index: pd.DataFrame,
+    lot_area: pd.Series,
 ) -> pd.DataFrame:
     """Calculate the Macdonald et al. roughness length for each building in a Pandas Series.
 
@@ -1051,6 +1083,11 @@ def macdonald_roughness_length(
 
     :param frontal_area_index:            Frontal area index for each building in each cardinal direction.
     :type frontal_area_index:             pd.DataFrame
+
+    :param lot_area:                      Lot area for each building.
+    :type lot_area:                       pd.Series
+
+    :return:                              Panda Series with Macdonald roughness length for each building in each cardinal direction.
     """
 
     macdonald_roughness_length_north = Settings.macdonald_roughness_length_north
