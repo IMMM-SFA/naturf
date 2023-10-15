@@ -987,6 +987,32 @@ def input_shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
     return gdf
 
 
+def lot_area(
+    buildings_intersecting_plan_area: gpd.GeoDataFrame, building_surface_area: pd.Series
+) -> pd.Series:
+    """Calculate the lot area for each building in a Panda Series. Lot area is the total surface area of all buildings
+    within a given building's plan area divided by the number of buildings in the plan area."
+
+    :param buildings_intersecting_plan_area:    Geometry field for the neighboring buildings from the spatially
+                                                joined data.
+    :type buildings_intersecting_plan_area:     gpd.GeoDataFrame
+
+    :param building_surface_area:               Building surface area for each building.
+    :type building_surface_area:                pd.Series
+
+    :return:                                    Panda Series of lot area for each building.
+    """
+
+    df = buildings_intersecting_plan_area.join(
+        building_surface_area.rename(Settings.building_surface_area),
+        on="index_neighbor",
+        how="left",
+    )
+    df = df.groupby(Settings.target_id_field)[Settings.building_surface_area].mean()
+
+    return pd.Series(df.values)
+
+
 def macdonald_displacement_height(
     building_height: pd.Series, plan_area_fraction: pd.Series
 ) -> pd.Series:

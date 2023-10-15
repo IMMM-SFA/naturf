@@ -105,6 +105,7 @@ class Settings:
     mean_building_height = "mean_building_height"
     standard_deviation_of_building_heights = "standard_deviation_of_building_heights"
     area_weighted_mean_of_building_heights = "area_weighted_mean_of_building_heights"
+    building_surface_area = "building_surface_area"
     building_surface_area_to_plan_area_ratio = "building_surface_area_to_plan_area_ratio"
     frontal_area_index_north = "frontal_area_index_north"
     frontal_area_index_east = "frontal_area_index_east"
