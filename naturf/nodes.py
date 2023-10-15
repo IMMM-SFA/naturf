@@ -773,21 +773,16 @@ def frontal_area_density(
     )
 
 
-def frontal_area_index(
-    frontal_length: pd.DataFrame, building_height: pd.Series, total_plan_area: pd.Series
-) -> pd.DataFrame:
+def frontal_area_index(frontal_area: pd.DataFrame, total_plan_area: pd.Series) -> pd.DataFrame:
     """Calculate the frontal area index for each building in a Pandas DataFrame in each cardinal direction.
 
-    :param frontal_length:                Frontal length in each cardinal direction for each building.
-    :type frontal_length:                 pd.DataFrame
-
-    :param building_height:               Building height for each building.
-    :type building_height:                pd.Series
+    :param frontal_area:                  Frontal area in each cardinal direction for each building.
+    :type frontal_area:                   pd.DataFrame
 
     :param total_plan_area:               Total plan area for each building.
     :type total_plan_area:                pd.Series
 
-    :return:                              Pandas DataFrame with frontal length in each cardinal direction.
+    :return:                              Pandas DataFrame with frontal area index in each cardinal direction.
     """
 
     frontal_area_index_north = Settings.frontal_area_index_north
@@ -795,7 +790,7 @@ def frontal_area_index(
     frontal_area_index_south = Settings.frontal_area_index_south
     frontal_area_index_west = Settings.frontal_area_index_west
 
-    frontal_area_index = frontal_length.mul(building_height, axis=0).div(total_plan_area, axis=0)
+    frontal_area_index = frontal_area.div(total_plan_area, axis=0)
 
     cols = [
         frontal_area_index_north,
