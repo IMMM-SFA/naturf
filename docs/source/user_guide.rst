@@ -193,9 +193,9 @@ Height-to-Width Ratio (101)
 
 The ratio of the building height to the street width. **naturf** generalizes this as the ratio of average height of buildings in the total plan area to average distance from the current building to all other buildings in the total plan area. If a building has no other buildings in its total plan area, the average distance is set to a default value. [Burian2003]_ Eq. 18
 
-$\\overline{\\lambda_s} = \\frac{\\overline{z_h}}{\\overline{W}}
+$\\overline{\\lambda_s} = \\frac{\\overline{z_h}}{\\overline{W}}$
 
-where, $\\overline{\\lambda_s}$ is the average height-to-width ration; $\\overline{z_h}$ is the average building height in m; $\\overline{W}$ is the average distance between buildings.
+where, $\\overline{\\lambda_s}$ is the average height-to-width ratio; $\\overline{z_h}$ is the average building height in m; $\\overline{W}$ is the average distance between buildings.
 
 Sky-View Factor (102)
 ~~~~~~~~~~~~~~~~~~~~~
