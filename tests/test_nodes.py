@@ -99,6 +99,7 @@ class TestNodes(unittest.TestCase):
             pd.testing.assert_series_equal(
                 expected,
                 actual,
+                f"angle_in_degrees_to_neighbor test {case.name} failed, expected {expected}, actual {actual}",
             )
 
     def test_area_weighted_mean_of_building_heights(self):
@@ -117,7 +118,11 @@ class TestNodes(unittest.TestCase):
         )
         expected = pd.Series([10.0, 1.5, 0.7701863354037267])
         actual = nodes.area_weighted_mean_of_building_heights(buildings_intersecting_plan_area)
-        pd.testing.assert_series_equal(expected, actual)
+        pd.testing.assert_series_equal(
+            expected,
+            actual,
+            f"area_weighted_mean_of_building_heights test failed, expected {expected}, actual {actual}",
+        )
 
     def test_average_distance_between_buildings(self):
         "Test that the function `average_distance_between_buildings()` returns the correct distance."
@@ -141,7 +146,11 @@ class TestNodes(unittest.TestCase):
 
         actual = nodes.average_distance_between_buildings(distance)
 
-        pd.testing.assert_series_equal(expected, actual)
+        pd.testing.assert_series_equal(
+            expected,
+            actual,
+            f"average_distance_between_buildings test failed, expected {expected}, actual {actual}",
+        )
 
     def test_buildings_intersecting_plan_area(self):
         """Test that the function `buildings_intersecting_plan_area()` returns the correct intersecting buildings."""
@@ -344,7 +353,7 @@ class TestNodes(unittest.TestCase):
             pd.testing.assert_frame_equal(
                 expected,
                 actual,
-                "failed test {} expected {}, actual {}".format(case.name, expected, actual),
+                f"buildings_intersecting_plan_area test {case.name} failed, expected {expected}, actual {actual}",
             )
 
     def test_building_plan_area(self):
@@ -491,7 +500,7 @@ class TestNodes(unittest.TestCase):
             pd.testing.assert_series_equal(
                 expected,
                 actual,
-                "failed test {} expected {}, actual {}".format(case.name, expected, actual),
+                f"building_plan_area test {case.name} failed, expected {expected}, actual {actual}",
             )
 
     def test_input_shapefile_df(self):
@@ -653,8 +662,11 @@ class TestNodes(unittest.TestCase):
             ],
             axis=1,
         )
-
-        pd.testing.assert_frame_equal(expected, actual)
+        pd.testing.assert_frame_equal(
+            expected,
+            actual,
+            f"frontal_area_density test failed, expected {expected}, actual {actual}",
+        )
 
     def test_frontal_length(self):
         """Test that the function `frontal_length()` returns the correct length."""
@@ -714,8 +726,20 @@ class TestNodes(unittest.TestCase):
             ],
             axis=1,
         )
+        pd.testing.assert_frame_equal(
+            expected, actual, f"frontal_length test failed, expected {expected}, actual {actual}"
+        )
 
-        pd.testing.assert_frame_equal(expected, actual)
+    def test_grimmond_oke_roughness_length(self):
+        """Test that the function `grimmond_oke_roughness_length()` returns the correct value."""
+        building_height = pd.Series([0, 1, 10.5, 75])
+        expected = pd.Series([0.0, 0.1, 1.05, 7.5])
+        actual = nodes.grimmond_oke_roughness_length(building_height)
+        pd.testing.assert_series_equal(
+            expected,
+            actual,
+            f"grimmond_oke_roughness_length test failed, expected {expected}, actual {actual}",
+        )
 
     def test_macdonald_displacement_height(self):
         """Test that the function `macdonald_displacement_height()` returns the correct height."""
@@ -764,7 +788,11 @@ class TestNodes(unittest.TestCase):
         for case in testcases:
             actual = nodes.orientation_to_neighbor(pd.Series(case.input))
             expected = pd.Series(case.expected)
-            pd.testing.assert_series_equal(expected, actual)
+            pd.testing.assert_series_equal(
+                expected,
+                actual,
+                f"orientation_to_neighbor test {case.name} failed, expected {expected}, actual {actual}",
+            )
 
     def test_plan_area_density(self):
         """Test that the function `plan_area_density()` returns the correct value."""
@@ -802,7 +830,9 @@ class TestNodes(unittest.TestCase):
         actual = nodes.plan_area_density(building_plan_area, building_height, total_plan_area)
         expected = pd.DataFrame(plan_area_density, columns=columns_plan_area_density)
 
-        pd.testing.assert_frame_equal(expected, actual)
+        pd.testing.assert_frame_equal(
+            expected, actual, f"plan_area_density test failed, expected {expected}, actual {actual}"
+        )
 
     def test_raupach_displacement_height(self):
         """Test that the function `raupach_displacement_height()` returns the correct value for each cardinal direction."""
@@ -845,7 +875,11 @@ class TestNodes(unittest.TestCase):
             Settings.raupach_displacement_height_west,
         ]
         actual = nodes.raupach_displacement_height(building_height, frontal_area_index)
-        pd.testing.assert_frame_equal(expected, actual)
+        pd.testing.assert_frame_equal(
+            expected,
+            actual,
+            f"raupach_displacement_height test failed, expected {expected}, actual {actual}",
+        )
 
     def test_wall_angle_direction_length(self):
         """Test that the function `wall_angle_direction_length()` returns the correct angle, direction, and length."""
@@ -988,7 +1022,11 @@ class TestNodes(unittest.TestCase):
         for case in testcases:
             actual = nodes.wall_angle_direction_length(gpd.GeoSeries(case.input))
             expected = case.expected
-            pd.testing.assert_frame_equal(expected, actual)
+            pd.testing.assert_frame_equal(
+                expected,
+                actual,
+                f"wall_angle_direction_length test {case.name} failed, expected {expected}, actual {actual}",
+            )
 
     def test_vertical_distribution_of_building_heights(self):
         """Test that the function `vertical_distribution_of_building_heights()` returns the correct dataframe."""
@@ -1014,7 +1052,11 @@ class TestNodes(unittest.TestCase):
             ],
         )
         actual = nodes.vertical_distribution_of_building_heights(building_height)
-        pd.testing.assert_frame_equal(expected, actual)
+        pd.testing.assert_frame_equal(
+            expected,
+            actual,
+            f"vertical_distribution_of_building_heights test failed, expected {expected}, actual {actual}",
+        )
 
     def test_wall_length(self):
         """Test that the function `wall_length()` returns the correct length."""
@@ -1116,7 +1158,7 @@ class TestNodes(unittest.TestCase):
             pd.testing.assert_frame_equal(
                 expected,
                 actual,
-                "failed test {} expected {}, actual {}".format(case.name, expected, actual),
+                f"wall_length test {case.name} failed, expected {expected}, actual {actual}",
             )
 
 
