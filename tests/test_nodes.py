@@ -730,6 +730,17 @@ class TestNodes(unittest.TestCase):
             expected, actual, f"frontal_length test failed, expected {expected}, actual {actual}"
         )
 
+    def test_grimmond_oke_displacement_height(self):
+        """Test that the function `grimmond_oke_displacement_height()` returns the correct value."""
+        building_height = pd.Series([0, 1, 10.5, 75])
+        expected = pd.Series([0.0, 0.67, 7.035, 50.25])
+        actual = nodes.grimmond_oke_displacement_height(building_height)
+        pd.testing.assert_series_equal(
+            expected,
+            actual,
+            f"grimmond_oke_displacement_height test failed, expected {expected}, actual {actual}",
+        )
+
     def test_grimmond_oke_roughness_length(self):
         """Test that the function `grimmond_oke_roughness_length()` returns the correct value."""
         building_height = pd.Series([0, 1, 10.5, 75])
