@@ -881,6 +881,27 @@ class TestNodes(unittest.TestCase):
             f"raupach_displacement_height test failed, expected {expected}, actual {actual}",
         )
 
+    def test_sky_view_factor(self):
+        """Test that the function `sky_view_factor()` returns the correct value."""
+
+        building_height = pd.Series([0, 0.1, 5.5, 5.5, 75])
+        average_distance_between_buildings = pd.Series([1, 1, 1, 0, 1])
+        expected = pd.Series(
+            [
+                1.0,
+                0.9805806756909201,
+                0.09053574604251861,
+                6.123233995736766e-17,
+                0.0066665185234566545,
+            ]
+        )
+        actual = nodes.sky_view_factor(building_height, average_distance_between_buildings)
+        pd.testing.assert_series_equal(
+            expected,
+            actual,
+            f"sky_view_factor test failed, expected {expected}, actual {actual}",
+        )
+
     def test_wall_angle_direction_length(self):
         """Test that the function `wall_angle_direction_length()` returns the correct angle, direction, and length."""
 
