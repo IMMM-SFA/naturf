@@ -503,8 +503,24 @@ class TestNodes(unittest.TestCase):
                 f"building_plan_area test {case.name} failed, expected {expected}, actual {actual}",
             )
 
+    def test_building_surface_area_to_plan_area_ratio(self):
+        """Test that the function `building_surface_area_to_plan_area_ratio()` returns the correct value."""
+
+        building_surface_area = pd.Series([0, 1.5, 75, 0, 1.5, 75])
+        total_plan_area = pd.Series([0, 0, 1.5, 1.5, 75, 75])
+        expected = pd.Series([math.nan, math.inf, 50.0, 0.0, 0.02, 1.0])
+        actual = nodes.building_surface_area_to_plan_area_ratio(
+            building_surface_area, total_plan_area
+        )
+        pd.testing.assert_series_equal(
+            expected,
+            actual,
+            f"building_surface_area_to_plan_area_ratio test failed, expected {expected}, actual {actual}",
+        )
+
     def test_complete_aspect_ratio(self):
         """Test that the function `complete_aspect_ratio()` returns the correct value."""
+        
         building_surface_area = pd.Series([0, 0, 0, 1, 1, 1, 5.5, 5.5, 5.5, 75, 75, 75])
         total_plan_area = pd.Series([0, 1, 5.5, 75, 0, 1, 5.5, 75, 0, 1, 5.5, 75])
         building_plan_area = pd.Series([0, 0, 1, 1, 5.5, 5.5, 75, 75, 0, 1, 5.5, 75])
@@ -532,7 +548,7 @@ class TestNodes(unittest.TestCase):
             actual,
             f"complete_aspect_ratio test failed, expected {expected}, actual {actual}",
         )
-
+          
     def test_input_shapefile_df(self):
         """Test that the function `input_shapefile_df()` creates the right shape and type of DataFrame."""
 
@@ -782,6 +798,20 @@ class TestNodes(unittest.TestCase):
             f"grimmond_oke_roughness_length test failed, expected {expected}, actual {actual}",
         )
 
+    def test_height_to_width_ratio(self):
+        """Test that the function `height_to_width_ratio()` returns the correct value."""
+        mean_building_height = pd.Series([0, 0, 1, 10.5, 75])
+        average_distance_between_buildings = pd.Series([0, 1, 0, 10.5, 100])
+        expected = pd.Series([float("nan"), 0.0, float("inf"), 1.0, 0.75])
+        actual = nodes.height_to_width_ratio(
+            mean_building_height, average_distance_between_buildings
+        )
+        pd.testing.assert_series_equal(
+            expected,
+            actual,
+            f"height_to_width_ratio test failed, expected {expected}, actual {actual}",
+        )
+
     def test_macdonald_displacement_height(self):
         """Test that the function `macdonald_displacement_height()` returns the correct height."""
         alpha_coefficient = Settings.ALPHACOEFFICIENT
@@ -920,6 +950,27 @@ class TestNodes(unittest.TestCase):
             expected,
             actual,
             f"raupach_displacement_height test failed, expected {expected}, actual {actual}",
+        )
+
+    def test_sky_view_factor(self):
+        """Test that the function `sky_view_factor()` returns the correct value."""
+
+        building_height = pd.Series([0, 0.1, 5.5, 5.5, 75])
+        average_distance_between_buildings = pd.Series([1, 1, 1, 0, 1])
+        expected = pd.Series(
+            [
+                1.0,
+                0.9805806756909201,
+                0.09053574604251861,
+                6.123233995736766e-17,
+                0.0066665185234566545,
+            ]
+        )
+        actual = nodes.sky_view_factor(building_height, average_distance_between_buildings)
+        pd.testing.assert_series_equal(
+            expected,
+            actual,
+            f"sky_view_factor test failed, expected {expected}, actual {actual}",
         )
 
     def test_wall_angle_direction_length(self):
