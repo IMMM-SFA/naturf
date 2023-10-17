@@ -752,6 +752,20 @@ class TestNodes(unittest.TestCase):
             f"grimmond_oke_roughness_length test failed, expected {expected}, actual {actual}",
         )
 
+    def test_height_to_width_ratio(self):
+        """Test that the function `height_to_width_ratio()` returns the correct value."""
+        mean_building_height = pd.Series([0, 0, 1, 10.5, 75])
+        average_distance_between_buildings = pd.Series([0, 1, 0, 10.5, 100])
+        expected = pd.Series([float("nan"), 0.0, float("inf"), 1.0, 0.75])
+        actual = nodes.height_to_width_ratio(
+            mean_building_height, average_distance_between_buildings
+        )
+        pd.testing.assert_series_equal(
+            expected,
+            actual,
+            f"height_to_width_ratio test failed, expected {expected}, actual {actual}",
+        )
+
     def test_macdonald_displacement_height(self):
         """Test that the function `macdonald_displacement_height()` returns the correct height."""
         alpha_coefficient = Settings.ALPHACOEFFICIENT
