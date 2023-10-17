@@ -503,6 +503,21 @@ class TestNodes(unittest.TestCase):
                 f"building_plan_area test {case.name} failed, expected {expected}, actual {actual}",
             )
 
+    def test_building_surface_area_to_plan_area_ratio(self):
+        """Test that the function `building_surface_area_to_plan_area_ratio()` returns the correct value."""
+
+        building_surface_area = pd.Series([0, 1.5, 75, 0, 1.5, 75])
+        total_plan_area = pd.Series([0, 0, 1.5, 1.5, 75, 75])
+        expected = pd.Series([math.nan, math.inf, 50.0, 0.0, 0.02, 1.0])
+        actual = nodes.building_surface_area_to_plan_area_ratio(
+            building_surface_area, total_plan_area
+        )
+        pd.testing.assert_series_equal(
+            expected,
+            actual,
+            f"building_surface_area_to_plan_area_ratio test failed, expected {expected}, actual {actual}",
+        )
+
     def test_input_shapefile_df(self):
         """Test that the function `input_shapefile_df()` creates the right shape and type of DataFrame."""
 
