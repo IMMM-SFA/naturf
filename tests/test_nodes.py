@@ -714,6 +714,44 @@ class TestNodes(unittest.TestCase):
             f"frontal_area_density test failed, expected {expected}, actual {actual}",
         )
 
+    def test_frontal_area_index(self):
+        """Test that the function `frontal_area_index()` returns the correct value in each cardinal direction."""
+
+        frontal_length = pd.DataFrame(
+            [
+                [0, 1, 5.5, 75],
+                [0, 1, 5.5, 75],
+                [0, 1, 5.5, 75],
+                [0, 1, 5.5, 75],
+                [0, 1, 5.5, 75],
+                [0, 1, 5.5, 75],
+            ]
+        )
+        building_height = pd.Series([0, 1.5, 75, 1, 1, 1])
+        total_plan_area = pd.Series([1, 1, 1, 0, 1.5, 75])
+        expected = pd.DataFrame(
+            [
+                [0.0, 0.0, 0.0, 0.0],
+                [0.0, 1.5, 8.25, 112.5],
+                [0.0, 75.0, 412.5, 5625.0],
+                [math.nan, math.inf, math.inf, math.inf],
+                [0.0, 0.6666666666666666, 3.6666666666666665, 50.0],
+                [0.0, 0.013333333333333334, 0.07333333333333333, 1.0],
+            ]
+        )
+        expected.columns = [
+            Settings.frontal_area_index_north,
+            Settings.frontal_area_index_east,
+            Settings.frontal_area_index_south,
+            Settings.frontal_area_index_west,
+        ]
+        actual = nodes.frontal_area_index(frontal_length, building_height, total_plan_area)
+        pd.testing.assert_frame_equal(
+            expected,
+            actual,
+            f"frontal_area_index test failed, expected {expected}, actual {actual}",
+        )
+
     def test_frontal_length(self):
         """Test that the function `frontal_length()` returns the correct length."""
 
@@ -915,14 +953,14 @@ class TestNodes(unittest.TestCase):
             [
                 [
                     1 - ((1 - math.exp(-math.sqrt(constant_75))) / math.sqrt(constant_75)),
-                    float("nan"),
+                    math.nan,
                     1 - ((1 - math.exp(-math.sqrt(constant_75 * 2))) / math.sqrt(constant_75 * 2)),
                     1
                     - ((1 - math.exp(-math.sqrt(constant_75 * 20))) / math.sqrt(constant_75 * 20)),
                 ],
                 [
                     75 * (1 - ((1 - math.exp(-math.sqrt(constant_75))) / math.sqrt(constant_75))),
-                    float("nan"),
+                    math.nan,
                     75
                     * (
                         1
