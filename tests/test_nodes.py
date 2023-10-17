@@ -520,7 +520,7 @@ class TestNodes(unittest.TestCase):
 
     def test_complete_aspect_ratio(self):
         """Test that the function `complete_aspect_ratio()` returns the correct value."""
-        
+
         building_surface_area = pd.Series([0, 0, 0, 1, 1, 1, 5.5, 5.5, 5.5, 75, 75, 75])
         total_plan_area = pd.Series([0, 1, 5.5, 75, 0, 1, 5.5, 75, 0, 1, 5.5, 75])
         building_plan_area = pd.Series([0, 0, 1, 1, 5.5, 5.5, 75, 75, 0, 1, 5.5, 75])
@@ -548,7 +548,7 @@ class TestNodes(unittest.TestCase):
             actual,
             f"complete_aspect_ratio test failed, expected {expected}, actual {actual}",
         )
-          
+
     def test_input_shapefile_df(self):
         """Test that the function `input_shapefile_df()` creates the right shape and type of DataFrame."""
 
@@ -717,23 +717,16 @@ class TestNodes(unittest.TestCase):
     def test_frontal_area_index(self):
         """Test that the function `frontal_area_index()` returns the correct value in each cardinal direction."""
 
-        frontal_length = pd.DataFrame(
+        frontal_area = pd.DataFrame(
             [
-                [0, 1, 5.5, 75],
-                [0, 1, 5.5, 75],
-                [0, 1, 5.5, 75],
                 [0, 1, 5.5, 75],
                 [0, 1, 5.5, 75],
                 [0, 1, 5.5, 75],
             ]
         )
-        building_height = pd.Series([0, 1.5, 75, 1, 1, 1])
-        total_plan_area = pd.Series([1, 1, 1, 0, 1.5, 75])
+        total_plan_area = pd.Series([0, 1.5, 75])
         expected = pd.DataFrame(
             [
-                [0.0, 0.0, 0.0, 0.0],
-                [0.0, 1.5, 8.25, 112.5],
-                [0.0, 75.0, 412.5, 5625.0],
                 [math.nan, math.inf, math.inf, math.inf],
                 [0.0, 0.6666666666666666, 3.6666666666666665, 50.0],
                 [0.0, 0.013333333333333334, 0.07333333333333333, 1.0],
@@ -745,7 +738,7 @@ class TestNodes(unittest.TestCase):
             Settings.frontal_area_index_south,
             Settings.frontal_area_index_west,
         ]
-        actual = nodes.frontal_area_index(frontal_length, building_height, total_plan_area)
+        actual = nodes.frontal_area_index(frontal_area, total_plan_area)
         pd.testing.assert_frame_equal(
             expected,
             actual,
