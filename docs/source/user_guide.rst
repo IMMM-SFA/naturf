@@ -249,9 +249,9 @@ Macdonald et al. Roughness Length (113-116)
 
 [Macdonald1998]_ Eq. 22
 
-$MRL = zh \\cdot (1 - \\frac{MDH}{zh})\\exp(-(0.5*\\Beta\\frac{C_{D}}{\\kappa^2}(1 - RDH)\\frac{A_{f}}{A_{d}})^{-0.5})$
+$MRL = zh \\cdot (1 - \\frac{MDH}{zh})\\exp(-(0.5*\\beta\\frac{C_{D}}{\\kappa^2}(1 - \\frac{MDH}{zh})\\frac{A_{f}}{A_{d}})^{-0.5})$
 
-where, *MRL* is the Macdonald roughness length in m; *zh* is the building height in m; *MDH* is the Macdonald displacement height in m; $\\Beta$ is the beta coefficient = 1; $C_D$ is the obstacle drag coefficient = 1.12; $\\kappa$ is von Kármán's constant = 0.4; $A_f$ is the frontal area of the building in $m^2$; $A_d$ is the total surface area of the buildings in the plan area divided by the number of buildings in $m^2$.
+where, *MRL* is the Macdonald roughness length in m; *zh* is the building height in m; *MDH* is the Macdonald displacement height in m; $\\beta$ is the beta coefficient = 1; $C_D$ is the obstacle drag coefficient = 1.12; $\\kappa$ is von Kármán's constant = 0.4; $A_f$ is the frontal area of the building in $m^2$; $A_d$ is the total surface area of the buildings in the plan area divided by the number of buildings in $m^2$.
 
 Macdonald et al. Displacement Height (117)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
