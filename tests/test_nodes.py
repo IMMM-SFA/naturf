@@ -518,6 +518,37 @@ class TestNodes(unittest.TestCase):
             f"building_surface_area_to_plan_area_ratio test failed, expected {expected}, actual {actual}",
         )
 
+    def test_complete_aspect_ratio(self):
+        """Test that the function `complete_aspect_ratio()` returns the correct value."""
+        
+        building_surface_area = pd.Series([0, 0, 0, 1, 1, 1, 5.5, 5.5, 5.5, 75, 75, 75])
+        total_plan_area = pd.Series([0, 1, 5.5, 75, 0, 1, 5.5, 75, 0, 1, 5.5, 75])
+        building_plan_area = pd.Series([0, 0, 1, 1, 5.5, 5.5, 75, 75, 0, 1, 5.5, 75])
+        expected = pd.Series(
+            [
+                float("nan"),
+                1.0,
+                0.8181818181818182,
+                1.0,
+                -float("inf"),
+                -3.5,
+                -11.636363636363637,
+                0.07333333333333333,
+                float("inf"),
+                75.0,
+                13.636363636363637,
+                1.0,
+            ]
+        )
+        actual = nodes.complete_aspect_ratio(
+            building_surface_area, total_plan_area, building_plan_area
+        )
+        pd.testing.assert_series_equal(
+            expected,
+            actual,
+            f"complete_aspect_ratio test failed, expected {expected}, actual {actual}",
+        )
+          
     def test_input_shapefile_df(self):
         """Test that the function `input_shapefile_df()` creates the right shape and type of DataFrame."""
 
