@@ -597,6 +597,35 @@ def filter_zero_height_df(standardize_column_names_df: gpd.GeoDataFrame) -> gpd.
     ].reset_index(drop=True)
 
 
+def frontal_area(frontal_length: pd.DataFrame, building_height: pd.Series) -> pd.DataFrame:
+    """Calculate the frontal area for each building in a Pandas DataFrame in each cardinal direction.
+
+    :param frontal_length:                Frontal length in each cardinal direction for each building.
+    :type frontal_length:                 pd.DataFrame
+
+    :param building_height:               Building height for each building.
+    :type building_height:                pd.Series
+
+    :return:                              Pandas DataFrame with frontal area in each cardinal direction.
+    """
+
+    frontal_area_north = Settings.frontal_area_north
+    frontal_area_east = Settings.frontal_area_east
+    frontal_area_south = Settings.frontal_area_south
+    frontal_area_west = Settings.frontal_area_west
+
+    frontal_area = frontal_length.mul(building_height, axis=0)
+
+    frontal_area.columns = [
+        frontal_area_north,
+        frontal_area_east,
+        frontal_area_south,
+        frontal_area_west,
+    ]
+
+    return frontal_area
+
+
 def frontal_area_density(
     frontal_length: pd.DataFrame, building_height: pd.Series, total_plan_area: pd.Series
 ) -> pd.DataFrame:
@@ -742,21 +771,16 @@ def frontal_area_density(
     )
 
 
-def frontal_area_index(
-    frontal_length: pd.DataFrame, building_height: pd.Series, total_plan_area: pd.Series
-) -> pd.DataFrame:
+def frontal_area_index(frontal_area: pd.DataFrame, total_plan_area: pd.Series) -> pd.DataFrame:
     """Calculate the frontal area index for each building in a Pandas DataFrame in each cardinal direction.
 
-    :param frontal_length:                Frontal length in each cardinal direction for each building.
-    :type frontal_length:                 pd.DataFrame
-
-    :param building_height:               Building height for each building.
-    :type building_height:                pd.Series
+    :param frontal_area:                  Frontal area in each cardinal direction for each building.
+    :type frontal_area:                   pd.DataFrame
 
     :param total_plan_area:               Total plan area for each building.
     :type total_plan_area:                pd.Series
 
-    :return:                              Pandas DataFrame with frontal length in each cardinal direction.
+    :return:                              Pandas DataFrame with frontal area index in each cardinal direction.
     """
 
     frontal_area_index_north = Settings.frontal_area_index_north
@@ -764,7 +788,7 @@ def frontal_area_index(
     frontal_area_index_south = Settings.frontal_area_index_south
     frontal_area_index_west = Settings.frontal_area_index_west
 
-    frontal_area_index = frontal_length.mul(building_height, axis=0).div(total_plan_area, axis=0)
+    frontal_area_index = frontal_area.div(total_plan_area, axis=0)
 
     cols = [
         frontal_area_index_north,
@@ -987,6 +1011,32 @@ def input_shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
     return gdf
 
 
+def lot_area(
+    buildings_intersecting_plan_area: gpd.GeoDataFrame, building_surface_area: pd.Series
+) -> pd.Series:
+    """Calculate the lot area for each building in a Panda Series. Lot area is the total surface area of all buildings
+    within a given building's plan area divided by the number of buildings in the plan area."
+
+    :param buildings_intersecting_plan_area:    Geometry field for the neighboring buildings from the spatially
+                                                joined data.
+    :type buildings_intersecting_plan_area:     gpd.GeoDataFrame
+
+    :param building_surface_area:               Building surface area for each building.
+    :type building_surface_area:                pd.Series
+
+    :return:                                    Panda Series of lot area for each building.
+    """
+
+    df = buildings_intersecting_plan_area.join(
+        building_surface_area.rename(Settings.building_surface_area),
+        on="index_neighbor",
+        how="left",
+    )
+    df = df.groupby(Settings.target_id_field)[Settings.building_surface_area].mean()
+
+    return pd.Series(df.values)
+
+
 def macdonald_displacement_height(
     building_height: pd.Series, plan_area_fraction: pd.Series
 ) -> pd.Series:
@@ -1013,7 +1063,8 @@ def macdonald_displacement_height(
 def macdonald_roughness_length(
     building_height: pd.Series,
     macdonald_displacement_height: pd.Series,
-    frontal_area_index: pd.DataFrame,
+    frontal_area: pd.DataFrame,
+    lot_area: pd.Series,
 ) -> pd.DataFrame:
     """Calculate the Macdonald et al. roughness length for each building in a Pandas Series.
 
@@ -1023,8 +1074,13 @@ def macdonald_roughness_length(
     :param macdonald_displacement_height: Macdonald displacement height for each building.
     :type macdonald_displacement_height:  pd.Series
 
-    :param frontal_area_index:            Frontal area index for each building in each cardinal direction.
-    :type frontal_area_index:             pd.DataFrame
+    :param frontal_area:                  Frontal area  for each building in each cardinal direction.
+    :type frontal_area:                   pd.DataFrame
+
+    :param lot_area:                      Lot area for each building.
+    :type lot_area:                       pd.Series
+
+    :return:                              Panda Series with Macdonald roughness length for each building in each cardinal direction.
     """
 
     macdonald_roughness_length_north = Settings.macdonald_roughness_length_north
@@ -1047,7 +1103,9 @@ def macdonald_roughness_length(
 
     drag_over_von_karman = obstacle_drag_coefficient / von_karman_constant**2
 
-    inside_exponential = -frontal_area_index.mul(
+    frontal_divided_by_lot = frontal_area.div(lot_area, axis=0)
+
+    inside_exponential = -frontal_divided_by_lot.mul(
         0.5 * beta_coefficient * drag_over_von_karman * one_minus_height_ratio, axis=0
     ) ** (-0.5)
 
