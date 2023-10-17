@@ -616,14 +616,12 @@ def frontal_area(frontal_length: pd.DataFrame, building_height: pd.Series) -> pd
 
     frontal_area = frontal_length.mul(building_height, axis=0)
 
-    cols = [
+    frontal_area.columns = [
         frontal_area_north,
         frontal_area_east,
         frontal_area_south,
         frontal_area_west,
     ]
-
-    frontal_area.columns = cols
 
     return frontal_area
 
