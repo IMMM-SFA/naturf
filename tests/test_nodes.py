@@ -520,7 +520,7 @@ class TestNodes(unittest.TestCase):
 
     def test_complete_aspect_ratio(self):
         """Test that the function `complete_aspect_ratio()` returns the correct value."""
-        
+
         building_surface_area = pd.Series([0, 0, 0, 1, 1, 1, 5.5, 5.5, 5.5, 75, 75, 75])
         total_plan_area = pd.Series([0, 1, 5.5, 75, 0, 1, 5.5, 75, 0, 1, 5.5, 75])
         building_plan_area = pd.Series([0, 0, 1, 1, 5.5, 5.5, 75, 75, 0, 1, 5.5, 75])
@@ -548,7 +548,7 @@ class TestNodes(unittest.TestCase):
             actual,
             f"complete_aspect_ratio test failed, expected {expected}, actual {actual}",
         )
-          
+
     def test_input_shapefile_df(self):
         """Test that the function `input_shapefile_df()` creates the right shape and type of DataFrame."""
 
@@ -712,6 +712,37 @@ class TestNodes(unittest.TestCase):
             expected,
             actual,
             f"frontal_area_density test failed, expected {expected}, actual {actual}",
+        )
+
+    def test_frontal_area_index(self):
+        """Test that the function `frontal_area_index()` returns the correct value in each cardinal direction."""
+
+        frontal_area = pd.DataFrame(
+            [
+                [0, 1, 5.5, 75],
+                [0, 1, 5.5, 75],
+                [0, 1, 5.5, 75],
+            ]
+        )
+        total_plan_area = pd.Series([0, 1.5, 75])
+        expected = pd.DataFrame(
+            [
+                [math.nan, math.inf, math.inf, math.inf],
+                [0.0, 0.6666666666666666, 3.6666666666666665, 50.0],
+                [0.0, 0.013333333333333334, 0.07333333333333333, 1.0],
+            ]
+        )
+        expected.columns = [
+            Settings.frontal_area_index_north,
+            Settings.frontal_area_index_east,
+            Settings.frontal_area_index_south,
+            Settings.frontal_area_index_west,
+        ]
+        actual = nodes.frontal_area_index(frontal_area, total_plan_area)
+        pd.testing.assert_frame_equal(
+            expected,
+            actual,
+            f"frontal_area_index test failed, expected {expected}, actual {actual}",
         )
 
     def test_frontal_length(self):
@@ -915,14 +946,14 @@ class TestNodes(unittest.TestCase):
             [
                 [
                     1 - ((1 - math.exp(-math.sqrt(constant_75))) / math.sqrt(constant_75)),
-                    float("nan"),
+                    math.nan,
                     1 - ((1 - math.exp(-math.sqrt(constant_75 * 2))) / math.sqrt(constant_75 * 2)),
                     1
                     - ((1 - math.exp(-math.sqrt(constant_75 * 20))) / math.sqrt(constant_75 * 20)),
                 ],
                 [
                     75 * (1 - ((1 - math.exp(-math.sqrt(constant_75))) / math.sqrt(constant_75))),
-                    float("nan"),
+                    math.nan,
                     75
                     * (
                         1
