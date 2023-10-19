@@ -609,18 +609,13 @@ def frontal_area(frontal_length: pd.DataFrame, building_height: pd.Series) -> pd
     :return:                              Pandas DataFrame with frontal area in each cardinal direction.
     """
 
-    frontal_area_north = Settings.frontal_area_north
-    frontal_area_east = Settings.frontal_area_east
-    frontal_area_south = Settings.frontal_area_south
-    frontal_area_west = Settings.frontal_area_west
-
     frontal_area = frontal_length.mul(building_height, axis=0)
 
     frontal_area.columns = [
-        frontal_area_north,
-        frontal_area_east,
-        frontal_area_south,
-        frontal_area_west,
+        Settings.frontal_area_north,
+        Settings.frontal_area_east,
+        Settings.frontal_area_south,
+        Settings.frontal_area_west,
     ]
 
     return frontal_area
@@ -783,21 +778,13 @@ def frontal_area_index(frontal_area: pd.DataFrame, total_plan_area: pd.Series) -
     :return:                              Pandas DataFrame with frontal area index in each cardinal direction.
     """
 
-    frontal_area_index_north = Settings.frontal_area_index_north
-    frontal_area_index_east = Settings.frontal_area_index_east
-    frontal_area_index_south = Settings.frontal_area_index_south
-    frontal_area_index_west = Settings.frontal_area_index_west
-
     frontal_area_index = frontal_area.div(total_plan_area, axis=0)
-
-    cols = [
-        frontal_area_index_north,
-        frontal_area_index_east,
-        frontal_area_index_south,
-        frontal_area_index_west,
+    frontal_area_index.columns = [
+        Settings.frontal_area_index_north,
+        Settings.frontal_area_index_east,
+        Settings.frontal_area_index_south,
+        Settings.frontal_area_index_west,
     ]
-
-    frontal_area_index.columns = cols
 
     return frontal_area_index
 
@@ -1083,18 +1070,6 @@ def macdonald_roughness_length(
     :return:                              Panda Series with Macdonald roughness length for each building in each cardinal direction.
     """
 
-    macdonald_roughness_length_north = Settings.macdonald_roughness_length_north
-    macdonald_roughness_length_east = Settings.macdonald_roughness_length_east
-    macdonald_roughness_length_south = Settings.macdonald_roughness_length_south
-    macdonald_roughness_length_west = Settings.macdonald_roughness_length_west
-
-    cols = [
-        macdonald_roughness_length_north,
-        macdonald_roughness_length_east,
-        macdonald_roughness_length_south,
-        macdonald_roughness_length_west,
-    ]
-
     obstacle_drag_coefficient = Settings.OBSTACLEDRAGCOEFFICIENT
     von_karman_constant = Settings.VONKARMANCONSTANT
     beta_coefficient = Settings.BETACOEFFICIENT
@@ -1115,7 +1090,12 @@ def macdonald_roughness_length(
 
     macdonald_roughness_length = right_side.mul(building_height, axis=0)
 
-    macdonald_roughness_length.columns = cols
+    macdonald_roughness_length.columns = [
+        Settings.macdonald_roughness_length_north,
+        Settings.macdonald_roughness_length_east,
+        Settings.macdonald_roughness_length_south,
+        Settings.macdonald_roughness_length_west,
+    ]
 
     return macdonald_roughness_length
 
@@ -1467,18 +1447,6 @@ def raupach_displacement_height(
     :return:                              Pandas DataFrame with Raupach displacement height in each cardinal direction.
     """
 
-    raupach_displacement_height_north = Settings.raupach_displacement_height_north
-    raupach_displacement_height_east = Settings.raupach_displacement_height_east
-    raupach_displacement_height_south = Settings.raupach_displacement_height_south
-    raupach_displacement_height_west = Settings.raupach_displacement_height_west
-
-    cols = [
-        raupach_displacement_height_north,
-        raupach_displacement_height_east,
-        raupach_displacement_height_south,
-        raupach_displacement_height_west,
-    ]
-
     constant_75 = Settings.CONSTANT_75
     capital_lambda = frontal_area_index.mul(2, axis=0)
 
@@ -1489,7 +1457,12 @@ def raupach_displacement_height(
         building_height, axis=0
     )
 
-    raupach_displacement_height.columns = cols
+    raupach_displacement_height.columns = [
+        Settings.raupach_displacement_height_north,
+        Settings.raupach_displacement_height_east,
+        Settings.raupach_displacement_height_south,
+        Settings.raupach_displacement_height_west,
+    ]
 
     return raupach_displacement_height
 
@@ -1514,16 +1487,11 @@ def raupach_roughness_length(
     :return:                              Pandas DataFrame with Raupach roughness length in each cardinal direction.
     """
 
-    raupach_roughness_length_north = Settings.raupach_roughness_length_north
-    raupach_roughness_length_east = Settings.raupach_roughness_length_east
-    raupach_roughness_length_south = Settings.raupach_roughness_length_south
-    raupach_roughness_length_west = Settings.raupach_roughness_length_west
-
     cols = [
-        raupach_roughness_length_north,
-        raupach_roughness_length_east,
-        raupach_roughness_length_south,
-        raupach_roughness_length_west,
+        Settings.raupach_roughness_length_north,
+        Settings.raupach_roughness_length_east,
+        Settings.raupach_roughness_length_south,
+        Settings.raupach_roughness_length_west,
     ]
 
     cols_fai = frontal_area_index.columns
