@@ -1019,6 +1019,35 @@ class TestNodes(unittest.TestCase):
             f"raupach_displacement_height test failed, expected {expected}, actual {actual}",
         )
 
+    def test_raupach_roughness_length(self):
+        """Test that the function `raupach_roughness_length()` returns the correct values."""
+        building_height = pd.Series([0, 0.5, 75])
+        frontal_area_index = pd.DataFrame([[0, 0.5, 1.0, 75], [0, 0.5, 1.0, 75], [0, 0.5, 1.0, 75]])
+        raupach_displacement_height = pd.DataFrame(
+            [[0, 0.5, 1, 75], [0, 0.5, 1, 75], [0, 0.5, 1, 75]]
+        )
+        expected = pd.DataFrame(
+            [
+                [math.nan, math.nan, math.nan, math.nan],
+                [0.0002776596113860747, 0.0, -0.1993248047654186, -56.45689024365426],
+                [0.04164894170791121, 22.09119560552915, 29.500071105281958, 0.0],
+            ]
+        )
+        expected.columns = [
+            Settings.raupach_roughness_length_north,
+            Settings.raupach_roughness_length_east,
+            Settings.raupach_roughness_length_south,
+            Settings.raupach_roughness_length_west,
+        ]
+        actual = nodes.raupach_roughness_length(
+            building_height, frontal_area_index, raupach_displacement_height
+        )
+        pd.testing.assert_frame_equal(
+            expected,
+            actual,
+            f"raupach_roughness_length test failed, expected {expected}, actual {actual}",
+        )
+
     def test_sky_view_factor(self):
         """Test that the function `sky_view_factor()` returns the correct value."""
 
