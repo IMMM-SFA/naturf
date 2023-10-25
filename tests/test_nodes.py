@@ -865,6 +865,42 @@ class TestNodes(unittest.TestCase):
             f"macdonald_displacement_height test failed, expected {expected}, actual {actual}",
         )
 
+    def test_macdonald_roughness_length(self):
+        """Test that the function `macdonald_roughness_length()` returns the correct values."""
+        building_height = pd.Series([0, 10.5, 75])
+        macdonald_displacement_height = pd.Series([1, 0.5, 0])
+        frontal_area = pd.DataFrame(
+            [[0, 1, 1.5, 75], [0, 1, 1.5, 75], [0, 1, 1.5, 75]],
+            columns=[
+                Settings.frontal_area_index_north,
+                Settings.frontal_area_index_east,
+                Settings.frontal_area_index_south,
+                Settings.frontal_area_index_west,
+            ],
+        )
+        lot_area = pd.Series([10.5, 1, 1])
+        expected = pd.DataFrame(
+            [
+                [math.nan, math.nan, math.nan, math.nan],
+                [0.0, 5.7826527777812675, 6.39407319161897, 9.387129414165152],
+                [0.0, 43.94617676155573, 48.47520029599251, 70.51086232991824],
+            ]
+        )
+        expected.columns = [
+            Settings.macdonald_roughness_length_north,
+            Settings.macdonald_roughness_length_east,
+            Settings.macdonald_roughness_length_south,
+            Settings.macdonald_roughness_length_west,
+        ]
+        actual = nodes.macdonald_roughness_length(
+            building_height, macdonald_displacement_height, frontal_area, lot_area
+        )
+        pd.testing.assert_frame_equal(
+            expected,
+            actual,
+            f"macdonald_displacement_height test failed, expected {expected}, actual {actual}",
+        )
+
     def test_orientation_to_neighbor(self):
         """Test that the function `orientation_to_neighbor()` returns either `north_south` or `east_west` correctly."""
 
