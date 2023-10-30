@@ -1500,7 +1500,7 @@ def raupach_roughness_length(
     von_karman_constant = Settings.VONKARMANCONSTANT
     drag_coefficient_03 = Settings.DRAGCOEFFICIENT_03
     drag_coefficient_0003 = Settings.DRAGCOEFFICIENT_0003
-    psi_k = Settings.PSI_K
+    psi_h = Settings.PSI_H
 
     frontal_area_index.columns = cols
     raupach_displacement_height.columns = cols
@@ -1509,7 +1509,7 @@ def raupach_roughness_length(
 
     one_minus_displacement_height = 1 - raupach_displacement_height.div(building_height, axis=0)
 
-    exponential = np.exp(-von_karman_constant / denominator - psi_k)
+    exponential = np.exp(-von_karman_constant / denominator - psi_h)
 
     raupach_roughness_length = exponential.mul(one_minus_displacement_height, axis=0).mul(
         building_height, axis=0
