@@ -232,7 +232,7 @@ Raupach Roughness Length (105, 107, 109, 111)
 
 $RRL = zh \\cdot (1 - \\frac{RDH}{zh}) \\cdot exp(-\\kappa \\cdot (C_{S} + C_{R} \\cdot \\lambda)^{-0.5} - \\Psi_{h}))$
 
-where, *RRL* is the Raupach roughness length in m; *RDH* is the Raupach displacement height in m; $\\kappa$ is von Kármán's constant = 0.4; $C_S$ is the substrate-surface drag coefficient = 0.003; $C_R$ is the roughness-element drag coefficient = 0.3; $\\Psi_h$ is the roughness-sublayer influence function = 0.193.
+where, *RRL* is the Raupach roughness length in m; *RDH* is the Raupach displacement height in m; $\\kappa$ is von Kármán's constant = 0.4; $C_S$ is the substrate-surface drag coefficient = 0.003; $C_R$ is the roughness-element drag coefficient = 0.3; $\\lambda$ is the frontal area index; $\\Psi_h$ is the roughness-sublayer influence function = 0.193.
 
 
 Raupach Displacment Height (106, 108, 110, 112)
