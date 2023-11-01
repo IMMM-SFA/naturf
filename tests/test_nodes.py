@@ -1,6 +1,5 @@
 import math
 import os
-import pkg_resources
 import unittest
 
 from dataclasses import dataclass
@@ -17,9 +16,7 @@ from naturf.config import Settings
 
 class TestNodes(unittest.TestCase):
     INPUTS = {
-        "input_shapefile": pkg_resources.resource_filename(
-            "naturf", os.path.join("data", "inputs", "C-5.shp")
-        ),
+        "input_shapefile": os.path.join("naturf", "data", "inputs", "C-5.shp"),
         "radius": 100,
         "cap_style": 1,
     }
