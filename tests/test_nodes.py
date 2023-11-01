@@ -576,7 +576,25 @@ class TestNodes(unittest.TestCase):
         self.assertEqual(
             type(fake_geodataframe),
             type(df),
-            "`input_shapefile_df` data type not matching expected",
+            "`input_shapefile_df` doesn't match expected data type.",
+        )
+
+    def test_frontal_area(self):
+        """Test that the function `frontal_area()` returns the correct values."""
+        frontal_length = pd.DataFrame([[0, 0.25, 0.5, 7500], [0, 3.14159, 10.5, 100]])
+        building_height = pd.Series([0.5, 75])
+        expected = pd.DataFrame([[0.0, 0.125, 0.25, 3750.0], [0.0, 235.61925, 787.5, 7500.0]])
+        actual = nodes.frontal_area(frontal_length, building_height)
+        expected.columns = [
+            Settings.frontal_area_north,
+            Settings.frontal_area_east,
+            Settings.frontal_area_south,
+            Settings.frontal_area_west,
+        ]
+        pd.testing.assert_frame_equal(
+            expected,
+            actual,
+            f"frontal_area test failed, expected {expected}, actual {actual}",
         )
 
     def test_frontal_area_density(self):
