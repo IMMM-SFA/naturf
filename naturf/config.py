@@ -31,6 +31,7 @@ class Settings:
     DEFAULT_STREET_WIDTH = 15
     DEFAULT_OUTPUT_RESOLUTION = [100, 100]
     DEFAULT_FILL_VALUE = 0
+    SCALING_FACTOR = 4
 
     data_id_field_name = "OBJECTID"
     data_height_field_name = "Max_HOUSE_"
