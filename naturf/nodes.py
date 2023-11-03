@@ -1278,9 +1278,7 @@ def numpy_to_binary(raster_to_numpy: np.ndarray) -> bytes:
         master_outi = bytes()
         for j in range(len(raster_to_numpy[i])):
             for k in range(len(raster_to_numpy[i][j])):
-                master_outi += struct.pack(
-                    ">i", int(raster_to_numpy[i][len(raster_to_numpy[i]) - j - 1][k])
-                )
+                master_outi += struct.pack(">i", int(raster_to_numpy[i][j][k]))
         master_out.append(master_outi)
 
     master_out_final = bytes()
