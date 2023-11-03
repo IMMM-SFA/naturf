@@ -1402,7 +1402,7 @@ def raster_to_numpy(aggregate_rasters: xr.Dataset) -> np.ndarray:
         master[i] = aggregate_rasters[parameter].to_numpy()
         i += 1
 
-    return master
+    return master * 10**Settings.SCALING_FACTOR
 
 
 def rasterize_parameters(merge_parameters: gpd.GeoDataFrame) -> xr.Dataset:
@@ -1883,6 +1883,8 @@ def write_index(raster_to_numpy: np.ndarray, building_geometry: pd.Series, targe
     tile_x = raster_to_numpy.shape[2]
     tile_y = raster_to_numpy.shape[1]
 
+    scale_factor = 10**-Settings.SCALING_FACTOR
+
     with open("index", "w") as index:
         index.writelines(
             [
@@ -1905,7 +1907,7 @@ def write_index(raster_to_numpy: np.ndarray, building_geometry: pd.Series, targe
                 "  tile_y=" + str(tile_y) + "\n",
                 "  tile_z=132\n",
                 '  units="dimensionless"\n',
-                "  scale_factor=0.0001\n",
+                "  scale_factor=" + str(scale_factor) + "\n",
                 '  description="Urban_Parameters"\n',
             ]
         )
