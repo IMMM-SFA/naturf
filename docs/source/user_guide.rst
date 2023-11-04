@@ -107,6 +107,12 @@ Plan Area
 
 When calculating parameters, **naturf** creates a buffer around each target building called the plan (or dilated) area. Each building has its own plan area which identifies neighbors to that target building which are important for the calculation of parameters. For the parameter definitions below, *total plan area* refers to the area of that buffer around the target building, while *building plan area* refers to the sum of building footprints within the *total plan area*. *Total plan area* should always be a larger value than the *building plan area*.
 
+
+Frontal Length
+^^^^^^^^^^^^^^
+
+For the urban parameters calculated by **naturf**, frontal length refers to the wall length perpendicular to a given direction for all buildings within the target building's total plan area. 
+
 Frontal Area
 ^^^^^^^^^^^^
 
