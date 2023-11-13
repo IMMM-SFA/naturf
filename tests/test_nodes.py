@@ -987,6 +987,19 @@ class TestNodes(unittest.TestCase):
             expected, actual, f"plan_area_density test failed, expected {expected}, actual {actual}"
         )
 
+    def test_plan_area_fraction(self):
+        """Test that the function `plan_area_fraction()` returns the correct value."""
+
+        building_plan_area = pd.Series([0, 0.01, 70, 100])
+        total_plan_area = pd.Series([1, 1, 0.1, 0])
+        expected = pd.Series([0.0, 0.01, 700, math.inf])
+        actual = nodes.plan_area_fraction(building_plan_area, total_plan_area)
+        pd.testing.assert_series_equal(
+            expected,
+            actual,
+            f"plan_area_fraction test failed, expected {expected}, actual {actual}",
+        )
+
     def test_raupach_displacement_height(self):
         """Test that the function `raupach_displacement_height()` returns the correct value for each cardinal direction."""
 
