@@ -916,6 +916,24 @@ class TestNodes(unittest.TestCase):
             f"macdonald_displacement_height test failed, expected {expected}, actual {actual}",
         )
 
+    def test_mean_building_height(self):
+        """Test that the function `mean_building_height()` returns the correct values."""
+
+        buildings_intersecting_plan_area = gpd.GeoDataFrame(
+            [[0, 10], [0, 5], [1, 0], [2, 3.14], [2, 11358], [0, 15]]
+        )
+        buildings_intersecting_plan_area.columns = [
+            Settings.target_id_field,
+            Settings.neighbor_height_field,
+        ]
+        expected = pd.Series([10, 0.0, 5680.57])
+        actual = nodes.mean_building_height(buildings_intersecting_plan_area)
+        pd.testing.assert_series_equal(
+            expected,
+            actual,
+            f"mean_building_height test failed, expected {expected}, actual {actual}",
+        )
+
     def test_orientation_to_neighbor(self):
         """Test that the function `orientation_to_neighbor()` returns either `north_south` or `east_west` correctly."""
 
