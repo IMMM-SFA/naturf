@@ -1084,6 +1084,25 @@ class TestNodes(unittest.TestCase):
             f"sky_view_factor test failed, expected {expected}, actual {actual}",
         )
 
+    def test_standard_deviation_of_building_heights(self):
+        """Test that the function `standard_deviation_of_building_heights()` returns the correct value."""
+
+        buildings_intersecting_plan_area = gpd.GeoDataFrame(
+            [[0, 10], [0, 1], [1, 0.1], [1, 0], [2, 112358], [0, 100]]
+        )
+        buildings_intersecting_plan_area.columns = [
+            Settings.target_id_field,
+            Settings.neighbor_height_field,
+        ]
+        expected = pd.Series([54.74486277268398, 0.07071067811865477, 0])
+
+        actual = nodes.standard_deviation_of_building_heights(buildings_intersecting_plan_area)
+        pd.testing.assert_series_equal(
+            expected,
+            actual,
+            f"standard_deviation_of_building_heights test failed, expected {expected}, actual {actual}",
+        )
+
     def test_wall_angle_direction_length(self):
         """Test that the function `wall_angle_direction_length()` returns the correct angle, direction, and length."""
 
