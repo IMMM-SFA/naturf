@@ -1063,6 +1063,27 @@ class TestNodes(unittest.TestCase):
             f"raupach_roughness_length test failed, expected {expected}, actual {actual}",
         )
 
+    def test_rooftop_area_density(self):
+        """Test that the function `rooftop_area_density()` returns the correct value."""
+
+        plan_area_density = pd.DataFrame(
+            [[0.0, 1, 0.1, math.nan, math.inf, 100.0, 3.14, 112358, 0.0, 75, 1, 1, 1, 1, 1]]
+        )
+        expected = pd.DataFrame(
+            [[0, 1, 0.1, math.nan, math.inf, 100.0, 3.14, 112358, 0.0, 75, 1, 1, 1, 1, 1]]
+        )
+        columns_rooftop_area_density = [
+            f"{Settings.rooftop_area_density}_{i}"
+            for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
+        ]
+        expected.columns = columns_rooftop_area_density
+        actual = nodes.rooftop_area_density(plan_area_density)
+        pd.testing.assert_frame_equal(
+            expected,
+            actual,
+            f"rooftop_area_density test failed, expected {expected}, actual {actual}",
+        )
+
     def test_sky_view_factor(self):
         """Test that the function `sky_view_factor()` returns the correct value."""
 
