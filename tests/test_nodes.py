@@ -8,6 +8,7 @@ import geopandas as gpd
 import pandas as pd
 from shapely.geometry import Point, Polygon, JOIN_STYLE
 from typing import List
+import xarray as xr
 
 from naturf.driver import Model
 import naturf.nodes as nodes
@@ -20,6 +21,34 @@ class TestNodes(unittest.TestCase):
         "radius": 100,
         "cap_style": 1,
     }
+
+    def test_aggregate_rasters(self):
+        "Test that the function `aggregate_rasters()` returns the correct Xarray."
+        rasterize_parameters = xr.Dataset(
+            data_vars=dict(
+                var0=(["x", "y"], np.array([[0, 1], [2, 3]])),
+                var1=(["x", "y"], np.array([[10, 15.5], [314159, 75]])),
+                building_count=(["x", "y"], np.array([[0, 1], [10, 75]])),
+            ),
+            coords=dict(
+                lat=(["x"], [0, 1]),
+                lon=(["y"], [0, 1]),
+            ),
+        )
+
+        expected = xr.Dataset(
+            data_vars=dict(
+                var0=(["x", "y"], np.array([[0.0, 1.0], [0.2, 0.04]])),
+                var1=(["x", "y"], np.array([[math.inf, 15.5], [31415.9, 1.0]])),
+                building_count=(["x", "y"], np.array([[0.0, 1.0], [1.0, 1.0]])),
+            ),
+            coords=dict(
+                lat=(["x"], [0, 1]),
+                lon=(["y"], [0, 1]),
+            ),
+        )
+        actual = nodes.aggregate_rasters(rasterize_parameters)
+        xr.testing.assert_equal(expected, actual)
 
     def test_angle_in_degrees_to_neighbor(self):
         "Test that the function `angle_in_degrees_to_neighbor()` returns the correct angle."
@@ -1070,7 +1099,25 @@ class TestNodes(unittest.TestCase):
             [[0.0, 1, 0.1, math.nan, math.inf, 100.0, 3.14, 112358, 0.0, 75, 1, 1, 1, 1, 1]]
         )
         expected = pd.DataFrame(
-            [[0, 1, 0.1, math.nan, math.inf, 100.0, 3.14, 112358, 0.0, 75, 1, 1, 1, 1, 1]]
+            [
+                [
+                    0.0,
+                    1.0,
+                    0.1,
+                    math.nan,
+                    math.inf,
+                    100.0,
+                    3.14,
+                    112358.0,
+                    0.0,
+                    75.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                ]
+            ]
         )
         columns_rooftop_area_density = [
             f"{Settings.rooftop_area_density}_{i}"
