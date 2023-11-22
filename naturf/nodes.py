@@ -131,23 +131,6 @@ def angle_in_degrees_to_neighbor(
     )
 
 
-def apply_max_building_height(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
-    """Cap building height at MAX_BUILDING_HEIGHT, specified in config.py.
-
-    :param gdf:             GeoDataFrame of the input shapefile with renamed columns.
-    :type gdf:              gpd.GeoDataFrame
-
-    :return:                GeoDataFrame
-
-    """
-
-    gdf.loc[
-        gdf[Settings.height_field] > Settings.MAX_BUILDING_HEIGHT, Settings.height_field
-    ] = Settings.MAX_BUILDING_HEIGHT
-
-    return gdf
-
-
 def area_weighted_mean_of_building_heights(
     buildings_intersecting_plan_area: gpd.GeoDataFrame,
 ) -> pd.Series:
@@ -581,7 +564,7 @@ def distance_to_neighbor_by_centroid(
 
 
 @extract_columns(*[Settings.id_field, Settings.height_field, Settings.geometry_field])
-def filter_zero_height_df(standardize_column_names_df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+def filter_height_range(standardize_column_names_df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     """Filter out any zero height buildings and reindex the data frame.  Extract the building_id,
     building_height, and geometry fields to nodes.
 
@@ -591,6 +574,11 @@ def filter_zero_height_df(standardize_column_names_df: gpd.GeoDataFrame) -> gpd.
     :return:                                        GeoDataFrame
 
     """
+
+    standardize_column_names_df.loc[
+        standardize_column_names_df[Settings.height_field] > Settings.MAX_BUILDING_HEIGHT,
+        Settings.height_field,
+    ] = Settings.MAX_BUILDING_HEIGHT
 
     return standardize_column_names_df.loc[
         standardize_column_names_df[Settings.height_field] > 0
