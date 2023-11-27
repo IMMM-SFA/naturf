@@ -1,0 +1,3 @@
+# this is larger than black because we don't mind
+# comments being over 100 characters
+line-length = 150
