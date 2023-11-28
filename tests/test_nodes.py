@@ -887,6 +887,26 @@ class TestNodes(unittest.TestCase):
             f"height_to_width_ratio test failed, expected {expected}, actual {actual}",
         )
 
+    def test_lot_area(self):
+        """Test that the function `lot_area()` returns the correct values."""
+
+        buildings_intersecting_plan_area = gpd.GeoDataFrame(
+            [[0, 0], [0, 1], [1, 0], [0, 2], [2, 2], [1, 1]]
+        )
+        buildings_intersecting_plan_area.columns = [
+            Settings.target_id_field,
+            f"index_{Settings.neighbor}",
+        ]
+        building_surface_area = pd.Series([1, 10, 100])
+
+        expected = pd.Series([37.0, 5.5, 100.0])
+        actual = nodes.lot_area(buildings_intersecting_plan_area, building_surface_area)
+        pd.testing.assert_series_equal(
+            expected,
+            actual,
+            f"lot_area test failed, expected {expected}, actual {actual}",
+        )
+
     def test_macdonald_displacement_height(self):
         """Test that the function `macdonald_displacement_height()` returns the correct height."""
         alpha_coefficient = Settings.ALPHACOEFFICIENT
