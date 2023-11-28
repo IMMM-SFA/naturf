@@ -322,8 +322,8 @@ def buildings_intersecting_plan_area(
     target_crs: CRS,
     join_type: str = "left",
     join_predicate: str = "intersects",
-    join_lsuffix: str = "target",
-    join_rsuffix: str = "neighbor",
+    join_lsuffix: str = Settings.target,
+    join_rsuffix: str = Settings.neighbor,
 ) -> gpd.GeoDataFrame:
     """Conduct a spatial join to get the building areas that intersect the buffered target buildings.
 
@@ -411,7 +411,7 @@ def buildings_intersecting_plan_area(
 def building_plan_area(
     buildings_intersecting_plan_area: gpd.GeoDataFrame,
     join_predicate: str = "intersection",
-    join_rsuffix: str = "neighbor",
+    join_rsuffix: str = Settings.neighbor,
 ) -> pd.Series:
     """Calculate the building plan area from the GeoDataFrame of buildings intersecting the plan area.
 
@@ -846,7 +846,7 @@ def get_neighboring_buildings_df(
     join_type: str = "left",
     join_predicate: str = "intersects",
     join_lsuffix: str = "target",
-    join_rsuffix: str = "neighbor",
+    join_rsuffix: str = Settings.neighbor,
 ) -> gpd.GeoDataFrame:
     """Conduct a spatial join to get the building centroids that intersect the buffered target buildings.
 
@@ -1004,7 +1004,7 @@ def lot_area(
 
     df = buildings_intersecting_plan_area.join(
         building_surface_area.rename(Settings.building_surface_area),
-        on="index_neighbor",
+        on=f"index_{Settings.neighbor}",
         how="left",
     )
     df = df.groupby(Settings.target_id_field)[Settings.building_surface_area].mean()
