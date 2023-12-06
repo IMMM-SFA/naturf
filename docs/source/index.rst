@@ -95,6 +95,7 @@ naturf documentation
    :hidden:
 
    getting_started
+   quickstarter
    user_guide
    modules
    contributing
