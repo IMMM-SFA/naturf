@@ -23,7 +23,7 @@ Additional Developers
 Product Tester
 ^^^^^^^^^^^^^^
 
-* **Pouya Vahmani** 
+* **Pouya Vahmani**
 
 Code Formatting
 ^^^^^^^^^^^^^^^

@@ -46,7 +46,7 @@ First, split the IDs into fields representing their columns and rows:
 .. code-block::
 
   Columns = !GRID_ID!.split("-")[0]
-  Rows = !GRID_ID!.split("-")[1] 
+  Rows = !GRID_ID!.split("-")[1]
 
 Next, assign the y-indices (Note: WRF requires the indexing to begin from the bottom left corner of the dataset):
 
@@ -72,7 +72,7 @@ The x-indices require an additional step. First, calculate the ``Let_To_Num`` fi
           number = 26 + ord(letters[1]) - 64
       else:
           number = 52 + ord(letters[1]) - 64
-      return number 
+      return number
 
 Then, calculate the X indices much the same as the Y indices.
 
@@ -91,7 +91,7 @@ Now that the tessellation attribute table is an Excel file, all columns can be d
 Spatial join and split by attribute
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Back in the GIS software, perform a spatial join with the buildings shapefile being the target features and the tessellation shapefile being the join features. This will create a buildings shapefile where every building has a grid ID associated with it. The last step is to use the "Split by Attribute" tool to separate the buildings into shapefiles for each tile. These shapefiles will be the input to **naturf** along with the CSV with index names. 
+Back in the GIS software, perform a spatial join with the buildings shapefile being the target features and the tessellation shapefile being the join features. This will create a buildings shapefile where every building has a grid ID associated with it. The last step is to use the "Split by Attribute" tool to separate the buildings into shapefiles for each tile. These shapefiles will be the input to **naturf** along with the CSV with index names.
 
 
 Fundamental equations and concepts
@@ -111,12 +111,12 @@ When calculating parameters, **naturf** creates a buffer around each target buil
 Frontal Length
 ^^^^^^^^^^^^^^
 
-For the urban parameters calculated by **naturf**, frontal length refers to the wall length perpendicular to a given direction for all buildings within the target building's total plan area. 
+For the urban parameters calculated by **naturf**, frontal length refers to the wall length perpendicular to a given direction for all buildings within the target building's total plan area.
 
 Frontal Area
 ^^^^^^^^^^^^
 
-For the urban parameters calculated by **naturf**, frontal area refers to the wall area perpendicular to a given direction for all buildings within the target building's total plan area. 
+For the urban parameters calculated by **naturf**, frontal area refers to the wall area perpendicular to a given direction for all buildings within the target building's total plan area.
 
 Assumptions
 ^^^^^^^^^^^
@@ -266,7 +266,7 @@ Macdonald et al. Displacement Height (117)
 
 $MDH = zh \\cdot (1 + \\frac{1}{A^\\lambda} \\cdot (\\lambda - 1))$
 
-where, *MDH* is the Macdonald displacement height in m; *zh* is the building height in m; *A* is a constant = 3.59; $\\lambda$ is the plan area density. 
+where, *MDH* is the Macdonald displacement height in m; *zh* is the building height in m; *A* is a constant = 3.59; $\\lambda$ is the plan area density.
 
 Vertical Distribution of Building Heights (118-132)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
