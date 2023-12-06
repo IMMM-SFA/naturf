@@ -1,46 +1,53 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>User guide &mdash; naturf 0.1.0 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" type="text/css" />
-      <link rel="stylesheet" href="_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" type="text/css" />
-      <link rel="stylesheet" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/naturf.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/getting_started.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
+      <link rel="stylesheet" type="text/css" href="_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css?v=45cf7dbc" />
+      <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
+      <link rel="stylesheet" type="text/css" href="_static/css/naturf.css?v=f9b8f5c0" />
+      <link rel="stylesheet" type="text/css" href="_static/css/getting_started.css?v=be86cd7f" />
+
+
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
+
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=01f34227"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="naturf" href="modules.html" />
-    <link rel="prev" title="Getting started" href="getting_started.html" /> 
+    <link rel="prev" title="Getting started" href="getting_started.html" />
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> naturf
+
+
+
+          <a href="index.html" class="icon icon-home">
+            naturf
           </a>
               <div class="version">
                 0.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -50,55 +57,54 @@
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">User guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#generalization">Generalization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#setting-up-a-cerf-run">Setting up a <strong>cerf</strong> run</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#configuration-file-setup">Configuration file setup</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#settings"><code class="docutils literal notranslate"><span class="pre">settings</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#technology"><code class="docutils literal notranslate"><span class="pre">technology</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#expansion-plan"><code class="docutils literal notranslate"><span class="pre">expansion_plan</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lmp-zones"><code class="docutils literal notranslate"><span class="pre">lmp_zones</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#infrastructure"><code class="docutils literal notranslate"><span class="pre">infrastructure</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#preparing-suitability-rasters">Preparing suitability rasters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#locational-marginal-price">Locational Marginal Price</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#tutorials">Tutorials</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#cerf-quickstarter"><strong>cerf</strong> quickstarter</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#load-packages">Load packages</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#install-package-data">Install package data</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#conduct-a-run-with-cerf">Conduct a run with CERF</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#run-cerf-to-site-power-plants-in-an-expansion-plan-for-a-single-year-for-the-conus">Run <code class="docutils literal notranslate"><span class="pre">cerf</span></code> to site power plants in an expansion plan for a single year for the CONUS</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#run-cerf-to-site-power-plants-in-an-expansion-plan-for-multiple-years-for-the-conus">Run <code class="docutils literal notranslate"><span class="pre">cerf</span></code> to site power plants in an expansion plan for multiple years for the CONUS</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#running-the-quickstarter-locally">Running the quickstarter locally</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-a-naturf-run">Setting up a <strong>naturf</strong> run</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#splitting-the-building-shapefile-into-tiles">Splitting the building shapefile into tiles</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#generate-a-tessellation">Generate a tessellation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#assign-index-numbers">Assign index numbers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#create-csv-file">Create CSV file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#spatial-join-and-split-by-attribute">Spatial join and split by attribute</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#fundamental-equations-and-concepts">Fundamental equations and concepts</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#net-operating-value">Net Operating Value</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#net-operating-value-nov">Net operating value (NOV)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#generation-g">Generation (G)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#levelization-factor-lfi">Levelization factor (LF<sub>i</sub>)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#annuity-factor-af">Annuity factor (AF)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#locational-marginal-price-lmp">Locational marginal price (LMP)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#operating-cost-oc">Operating cost (OC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#concepts-definitions">Concepts/Definitions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plan-area">Plan Area</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#frontal-length">Frontal Length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#frontal-area">Frontal Area</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#assumptions">Assumptions</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#interconnection-cost">Interconnection Cost</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#net-locational-cost">Net Locational Cost</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#competition-algorithm">Competition algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#frontal-area-density-1-60">Frontal Area Density (1-60)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plan-area-density-61-75">Plan Area Density (61-75)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rooftop-area-density-76-90">Rooftop Area Density (76-90)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plan-area-fraction-91">Plan Area Fraction (91)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mean-building-height-92">Mean Building Height (92)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#standard-deviation-of-building-heights-93">Standard Deviation of Building Heights (93)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#area-weighted-mean-of-building-heights-94">Area Weighted Mean of Building Heights (94)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#building-surface-area-to-plan-area-ratio-95">Building Surface Area to Plan Area Ratio (95)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#frontal-area-index-96-99">Frontal Area Index (96-99)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#complete-aspect-ratio-100">Complete Aspect Ratio (100)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#height-to-width-ratio-101">Height-to-Width Ratio (101)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sky-view-factor-102">Sky-View Factor (102)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#grimmond-oke-roughness-length-103">Grimmond &amp; Oke Roughness Length (103)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#grimmond-oke-displacement-height-104">Grimmond &amp; Oke Displacement Height (104)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#raupach-roughness-length-105-107-109-111">Raupach Roughness Length (105, 107, 109, 111)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#raupach-displacment-height-106-108-110-112">Raupach Displacment Height (106, 108, 110, 112)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#macdonald-et-al-roughness-length-113-116">Macdonald et al. Roughness Length (113-116)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#macdonald-et-al-displacement-height-117">Macdonald et al. Displacement Height (117)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vertical-distribution-of-building-heights-118-132">Vertical Distribution of Building Heights (118-132)</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#key-outputs">Key outputs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">naturf</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to <strong>cerf</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to <strong>naturf</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release notes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="publications.html">Publications</a></li>
-<li class="toctree-l1"><a class="reference internal" href="how_to_cite.html">How to cite <strong>cerf</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_cite.html">How to cite <strong>naturf</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors and Contributors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="footer.html">Acknowledgement</a></li>
 </ul>
@@ -116,8 +122,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>User guide</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">User guide</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/user_guide.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -126,1045 +132,228 @@
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
 
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="user-guide">
-<h1>User guide<a class="headerlink" href="#user-guide" title="Permalink to this headline"></a></h1>
+  <section id="user-guide">
+<h1>User guide<a class="headerlink" href="#user-guide" title="Link to this heading"></a></h1>
 <section id="generalization">
-<h2>Generalization<a class="headerlink" href="#generalization" title="Permalink to this headline"></a></h2>
-<p>Though <strong>cerf</strong> is demonstrated for the conterminous United States (CONUS), the package could easily be used in research ranging from regional to global analysis.</p>
-<p><strong>cerf</strong> requires the following inputs to be able to operate:</p>
+<h2>Generalization<a class="headerlink" href="#generalization" title="Link to this heading"></a></h2>
+<p>Though <strong>naturf</strong> is demonstrated for the conterminous United States (CONUS), the package could easily be used in research ranging from regional to global analysis.</p>
+<p><strong>naturf</strong> requires the following inputs to be able to operate:</p>
 <ul class="simple">
-<li><p>A shapefile of substations as points.</p></li>
-<li><p>A shapefile of gas pipelines as polylines if siting gas technologies.</p></li>
-<li><p>A raster containing region IDs.  Each grid cell has the value of its parent region.  Currently, this is demonstrated using US states, though this could be generalized to any region/country/locale identifier matching what the electricity expansion plan provides.</p></li>
-<li><p>A raster containing locational marginal pricing (LMP) zone IDs.  Each grid cell has the ID of its LMP zones.  These zones are representative of the nodal structure of the underlying model or software that produces the LMPs.  Production cost models to generate this value are not US-specific and this could be generated from any number of open-source and/or commercial products.</p></li>
-<li><p>A file of LMPs per zone (corresponding to the aforementioned raster) for each 8760 hour.  Again, the source model or dataset that these are generated from does not have to be US-specific.</p></li>
-<li><p>An electricity capacity expansion plan and its accompanying technology-specific information (e.g., variable O&amp;M, fuel price, etc.).  For the CONUS, we use the 50 US-state version of GCAM.  However, GCAM is a global model and can produce this data for each of its regions.</p></li>
-<li><p>Both the <cite>region-abbrev_to_region-name.yml</cite> and the <cite>region-name_to_region-id.yml</cite> files can be replaced with regional information.</p></li>
-<li><p>Other variable information which is able to be modified per run, are the assumed interconnection costs per km to a substation KV class and the cost per km to connect to a gas pipeline if applicable.</p></li>
-<li><p>Lastly, are the suitability rasters which can be composed of any number of locally-relevant exclusion criteria (e.g., protected area, critical habitat, etc.) per technology being sited in the expansion plan.</p></li>
+<li><p>A shapefile of buildings as polygons with height data.</p></li>
+<li><p>A shapefile of square polygons tessellated over the study area.</p></li>
+<li><p>A CSV file matching each tile name to its index number.</p></li>
 </ul>
-<p>Let us know if you are using <strong>cerf</strong> in your research in our <a class="reference external" href="https://github.com/IMMM-SFA/cerf/discussions/61">discussion thread</a>!</p>
 </section>
-<section id="setting-up-a-cerf-run">
-<h2>Setting up a <strong>cerf</strong> run<a class="headerlink" href="#setting-up-a-cerf-run" title="Permalink to this headline"></a></h2>
-<p>The following with indroduce you to the input data required by <strong>cerf</strong> and how to set up a configuration file to run <strong>cerf</strong>.</p>
-<section id="configuration-file-setup">
-<h3>Configuration file setup<a class="headerlink" href="#configuration-file-setup" title="Permalink to this headline"></a></h3>
-<p>The <strong>cerf</strong> package utilizes a YAML configuration file customized by the user with project level and technology-specific settings, an electricity technology capacity expansion plan, and LMP zone data for each year intended to model. <strong>cerf</strong> comes equipped with prebuilt configuration files for years 2010 through 2050 to provide an illustrative example. Each example configuration file can be viewed using the following:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cerf</span>
-
-<span class="n">sample_config</span> <span class="o">=</span> <span class="n">cerf</span><span class="o">.</span><span class="n">load_sample_config</span><span class="p">(</span><span class="n">yr</span><span class="o">=</span><span class="mi">2010</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>The following are the required key, values if your wish to construct your own configuration files:</p>
-<section id="settings">
-<h4><code class="docutils literal notranslate"><span class="pre">settings</span></code><a class="headerlink" href="#settings" title="Permalink to this headline"></a></h4>
-<p>These are required values for project-level settings.</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 22%" />
-<col style="width: 62%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Name</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Unit</p></th>
-<th class="head"><p>Type</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>run_year</p></td>
-<td><p>Target year to run in YYYY format</p></td>
-<td><p>year</p></td>
-<td><p>int</p></td>
-</tr>
-<tr class="row-odd"><td><p>output_directory</p></td>
-<td><p>Directory to write the output data to</p></td>
-<td><p>NA</p></td>
-<td><p>str</p></td>
-</tr>
-<tr class="row-even"><td><p>randomize</p></td>
-<td><div class="line-block">
-<div class="line">Randomize selection of a site for a technology when</div>
-<div class="line">NLC values are equal. The first pass is always</div>
-<div class="line">random but setting <cite>randomize</cite> to False and passing</div>
-<div class="line">a seed value will ensure that runs are reproducible</div>
-</div>
-</td>
-<td><p>NA</p></td>
-<td><p>str</p></td>
-</tr>
-<tr class="row-odd"><td><p>seed_value</p></td>
-<td><div class="line-block">
-<div class="line">If <code class="docutils literal notranslate"><span class="pre">randomize</span></code> is False; set a seed value for</div>
-<div class="line">reproducibility; the default is 0</div>
-</div>
-</td>
-<td><p>NA</p></td>
-<td><p>int</p></td>
-</tr>
-</tbody>
-</table>
-<p>The following is an example implementation in the YAML configuration file:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">settings</span><span class="p">:</span><span class="w"></span>
-
-<span class="w">    </span><span class="nt">run_year</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2010</span><span class="w"></span>
-<span class="w">    </span><span class="nt">output_directory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;your output directory&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nt">randomize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
-<span class="w">    </span><span class="nt">seed_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
-</pre></div>
-</div>
+<section id="setting-up-a-naturf-run">
+<h2>Setting up a <strong>naturf</strong> run<a class="headerlink" href="#setting-up-a-naturf-run" title="Link to this heading"></a></h2>
+<p>The following with indroduce you to the input data required by <strong>naturf</strong> and how to set up a configuration file to run <strong>naturf</strong>.</p>
+<section id="splitting-the-building-shapefile-into-tiles">
+<h3>Splitting the building shapefile into tiles<a class="headerlink" href="#splitting-the-building-shapefile-into-tiles" title="Link to this heading"></a></h3>
+<p><strong>naturf</strong> works optimally with inputs of building shapefiles as regular square tiles that can be processed in parallel. Experiments with Los Angeles found that tiles of 3.2 km by 3.2 km were the most computationally efficient at 100 meter output resolution.</p>
+<section id="generate-a-tessellation">
+<h4>Generate a tessellation<a class="headerlink" href="#generate-a-tessellation" title="Link to this heading"></a></h4>
+<p>The first step to splitting the input building shapefile into tiles is to load the shapefile into any GIS software (ArcPro, ArcMap, QGIS, etc.) and run the <a class="reference external" href="https://pro.arcgis.com/en/pro-app/2.8/tool-reference/data-management/generatetesellation.htm">Generate Tessellation</a> tool for ArcPro/ArcMap; <a class="reference external" href="https://docs.qgis.org/2.6/en/docs/user_manual/processing_algs/qgis/vector_creation_tools/creategrid.html">Create Grid</a> for QGIS) with the desired tile size. After the tessellation is created, note the center latitude and longitude in decimal degrees as well as the coordinates of the bottom left corner of the tessellation. All of those coordinates will be needed to set the projection of the output data and to tell WRF where to start placing the data.</p>
 </section>
-<section id="technology">
-<h4><code class="docutils literal notranslate"><span class="pre">technology</span></code><a class="headerlink" href="#technology" title="Permalink to this headline"></a></h4>
-<p>These are technology-specific settings.</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 34%" />
-<col style="width: 46%" />
-<col style="width: 10%" />
-<col style="width: 10%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Name</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Unit</p></th>
-<th class="head"><p>Type</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>&lt;tech id number&gt;</p></td>
-<td><div class="line-block">
-<div class="line">This is an integer ID key given to the</div>
-<div class="line">technology for reference purposes.  This</div>
-<div class="line">ID should match the corresponding</div>
-<div class="line">technology in the electricity technology</div>
-<div class="line">expansion plan.</div>
-</div>
-</td>
-<td><p>NA</p></td>
-<td><p>int</p></td>
-</tr>
-<tr class="row-odd"><td><p>tech_name</p></td>
-<td><p>Name of the technology</p></td>
-<td><p>NA</p></td>
-<td><p>str</p></td>
-</tr>
-<tr class="row-even"><td><p>lifetime_yrs</p></td>
-<td><p>Asset lifetime</p></td>
-<td><p>n_years</p></td>
-<td><p>int</p></td>
-</tr>
-<tr class="row-odd"><td><p>capacity_factor_fraction</p></td>
-<td><div class="line-block">
-<div class="line">Defined as average annual power generated</div>
-<div class="line">divided by the potential output if the</div>
-<div class="line">plant operated at its rated capacity for a</div>
-<div class="line">year</div>
-</div>
-</td>
-<td><p>fraction</p></td>
-<td><p>float</p></td>
-</tr>
-<tr class="row-even"><td><p>variable_om_esc_rate_fraction</p></td>
-<td><p>Escalation rate of variable cost</p></td>
-<td><p>fraction</p></td>
-<td><p>float</p></td>
-</tr>
-<tr class="row-odd"><td><p>fuel_price_esc_rate_fraction</p></td>
-<td><p>Escalation rate of fuel</p></td>
-<td><p>fraction</p></td>
-<td><p>float</p></td>
-</tr>
-<tr class="row-even"><td><p>unit_size_mw</p></td>
-<td><p>The size of the expected power plant</p></td>
-<td><p>MW</p></td>
-<td><p>float</p></td>
-</tr>
-<tr class="row-odd"><td><p>variable_om_usd_per_mwh</p></td>
-<td><div class="line-block">
-<div class="line">Variable operation and maintenance costs</div>
-<div class="line">of yearly capacity use</div>
-</div>
-</td>
-<td><p>$/MWh</p></td>
-<td><p>float</p></td>
-</tr>
-<tr class="row-even"><td><p>heat_rate_btu_per_kWh</p></td>
-<td><div class="line-block">
-<div class="line">Amount of energy used by a power plant to</div>
-<div class="line">generate one kilowatt-hour of electricity</div>
-</div>
-</td>
-<td><p>Btu/kWh</p></td>
-<td><p>float</p></td>
-</tr>
-<tr class="row-odd"><td><p>fuel_price_usd_per_mmbtu</p></td>
-<td><p>Cost of fuel per unit</p></td>
-<td><p>$/MMbtu</p></td>
-<td><p>float</p></td>
-</tr>
-<tr class="row-even"><td><p>carbon_capture_rate_fraction</p></td>
-<td><p>Rate of carbon capture</p></td>
-<td><p>fraction</p></td>
-<td><p>float</p></td>
-</tr>
-<tr class="row-odd"><td><p>fuel_co2_content_tons_per_btu</p></td>
-<td><div class="line-block">
-<div class="line">CO2 content of the fuel and the heat rate</div>
-<div class="line">of the technology</div>
-</div>
-</td>
-<td><p>tons/Btu</p></td>
-<td><p>float</p></td>
-</tr>
-<tr class="row-even"><td><p>discount_rate</p></td>
-<td><p>The time value of money in real terms</p></td>
-<td><p>fraction</p></td>
-<td><p>float</p></td>
-</tr>
-<tr class="row-odd"><td><p>carbon_tax_esc_rate_fraction</p></td>
-<td><p>Escalation rate of carbon</p></td>
-<td><p>fraction</p></td>
-<td><p>float</p></td>
-</tr>
-<tr class="row-even"><td><p>carbon_tax_usd_per_ton</p></td>
-<td><div class="line-block">
-<div class="line">The fee imposed on the burning of</div>
-<div class="line">carbon-based fuels</div>
-</div>
-</td>
-<td><p>$/ton</p></td>
-<td><p>float</p></td>
-</tr>
-<tr class="row-odd"><td><p>buffer_in_km</p></td>
-<td><div class="line-block">
-<div class="line">Buffer around the site to apply in</div>
-<div class="line">kilometers which becomes unsuitable for</div>
-<div class="line">other sites after siting</div>
-</div>
-</td>
-<td><p>n_km</p></td>
-<td><p>int</p></td>
-</tr>
-<tr class="row-even"><td><p>require_pipelines</p></td>
-<td><div class="line-block">
-<div class="line">If the technology is gas related pipelines</div>
-<div class="line">will be used when calculating the</div>
-<div class="line">interconnection cost</div>
-</div>
-</td>
-<td><p>NA</p></td>
-<td><p>bool</p></td>
-</tr>
-<tr class="row-odd"><td><p>suitability_raster_file</p></td>
-<td><div class="line-block">
-<div class="line">Full path with file name and extension to</div>
-<div class="line">the accompanying suitability raster file</div>
-</div>
-</td>
-<td><p>NA</p></td>
-<td><p>str</p></td>
-</tr>
-</tbody>
-</table>
-<p>The following is an example implementation in the YAML configuration file:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">technology</span><span class="p">:</span><span class="w"></span>
-
-<span class="w">    </span><span class="nt">9</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">tech_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">biomass</span><span class="w"></span>
-<span class="w">        </span><span class="nt">lifetime_yrs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60</span><span class="w"></span>
-<span class="w">        </span><span class="nt">capacity_factor_fraction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.6090000000000005</span><span class="w"></span>
-<span class="w">        </span><span class="nt">variable_om_esc_rate_fraction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-0.00398993418629034</span><span class="w"></span>
-<span class="w">        </span><span class="nt">fuel_price_esc_rate_fraction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w"></span>
-<span class="w">        </span><span class="nt">unit_size_mw</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span><span class="w"></span>
-<span class="w">        </span><span class="nt">variable_om</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">11.68495803744351</span><span class="w"></span>
-<span class="w">        </span><span class="nt">heat_rate_btu_per_kWh</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15117.64999999997</span><span class="w"></span>
-<span class="w">        </span><span class="nt">fuel_price_usd_per_mmbtu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w"></span>
-<span class="w">        </span><span class="nt">carbon_capture_rate_fraction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w"></span>
-<span class="w">        </span><span class="nt">fuel_co2_content_tons_per_btu</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3035999999999996</span><span class="w"></span>
-<span class="w">        </span><span class="nt">discount_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span><span class="w"></span>
-<span class="w">        </span><span class="nt">carbon_tax_esc_rate_fraction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w"></span>
-<span class="w">        </span><span class="nt">carbon_tax_usd_per_ton</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w"></span>
-<span class="w">        </span><span class="nt">buffer_in_km</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w"></span>
-<span class="w">        </span><span class="nt">require_pipelines</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
-<span class="w">        </span><span class="nt">suitability_raster_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;path to file&gt;</span><span class="w"></span>
+<section id="assign-index-numbers">
+<h4>Assign index numbers<a class="headerlink" href="#assign-index-numbers" title="Link to this heading"></a></h4>
+<p>After the tessellation is created, the next step is to use the “Calculate Field” tool to assign index numbers to each tile. By default, the “Generate Tessellation” tool assigns each tile an ID associated with its location, with the letters representing the columns and x-positions and the numbers representing the rows and the y-position. The letters go from A to Z, AA to ZZ, etc. from left to right and the numbers increase as they go top to bottom. The following fields will need to be created and calculated: Columns, Rows, Let_To_Num, First_Index_X, Second_Index_X, First_Index_Y, and Second_Index_Y.</p>
+<p>First, split the IDs into fields representing their columns and rows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Columns = !GRID_ID!.split(&quot;-&quot;)[0]
+Rows = !GRID_ID!.split(&quot;-&quot;)[1]
 </pre></div>
 </div>
-</section>
-<section id="expansion-plan">
-<h4><code class="docutils literal notranslate"><span class="pre">expansion_plan</span></code><a class="headerlink" href="#expansion-plan" title="Permalink to this headline"></a></h4>
-<p>These are technology-specific settings.</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 27%" />
-<col style="width: 51%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Name</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Unit</p></th>
-<th class="head"><p>Type</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>&lt;region name&gt;</p></td>
-<td><div class="line-block">
-<div class="line">Name key of region in all lower case with</div>
-<div class="line">underscore separation</div>
-</div>
-</td>
-<td><p>NA</p></td>
-<td><p>str</p></td>
-</tr>
-<tr class="row-odd"><td><p>&lt;tech id key&gt;</p></td>
-<td><div class="line-block">
-<div class="line">Technology ID key matching what is in the</div>
-<div class="line">technology section (e.g. 9)</div>
-</div>
-</td>
-<td><p>NA</p></td>
-<td><p>int</p></td>
-</tr>
-<tr class="row-even"><td><p>tech_name</p></td>
-<td><div class="line-block">
-<div class="line">Name of the technology matching the name</div>
-<div class="line">in the technology section</div>
-</div>
-</td>
-<td><p>NA</p></td>
-<td><p>str</p></td>
-</tr>
-<tr class="row-odd"><td><p>n_sites</p></td>
-<td><p>Number of sites desired</p></td>
-<td><p>n_sites</p></td>
-<td><p>int</p></td>
-</tr>
-</tbody>
-</table>
-<p>The following is an example implementation in the YAML configuration file:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">expansion_plan</span><span class="p">:</span><span class="w"></span>
-
-<span class="w">    </span><span class="nt">arizona</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">9</span><span class="p">:</span><span class="w"></span>
-<span class="w">            </span><span class="nt">tech_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">biomass</span><span class="w"></span>
-<span class="w">            </span><span class="nt">n_sites</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w"></span>
+<p>Next, assign the y-indices (Note: WRF requires the indexing to begin from the bottom left corner of the dataset):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Second_Index_Y = 32 * ((Number of rows) - !Rows! + 1)
+First_Index_Y = !Second_Index_Y! - 31
 </pre></div>
 </div>
-</section>
-<section id="lmp-zones">
-<h4><code class="docutils literal notranslate"><span class="pre">lmp_zones</span></code><a class="headerlink" href="#lmp-zones" title="Permalink to this headline"></a></h4>
-<p>These are the lmp zones data representing the linkage between each grid and technology and their locational marginal price (LMP).</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 34%" />
-<col style="width: 45%" />
-<col style="width: 10%" />
-<col style="width: 10%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Name</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Unit</p></th>
-<th class="head"><p>Type</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>lmp_zone_raster_file</p></td>
-<td><div class="line-block">
-<div class="line">Full path with file name and extension to</div>
-<div class="line">the lmp zoness raster file</div>
-</div>
-</td>
-<td><p>NA</p></td>
-<td><p>str</p></td>
-</tr>
-<tr class="row-odd"><td><p>lmp_zone_raster_nodata_value</p></td>
-<td><p>No data value in the lmp zones raster</p></td>
-<td><p>NA</p></td>
-<td><p>float</p></td>
-</tr>
-<tr class="row-even"><td><p>lmp_hourly_data_file</p></td>
-<td><div class="line-block">
-<div class="line">LMP CSV file containing 8760 LMP per zone</div>
-<div class="line">where columns are each zone with a numeric</div>
-<div class="line">zone ID header that corresponds with the</div>
-<div class="line">zones represented in the</div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">lmp_zone_raster_file</span></code> found in the</div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">lmp_zones</span></code> section and an</div>
-<div class="line">additional hour column named <code class="docutils literal notranslate"><span class="pre">hour</span></code></div>
-<div class="line">holding the hour of each record</div>
-</div>
-</td>
-<td><p>$/MWh</p></td>
-<td><p>str</p></td>
-</tr>
-</tbody>
-</table>
-<p>The following is an example implementation in the YAML configuration file:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">lmp_zones</span><span class="p">:</span><span class="w"></span>
-
-<span class="w">    </span><span class="nt">lmp_zone_raster_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;path to zone raster&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nt">lmp_zone_raster_nodata_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">255</span><span class="w"></span>
-<span class="w">    </span><span class="nt">lmp_hourly_data_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;path to data file&gt;</span><span class="w"></span>
+<p>The x-indices require an additional step. First, calculate the <code class="docutils literal notranslate"><span class="pre">Let_To_Num</span></code> field by turning the letters in the Columns field into numbers using the code below, which can be adjusted to accomodated as many columns as needed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Expression:
+LetToNum(!Columns!)
 </pre></div>
 </div>
-<p>The <cite>cerf</cite> package comes equipped with a sample lmp zoness raster file and a sample hourly (8760) locational marginal price file for illustrative purposes only.</p>
-<p>You can take a look at the lmp zoness raster file by running:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cerf</span>
-
-<span class="n">lmp_zone_file</span> <span class="o">=</span> <span class="n">cerf</span><span class="o">.</span><span class="n">sample_lmp_zones_raster_file</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>You can also view the sample hourly locational marginal price file as a Pandas DataFrame using:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cerf</span>
-
-<span class="n">df</span> <span class="o">=</span> <span class="n">cerf</span><span class="o">.</span><span class="n">get_sample_lmp_data</span><span class="p">()</span>
-</pre></div>
-</div>
-</section>
-<section id="infrastructure">
-<h4><code class="docutils literal notranslate"><span class="pre">infrastructure</span></code><a class="headerlink" href="#infrastructure" title="Permalink to this headline"></a></h4>
-<p>These are the electricity transmission and gas pipeline infrastructure data.</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 30%" />
-<col style="width: 48%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Name</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Unit</p></th>
-<th class="head"><p>Type</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>substation_file</p></td>
-<td><div class="line-block">
-<div class="line">Full path with file name and extension to</div>
-<div class="line">he input substations shapefile. If</div>
-<div class="line"><code class="docutils literal notranslate"><span class="pre">null</span></code> <strong>cerf</strong> will use the default</div>
-<div class="line">data stored in the package.</div>
-</div>
-</td>
-<td><p>NA</p></td>
-<td><p>str</p></td>
-</tr>
-<tr class="row-odd"><td><p>pipeline_file</p></td>
-<td><div class="line-block">
-<div class="line">Full path with file name and extension to</div>
-<div class="line">he input pipelines shapefile. If <code class="docutils literal notranslate"><span class="pre">null</span></code></div>
-<div class="line">CERF will use the default data stored in</div>
-<div class="line">the package.</div>
-</div>
-</td>
-<td><p>NA</p></td>
-<td><p>str</p></td>
-</tr>
-<tr class="row-even"><td><p>transmission_costs_file</p></td>
-<td><div class="line-block">
-<div class="line">A YAML file containing the costs of</div>
-<div class="line">connection per km to a substation having</div>
-<div class="line">a certain minimum voltage range. Default</div>
-<div class="line">is to load from the defualt</div>
-<div class="line">‘costs_per_kv_substation.yml’ file</div>
-<div class="line">by specifying <code class="docutils literal notranslate"><span class="pre">null</span></code></div>
-</div>
-</td>
-<td><p>NA</p></td>
-<td><p>str</p></td>
-</tr>
-<tr class="row-odd"><td><p>pipeline_costs_file</p></td>
-<td><div class="line-block">
-<div class="line">A YAML file containing the costs of</div>
-<div class="line">connection per km to a gas pipeline.</div>
-<div class="line">Default is to load from the default</div>
-<div class="line">‘costs_gas_pipeline.yml’ file</div>
-<div class="line">by specifying <code class="docutils literal notranslate"><span class="pre">null</span></code></div>
-</div>
-</td>
-<td><p>NA</p></td>
-<td><p>str</p></td>
-</tr>
-<tr class="row-even"><td><p>output_rasterized_file</p></td>
-<td><p>Write distance raster</p></td>
-<td><p>NA</p></td>
-<td><p>bool</p></td>
-</tr>
-<tr class="row-odd"><td><p>output_dist_file</p></td>
-<td><p>Write distance raster</p></td>
-<td><p>NA</p></td>
-<td><p>bool</p></td>
-</tr>
-<tr class="row-even"><td><p>output_alloc_file</p></td>
-<td><p>Write allocation file</p></td>
-<td><p>NA</p></td>
-<td><p>bool</p></td>
-</tr>
-<tr class="row-odd"><td><p>output_cost_file</p></td>
-<td><p>Write cost file</p></td>
-<td><p>NA</p></td>
-<td><p>bool</p></td>
-</tr>
-<tr class="row-even"><td><p>output_dir</p></td>
-<td><p>If writing files, specify an out directory</p></td>
-<td><p>NA</p></td>
-<td><p>bool</p></td>
-</tr>
-<tr class="row-odd"><td><p>interconnection_cost_file</p></td>
-<td><div class="line-block">
-<div class="line">Full path with the file name and extension</div>
-<div class="line">to a preprocessed interconnection cost</div>
-<div class="line">NPY file that has been previously written.</div>
-<div class="line">If <code class="docutils literal notranslate"><span class="pre">null</span></code>, interconnection costs will be</div>
-<div class="line">calculated.</div>
-</div>
-</td>
-<td><p>NA</p></td>
-<td><p>str</p></td>
-</tr>
-</tbody>
-</table>
-<p>The following is an example implementation in the YAML configuration file:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">infrastructure</span><span class="p">:</span><span class="w"></span>
-
-<span class="w">    </span><span class="nt">substation_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;path to substation shapefile&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nt">transmission_costs_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;path to the yaml file&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nt">pipeline_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;path to the pipeline file&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="nt">output_rasterized_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="w">    </span><span class="nt">output_dist_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="w">    </span><span class="nt">output_alloc_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="w">    </span><span class="nt">output_cost_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-</pre></div>
-</div>
-<p>You can view the built-in costs per kV to connect to a substation using:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cerf</span>
-
-<span class="n">costs_dict</span> <span class="o">=</span> <span class="n">cerf</span><span class="o">.</span><span class="n">costs_per_kv_substation</span><span class="p">()</span>
-</pre></div>
-</div>
-</section>
-</section>
-<section id="preparing-suitability-rasters">
-<h3>Preparing suitability rasters<a class="headerlink" href="#preparing-suitability-rasters" title="Permalink to this headline"></a></h3>
-<p>The <strong>cerf</strong> package comes equipped with sample suitability data but you can build your on as well.</p>
-<p>You can see which suitability rasters are available in the <cite>cerf</cite> package by running the following after installing the package data:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cerf</span>
-
-<span class="n">cerf</span><span class="o">.</span><span class="n">list_available_suitability_files</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>The sample rasters for spatial suitability at a resolution of 1km over the CONUS use the following format.  Suitability rasters can be prepared using any GIS.</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 27%" />
-<col style="width: 73%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Attribute</p></th>
-<th class="head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><div class="line-block">
-<div class="line">Number of columns</div>
-<div class="line">Number of rows</div>
-</div>
-</td>
-<td><p>4693, 2999</p></td>
-</tr>
-<tr class="row-odd"><td><p>Coordinate system</p></td>
-<td><div class="line-block">
-<div class="line">PROJCS[“USA_Contiguous_Albers_Equal_Area_Conic”,</div>
-<div class="line">GEOGCS[“GCS_North_American_1983”,</div>
-<div class="line">DATUM[“North_American_Datum_1983”,</div>
-<div class="line">SPHEROID[“GRS_1980”,6378137.0,298.257222101]],</div>
-<div class="line">PRIMEM[“Greenwich”,0.0],</div>
-<div class="line">UNIT[“Degree”,0.0174532925199433]],</div>
-<div class="line">PROJECTION[“Albers_Conic_Equal_Area”],</div>
-<div class="line">PARAMETER[“false_easting”,0.0],</div>
-<div class="line">PARAMETER[“false_northing”,0.0],</div>
-<div class="line">PARAMETER[“longitude_of_center”,-96.0],</div>
-<div class="line">PARAMETER[“standard_parallel_1”,29.5],</div>
-<div class="line">PARAMETER[“standard_parallel_2”,45.5],</div>
-<div class="line">PARAMETER[“latitude_of_center”,37.5],</div>
-<div class="line">UNIT[“Meters”,1.0]]</div>
-</div>
-</td>
-</tr>
-<tr class="row-even"><td><p>Origin</p></td>
-<td><p>(-2405552.835500000044703, 1609934.799499999964610)</p></td>
-</tr>
-<tr class="row-odd"><td><p>Pixel Size</p></td>
-<td><p>(1000, -1000)</p></td>
-</tr>
-<tr class="row-even"><td><p>Upper Left</p></td>
-<td><p>(-2405552.836, 1609934.799)</p></td>
-</tr>
-<tr class="row-odd"><td><p>Lower Left</p></td>
-<td><p>(-2405552.836, -1389065.201)</p></td>
-</tr>
-<tr class="row-even"><td><p>Upper Right</p></td>
-<td><p>(2287447.164, 1609934.799)</p></td>
-</tr>
-<tr class="row-odd"><td><p>Lower Right</p></td>
-<td><p>(2287447.164, -1389065.201)</p></td>
-</tr>
-<tr class="row-even"><td><p>Center</p></td>
-<td><p>(-59052.836, 110434.799)</p></td>
-</tr>
-<tr class="row-odd"><td><p>Type</p></td>
-<td><p>Byte</p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="locational-marginal-price">
-<h3>Locational Marginal Price<a class="headerlink" href="#locational-marginal-price" title="Permalink to this headline"></a></h3>
-<p>Locational Marginal Pricing (LMP) represents the cost of making and delivering electricity over an interconnected network of service nodes. LMPs are delivered on an hourly basis (8760 hours for the year) and help us to understand aspects of generation and congestion costs relative to the supply and demand of electricity when considering existing transmission infrastructure.  LMPs are a also driven by factors such as the cost of fuel which <strong>cerf</strong> also takes into account when calculating a power plants <a class="reference internal" href="#net-operating-value"><span class="std std-ref">Net Operating Value</span></a>.  When working with a scenario-driven grid operations model to evaluate the future evolution of the electricity system, <strong>cerf</strong> can ingest LMPs, return the sited generation per service area for the time step, and then continue this iteration through all future years to provide a harmonized view how the electricity system may respond to stressors in the future.</p>
-<p><strong>cerf</strong> was designed to ingest a single CSV file of LMPs per service area for each of the 8760 hours in a year where LMPs are in units $/MWh.  Mean LMPs representing annual trends are then calculated over the time period corresponding to each technology’s capacity factor using the following logic:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>FOR each service area AND technology
-
-  SORT LMP <span class="m">8760</span> values descending and rank <span class="m">1</span>..8760 where <span class="m">1</span> is the largest LMP value<span class="p">;</span>
-
-  IF the capacity factor <span class="nv">is</span> <span class="o">==</span> <span class="m">1</span>.0:
-    MEAN of all values<span class="p">;</span>
-
-  ELSE IF the capacity factor is &gt;<span class="o">=</span> <span class="m">0</span>.5:
-    MEAN of values starting <span class="k">in</span> the rank position
-    CEILING<span class="o">(</span><span class="m">8760</span> * <span class="o">(</span><span class="m">1</span> - capacity factor<span class="o">))</span> through <span class="m">8760</span><span class="p">;</span>
-
-  ELSE IF the <span class="m">0</span>.0 &lt; capacity factor &lt; <span class="m">0</span>.5:
-    MEAN of values starting <span class="k">in</span> the rank position <span class="m">1</span> through
-    CEILING<span class="o">(</span><span class="m">8760</span> * <span class="o">(</span><span class="m">1</span> - capacity factor<span class="o">))</span><span class="p">;</span>
-
-  ELSE:
-    FAIL<span class="p">;</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><strong>cerf</strong> comes with an LMP dataset for illustrative purposes only which can be accessed using the <code class="docutils literal notranslate"><span class="pre">get_sample_lmp_file()</span></code> function.  The service areas in this file correspond with the sample lmp zoness raster file in the <strong>cerf</strong> package which defines the service area ID for each grid cell in the CONUS.  This raster file can also be accessed using <code class="docutils literal notranslate"><span class="pre">sample_lmp_zones_raster_file()</span></code> function.</p>
-</div>
-</section>
-</section>
-<section id="tutorials">
-<h2>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline"></a></h2>
-<section id="cerf-quickstarter">
-<h3><strong>cerf</strong> quickstarter<a class="headerlink" href="#cerf-quickstarter" title="Permalink to this headline"></a></h3>
-<section id="load-packages">
-<h4>Load packages<a class="headerlink" href="#load-packages" title="Permalink to this headline"></a></h4>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cerf</span>
-</pre></div>
-</div>
-</section>
-<section id="install-package-data">
-<h4>Install package data<a class="headerlink" href="#install-package-data" title="Permalink to this headline"></a></h4>
-<p><strong>NOTE</strong>:  The package data will require approximately 195 MB of storage.</p>
-<p>Ensure that you have installed the package data using:</p>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cerf</span><span class="o">.</span><span class="n">install_package_data</span><span class="p">()</span>
-</pre></div>
-</div>
-</section>
-<section id="conduct-a-run-with-cerf">
-<h4>Conduct a run with CERF<a class="headerlink" href="#conduct-a-run-with-cerf" title="Permalink to this headline"></a></h4>
-<p>We will be exploring the main functionality of the <code class="docutils literal notranslate"><span class="pre">cerf</span></code> package
-using our our example data which is meant for illustrative purposes only.
-<code class="docutils literal notranslate"><span class="pre">cerf</span></code> runs using a single YAML configuration file that contains
-project and technology-specific settings, an electricity capacity
-expansion plan, and LMP zones pricing data which is described in detail
-in the docs <a class="reference external" href="https://immm-sfa.github.io/cerf/">here</a>. Expansion plans
-and technology data are generally generated by models such as GCAM
-which capture multi-sector dynamics that represent alternate futures
-based on scenario assumptions for socioeconomics, radiative forcing,
-etc. The <code class="docutils literal notranslate"><span class="pre">cerf</span></code> package also comes equipped with power plant siting suitability
-data at a 1-km resolution over the CONUS, publically available data from EIA and
-HIFLD for transmission and pipeline infrastructure, and generic 8760 locational
-marginal pricing similar to what you could model using your prefered grid
-operations model.</p>
-</section>
-<section id="run-cerf-to-site-power-plants-in-an-expansion-plan-for-a-single-year-for-the-conus">
-<h4>Run <code class="docutils literal notranslate"><span class="pre">cerf</span></code> to site power plants in an expansion plan for a single year for the CONUS<a class="headerlink" href="#run-cerf-to-site-power-plants-in-an-expansion-plan-for-a-single-year-for-the-conus" title="Permalink to this headline"></a></h4>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sample year</span>
-<span class="n">yr</span> <span class="o">=</span> <span class="mi">2030</span>
-
-<span class="c1"># load the sample configuration file path for the target year</span>
-<span class="n">config_file</span> <span class="o">=</span> <span class="n">cerf</span><span class="o">.</span><span class="n">config_file</span><span class="p">(</span><span class="n">yr</span><span class="p">)</span>
-
-<span class="c1"># run the configuration for the target year and return a data frame</span>
-<span class="n">result_df</span> <span class="o">=</span> <span class="n">cerf</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="n">write_output</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-</pre></div>
-</div>
-<pre class="literal-block">2021-08-24 11:44:03,734 - root - INFO - Starting CERF model
-2021-08-24 11:44:03,956 - root - INFO - Staging data...
-2021-08-24 11:44:04,168 - root - INFO - Using 'zones_raster_file':  /Users/d3y010/repos/github/cerf/cerf/data/lmp_zones_1km.img
-2021-08-24 11:44:04,203 - root - INFO - Processing locational marginal pricing (LMP)
-2021-08-24 11:44:04,203 - root - INFO - Using LMP from default illustrative package data:  /Users/d3y010/repos/github/cerf/cerf/data/illustrative_lmp_8760-per-zone_dollars-per-mwh.zip
-2021-08-24 11:44:13,798 - root - INFO - Calculating interconnection costs (IC)
-2021-08-24 11:44:13,798 - root - INFO - Using default substation costs from file: /Users/d3y010/repos/github/cerf/cerf/data/costs_per_kv_substation.yml
-2021-08-24 11:44:13,802 - root - INFO - Using default substation file: /Users/d3y010/repos/github/cerf/cerf/data/hifld_substations_conus_albers.zip
-2021-08-24 11:44:21,669 - root - INFO - Using default gas pipeline file:  /Users/d3y010/repos/github/cerf/cerf/data/eia_natural_gas_pipelines_conus_albers.zip
-2021-08-24 11:44:22,938 - root - INFO - Using gas pipeline costs from default file:  /Users/d3y010/repos/github/cerf/cerf/data/costs_gas_pipeline.yml
-2021-08-24 11:44:29,649 - root - INFO - Calculating net operational cost (NOV)
-2021-08-24 11:44:30,783 - root - INFO - Calculating net locational cost (NLC)
-2021-08-24 11:44:31,325 - root - INFO - Building suitability array
-2021-08-24 11:44:31,749 - root - INFO - Using suitability file for 'biomass_conv_wo_ccs':  /Users/d3y010/repos/github/cerf/cerf/data/suitability_biomass.sdat
-2021-08-24 11:44:31,789 - root - INFO - Using suitability file for 'biomass_igcc_wo_ccs':  /Users/d3y010/repos/github/cerf/cerf/data/suitability_biomass_igcc.sdat
-2021-08-24 11:44:31,825 - root - INFO - Using suitability file for 'coal_conv_pul_wo_ccs':  /Users/d3y010/repos/github/cerf/cerf/data/suitability_coal.sdat
-2021-08-24 11:44:31,852 - root - INFO - Using suitability file for 'gas_cc_wo_ccs':  /Users/d3y010/repos/github/cerf/cerf/data/suitability_gas_cc.sdat
-2021-08-24 11:44:31,881 - root - INFO - Using suitability file for 'gas_cc_w_ccs':  /Users/d3y010/repos/github/cerf/cerf/data/suitability_gas_cc_ccs.sdat
-2021-08-24 11:44:31,908 - root - INFO - Using suitability file for 'nuclear_gen_ii':  /Users/d3y010/repos/github/cerf/cerf/data/suitability_nuclear.sdat
-2021-08-24 11:44:31,935 - root - INFO - Using suitability file for 'nuclear_gen_iii':  /Users/d3y010/repos/github/cerf/cerf/data/suitability_nuclear.sdat
-2021-08-24 11:44:31,963 - root - INFO - Using suitability file for 'oil_ct_wo_ccs':  /Users/d3y010/repos/github/cerf/cerf/data/suitability_oil_baseload.sdat
-2021-08-24 11:44:31,989 - root - INFO - Using suitability file for 'solar_csp':  /Users/d3y010/repos/github/cerf/cerf/data/suitability_solar.sdat
-2021-08-24 11:44:32,015 - root - INFO - Using suitability file for 'solar_pv_non_dist':  /Users/d3y010/repos/github/cerf/cerf/data/suitability_solar.sdat
-2021-08-24 11:44:32,042 - root - INFO - Using suitability file for 'wind_onshore':  /Users/d3y010/repos/github/cerf/cerf/data/suitability_wind.sdat
-2021-08-24 11:44:32,069 - root - INFO - Staged data in 28.1118519 seconds
-2021-08-24 11:44:33,086 - root - INFO - Processed <cite>alabama</cite> in 1.0166159 seconds
-2021-08-24 11:44:34,387 - root - INFO - Processed <cite>arizona</cite> in 1.3004961 seconds
-2021-08-24 11:44:34,920 - root - INFO - Processed <cite>arkansas</cite> in 0.531682 seconds
-2021-08-24 11:44:39,114 - root - INFO - Processed <cite>california</cite> in 4.19344 seconds
-2021-08-24 11:44:39,809 - root - INFO - Processed <cite>colorado</cite> in 0.6944351 seconds
-2021-08-24 11:44:39,956 - root - INFO - Processed <cite>connecticut</cite> in 0.1455598 seconds
-2021-08-24 11:44:40,040 - root - INFO - Processed <cite>delaware</cite> in 0.083498 seconds
-2021-08-24 11:44:40,114 - root - INFO - Processed <cite>district_of_columbia</cite> in 0.0735919 seconds
-2021-08-24 11:44:41,768 - root - INFO - Processed <cite>florida</cite> in 1.6528592 seconds
-2021-08-24 11:44:42,681 - root - INFO - Processed <cite>georgia</cite> in 0.9123399 seconds
-2021-08-24 11:44:43,257 - root - INFO - Processed <cite>idaho</cite> in 0.5753481 seconds
-2021-08-24 11:44:44,108 - root - INFO - Processed <cite>illinois</cite> in 0.8507626 seconds
-2021-08-24 11:44:44,496 - root - INFO - Processed <cite>indiana</cite> in 0.3873999 seconds
-2021-08-24 11:44:45,108 - root - INFO - Processed <cite>iowa</cite> in 0.610285 seconds
-2021-08-24 11:44:45,625 - root - INFO - Processed <cite>kansas</cite> in 0.5162001 seconds
-2021-08-24 11:44:46,092 - root - INFO - Processed <cite>kentucky</cite> in 0.46629 seconds
-2021-08-24 11:44:46,929 - root - INFO - Processed <cite>louisiana</cite> in 0.8366458 seconds
-2021-08-24 11:44:47,207 - root - INFO - Processed <cite>maine</cite> in 0.276648 seconds
-2021-08-24 11:44:47,427 - root - INFO - Processed <cite>maryland</cite> in 0.2200139 seconds
-2021-08-24 11:44:47,603 - root - INFO - Processed <cite>massachusetts</cite> in 0.1754241 seconds
-2021-08-24 11:44:48,601 - root - INFO - Processed <cite>michigan</cite> in 0.9966919 seconds
-2021-08-24 11:44:49,403 - root - INFO - Processed <cite>minnesota</cite> in 0.8013589 seconds
-2021-08-24 11:44:50,051 - root - INFO - Processed <cite>mississippi</cite> in 0.6468239 seconds
-2021-08-24 11:44:50,769 - root - INFO - Processed <cite>missouri</cite> in 0.7176321 seconds
-2021-08-24 11:44:51,607 - root - INFO - Processed <cite>montana</cite> in 0.83709 seconds
-2021-08-24 11:44:52,010 - root - INFO - Processed <cite>nebraska</cite> in 0.4028261 seconds
-2021-08-24 11:44:53,065 - root - INFO - Processed <cite>nevada</cite> in 1.0537767 seconds
-2021-08-24 11:44:53,235 - root - INFO - Processed <cite>new_hampshire</cite> in 0.169647 seconds
-2021-08-24 11:44:53,436 - root - INFO - Processed <cite>new_jersey</cite> in 0.1997998 seconds
-2021-08-24 11:44:54,095 - root - INFO - Processed <cite>new_mexico</cite> in 0.659168 seconds
-2021-08-24 11:44:55,054 - root - INFO - Processed <cite>new_york</cite> in 0.9580491 seconds
-2021-08-24 11:44:55,747 - root - INFO - Processed <cite>north_carolina</cite> in 0.6923168 seconds
-2021-08-24 11:44:56,122 - root - INFO - Processed <cite>north_dakota</cite> in 0.3739688 seconds
-2021-08-24 11:44:56,679 - root - INFO - Processed <cite>ohio</cite> in 0.5559881 seconds
-2021-08-24 11:44:57,555 - root - INFO - Processed <cite>oklahoma</cite> in 0.8756032 seconds
-2021-08-24 11:44:58,328 - root - INFO - Processed <cite>oregon</cite> in 0.7727861 seconds
-2021-08-24 11:44:59,067 - root - INFO - Processed <cite>pennsylvania</cite> in 0.7384419 seconds
-2021-08-24 11:44:59,145 - root - INFO - Processed <cite>rhode_island</cite> in 0.0770929 seconds
-2021-08-24 11:44:59,585 - root - INFO - Processed <cite>south_carolina</cite> in 0.438771 seconds
-2021-08-24 11:44:59,922 - root - INFO - Processed <cite>south_dakota</cite> in 0.3369012 seconds
-2021-08-24 11:45:00,338 - root - INFO - Processed <cite>tennessee</cite> in 0.4145651 seconds
-2021-08-24 11:45:12,257 - root - INFO - Processed <cite>texas</cite> in 11.9182241 seconds
-2021-08-24 11:45:12,893 - root - INFO - Processed <cite>utah</cite> in 0.6355641 seconds
-2021-08-24 11:45:13,009 - root - INFO - Processed <cite>vermont</cite> in 0.1157441 seconds
-2021-08-24 11:45:13,649 - root - INFO - Processed <cite>virginia</cite> in 0.63941 seconds
-2021-08-24 11:45:14,111 - root - INFO - Processed <cite>washington</cite> in 0.4608808 seconds
-2021-08-24 11:45:14,389 - root - INFO - Processed <cite>west_virginia</cite> in 0.2771189 seconds
-2021-08-24 11:45:14,896 - root - INFO - Processed <cite>wisconsin</cite> in 0.5063529 seconds
-2021-08-24 11:45:15,473 - root - INFO - Processed <cite>wyoming</cite> in 0.5768282 seconds
-2021-08-24 11:45:15,474 - root - INFO - All regions processed in 43.4045889 seconds.
-2021-08-24 11:45:15,475 - root - INFO - Aggregating outputs...
-2021-08-24 11:45:15,861 - root - INFO - CERF model run completed in 72.1272678 seconds</pre>
-<p><strong>Results are returned as a Pandas DataFrame</strong></p>
-<p>Each record is a sited power plant having a geographic location and
-other siting attributes. Reminder: <code class="docutils literal notranslate"><span class="pre">cerf</span></code> uses the
-<code class="docutils literal notranslate"><span class="pre">USA_Contiguous_Albers_Equal_Area_Conic</span></code> projected coordinate
-reference system in its CONUS example data, so the <code class="docutils literal notranslate"><span class="pre">xcoord</span></code> and
-<code class="docutils literal notranslate"><span class="pre">ycoord</span></code> are relative to that projection.</p>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</section>
-<section id="run-cerf-to-site-power-plants-in-an-expansion-plan-for-multiple-years-for-the-conus">
-<h4>Run <code class="docutils literal notranslate"><span class="pre">cerf</span></code> to site power plants in an expansion plan for multiple years for the CONUS<a class="headerlink" href="#run-cerf-to-site-power-plants-in-an-expansion-plan-for-multiple-years-for-the-conus" title="Permalink to this headline"></a></h4>
-<p>This exercise demonstrates how to inherit sites from a previous year’s
-results and keep them in the mix if they have not yet reached
-retirement. If this is done in <code class="docutils literal notranslate"><span class="pre">cerf</span></code>, users should ensure that their
-expansion plan is only for new vintage each timestep.</p>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cerf</span>
-
-<span class="c1"># process year 2010, 2030, and 2050</span>
-<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">yr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">2010</span><span class="p">,</span> <span class="mi">2030</span><span class="p">,</span> <span class="mi">2050</span><span class="p">]):</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Processing year:  </span><span class="si">{</span><span class="n">yr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="c1"># load the sample configuration file path for the target year</span>
-    <span class="n">config_file</span> <span class="o">=</span> <span class="n">cerf</span><span class="o">.</span><span class="n">config_file</span><span class="p">(</span><span class="n">yr</span><span class="p">)</span>
-
-    <span class="c1"># do not intialize the run with previously sited data if it is the first time step</span>
-    <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">result_df</span> <span class="o">=</span> <span class="n">cerf</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="n">write_output</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">LetToNum</span><span class="p">(</span><span class="n">feat</span><span class="p">):</span>
+    <span class="n">letters</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">number</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">letters</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="mi">64</span>
+    <span class="k">elif</span> <span class="n">letters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;A&#39;</span><span class="p">:</span>
+        <span class="n">number</span> <span class="o">=</span> <span class="mi">26</span> <span class="o">+</span> <span class="nb">ord</span><span class="p">(</span><span class="n">letters</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="mi">64</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">result_df</span> <span class="o">=</span> <span class="n">cerf</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="n">write_output</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">initialize_site_data</span><span class="o">=</span><span class="n">result_df</span><span class="p">)</span>
+        <span class="n">number</span> <span class="o">=</span> <span class="mi">52</span> <span class="o">+</span> <span class="nb">ord</span><span class="p">(</span><span class="n">letters</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="mi">64</span>
+    <span class="k">return</span> <span class="n">number</span>
 </pre></div>
 </div>
-<p><strong>Explore the results that account for retirement</strong></p>
-<p>Since we inherited the each year, and we are only siting new vintage per
-year, we see power plants from multiple technlogies until they reach
-their retirement age. We can narrow in on <code class="docutils literal notranslate"><span class="pre">biomass</span></code> power plants in
-Virginia to see this:</p>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="n">result_df</span><span class="p">[</span><span class="s1">&#39;region_name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;virginia&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">result_df</span><span class="p">[</span><span class="s1">&#39;tech_id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">9</span><span class="p">)]</span>
+<p>Then, calculate the X indices much the same as the Y indices.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Second_Index_X = 32 * !Let_To_Num!
+First_Index_X = !Second_Index_X! - 31
 </pre></div>
 </div>
-<p><strong>Plot the output</strong></p>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cerf</span><span class="o">.</span><span class="n">plot_siting</span><span class="p">(</span><span class="n">result_df</span><span class="p">)</span>
-</pre></div>
-</div>
-<img alt="_images/quickstart_plot.png" src="_images/quickstart_plot.png" />
+<p>The attribute table should then be exported to an Excel file using the “Table to Table” tool, and the rest of the indexing will be done in Excel.</p>
 </section>
-<section id="running-the-quickstarter-locally">
-<h4>Running the quickstarter locally<a class="headerlink" href="#running-the-quickstarter-locally" title="Permalink to this headline"></a></h4>
-<p>You can download the <strong>cerf</strong> quickstarter Jupyter notebook here: <a class="reference external" href="https://github.com/IMMM-SFA/cerf/blob/main/notebooks/quickstarter.ipynb">cerf quickstarter</a></p>
-<p>This will allow you to run the tutorial interactively on your local computer.  Installation instructions for installing Jupyter software can be found <a class="reference external" href="https://jupyter.org/install">here</a>.</p>
-<p>Once you have Jupyter up-and-running, make sure you install <strong>cerf</strong> and its package data by running:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 -m pip install cerf
-
-python3 -c <span class="s1">&#39;import cerf; cerf.install_package_data()&#39;</span>
-</pre></div>
-</div>
-<p>where, <code class="docutils literal notranslate"><span class="pre">python3</span></code> would be the instance of Python that you installed Jupyter on.  Now you are ready to explore <strong>cerf</strong>!</p>
+<section id="create-csv-file">
+<h4>Create CSV file<a class="headerlink" href="#create-csv-file" title="Link to this heading"></a></h4>
+<p>Now that the tessellation attribute table is an Excel file, all columns can be deleted except for the grid ID column and the indices columns. In new columns, use <code class="docutils literal notranslate"><span class="pre">=TEXT(cell,</span> <span class="pre">&quot;00000&quot;)</span></code> to add leading zeroes to the indices (at least 5 digits are required, more can be added if necessary). In another column, concatenate the indices using <code class="docutils literal notranslate"><span class="pre">=CONCAT(cell1,&quot;-&quot;,cell2,&quot;.&quot;,cell3,&quot;-&quot;,cell4)</span></code>. Copy the <code class="docutils literal notranslate"><span class="pre">GRID_ID</span></code> and concatenated index numbers(important: with headers) into a separate spreadsheet and save as a CSV. This CSV will allow <strong>naturf</strong> to assign the correct index name to the corresponsing binary file.</p>
+</section>
+<section id="spatial-join-and-split-by-attribute">
+<h4>Spatial join and split by attribute<a class="headerlink" href="#spatial-join-and-split-by-attribute" title="Link to this heading"></a></h4>
+<p>Back in the GIS software, perform a spatial join with the buildings shapefile being the target features and the tessellation shapefile being the join features. This will create a buildings shapefile where every building has a grid ID associated with it. The last step is to use the “Split by Attribute” tool to separate the buildings into shapefiles for each tile. These shapefiles will be the input to <strong>naturf</strong> along with the CSV with index names.</p>
 </section>
 </section>
 </section>
 <section id="fundamental-equations-and-concepts">
-<h2>Fundamental equations and concepts<a class="headerlink" href="#fundamental-equations-and-concepts" title="Permalink to this headline"></a></h2>
-<p>The following are the building blocks of how <strong>cerf</strong> sites power plants.</p>
-<section id="net-operating-value">
-<h3>Net Operating Value<a class="headerlink" href="#net-operating-value" title="Permalink to this headline"></a></h3>
-<p>The Net Operating Value is the difference between the locational marginal value of the energy generated by a technology and its operating costs.  The locational marginal value is a function of the plant’s capacity factor, the average locational marginal price (LMP) for that capacity factor in the zone that encompasses the grid cell, and the plant’s generation.  The average LMP for each zone/capacity factor is calculated from a grid operation model output as the average of the hours corresponding to that capacity factor (e.g., for a 10% capacity factor, the LMP is calculated based on the top 10% of LMP values).  The operating costs are determined by the plant’s generation, heat rate, fuel cost, variable O&amp;M, carbon tax, and carbon emissions–if there is a carbon tax in the expansion plan scenario being processed.</p>
-<section id="net-operating-value-nov">
-<h4>Net operating value (NOV)<a class="headerlink" href="#net-operating-value-nov" title="Permalink to this headline"></a></h4>
-<div class="math">
-<p><img src="_images/math/d50c19b3cf3206cb5d6dfe0ea630f5099543c485.png" alt="NOV = G(LMP - OC)"/></p>
-</div><p>where, <em>NOV</em> is Net Operating Value in $/yr; <em>G</em> is electricity generation in MWh/yr; <em>LMP</em> is locational marginal price in $/MWh; <em>OC</em> are operating costs in $/MWh.</p>
+<h2>Fundamental equations and concepts<a class="headerlink" href="#fundamental-equations-and-concepts" title="Link to this heading"></a></h2>
+<p>The following are the urban parameters calculated by <strong>naturf</strong>.</p>
+<section id="concepts-definitions">
+<h3>Concepts/Definitions<a class="headerlink" href="#concepts-definitions" title="Link to this heading"></a></h3>
+<section id="plan-area">
+<h4>Plan Area<a class="headerlink" href="#plan-area" title="Link to this heading"></a></h4>
+<p>When calculating parameters, <strong>naturf</strong> creates a buffer around each target building called the plan (or dilated) area. Each building has its own plan area which identifies neighbors to that target building which are important for the calculation of parameters. For the parameter definitions below, <em>total plan area</em> refers to the area of that buffer around the target building, while <em>building plan area</em> refers to the sum of building footprints within the <em>total plan area</em>. <em>Total plan area</em> should always be a larger value than the <em>building plan area</em>.</p>
 </section>
-<section id="generation-g">
-<h4>Generation (G)<a class="headerlink" href="#generation-g" title="Permalink to this headline"></a></h4>
-<div class="math">
-<p><img src="_images/math/9ae966448b9c5b077c02c8b376846ffdbf51d5cc.png" alt="G = U * CF * HPY"/></p>
-</div><p>where, <em>U</em> is the unit size of a power plant in MW; <em>CF</em> is the capacity factor of the power plant; <em>HPY</em> is the number of hours in a year.  Both unit size and capacity factor are input variables to <strong>cerf</strong>.</p>
+<section id="frontal-length">
+<h4>Frontal Length<a class="headerlink" href="#frontal-length" title="Link to this heading"></a></h4>
+<p>For the urban parameters calculated by <strong>naturf</strong>, frontal length refers to the wall length perpendicular to a given direction for all buildings within the target building’s total plan area.</p>
 </section>
-<section id="levelization-factor-lfi">
-<h4>Levelization factor (LF<sub>i</sub>)<a class="headerlink" href="#levelization-factor-lfi" title="Permalink to this headline"></a></h4>
-<div class="math">
-<p><img src="_images/math/3e33444806b1a397bdb6e7cc29bff5ad4e7ca72b.png" alt="k_i = \frac{1 + l_i}{1 + d}"/></p>
-</div><div class="math">
-<p><img src="_images/math/7a5882e7bd42cab276b0e1ba589fe1a0811b9c27.png" alt="LF_i = k_i(1-k_i^n) * \frac{AF}{1-k_i}"/></p>
-</div><p>where, <em>l</em><sub>fuel</sub> is an escalation rate as a fraction; <em>d</em> is the real annual discount rate as a fraction; <em>n</em> is the asset lifetime in years; and <em>AF</em> is the annuity factor.  All escalation rates are input variables to <strong>cerf</strong>.</p>
+<section id="frontal-area">
+<h4>Frontal Area<a class="headerlink" href="#frontal-area" title="Link to this heading"></a></h4>
+<p>For the urban parameters calculated by <strong>naturf</strong>, frontal area refers to the wall area perpendicular to a given direction for all buildings within the target building’s total plan area.</p>
 </section>
-<section id="annuity-factor-af">
-<h4>Annuity factor (AF)<a class="headerlink" href="#annuity-factor-af" title="Permalink to this headline"></a></h4>
-<div class="math">
-<p><img src="_images/math/8ff73e9308fe851036cbddd32ed53043fdddb6c9.png" alt="AF = \frac{d(1 + d)^n}{(1 + d)^n - 1}"/></p>
-</div><p>where, <em>d</em> is the real annual discount rate as a fraction and <em>n</em> is the asset lifetime in years.</p>
-</section>
-<section id="locational-marginal-price-lmp">
-<h4>Locational marginal price (LMP)<a class="headerlink" href="#locational-marginal-price-lmp" title="Permalink to this headline"></a></h4>
-<div class="math">
-<p><img src="_images/math/834367e23684863bd51bb3642d7095990344eca8.png" alt="LMP_{lev} = LMP * LF_{fuel}"/></p>
-</div><p>where, <em>LMP</em> is the locational marginal price (<em>LMP</em>) in $/MWh and <em>LF</em><sub>fuel</sub> is the levelization factor of fuel.  <em>LMP</em> is also an input to <strong>cerf</strong> and is described in full in the <a class="reference internal" href="#locational-marginal-price"><span class="std std-ref">Locational Marginal Price</span></a> section.</p>
-</section>
-<section id="operating-cost-oc">
-<h4>Operating cost (OC)<a class="headerlink" href="#operating-cost-oc" title="Permalink to this headline"></a></h4>
-<div class="math">
-<p><img src="_images/math/c905a4509ebb0b48009cbda0e0fa56baf07fbc4f.png" alt="OC = \bigg(HR * \bigg(\frac{FP}{1000}\bigg) * LF_{fuel}\bigg) + \bigg(VOM * LF_{vom}\bigg) + \bigg(\bigg(\frac{CT * CO2 * HR * LF_{carbon}}{1000000}\bigg) * \bigg(1 - CCR\bigg)\bigg)"/></p>
-</div><p>where, <em>HR</em> is heat rate in Btu/kWh; <em>FP</em> is fuel price which <strong>cerf</strong> takes in as $/GJ but it gets converted to $/MBtu in the model; <em>VOM</em> is the variable operation and maintenance costs of yearly capacity use in $/MWh; <em>LF</em><sub>vom</sub> is the levelization factor of variable O&amp;M; <em>CT</em> is the carbon tax in $/ton; <em>CO2</em> is the CO2 content of the fuel taken as an input in units tons/MWh but gets converted to tons/Btu in the model; <em>LF</em><sub>carbon</sub> is the levelization factor for carbon as a fraction; and <em>CCR</em> is the carbon capture rate as a fraction.  All variables are inputs to the <strong>cerf</strong> model.</p>
+<section id="assumptions">
+<h4>Assumptions<a class="headerlink" href="#assumptions" title="Link to this heading"></a></h4>
+<p>Following NUDAPT, <strong>naturf</strong> bins building heights into five meter increments from 0 to 75 meters. Any building with a height greater than 75 meters is considered as ending at 75 meters.</p>
 </section>
 </section>
-<section id="interconnection-cost">
-<h3>Interconnection Cost<a class="headerlink" href="#interconnection-cost" title="Permalink to this headline"></a></h3>
-<p>Interconnection cost is the sum of the transmission interconnection cost and the gas pipeline interconnection cost (if a gas-fired technology is being evaluated) at each grid cell.  <strong>cerf</strong> calculates the distances to the nearest substation with the minimum required voltage rating and to the nearest gas pipeline with the minimum required diameter for each suitable grid cell.  It then applies distance- and voltage-based capital costs to estimate the total cost for the new plant to connect to the grid.  This is calculated as:</p>
-<div class="math">
-<p><img src="_images/math/e8de11eb01d453ad52e244f7a9941bb251d1735e.png" alt="IC = (D_{elec} * C_{elec} * AF) + (D_{gas} * C_{gas} * AF)"/></p>
-</div><p>where, <em>IC</em> is Interconnection Cost in $/yr; <em>D</em><sub>elec</sub> is the distance to the nearest suitable electricity transmission infrastructure (e.g., substation) in kilometers; <em>C</em><sub>elec</sub> is the electric grid interconnection captial cost in $/km; <em>D</em><sub>gas</sub> is the distance to the nearest suitable gas pipeline in kilometers; <em>C</em><sub>gas</sub> is the gas interconnection captial cost in $/km and <em>AF</em> is the annuity factor.</p>
-<p>The annuity factor (<em>AF</em>) is calculated as:</p>
-<div class="math">
-<p><img src="_images/math/8ff73e9308fe851036cbddd32ed53043fdddb6c9.png" alt="AF = \frac{d(1 + d)^n}{(1 + d)^n - 1}"/></p>
-</div><p>where, <em>d</em> is the real annual discount rate as a fraction and <em>n</em> is the asset lifetime in years.</p>
+<section id="frontal-area-density-1-60">
+<h3>Frontal Area Density (1-60)<a class="headerlink" href="#frontal-area-density-1-60" title="Link to this heading"></a></h3>
+<p>Frontal area density is the frontal area at a certain height increment divided by the total plan area. <strong>naturf</strong> calculates frontal area density from the four cardinal directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters. Parameters 1-15 represent the north, parameters 16-30 represent the west, parameters 31-45 represent the south, and parameters 46-60 represent the east. For instance, parameter 1 gives the north-facing wall area for each building and its neighbors divided by the total plan area. <a class="reference internal" href="#burian2003" id="id1"><span>[Burian2003]</span></a> Eq. 14</p>
+<p>$FAD = \frac{FA}{TPA}$</p>
+<p>where <em>FAD</em> is Frontal area density; <em>FA</em> is the frontal area of the wall from the current direction and height level in $m^2$; <em>TPA</em> is the total plan area in $m^2$.</p>
 </section>
-<section id="net-locational-cost">
-<h3>Net Locational Cost<a class="headerlink" href="#net-locational-cost" title="Permalink to this headline"></a></h3>
-<p>Net Locational Cost (<em>NLC</em>) is used to compete power plant technologies per grid cell based on the least expensive option to site.  <em>NLC</em> is calculated by subtracting the Net Operating Value (NOV) of the proposed power plant from the cost of its interconnection (IC) to the grid to represent the potential deployment value.  Both the NOV parameter which incorporates many technology-specific values such as variable operations and maintenance costs, carbon price, heat rate, etc. and the interconnection cost parameter used for both electricity transmission and gas pipelines have variables that are accessible to the user for modification per time step.</p>
-<p><em>NLC</em> is calculated as:</p>
-<div class="math">
-<p><img src="_images/math/2b07e8f7df08d43239da166fd06794fec7d86d3d.png" alt="NLC = IC - NOV"/></p>
-</div><p>where, <em>NLC</em> is in $/yr; <em>IC</em> is interconnection cost in $/yr; and <em>NOV</em> is in $/yr.</p>
+<section id="plan-area-density-61-75">
+<h3>Plan Area Density (61-75)<a class="headerlink" href="#plan-area-density-61-75" title="Link to this heading"></a></h3>
+<p>Plan area density is the ratio of building plan area to the total plan area, calculated in 5 meter increments from ground level to 75 meters. <strong>naturf</strong> projects the building footprint vertically to the building height, meaning plan area density is the same at every vertical level. <a class="reference internal" href="#burian2003" id="id2"><span>[Burian2003]</span></a> Eq. 7</p>
+<p>$PAD = \frac{BPA}{TPA}$</p>
+<p>where, <em>PAD</em> is the plan area density; <em>BPA</em> is the building plan area in $m^2$; <em>TPA</em> is the total plan area in $m^2$.</p>
 </section>
-<section id="competition-algorithm">
-<h3>Competition algorithm<a class="headerlink" href="#competition-algorithm" title="Permalink to this headline"></a></h3>
-<p>Technology competition algorithm for CERF.</p>
-<p>Grid cell level net locational cost (NLC) per technology and an electricity technology capacity expansion plan are used to compete technologies against each other to see which will win the grid cell. The technology that wins the grid cell is then sited until no further winning cells exist. Once sited, the location of the winning technology’s grid cell, along with its buffer, are no longer available for siting. The competition array is recalculated after all technologies have passed through an iteration. This process is repeated until there are either no cells left to site or there are no more power plants left to satisfy the expansion plan for any technology. For technologies that have the same NLC value in multiple grid cells that win the competition, random selection is available by default. If the user wishes to have the outcomes be repeatable, the randomizer can be set to False and a random seed set.</p>
+<section id="rooftop-area-density-76-90">
+<h3>Rooftop Area Density (76-90)<a class="headerlink" href="#rooftop-area-density-76-90" title="Link to this heading"></a></h3>
+<p>Rooftop area density is the ratio of building rooftop area to the total plan area, calculated in 5 meter increments from ground level to 75 meters. Because <strong>naturf</strong> projects building footprints vertically to the building height, these parameters are equal to the plan area density. <a class="reference internal" href="#burian2003" id="id3"><span>[Burian2003]</span></a> Eq. 7</p>
+</section>
+<section id="plan-area-fraction-91">
+<h3>Plan Area Fraction (91)<a class="headerlink" href="#plan-area-fraction-91" title="Link to this heading"></a></h3>
+<p>Plan area fraction is the ratio of building plan area to the total plan area, calculated at ground level. For <strong>naturf</strong>, this is equal to plan area density at any height increment. <a class="reference internal" href="#burian2003" id="id4"><span>[Burian2003]</span></a> Eq. 4</p>
+</section>
+<section id="mean-building-height-92">
+<h3>Mean Building Height (92)<a class="headerlink" href="#mean-building-height-92" title="Link to this heading"></a></h3>
+<p>The average building height of all buildings within the total plan area.</p>
+</section>
+<section id="standard-deviation-of-building-heights-93">
+<h3>Standard Deviation of Building Heights (93)<a class="headerlink" href="#standard-deviation-of-building-heights-93" title="Link to this heading"></a></h3>
+<p>The standard deviation of building heights for all buildings within the total plan area.</p>
+</section>
+<section id="area-weighted-mean-of-building-heights-94">
+<h3>Area Weighted Mean of Building Heights (94)<a class="headerlink" href="#area-weighted-mean-of-building-heights-94" title="Link to this heading"></a></h3>
+<p>The average height of all buildings within the total plan area weighted by the total plan area. <a class="reference internal" href="#burian2003" id="id5"><span>[Burian2003]</span></a> Eq. 3</p>
+<p>$AWMH = \frac{\Sigma{A_i zh_i}}{\Sigma{A_i}}$</p>
+<p>where, <em>AWMH</em> is the area weighted mean height in m; $A_i$ is the current building plan area in $m^2$; $zh_i$ is the current building height in m.</p>
+</section>
+<section id="building-surface-area-to-plan-area-ratio-95">
+<h3>Building Surface Area to Plan Area Ratio (95)<a class="headerlink" href="#building-surface-area-to-plan-area-ratio-95" title="Link to this heading"></a></h3>
+<p>The ratio of all the surface areas of a building to the total plan area. <a class="reference internal" href="#burian2003" id="id6"><span>[Burian2003]</span></a> Eq. 16</p>
+</section>
+<section id="frontal-area-index-96-99">
+<h3>Frontal Area Index (96-99)<a class="headerlink" href="#frontal-area-index-96-99" title="Link to this heading"></a></h3>
+<p>Frontal area index is the ratio of the entire frontal area of a building to the total plan area. <strong>naturf</strong> calculates the frontal area index from the four cardinal directions. Because buildings often do not face a cardinal direction head on, <strong>naturf</strong> uses the average alongwind and crosswind distance from the current building centroid to all other building centroids for the total plan area. <a class="reference internal" href="#burian2003" id="id7"><span>[Burian2003]</span></a> Eq. 12</p>
+<p>$FAI = \frac{FA}{TPA}$</p>
+<p>where, <em>FAI</em> is frontal area index; <em>FA</em> is the frontal area of the wall from the current direction in $m^2$; <em>TPA</em> is the total plan area in $m^2$.</p>
+</section>
+<section id="complete-aspect-ratio-100">
+<h3>Complete Aspect Ratio (100)<a class="headerlink" href="#complete-aspect-ratio-100" title="Link to this heading"></a></h3>
+<p>The ratio of building surface area and exposed ground area to the total plan area. <a class="reference internal" href="#burian2003" id="id8"><span>[Burian2003]</span></a> Eq. 15</p>
+<p>$CAR = \frac{BSA + (PA - BPA)}{TPA}$</p>
+<p>where, <em>BSA</em> is the building surface area in $m^2$; <em>BPA</em> is the building plan area in $m^2$; <em>TPA</em> is the total plan area in $m^2$.</p>
+</section>
+<section id="height-to-width-ratio-101">
+<h3>Height-to-Width Ratio (101)<a class="headerlink" href="#height-to-width-ratio-101" title="Link to this heading"></a></h3>
+<p>The ratio of the building height to the street width. <strong>naturf</strong> generalizes this as the ratio of average height of buildings in the total plan area to average distance from the current building to all other buildings in the total plan area. If a building has no other buildings in its total plan area, the average distance is set to a default value. <a class="reference internal" href="#burian2003" id="id9"><span>[Burian2003]</span></a> Eq. 18</p>
+<p>$\overline{\lambda_s} = \frac{\overline{z_h}}{\overline{W}}$</p>
+<p>where, $\overline{\lambda_s}$ is the average height-to-width ratio; $\overline{z_h}$ is the average building height in m; $\overline{W}$ is the average distance between buildings.</p>
+</section>
+<section id="sky-view-factor-102">
+<h3>Sky-View Factor (102)<a class="headerlink" href="#sky-view-factor-102" title="Link to this heading"></a></h3>
+<p>The fraction of visible sky in a given area. <strong>naturf</strong> generalizes the distance between buildings to be the average distance between the current building and all other buildings in the total plan area.  <a class="reference internal" href="#dirksen2019" id="id10"><span>[Dirksen2019]</span></a> Eq. 1</p>
+<p>$SVF = cos(arctan(\frac{H}{0.5W}))$</p>
+<p>where, <em>SVF</em> is the sky-view factor; <em>H</em> is the building height in m; <em>W</em> is the distance between buildings in m.</p>
+</section>
+<section id="grimmond-oke-roughness-length-103">
+<h3>Grimmond &amp; Oke Roughness Length (103)<a class="headerlink" href="#grimmond-oke-roughness-length-103" title="Link to this heading"></a></h3>
+<p><a class="reference internal" href="#grimmondoke1999" id="id11"><span>[GrimmondOke1999]</span></a> Eq. 2</p>
+<p>$GORL = 0.1 \cdot zh$</p>
+<p>where, <em>GORL</em> is Grimmond &amp; Oke rougness length in m; <em>zh</em> is the building height in m.</p>
+</section>
+<section id="grimmond-oke-displacement-height-104">
+<h3>Grimmond &amp; Oke Displacement Height (104)<a class="headerlink" href="#grimmond-oke-displacement-height-104" title="Link to this heading"></a></h3>
+<p><a class="reference internal" href="#grimmondoke1999" id="id12"><span>[GrimmondOke1999]</span></a> Eq. 1</p>
+<p>$GODH = 0.67 \cdot zh$</p>
+<p>where, <em>GODH</em> is Grimmond &amp; Oke displacement height in m; <em>zh</em> is building height in m.</p>
+</section>
+<section id="raupach-roughness-length-105-107-109-111">
+<h3>Raupach Roughness Length (105, 107, 109, 111)<a class="headerlink" href="#raupach-roughness-length-105-107-109-111" title="Link to this heading"></a></h3>
+<p><a class="reference internal" href="#raupach1994" id="id13"><span>[Raupach1994]</span></a> Eq. 4</p>
+<p>$RRL = zh \cdot (1 - \frac{RDH}{zh}) \cdot exp(-\kappa \cdot (C_{S} + C_{R} \cdot \lambda)^{-0.5} - \Psi_{h}))$</p>
+<p>where, <em>RRL</em> is the Raupach roughness length in m; <em>RDH</em> is the Raupach displacement height in m; $\kappa$ is von Kármán’s constant = 0.4; $C_S$ is the substrate-surface drag coefficient = 0.003; $C_R$ is the roughness-element drag coefficient = 0.3; $\lambda$ is the frontal area index; $\Psi_h$ is the roughness-sublayer influence function = 0.193.</p>
+</section>
+<section id="raupach-displacment-height-106-108-110-112">
+<h3>Raupach Displacment Height (106, 108, 110, 112)<a class="headerlink" href="#raupach-displacment-height-106-108-110-112" title="Link to this heading"></a></h3>
+<p><a class="reference internal" href="#raupach1994" id="id14"><span>[Raupach1994]</span></a> Eq. 8</p>
+<p>$RDH = zh \cdot (1 - (\frac{1 - \exp(-\sqrt(c_{d1} \cdot \Lambda))}{\sqrt(c_{d1} \cdot \Lambda)}))$</p>
+<p>where, <em>RDH</em> is the Raupach displacement height in m; $c_{d1}$ is a constant = 7.5; $\Lambda$ is frontal area index times 2.</p>
+</section>
+<section id="macdonald-et-al-roughness-length-113-116">
+<h3>Macdonald et al. Roughness Length (113-116)<a class="headerlink" href="#macdonald-et-al-roughness-length-113-116" title="Link to this heading"></a></h3>
+<p><a class="reference internal" href="#macdonald1998" id="id15"><span>[Macdonald1998]</span></a> Eq. 22</p>
+<p>$MRL = zh \cdot (1 - \frac{MDH}{zh})\exp(-(0.5*\beta\frac{C_{D}}{\kappa^2}(1 - \frac{MDH}{zh})\frac{A_{f}}{A_{d}})^{-0.5})$</p>
+<p>where, <em>MRL</em> is the Macdonald roughness length in m; <em>zh</em> is the building height in m; <em>MDH</em> is the Macdonald displacement height in m; $\beta$ is the beta coefficient = 1; $C_D$ is the obstacle drag coefficient = 1.12; $\kappa$ is von Kármán’s constant = 0.4; $A_f$ is the frontal area of the building in $m^2$; $A_d$ is the total surface area of the buildings in the plan area divided by the number of buildings in $m^2$.</p>
+</section>
+<section id="macdonald-et-al-displacement-height-117">
+<h3>Macdonald et al. Displacement Height (117)<a class="headerlink" href="#macdonald-et-al-displacement-height-117" title="Link to this heading"></a></h3>
+<p><a class="reference internal" href="#macdonald1998" id="id16"><span>[Macdonald1998]</span></a> Eq. 23</p>
+<p>$MDH = zh \cdot (1 + \frac{1}{A^\lambda} \cdot (\lambda - 1))$</p>
+<p>where, <em>MDH</em> is the Macdonald displacement height in m; <em>zh</em> is the building height in m; <em>A</em> is a constant = 3.59; $\lambda$ is the plan area density.</p>
+</section>
+<section id="vertical-distribution-of-building-heights-118-132">
+<h3>Vertical Distribution of Building Heights (118-132)<a class="headerlink" href="#vertical-distribution-of-building-heights-118-132" title="Link to this heading"></a></h3>
+<p>The vertical distribution of building heights is a representation of where buildings are located at each vertical level. <strong>naturf</strong> represents buildings as arbitrary float values in an array, and each vertical dimension of the array shows how many buildings reach that height. <a class="reference internal" href="#burian2003" id="id17"><span>[Burian2003]</span></a></p>
 </section>
 </section>
-<section id="key-outputs">
-<h2>Key outputs<a class="headerlink" href="#key-outputs" title="Permalink to this headline"></a></h2>
-<p>The following are the outputs and their descriptions from the Pandas DataFrame that is generated when calling <code class="docutils literal notranslate"><span class="pre">run()</span></code> to site power plant for all regions in the CONUS for all technologies:</p>
-<table class="docutils align-default">
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Name</p></th>
-<th class="head"><p>Description</p></th>
-<th class="head"><p>Units</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>region_name</p></td>
-<td><p>Name of region</p></td>
-<td><p>NA</p></td>
-</tr>
-<tr class="row-odd"><td><p>tech_id</p></td>
-<td><p>Technology ID</p></td>
-<td><p>NA</p></td>
-</tr>
-<tr class="row-even"><td><p>tech_name</p></td>
-<td><p>Technology name</p></td>
-<td><p>NA</p></td>
-</tr>
-<tr class="row-odd"><td><p>unit_size_mw</p></td>
-<td><p>Power plant unit size</p></td>
-<td><p>MW</p></td>
-</tr>
-<tr class="row-even"><td><p>xcoord</p></td>
-<td><p>X coordinate in the default <a class="reference external" href="https://spatialreference.org/ref/esri/usa-contiguous-albers-equal-area-conic/">CRS</a></p></td>
-<td><p>meters</p></td>
-</tr>
-<tr class="row-odd"><td><p>ycoord</p></td>
-<td><p>Y coordinate in the default <a class="reference external" href="https://spatialreference.org/ref/esri/usa-contiguous-albers-equal-area-conic/">CRS</a></p></td>
-<td><p>meters</p></td>
-</tr>
-<tr class="row-even"><td><p>index</p></td>
-<td><p>Index position in the flattend 2D array</p></td>
-<td><p>NA</p></td>
-</tr>
-<tr class="row-odd"><td><p>buffer_in_km</p></td>
-<td><p>Exclusion buffer around site</p></td>
-<td><p>km</p></td>
-</tr>
-<tr class="row-even"><td><p>sited_year</p></td>
-<td><p>Year of siting</p></td>
-<td><p>year</p></td>
-</tr>
-<tr class="row-odd"><td><p>retirement_year</p></td>
-<td><p>Year of retirement</p></td>
-<td><p>year</p></td>
-</tr>
-<tr class="row-even"><td><p>lmp_zone</p></td>
-<td><p>LMP zone ID</p></td>
-<td><p>NA</p></td>
-</tr>
-<tr class="row-odd"><td><p>locational_marginal_price_usd_per_mwh</p></td>
-<td><p>See <a class="reference internal" href="#locational-marginal-price-lmp"><span class="std std-ref">Locational marginal price (LMP)</span></a></p></td>
-<td><p>$/MWh</p></td>
-</tr>
-<tr class="row-even"><td><p>generation_mwh_per_year</p></td>
-<td><p>See <a class="reference internal" href="#generation-g"><span class="std std-ref">Generation (G)</span></a></p></td>
-<td><p>MWh/yr</p></td>
-</tr>
-<tr class="row-odd"><td><p>operating_cost_usd_per_year</p></td>
-<td><p>See <a class="reference internal" href="#operating-cost-oc"><span class="std std-ref">Operating cost (OC)</span></a></p></td>
-<td><p>$/yr</p></td>
-</tr>
-<tr class="row-even"><td><p>net_operational_value</p></td>
-<td><p>See <a class="reference internal" href="#net-operating-value"><span class="std std-ref">Net Operating Value</span></a></p></td>
-<td><p>$/yr</p></td>
-</tr>
-<tr class="row-odd"><td><p>interconnection_cost</p></td>
-<td><p>See <a class="reference internal" href="#interconnection-cost"><span class="std std-ref">Interconnection Cost</span></a></p></td>
-<td><p>$/yr</p></td>
-</tr>
-<tr class="row-even"><td><p>net_locational_cost</p></td>
-<td><p>See <a class="reference internal" href="#net-locational-cost"><span class="std std-ref">Net Locational Cost</span></a></p></td>
-<td><p>$/yr</p></td>
-</tr>
-<tr class="row-odd"><td><p>capacity_factor_fraction</p></td>
-<td><p>Capacity factor</p></td>
-<td><p>fraction</p></td>
-</tr>
-<tr class="row-even"><td><p>carbon_capture_rate_fraction</p></td>
-<td><p>Carbon capture rate</p></td>
-<td><p>fraction</p></td>
-</tr>
-<tr class="row-odd"><td><p>fuel_co2_content_tons_per_btu</p></td>
-<td><p>Fuel CO2 content</p></td>
-<td><p>tons/Btu</p></td>
-</tr>
-<tr class="row-even"><td><p>fuel_price_usd_per_mmbtu</p></td>
-<td><p>Fuel price</p></td>
-<td><p>$/MMBtu</p></td>
-</tr>
-<tr class="row-odd"><td><p>fuel_price_esc_rate_fraction</p></td>
-<td><p>Fuel price escalation rate</p></td>
-<td><p>fraction</p></td>
-</tr>
-<tr class="row-even"><td><p>heat_rate_btu_per_kWh</p></td>
-<td><p>Heat rate</p></td>
-<td><p>Btu/kWh</p></td>
-</tr>
-<tr class="row-odd"><td><p>lifetime_yrs</p></td>
-<td><p>Technology lifetime</p></td>
-<td><p>years</p></td>
-</tr>
-<tr class="row-even"><td><p>variable_om_usd_per_mwh</p></td>
-<td><p>Variable operation and maintenance costs of yearly capacity use</p></td>
-<td><p>$/mWh</p></td>
-</tr>
-<tr class="row-odd"><td><p>variable_om_esc_rate_fraction</p></td>
-<td><p>Variable operation and maintenance costs escalation rate</p></td>
-<td><p>fraction</p></td>
-</tr>
-<tr class="row-even"><td><p>carbon_tax_usd_per_ton</p></td>
-<td><p>Carbon tax</p></td>
-<td><p>$/ton</p></td>
-</tr>
-<tr class="row-odd"><td><p>carbon_tax_esc_rate_fraction</p></td>
-<td><p>Carbon tax escalation rate</p></td>
-<td><p>fraction</p></td>
-</tr>
-</tbody>
-</table>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<div role="list" class="citation-list">
+<div class="citation" id="burian2003" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Burian2003<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id2">2</a>,<a role="doc-backlink" href="#id3">3</a>,<a role="doc-backlink" href="#id4">4</a>,<a role="doc-backlink" href="#id5">5</a>,<a role="doc-backlink" href="#id6">6</a>,<a role="doc-backlink" href="#id7">7</a>,<a role="doc-backlink" href="#id8">8</a>,<a role="doc-backlink" href="#id9">9</a>,<a role="doc-backlink" href="#id17">10</a>)</span>
+<p>Burian, S. J., Han, W. S., &amp; Brown, M. J. (2003). Morphological analyses using 3D building databases: Houston, Texas. Department of Civil and Environmental Engineering, University of Utah.</p>
+</div>
+<div class="citation" id="dirksen2019" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">Dirksen2019</a><span class="fn-bracket">]</span></span>
+<p>Dirksen, M., Ronda, R. J., Theeuwes, N. E., &amp; Pagani, G. A. (2019). Sky view factor calculations and its application in urban heat island studies. Urban Climate, 30, 100498.</p>
+</div>
+<div class="citation" id="grimmondoke1999" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>GrimmondOke1999<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id11">1</a>,<a role="doc-backlink" href="#id12">2</a>)</span>
+<p>Grimmond, C. S. B., &amp; Oke, T. R. (1999). Aerodynamic properties of urban areas derived from analysis of surface form. Journal of Applied Meteorology and Climatology, 38(9), 1262-1292.</p>
+</div>
+<div class="citation" id="macdonald1998" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Macdonald1998<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id15">1</a>,<a role="doc-backlink" href="#id16">2</a>)</span>
+<p>Macdonald, R. W., Griffiths, R. F., &amp; Hall, D. J. (1998). An improved method for the estimation of surface roughness of obstacle arrays. Atmospheric environment, 32(11), 1857-1864.</p>
+</div>
+<div class="citation" id="raupach1994" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Raupach1994<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id13">1</a>,<a role="doc-backlink" href="#id14">2</a>)</span>
+<p>Raupach, M. R. (1994). Simplified expressions for vegetation roughness length and zero-plane displacement as functions of canopy height and area index. Boundary-layer meteorology, 71(1), 211-216.</p>
+</div>
+</div>
 </section>
 </section>
 
@@ -1185,7 +374,7 @@ python3 -c <span class="s1">&#39;import cerf; cerf.install_package_data()&#39;</
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+
 
 </footer>
         </div>
@@ -1196,7 +385,7 @@ python3 -c <span class="s1">&#39;import cerf; cerf.install_package_data()&#39;</
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
 
 </body>
 </html>
