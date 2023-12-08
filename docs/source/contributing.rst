@@ -1,5 +1,5 @@
 Contributing to **naturf**
-========================
+==========================
 
 Whether you find a typo in the documentation, find a bug, or want to develop functionality that you think will make **naturf** more robust, you are welcome to contribute!
 

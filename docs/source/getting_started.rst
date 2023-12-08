@@ -35,7 +35,7 @@ Dependencies
     * - click-plugins
       - 1.1.1
     * - cligj
-      - 0.7.2 
+      - 0.7.2
     * - Fiona
       - 1.9.4.post1
     * - geocube
