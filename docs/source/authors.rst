@@ -13,12 +13,12 @@ Contributors
 Additional Developers
 ^^^^^^^^^^^^^^^^^^^^^
 
-* **Emily Rexer (@erexer)**
+* **Em Rexer (@erexer)**
 * **Chris R. Vernon (@crvernon)**
 * **Matthew Seals**
 * **Andy Berres (@q-rai)**
 * **Stefan Krawczyk (@skrawcz)**
-* **Elijah ben Izzy**
+* **Elijah ben Izzy (@elijahbenizzy)**
 
 Product Tester
 ^^^^^^^^^^^^^^
