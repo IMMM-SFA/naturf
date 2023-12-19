@@ -5,6 +5,8 @@ Authors
 -------
 
 * **Levi T. Sweet-Breu (@levisweetbreu)**
+* **Em Rexer (@erexer)**
+* **Chris R. Vernon (@crvernon)**
 * **Melissa R. Allen-Dumas (@mallen2718)**
 
 Contributors
@@ -13,12 +15,10 @@ Contributors
 Additional Developers
 ^^^^^^^^^^^^^^^^^^^^^
 
-* **Em Rexer (@erexer)**
-* **Chris R. Vernon (@crvernon)**
 * **Matthew Seals**
-* **Andy Berres (@q-rai)**
 * **Stefan Krawczyk (@skrawcz)**
 * **Elijah ben Izzy (@elijahbenizzy)**
+* **Andy Berres (@q-rai)**
 
 Product Tester
 ^^^^^^^^^^^^^^
