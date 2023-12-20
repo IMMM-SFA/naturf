@@ -11,6 +11,7 @@ repos:
     hooks:
         - id: ruff
           args: [ --fix, --exit-non-zero-on-fix ]
+          exclude: .rst
 -   repo: https://github.com/ambv/black
     rev: 23.11.0
     hooks:
@@ -19,8 +20,9 @@ repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
+    # Trims trailing whitespace.
     -   id: trailing-whitespace
-    # ensures files are either empty or end with a blank line
+    # Makes sure files end in a newline and only a newline.
     -   id: end-of-file-fixer
     # sorts requirements
     -   id: requirements-txt-fixer
