@@ -1,34 +1,31 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>User guide &mdash; naturf 0.1.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
-      <link rel="stylesheet" type="text/css" href="_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css?v=45cf7dbc" />
-      <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
-      <link rel="stylesheet" type="text/css" href="_static/css/naturf.css?v=f9b8f5c0" />
-      <link rel="stylesheet" type="text/css" href="_static/css/getting_started.css?v=be86cd7f" />
-
-
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" type="text/css" />
+      <link rel="stylesheet" href="_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" type="text/css" />
+      <link rel="stylesheet" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/naturf.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/getting_started.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
 
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=01f34227"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="naturf" href="modules.html" />
-    <link rel="prev" title="Getting started" href="getting_started.html" />
+    <link rel="prev" title="Quickstarter" href="quickstarter.html" />
 </head>
 
 <body class="wy-body-for-nav">
@@ -55,6 +52,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstarter.html">Quickstarter</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">User guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#generalization">Generalization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#setting-up-a-naturf-run">Setting up a <strong>naturf</strong> run</a><ul>
@@ -68,32 +66,36 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#fundamental-equations-and-concepts">Fundamental equations and concepts</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#concepts-definitions">Concepts/Definitions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#supporting-parameters">Supporting Parameters</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#plan-area">Plan Area</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#frontal-length">Frontal Length</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#frontal-area">Frontal Area</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#assumptions">Assumptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lot-area">Lot Area</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#building-height-limit">Building Height Limit</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#frontal-area-density-1-60">Frontal Area Density (1-60)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#plan-area-density-61-75">Plan Area Density (61-75)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#rooftop-area-density-76-90">Rooftop Area Density (76-90)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#plan-area-fraction-91">Plan Area Fraction (91)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mean-building-height-92">Mean Building Height (92)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#standard-deviation-of-building-heights-93">Standard Deviation of Building Heights (93)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#area-weighted-mean-of-building-heights-94">Area Weighted Mean of Building Heights (94)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#building-surface-area-to-plan-area-ratio-95">Building Surface Area to Plan Area Ratio (95)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#frontal-area-index-96-99">Frontal Area Index (96-99)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#complete-aspect-ratio-100">Complete Aspect Ratio (100)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#height-to-width-ratio-101">Height-to-Width Ratio (101)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sky-view-factor-102">Sky-View Factor (102)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#grimmond-oke-roughness-length-103">Grimmond &amp; Oke Roughness Length (103)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#grimmond-oke-displacement-height-104">Grimmond &amp; Oke Displacement Height (104)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#raupach-roughness-length-105-107-109-111">Raupach Roughness Length (105, 107, 109, 111)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#raupach-displacment-height-106-108-110-112">Raupach Displacment Height (106, 108, 110, 112)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#macdonald-et-al-roughness-length-113-116">Macdonald et al. Roughness Length (113-116)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#macdonald-et-al-displacement-height-117">Macdonald et al. Displacement Height (117)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#vertical-distribution-of-building-heights-118-132">Vertical Distribution of Building Heights (118-132)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-parameters">Output Parameters</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#frontal-area-density-1-60">Frontal Area Density (1-60)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plan-area-density-61-75">Plan Area Density (61-75)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rooftop-area-density-76-90">Rooftop Area Density (76-90)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plan-area-fraction-91">Plan Area Fraction (91)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mean-building-height-92">Mean Building Height (92)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#standard-deviation-of-building-heights-93">Standard Deviation of Building Heights (93)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#area-weighted-mean-of-building-heights-94">Area Weighted Mean of Building Heights (94)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#building-surface-area-to-plan-area-ratio-95">Building Surface Area to Plan Area Ratio (95)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#frontal-area-index-96-99">Frontal Area Index (96-99)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#complete-aspect-ratio-100">Complete Aspect Ratio (100)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#height-to-width-ratio-101">Height-to-Width Ratio (101)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sky-view-factor-102">Sky-View Factor (102)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grimmond-oke-roughness-length-103">Grimmond &amp; Oke Roughness Length (103)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grimmond-oke-displacement-height-104">Grimmond &amp; Oke Displacement Height (104)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raupach-roughness-length-105-107-109-111">Raupach Roughness Length (105, 107, 109, 111)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raupach-displacment-height-106-108-110-112">Raupach Displacment Height (106, 108, 110, 112)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#macdonald-et-al-roughness-length-113-116">Macdonald et al. Roughness Length (113-116)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#macdonald-et-al-displacement-height-117">Macdonald et al. Displacement Height (117)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vertical-distribution-of-building-heights-118-132">Vertical Distribution of Building Heights (118-132)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
@@ -134,9 +136,9 @@
            <div itemprop="articleBody">
 
   <section id="user-guide">
-<h1>User guide<a class="headerlink" href="#user-guide" title="Link to this heading"></a></h1>
+<h1>User guide<a class="headerlink" href="#user-guide" title="Permalink to this headline"></a></h1>
 <section id="generalization">
-<h2>Generalization<a class="headerlink" href="#generalization" title="Link to this heading"></a></h2>
+<h2>Generalization<a class="headerlink" href="#generalization" title="Permalink to this headline"></a></h2>
 <p>Though <strong>naturf</strong> is demonstrated for the conterminous United States (CONUS), the package could easily be used in research ranging from regional to global analysis.</p>
 <p><strong>naturf</strong> requires the following inputs to be able to operate:</p>
 <ul class="simple">
@@ -144,19 +146,22 @@
 <li><p>A shapefile of square polygons tessellated over the study area.</p></li>
 <li><p>A CSV file matching each tile name to its index number.</p></li>
 </ul>
+<blockquote>
+<div><p>Let us know if you are using <strong>naturf</strong> in your research in our <a class="reference external" href="https://github.com/IMMM-SFA/naturf/discussions">discussion thread</a>!</p>
+</div></blockquote>
 </section>
 <section id="setting-up-a-naturf-run">
-<h2>Setting up a <strong>naturf</strong> run<a class="headerlink" href="#setting-up-a-naturf-run" title="Link to this heading"></a></h2>
+<h2>Setting up a <strong>naturf</strong> run<a class="headerlink" href="#setting-up-a-naturf-run" title="Permalink to this headline"></a></h2>
 <p>The following with indroduce you to the input data required by <strong>naturf</strong> and how to set up a configuration file to run <strong>naturf</strong>.</p>
 <section id="splitting-the-building-shapefile-into-tiles">
-<h3>Splitting the building shapefile into tiles<a class="headerlink" href="#splitting-the-building-shapefile-into-tiles" title="Link to this heading"></a></h3>
+<h3>Splitting the building shapefile into tiles<a class="headerlink" href="#splitting-the-building-shapefile-into-tiles" title="Permalink to this headline"></a></h3>
 <p><strong>naturf</strong> works optimally with inputs of building shapefiles as regular square tiles that can be processed in parallel. Experiments with Los Angeles found that tiles of 3.2 km by 3.2 km were the most computationally efficient at 100 meter output resolution.</p>
 <section id="generate-a-tessellation">
-<h4>Generate a tessellation<a class="headerlink" href="#generate-a-tessellation" title="Link to this heading"></a></h4>
+<h4>Generate a tessellation<a class="headerlink" href="#generate-a-tessellation" title="Permalink to this headline"></a></h4>
 <p>The first step to splitting the input building shapefile into tiles is to load the shapefile into any GIS software (ArcPro, ArcMap, QGIS, etc.) and run the <a class="reference external" href="https://pro.arcgis.com/en/pro-app/2.8/tool-reference/data-management/generatetesellation.htm">Generate Tessellation</a> tool for ArcPro/ArcMap; <a class="reference external" href="https://docs.qgis.org/2.6/en/docs/user_manual/processing_algs/qgis/vector_creation_tools/creategrid.html">Create Grid</a> for QGIS) with the desired tile size. After the tessellation is created, note the center latitude and longitude in decimal degrees as well as the coordinates of the bottom left corner of the tessellation. All of those coordinates will be needed to set the projection of the output data and to tell WRF where to start placing the data.</p>
 </section>
 <section id="assign-index-numbers">
-<h4>Assign index numbers<a class="headerlink" href="#assign-index-numbers" title="Link to this heading"></a></h4>
+<h4>Assign index numbers<a class="headerlink" href="#assign-index-numbers" title="Permalink to this headline"></a></h4>
 <p>After the tessellation is created, the next step is to use the “Calculate Field” tool to assign index numbers to each tile. By default, the “Generate Tessellation” tool assigns each tile an ID associated with its location, with the letters representing the columns and x-positions and the numbers representing the rows and the y-position. The letters go from A to Z, AA to ZZ, etc. from left to right and the numbers increase as they go top to bottom. The following fields will need to be created and calculated: Columns, Rows, Let_To_Num, First_Index_X, Second_Index_X, First_Index_Y, and Second_Index_Y.</p>
 <p>First, split the IDs into fields representing their columns and rows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Columns = !GRID_ID!.split(&quot;-&quot;)[0]
@@ -168,7 +173,7 @@ Rows = !GRID_ID!.split(&quot;-&quot;)[1]
 First_Index_Y = !Second_Index_Y! - 31
 </pre></div>
 </div>
-<p>The x-indices require an additional step. First, calculate the <code class="docutils literal notranslate"><span class="pre">Let_To_Num</span></code> field by turning the letters in the Columns field into numbers using the code below, which can be adjusted to accomodated as many columns as needed:</p>
+<p>The x-indices require an additional step. First, calculate the <cite>Let_To_Num</cite> field by turning the letters in the Columns field into numbers using the code below, which can be adjusted to accomodated as many columns as needed:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Expression:
 LetToNum(!Columns!)
 </pre></div>
@@ -192,168 +197,180 @@ First_Index_X = !Second_Index_X! - 31
 <p>The attribute table should then be exported to an Excel file using the “Table to Table” tool, and the rest of the indexing will be done in Excel.</p>
 </section>
 <section id="create-csv-file">
-<h4>Create CSV file<a class="headerlink" href="#create-csv-file" title="Link to this heading"></a></h4>
-<p>Now that the tessellation attribute table is an Excel file, all columns can be deleted except for the grid ID column and the indices columns. In new columns, use <code class="docutils literal notranslate"><span class="pre">=TEXT(cell,</span> <span class="pre">&quot;00000&quot;)</span></code> to add leading zeroes to the indices (at least 5 digits are required, more can be added if necessary). In another column, concatenate the indices using <code class="docutils literal notranslate"><span class="pre">=CONCAT(cell1,&quot;-&quot;,cell2,&quot;.&quot;,cell3,&quot;-&quot;,cell4)</span></code>. Copy the <code class="docutils literal notranslate"><span class="pre">GRID_ID</span></code> and concatenated index numbers(important: with headers) into a separate spreadsheet and save as a CSV. This CSV will allow <strong>naturf</strong> to assign the correct index name to the corresponsing binary file.</p>
+<h4>Create CSV file<a class="headerlink" href="#create-csv-file" title="Permalink to this headline"></a></h4>
+<p>Now that the tessellation attribute table is an Excel file, all columns can be deleted except for the grid ID column and the indices columns. In new columns, use <cite>=TEXT(cell, “00000”)</cite> to add leading zeroes to the indices (at least 5 digits are required, more can be added if necessary). In another column, concatenate the indices using <cite>=CONCAT(cell1,”-“,cell2,”.”,cell3,”-“,cell4)</cite>. Copy the <cite>GRID_ID</cite> and concatenated index numbers(important: with headers) into a separate spreadsheet and save as a CSV. This CSV will allow <strong>naturf</strong> to assign the correct index name to the corresponsing binary file.</p>
 </section>
 <section id="spatial-join-and-split-by-attribute">
-<h4>Spatial join and split by attribute<a class="headerlink" href="#spatial-join-and-split-by-attribute" title="Link to this heading"></a></h4>
+<h4>Spatial join and split by attribute<a class="headerlink" href="#spatial-join-and-split-by-attribute" title="Permalink to this headline"></a></h4>
 <p>Back in the GIS software, perform a spatial join with the buildings shapefile being the target features and the tessellation shapefile being the join features. This will create a buildings shapefile where every building has a grid ID associated with it. The last step is to use the “Split by Attribute” tool to separate the buildings into shapefiles for each tile. These shapefiles will be the input to <strong>naturf</strong> along with the CSV with index names.</p>
 </section>
 </section>
 </section>
 <section id="fundamental-equations-and-concepts">
-<h2>Fundamental equations and concepts<a class="headerlink" href="#fundamental-equations-and-concepts" title="Link to this heading"></a></h2>
-<p>The following are the urban parameters calculated by <strong>naturf</strong>.</p>
-<section id="concepts-definitions">
-<h3>Concepts/Definitions<a class="headerlink" href="#concepts-definitions" title="Link to this heading"></a></h3>
+<h2>Fundamental equations and concepts<a class="headerlink" href="#fundamental-equations-and-concepts" title="Permalink to this headline"></a></h2>
+<section id="supporting-parameters">
+<h3>Supporting Parameters<a class="headerlink" href="#supporting-parameters" title="Permalink to this headline"></a></h3>
+<p>The following parameters/concepts are not output from <strong>naturf</strong> by default, but they contribute to the calculation of the output parameters.</p>
 <section id="plan-area">
-<h4>Plan Area<a class="headerlink" href="#plan-area" title="Link to this heading"></a></h4>
+<h4>Plan Area<a class="headerlink" href="#plan-area" title="Permalink to this headline"></a></h4>
 <p>When calculating parameters, <strong>naturf</strong> creates a buffer around each target building called the plan (or dilated) area. Each building has its own plan area which identifies neighbors to that target building which are important for the calculation of parameters. For the parameter definitions below, <em>total plan area</em> refers to the area of that buffer around the target building, while <em>building plan area</em> refers to the sum of building footprints within the <em>total plan area</em>. <em>Total plan area</em> should always be a larger value than the <em>building plan area</em>.</p>
 </section>
 <section id="frontal-length">
-<h4>Frontal Length<a class="headerlink" href="#frontal-length" title="Link to this heading"></a></h4>
+<h4>Frontal Length<a class="headerlink" href="#frontal-length" title="Permalink to this headline"></a></h4>
 <p>For the urban parameters calculated by <strong>naturf</strong>, frontal length refers to the wall length perpendicular to a given direction for all buildings within the target building’s total plan area.</p>
 </section>
 <section id="frontal-area">
-<h4>Frontal Area<a class="headerlink" href="#frontal-area" title="Link to this heading"></a></h4>
+<h4>Frontal Area<a class="headerlink" href="#frontal-area" title="Permalink to this headline"></a></h4>
 <p>For the urban parameters calculated by <strong>naturf</strong>, frontal area refers to the wall area perpendicular to a given direction for all buildings within the target building’s total plan area.</p>
 </section>
-<section id="assumptions">
-<h4>Assumptions<a class="headerlink" href="#assumptions" title="Link to this heading"></a></h4>
+<section id="lot-area">
+<h4>Lot Area<a class="headerlink" href="#lot-area" title="Permalink to this headline"></a></h4>
+<p>For the urban parameters calculated by <strong>naturf</strong>, lot area refers to the total surface area of all buildings
+within a given building’s total plan area divided by the number of buildings in the total plan area.</p>
+</section>
+<section id="building-height-limit">
+<h4>Building Height Limit<a class="headerlink" href="#building-height-limit" title="Permalink to this headline"></a></h4>
 <p>Following NUDAPT, <strong>naturf</strong> bins building heights into five meter increments from 0 to 75 meters. Any building with a height greater than 75 meters is considered as ending at 75 meters.</p>
 </section>
 </section>
+<section id="output-parameters">
+<h3>Output Parameters<a class="headerlink" href="#output-parameters" title="Permalink to this headline"></a></h3>
 <section id="frontal-area-density-1-60">
-<h3>Frontal Area Density (1-60)<a class="headerlink" href="#frontal-area-density-1-60" title="Link to this heading"></a></h3>
+<h4>Frontal Area Density (1-60)<a class="headerlink" href="#frontal-area-density-1-60" title="Permalink to this headline"></a></h4>
 <p>Frontal area density is the frontal area at a certain height increment divided by the total plan area. <strong>naturf</strong> calculates frontal area density from the four cardinal directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters. Parameters 1-15 represent the north, parameters 16-30 represent the west, parameters 31-45 represent the south, and parameters 46-60 represent the east. For instance, parameter 1 gives the north-facing wall area for each building and its neighbors divided by the total plan area. <a class="reference internal" href="#burian2003" id="id1"><span>[Burian2003]</span></a> Eq. 14</p>
-<p>$FAD = \frac{FA}{TPA}$</p>
-<p>where <em>FAD</em> is Frontal area density; <em>FA</em> is the frontal area of the wall from the current direction and height level in $m^2$; <em>TPA</em> is the total plan area in $m^2$.</p>
+<div class="math">
+<p><img src="_images/math/cdfb3400cf4bd5af7162caafe688969cc68ee7c0.png" alt="FAD = \frac{FA}{TPA}"/></p>
+</div><p>where <cite>FAD</cite> is Frontal area density; <cite>FA</cite> is the frontal area of the wall from the current direction and height level in <img class="math" src="_images/math/950616440da899e8ebe8ffec67f98321b438e7a2.png" alt="m^2"/>; <cite>TPA</cite> is the total plan area in <img class="math" src="_images/math/950616440da899e8ebe8ffec67f98321b438e7a2.png" alt="m^2"/>.</p>
 </section>
 <section id="plan-area-density-61-75">
-<h3>Plan Area Density (61-75)<a class="headerlink" href="#plan-area-density-61-75" title="Link to this heading"></a></h3>
+<h4>Plan Area Density (61-75)<a class="headerlink" href="#plan-area-density-61-75" title="Permalink to this headline"></a></h4>
 <p>Plan area density is the ratio of building plan area to the total plan area, calculated in 5 meter increments from ground level to 75 meters. <strong>naturf</strong> projects the building footprint vertically to the building height, meaning plan area density is the same at every vertical level. <a class="reference internal" href="#burian2003" id="id2"><span>[Burian2003]</span></a> Eq. 7</p>
-<p>$PAD = \frac{BPA}{TPA}$</p>
-<p>where, <em>PAD</em> is the plan area density; <em>BPA</em> is the building plan area in $m^2$; <em>TPA</em> is the total plan area in $m^2$.</p>
+<div class="math">
+<p><img src="_images/math/0a6941aaa77d66e0e2edc65ce8d51b3f89299d1b.png" alt="PAD = \frac{BPA}{TPA}"/></p>
+</div><p>where, <cite>PAD</cite> is the plan area density; <cite>BPA</cite> is the building plan area in <img class="math" src="_images/math/950616440da899e8ebe8ffec67f98321b438e7a2.png" alt="m^2"/>; <cite>TPA</cite> is the total plan area in <img class="math" src="_images/math/950616440da899e8ebe8ffec67f98321b438e7a2.png" alt="m^2"/>.</p>
 </section>
 <section id="rooftop-area-density-76-90">
-<h3>Rooftop Area Density (76-90)<a class="headerlink" href="#rooftop-area-density-76-90" title="Link to this heading"></a></h3>
+<h4>Rooftop Area Density (76-90)<a class="headerlink" href="#rooftop-area-density-76-90" title="Permalink to this headline"></a></h4>
 <p>Rooftop area density is the ratio of building rooftop area to the total plan area, calculated in 5 meter increments from ground level to 75 meters. Because <strong>naturf</strong> projects building footprints vertically to the building height, these parameters are equal to the plan area density. <a class="reference internal" href="#burian2003" id="id3"><span>[Burian2003]</span></a> Eq. 7</p>
 </section>
 <section id="plan-area-fraction-91">
-<h3>Plan Area Fraction (91)<a class="headerlink" href="#plan-area-fraction-91" title="Link to this heading"></a></h3>
+<h4>Plan Area Fraction (91)<a class="headerlink" href="#plan-area-fraction-91" title="Permalink to this headline"></a></h4>
 <p>Plan area fraction is the ratio of building plan area to the total plan area, calculated at ground level. For <strong>naturf</strong>, this is equal to plan area density at any height increment. <a class="reference internal" href="#burian2003" id="id4"><span>[Burian2003]</span></a> Eq. 4</p>
 </section>
 <section id="mean-building-height-92">
-<h3>Mean Building Height (92)<a class="headerlink" href="#mean-building-height-92" title="Link to this heading"></a></h3>
+<h4>Mean Building Height (92)<a class="headerlink" href="#mean-building-height-92" title="Permalink to this headline"></a></h4>
 <p>The average building height of all buildings within the total plan area.</p>
 </section>
 <section id="standard-deviation-of-building-heights-93">
-<h3>Standard Deviation of Building Heights (93)<a class="headerlink" href="#standard-deviation-of-building-heights-93" title="Link to this heading"></a></h3>
+<h4>Standard Deviation of Building Heights (93)<a class="headerlink" href="#standard-deviation-of-building-heights-93" title="Permalink to this headline"></a></h4>
 <p>The standard deviation of building heights for all buildings within the total plan area.</p>
 </section>
 <section id="area-weighted-mean-of-building-heights-94">
-<h3>Area Weighted Mean of Building Heights (94)<a class="headerlink" href="#area-weighted-mean-of-building-heights-94" title="Link to this heading"></a></h3>
+<h4>Area Weighted Mean of Building Heights (94)<a class="headerlink" href="#area-weighted-mean-of-building-heights-94" title="Permalink to this headline"></a></h4>
 <p>The average height of all buildings within the total plan area weighted by the total plan area. <a class="reference internal" href="#burian2003" id="id5"><span>[Burian2003]</span></a> Eq. 3</p>
-<p>$AWMH = \frac{\Sigma{A_i zh_i}}{\Sigma{A_i}}$</p>
-<p>where, <em>AWMH</em> is the area weighted mean height in m; $A_i$ is the current building plan area in $m^2$; $zh_i$ is the current building height in m.</p>
+<div class="math">
+<p><img src="_images/math/0e12ede7c5f0339c83956b5db0f5e1731650fdc1.png" alt="AWMH = \frac{\Sigma{A_i zh_i}}{\Sigma{A_i}}"/></p>
+</div><p>where, <cite>AWMH</cite> is the area weighted mean height in m; <cite>A_i</cite> is the current building plan area in <cite>m^2</cite>; <cite>zh_i</cite> is the current building height in m.</p>
 </section>
 <section id="building-surface-area-to-plan-area-ratio-95">
-<h3>Building Surface Area to Plan Area Ratio (95)<a class="headerlink" href="#building-surface-area-to-plan-area-ratio-95" title="Link to this heading"></a></h3>
+<h4>Building Surface Area to Plan Area Ratio (95)<a class="headerlink" href="#building-surface-area-to-plan-area-ratio-95" title="Permalink to this headline"></a></h4>
 <p>The ratio of all the surface areas of a building to the total plan area. <a class="reference internal" href="#burian2003" id="id6"><span>[Burian2003]</span></a> Eq. 16</p>
 </section>
 <section id="frontal-area-index-96-99">
-<h3>Frontal Area Index (96-99)<a class="headerlink" href="#frontal-area-index-96-99" title="Link to this heading"></a></h3>
+<h4>Frontal Area Index (96-99)<a class="headerlink" href="#frontal-area-index-96-99" title="Permalink to this headline"></a></h4>
 <p>Frontal area index is the ratio of the entire frontal area of a building to the total plan area. <strong>naturf</strong> calculates the frontal area index from the four cardinal directions. Because buildings often do not face a cardinal direction head on, <strong>naturf</strong> uses the average alongwind and crosswind distance from the current building centroid to all other building centroids for the total plan area. <a class="reference internal" href="#burian2003" id="id7"><span>[Burian2003]</span></a> Eq. 12</p>
-<p>$FAI = \frac{FA}{TPA}$</p>
-<p>where, <em>FAI</em> is frontal area index; <em>FA</em> is the frontal area of the wall from the current direction in $m^2$; <em>TPA</em> is the total plan area in $m^2$.</p>
+<div class="math">
+<p><img src="_images/math/c72c80e279c529db6a6bcb5636ff9eba292b070e.png" alt="FAI = \frac{FA}{TPA}"/></p>
+</div><p>where, <cite>FAI</cite> is frontal area index; <cite>FA</cite> is the frontal area of the wall from the current direction in <img class="math" src="_images/math/950616440da899e8ebe8ffec67f98321b438e7a2.png" alt="m^2"/>; <cite>TPA</cite> is the total plan area in <img class="math" src="_images/math/950616440da899e8ebe8ffec67f98321b438e7a2.png" alt="m^2"/>.</p>
 </section>
 <section id="complete-aspect-ratio-100">
-<h3>Complete Aspect Ratio (100)<a class="headerlink" href="#complete-aspect-ratio-100" title="Link to this heading"></a></h3>
+<h4>Complete Aspect Ratio (100)<a class="headerlink" href="#complete-aspect-ratio-100" title="Permalink to this headline"></a></h4>
 <p>The ratio of building surface area and exposed ground area to the total plan area. <a class="reference internal" href="#burian2003" id="id8"><span>[Burian2003]</span></a> Eq. 15</p>
-<p>$CAR = \frac{BSA + (PA - BPA)}{TPA}$</p>
-<p>where, <em>BSA</em> is the building surface area in $m^2$; <em>BPA</em> is the building plan area in $m^2$; <em>TPA</em> is the total plan area in $m^2$.</p>
+<div class="math">
+<p><img src="_images/math/7e57a7652755b0be14e6298efa10461e5831193e.png" alt="CAR = \frac{BSA + (PA - BPA)}{TPA}"/></p>
+</div><p>where, <cite>BSA</cite> is the building surface area in <img class="math" src="_images/math/950616440da899e8ebe8ffec67f98321b438e7a2.png" alt="m^2"/>; <cite>BPA</cite> is the building plan area in <img class="math" src="_images/math/950616440da899e8ebe8ffec67f98321b438e7a2.png" alt="m^2"/>; <cite>TPA</cite> is the total plan area in <img class="math" src="_images/math/950616440da899e8ebe8ffec67f98321b438e7a2.png" alt="m^2"/>.</p>
 </section>
 <section id="height-to-width-ratio-101">
-<h3>Height-to-Width Ratio (101)<a class="headerlink" href="#height-to-width-ratio-101" title="Link to this heading"></a></h3>
+<h4>Height-to-Width Ratio (101)<a class="headerlink" href="#height-to-width-ratio-101" title="Permalink to this headline"></a></h4>
 <p>The ratio of the building height to the street width. <strong>naturf</strong> generalizes this as the ratio of average height of buildings in the total plan area to average distance from the current building to all other buildings in the total plan area. If a building has no other buildings in its total plan area, the average distance is set to a default value. <a class="reference internal" href="#burian2003" id="id9"><span>[Burian2003]</span></a> Eq. 18</p>
-<p>$\overline{\lambda_s} = \frac{\overline{z_h}}{\overline{W}}$</p>
-<p>where, $\overline{\lambda_s}$ is the average height-to-width ratio; $\overline{z_h}$ is the average building height in m; $\overline{W}$ is the average distance between buildings.</p>
+<div class="math">
+<p><img src="_images/math/4aa2585323f78d7968fc1a086caee86947af337c.png" alt="\overline{\lambda_s} = \frac{\overline{z_h}}{\overline{W}}"/></p>
+</div><p>where, <img class="math" src="_images/math/0242274bda6b238c3186d7b2d7d45db88288600d.png" alt="\overline{\lambda_s}"/> is the average height-to-width ratio; <img class="math" src="_images/math/e29a886bb0700bebc3330e9062b9ebcd9300f5b9.png" alt="\overline{z_h}"/> is the average building height in m; <img class="math" src="_images/math/099cc2b7724516c5ffdd6aae018134f6f0098b1b.png" alt="\overline{W}"/> is the average distance between buildings.</p>
 </section>
 <section id="sky-view-factor-102">
-<h3>Sky-View Factor (102)<a class="headerlink" href="#sky-view-factor-102" title="Link to this heading"></a></h3>
+<h4>Sky-View Factor (102)<a class="headerlink" href="#sky-view-factor-102" title="Permalink to this headline"></a></h4>
 <p>The fraction of visible sky in a given area. <strong>naturf</strong> generalizes the distance between buildings to be the average distance between the current building and all other buildings in the total plan area.  <a class="reference internal" href="#dirksen2019" id="id10"><span>[Dirksen2019]</span></a> Eq. 1</p>
-<p>$SVF = cos(arctan(\frac{H}{0.5W}))$</p>
-<p>where, <em>SVF</em> is the sky-view factor; <em>H</em> is the building height in m; <em>W</em> is the distance between buildings in m.</p>
+<div class="math">
+<p><img src="_images/math/b716aa17cb15697de5d2cf8a4939d1b75c7cadef.png" alt="SVF = cos(arctan(\frac{H}{0.5W}))"/></p>
+</div><p>where, <cite>SVF</cite> is the sky-view factor; <cite>H</cite> is the building height in m; <cite>W</cite> is the distance between buildings in m.</p>
 </section>
 <section id="grimmond-oke-roughness-length-103">
-<h3>Grimmond &amp; Oke Roughness Length (103)<a class="headerlink" href="#grimmond-oke-roughness-length-103" title="Link to this heading"></a></h3>
+<h4>Grimmond &amp; Oke Roughness Length (103)<a class="headerlink" href="#grimmond-oke-roughness-length-103" title="Permalink to this headline"></a></h4>
 <p><a class="reference internal" href="#grimmondoke1999" id="id11"><span>[GrimmondOke1999]</span></a> Eq. 2</p>
-<p>$GORL = 0.1 \cdot zh$</p>
-<p>where, <em>GORL</em> is Grimmond &amp; Oke rougness length in m; <em>zh</em> is the building height in m.</p>
+<div class="math">
+<p><img src="_images/math/b523882fcc9f259256e01a1b7535a4cefcab5889.png" alt="GORL = 0.1 \cdot zh"/></p>
+</div><p>where, <cite>GORL</cite> is Grimmond &amp; Oke rougness length in m; <cite>zh</cite> is the building height in m.</p>
 </section>
 <section id="grimmond-oke-displacement-height-104">
-<h3>Grimmond &amp; Oke Displacement Height (104)<a class="headerlink" href="#grimmond-oke-displacement-height-104" title="Link to this heading"></a></h3>
+<h4>Grimmond &amp; Oke Displacement Height (104)<a class="headerlink" href="#grimmond-oke-displacement-height-104" title="Permalink to this headline"></a></h4>
 <p><a class="reference internal" href="#grimmondoke1999" id="id12"><span>[GrimmondOke1999]</span></a> Eq. 1</p>
-<p>$GODH = 0.67 \cdot zh$</p>
-<p>where, <em>GODH</em> is Grimmond &amp; Oke displacement height in m; <em>zh</em> is building height in m.</p>
+<div class="math">
+<p><img src="_images/math/fdbb4fafedc1863cfd64de32f796fd2ce73d1748.png" alt="GODH = 0.67 \cdot zh"/></p>
+</div><p>where, <cite>GODH</cite> is Grimmond &amp; Oke displacement height in m; <cite>zh</cite> is building height in m.</p>
 </section>
 <section id="raupach-roughness-length-105-107-109-111">
-<h3>Raupach Roughness Length (105, 107, 109, 111)<a class="headerlink" href="#raupach-roughness-length-105-107-109-111" title="Link to this heading"></a></h3>
+<h4>Raupach Roughness Length (105, 107, 109, 111)<a class="headerlink" href="#raupach-roughness-length-105-107-109-111" title="Permalink to this headline"></a></h4>
 <p><a class="reference internal" href="#raupach1994" id="id13"><span>[Raupach1994]</span></a> Eq. 4</p>
-<p>$RRL = zh \cdot (1 - \frac{RDH}{zh}) \cdot exp(-\kappa \cdot (C_{S} + C_{R} \cdot \lambda)^{-0.5} - \Psi_{h}))$</p>
-<p>where, <em>RRL</em> is the Raupach roughness length in m; <em>RDH</em> is the Raupach displacement height in m; $\kappa$ is von Kármán’s constant = 0.4; $C_S$ is the substrate-surface drag coefficient = 0.003; $C_R$ is the roughness-element drag coefficient = 0.3; $\lambda$ is the frontal area index; $\Psi_h$ is the roughness-sublayer influence function = 0.193.</p>
+<div class="math">
+<p><img src="_images/math/13d5bf91a5ff0793b6488695f707ce9ca2c15791.png" alt="RRL = zh \cdot (1 - \frac{RDH}{zh}) \cdot exp(-\kappa \cdot (C_{S} + C_{R} \cdot \lambda)^{-0.5} - \Psi_{h})"/></p>
+</div><p>where, <cite>RRL</cite> is the Raupach roughness length in m; <cite>RDH</cite> is the Raupach displacement height in m; <img class="math" src="_images/math/261e3eb56c1757dd003745ee4cc53aa595565af1.png" alt="\kappa"/> is von Kármán’s constant = 0.4; <cite>C_S</cite> is the substrate-surface drag coefficient = 0.003; <cite>C_R</cite> is the roughness-element drag coefficient = 0.3; <img class="math" src="_images/math/cefc603e5658facb747581f9567192993f21c7ab.png" alt="\lambda"/> is the frontal area index; <img class="math" src="_images/math/b7dfeae416712985339d85739e506cc85720818a.png" alt="\Psi_h"/> is the roughness-sublayer influence function = 0.193.</p>
 </section>
 <section id="raupach-displacment-height-106-108-110-112">
-<h3>Raupach Displacment Height (106, 108, 110, 112)<a class="headerlink" href="#raupach-displacment-height-106-108-110-112" title="Link to this heading"></a></h3>
+<h4>Raupach Displacment Height (106, 108, 110, 112)<a class="headerlink" href="#raupach-displacment-height-106-108-110-112" title="Permalink to this headline"></a></h4>
 <p><a class="reference internal" href="#raupach1994" id="id14"><span>[Raupach1994]</span></a> Eq. 8</p>
-<p>$RDH = zh \cdot (1 - (\frac{1 - \exp(-\sqrt(c_{d1} \cdot \Lambda))}{\sqrt(c_{d1} \cdot \Lambda)}))$</p>
-<p>where, <em>RDH</em> is the Raupach displacement height in m; $c_{d1}$ is a constant = 7.5; $\Lambda$ is frontal area index times 2.</p>
+<div class="math">
+<p><img src="_images/math/d5db94b8846de8c9f1dd77114119ce2352a81fec.png" alt="RDH = zh \cdot (1 - (\frac{1 - \exp(-\sqrt(c_{d1} \cdot \Lambda))}{\sqrt(c_{d1} \cdot \Lambda)}))"/></p>
+</div><p>where, <cite>RDH</cite> is the Raupach displacement height in m; <img class="math" src="_images/math/c518c456c28ccc685177d5d87175bf064b5b8ab5.png" alt="c_{d1}"/> is a constant = 7.5; <img class="math" src="_images/math/65e60d95fc7bc06725cb967be10982e4bf310122.png" alt="\Lambda"/> is frontal area index times 2.</p>
 </section>
 <section id="macdonald-et-al-roughness-length-113-116">
-<h3>Macdonald et al. Roughness Length (113-116)<a class="headerlink" href="#macdonald-et-al-roughness-length-113-116" title="Link to this heading"></a></h3>
+<h4>Macdonald et al. Roughness Length (113-116)<a class="headerlink" href="#macdonald-et-al-roughness-length-113-116" title="Permalink to this headline"></a></h4>
 <p><a class="reference internal" href="#macdonald1998" id="id15"><span>[Macdonald1998]</span></a> Eq. 22</p>
-<p>$MRL = zh \cdot (1 - \frac{MDH}{zh})\exp(-(0.5*\beta\frac{C_{D}}{\kappa^2}(1 - \frac{MDH}{zh})\frac{A_{f}}{A_{d}})^{-0.5})$</p>
-<p>where, <em>MRL</em> is the Macdonald roughness length in m; <em>zh</em> is the building height in m; <em>MDH</em> is the Macdonald displacement height in m; $\beta$ is the beta coefficient = 1; $C_D$ is the obstacle drag coefficient = 1.12; $\kappa$ is von Kármán’s constant = 0.4; $A_f$ is the frontal area of the building in $m^2$; $A_d$ is the total surface area of the buildings in the plan area divided by the number of buildings in $m^2$.</p>
+<div class="math">
+<p><img src="_images/math/297e5602458de1baab8aaa02cad4592258491ebf.png" alt="MRL = zh \cdot (1 - \frac{MDH}{zh})\exp(-(0.5*\beta\frac{C_{D}}{\kappa^2}(1 - \frac{MDH}{zh})\frac{A_{f}}{A_{l}})^{-0.5})"/></p>
+</div><p>where, <cite>MRL</cite> is the Macdonald roughness length in m; <cite>zh</cite> is the building height in m; <cite>MDH</cite> is the Macdonald displacement height in m; <img class="math" src="_images/math/7138dad9ac96835665b17f5817eacfcaa9b834c9.png" alt="\beta"/> is the beta coefficient = 1; <img class="math" src="_images/math/ad8ff1b7ba5c7eef28184bc829649423b8bf8b3b.png" alt="C_D"/> is the obstacle drag coefficient = 1.12; <img class="math" src="_images/math/261e3eb56c1757dd003745ee4cc53aa595565af1.png" alt="\kappa"/> is von Kármán’s constant = 0.4; <img class="math" src="_images/math/36cc2dc5583a0705237ac5f9cfc42373f131cdfb.png" alt="A_f"/> is the frontal area of the building in <img class="math" src="_images/math/950616440da899e8ebe8ffec67f98321b438e7a2.png" alt="m^2"/>; <img class="math" src="_images/math/09561e970875c2498666f202bafaacebfe48fb75.png" alt="A_l"/> is the lot area of the building in <img class="math" src="_images/math/950616440da899e8ebe8ffec67f98321b438e7a2.png" alt="m^2"/>.</p>
 </section>
 <section id="macdonald-et-al-displacement-height-117">
-<h3>Macdonald et al. Displacement Height (117)<a class="headerlink" href="#macdonald-et-al-displacement-height-117" title="Link to this heading"></a></h3>
+<h4>Macdonald et al. Displacement Height (117)<a class="headerlink" href="#macdonald-et-al-displacement-height-117" title="Permalink to this headline"></a></h4>
 <p><a class="reference internal" href="#macdonald1998" id="id16"><span>[Macdonald1998]</span></a> Eq. 23</p>
-<p>$MDH = zh \cdot (1 + \frac{1}{A^\lambda} \cdot (\lambda - 1))$</p>
-<p>where, <em>MDH</em> is the Macdonald displacement height in m; <em>zh</em> is the building height in m; <em>A</em> is a constant = 3.59; $\lambda$ is the plan area density.</p>
+<div class="math">
+<p><img src="_images/math/3f3d84d4e26c6bdd39b60a88d2933fd1f02e1f5e.png" alt="MDH = zh \cdot (1 + \frac{1}{A^\lambda} \cdot (\lambda - 1))"/></p>
+</div><p>where, <cite>MDH</cite> is the Macdonald displacement height in m; <cite>zh</cite> is the building height in m; <cite>A</cite> is a constant = 3.59; <img class="math" src="_images/math/cefc603e5658facb747581f9567192993f21c7ab.png" alt="\lambda"/> is the plan area density.</p>
 </section>
 <section id="vertical-distribution-of-building-heights-118-132">
-<h3>Vertical Distribution of Building Heights (118-132)<a class="headerlink" href="#vertical-distribution-of-building-heights-118-132" title="Link to this heading"></a></h3>
+<h4>Vertical Distribution of Building Heights (118-132)<a class="headerlink" href="#vertical-distribution-of-building-heights-118-132" title="Permalink to this headline"></a></h4>
 <p>The vertical distribution of building heights is a representation of where buildings are located at each vertical level. <strong>naturf</strong> represents buildings as arbitrary float values in an array, and each vertical dimension of the array shows how many buildings reach that height. <a class="reference internal" href="#burian2003" id="id17"><span>[Burian2003]</span></a></p>
 </section>
 </section>
+</section>
 <section id="references">
-<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
-<div role="list" class="citation-list">
-<div class="citation" id="burian2003" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>Burian2003<span class="fn-bracket">]</span></span>
-<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id2">2</a>,<a role="doc-backlink" href="#id3">3</a>,<a role="doc-backlink" href="#id4">4</a>,<a role="doc-backlink" href="#id5">5</a>,<a role="doc-backlink" href="#id6">6</a>,<a role="doc-backlink" href="#id7">7</a>,<a role="doc-backlink" href="#id8">8</a>,<a role="doc-backlink" href="#id9">9</a>,<a role="doc-backlink" href="#id17">10</a>)</span>
-<p>Burian, S. J., Han, W. S., &amp; Brown, M. J. (2003). Morphological analyses using 3D building databases: Houston, Texas. Department of Civil and Environmental Engineering, University of Utah.</p>
-</div>
-<div class="citation" id="dirksen2019" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">Dirksen2019</a><span class="fn-bracket">]</span></span>
-<p>Dirksen, M., Ronda, R. J., Theeuwes, N. E., &amp; Pagani, G. A. (2019). Sky view factor calculations and its application in urban heat island studies. Urban Climate, 30, 100498.</p>
-</div>
-<div class="citation" id="grimmondoke1999" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>GrimmondOke1999<span class="fn-bracket">]</span></span>
-<span class="backrefs">(<a role="doc-backlink" href="#id11">1</a>,<a role="doc-backlink" href="#id12">2</a>)</span>
-<p>Grimmond, C. S. B., &amp; Oke, T. R. (1999). Aerodynamic properties of urban areas derived from analysis of surface form. Journal of Applied Meteorology and Climatology, 38(9), 1262-1292.</p>
-</div>
-<div class="citation" id="macdonald1998" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>Macdonald1998<span class="fn-bracket">]</span></span>
-<span class="backrefs">(<a role="doc-backlink" href="#id15">1</a>,<a role="doc-backlink" href="#id16">2</a>)</span>
-<p>Macdonald, R. W., Griffiths, R. F., &amp; Hall, D. J. (1998). An improved method for the estimation of surface roughness of obstacle arrays. Atmospheric environment, 32(11), 1857-1864.</p>
-</div>
-<div class="citation" id="raupach1994" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>Raupach1994<span class="fn-bracket">]</span></span>
-<span class="backrefs">(<a role="doc-backlink" href="#id13">1</a>,<a role="doc-backlink" href="#id14">2</a>)</span>
-<p>Raupach, M. R. (1994). Simplified expressions for vegetation roughness length and zero-plane displacement as functions of canopy height and area index. Boundary-layer meteorology, 71(1), 211-216.</p>
-</div>
-</div>
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline"></a></h2>
+<dl class="citation">
+<dt class="label" id="burian2003"><span class="brackets">Burian2003</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id2">2</a>,<a href="#id3">3</a>,<a href="#id4">4</a>,<a href="#id5">5</a>,<a href="#id6">6</a>,<a href="#id7">7</a>,<a href="#id8">8</a>,<a href="#id9">9</a>,<a href="#id17">10</a>)</span></dt>
+<dd><p>Burian, S. J., Han, W. S., &amp; Brown, M. J. (2003). Morphological analyses using 3D building databases: Houston, Texas. Department of Civil and Environmental Engineering, University of Utah.</p>
+</dd>
+<dt class="label" id="dirksen2019"><span class="brackets"><a class="fn-backref" href="#id10">Dirksen2019</a></span></dt>
+<dd><p>Dirksen, M., Ronda, R. J., Theeuwes, N. E., &amp; Pagani, G. A. (2019). Sky view factor calculations and its application in urban heat island studies. Urban Climate, 30, 100498.</p>
+</dd>
+<dt class="label" id="grimmondoke1999"><span class="brackets">GrimmondOke1999</span><span class="fn-backref">(<a href="#id11">1</a>,<a href="#id12">2</a>)</span></dt>
+<dd><p>Grimmond, C. S. B., &amp; Oke, T. R. (1999). Aerodynamic properties of urban areas derived from analysis of surface form. Journal of Applied Meteorology and Climatology, 38(9), 1262-1292.</p>
+</dd>
+<dt class="label" id="macdonald1998"><span class="brackets">Macdonald1998</span><span class="fn-backref">(<a href="#id15">1</a>,<a href="#id16">2</a>)</span></dt>
+<dd><p>Macdonald, R. W., Griffiths, R. F., &amp; Hall, D. J. (1998). An improved method for the estimation of surface roughness of obstacle arrays. Atmospheric environment, 32(11), 1857-1864.</p>
+</dd>
+<dt class="label" id="raupach1994"><span class="brackets">Raupach1994</span><span class="fn-backref">(<a href="#id13">1</a>,<a href="#id14">2</a>)</span></dt>
+<dd><p>Raupach, M. R. (1994). Simplified expressions for vegetation roughness length and zero-plane displacement as functions of canopy height and area index. Boundary-layer meteorology, 71(1), 211-216.</p>
+</dd>
+</dl>
 </section>
 </section>
 
@@ -361,7 +378,7 @@ First_Index_X = !Second_Index_X! - 31
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="getting_started.html" class="btn btn-neutral float-left" title="Getting started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="quickstarter.html" class="btn btn-neutral float-left" title="Quickstarter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="modules.html" class="btn btn-neutral float-right" title="naturf" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

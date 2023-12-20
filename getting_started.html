@@ -1,33 +1,30 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Getting started &mdash; naturf 0.1.0 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
-      <link rel="stylesheet" type="text/css" href="_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css?v=45cf7dbc" />
-      <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
-      <link rel="stylesheet" type="text/css" href="_static/css/naturf.css?v=f9b8f5c0" />
-      <link rel="stylesheet" type="text/css" href="_static/css/getting_started.css?v=be86cd7f" />
-
-
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" type="text/css" />
+      <link rel="stylesheet" href="_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" type="text/css" />
+      <link rel="stylesheet" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/naturf.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/getting_started.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
 
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=01f34227"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="User guide" href="user_guide.html" />
+    <link rel="next" title="Quickstarter" href="quickstarter.html" />
     <link rel="prev" title="naturf documentation" href="index.html" />
 </head>
 
@@ -59,6 +56,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#dependencies">Dependencies</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="quickstarter.html">Quickstarter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">naturf</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to <strong>naturf</strong></a></li>
@@ -95,19 +93,19 @@
            <div itemprop="articleBody">
 
   <section id="getting-started">
-<h1>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
+<h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h1>
 <section id="about">
-<h2>About<a class="headerlink" href="#about" title="Link to this heading"></a></h2>
+<h2>About<a class="headerlink" href="#about" title="Permalink to this headline"></a></h2>
 <p>The Neighborhood Adaptive Tissues for Urban Resilience Futures tool (<strong>naturf</strong>) enables the examination of the effect of urban morphology at variable resolutions on the urban microclimate through the Weather Research and Forecasting model (WRF). Following the work of Ching et al. (citation) on NUDAPT/WUDAPT, <strong>naturf</strong> calculates 132 urban parameters based on shapefiles of building footprints and heights; however, <strong>naturf</strong> is capable of compiling these urban parameters at finer, sub-kilometer resolutions than offered by NUDAPT/WUDAPT.</p>
 <p><strong>naturf</strong> takes in building polygon shapefiles with height data and uses the Python package <strong>geopandas</strong> to calculate 132 urban parameters for each building that are compiled into a binary file. The name of the binary file as well as an automatically generated index file instructs WRF to place the binary data into the correct location in a geogrid.  <strong>naturf</strong> also uses <strong>hamilton</strong> as a means of organizing, streamlining, and visualizing its workflow.</p>
 <p>Currently, <strong>naturf</strong> requires the shapefile inputs to first be separated into regular tiles, and it also requires a csv containing a index number for each of the tiles in the study area (todo: clarify). In tests of Los Angeles, regular tiles of 3.2 km x 3.2 km proved to be the most computationally efficient tile sizes, but any tile size that is a power of two is recommended.</p>
 </section>
 <section id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading"></a></h2>
-<table class="docutils align-default">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline"></a></h2>
+<table class="colwidths-given docutils align-default">
 <colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Dependency</p></th>
@@ -222,6 +220,55 @@
 </tr>
 </tbody>
 </table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 63%" />
+<col style="width: 37%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Dependency</p></th>
+<th class="head"><p>Minimum Version</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>numpy</p></td>
+<td><p>1.22.4</p></td>
+</tr>
+<tr class="row-odd"><td><p>pandas</p></td>
+<td><p>1.4.2</p></td>
+</tr>
+<tr class="row-even"><td><p>geocube</p></td>
+<td><p>0.3.1</p></td>
+</tr>
+<tr class="row-odd"><td><p>rasterio</p></td>
+<td><p>1.2.10</p></td>
+</tr>
+<tr class="row-even"><td><p>xarray</p></td>
+<td><p>2022.3.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>joblib</p></td>
+<td><p>1.0.1</p></td>
+</tr>
+<tr class="row-even"><td><p>fiona</p></td>
+<td><p>1.8.19</p></td>
+</tr>
+<tr class="row-odd"><td><p>pyproj</p></td>
+<td><p>3.0.1</p></td>
+</tr>
+<tr class="row-even"><td><p>rtree</p></td>
+<td><p>1.0.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>shapely</p></td>
+<td><p>1.8.2, &lt;2</p></td>
+</tr>
+<tr class="row-even"><td><p>geopandas</p></td>
+<td><p>0.10.2</p></td>
+</tr>
+<tr class="row-odd"><td><p>sf-hamilton[visualization]</p></td>
+<td><p>1.10</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 
@@ -230,7 +277,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="naturf documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="user_guide.html" class="btn btn-neutral float-right" title="User guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="quickstarter.html" class="btn btn-neutral float-right" title="Quickstarter" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
