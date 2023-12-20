@@ -53,7 +53,7 @@ Next, assign the y-indices (Note: WRF requires the indexing to begin from the bo
   Second_Index_Y = 32 * ((Number of rows) - !Rows! + 1)
   First_Index_Y = !Second_Index_Y! - 31
 
-The x-indices require an additional step. First, calculate the ``Let_To_Num`` field by turning the letters in the Columns field into numbers using the code below, which can be adjusted to accomodated as many columns as needed:
+The x-indices require an additional step. First, calculate the `Let_To_Num` field by turning the letters in the Columns field into numbers using the code below, which can be adjusted to accomodated as many columns as needed:
 
 .. code-block::
 
@@ -84,7 +84,7 @@ The attribute table should then be exported to an Excel file using the "Table to
 Create CSV file
 ^^^^^^^^^^^^^^^
 
-Now that the tessellation attribute table is an Excel file, all columns can be deleted except for the grid ID column and the indices columns. In new columns, use ``=TEXT(cell, "00000")`` to add leading zeroes to the indices (at least 5 digits are required, more can be added if necessary). In another column, concatenate the indices using ``=CONCAT(cell1,"-",cell2,".",cell3,"-",cell4)``. Copy the ``GRID_ID`` and concatenated index numbers(important: with headers) into a separate spreadsheet and save as a CSV. This CSV will allow **naturf** to assign the correct index name to the corresponsing binary file.
+Now that the tessellation attribute table is an Excel file, all columns can be deleted except for the grid ID column and the indices columns. In new columns, use `=TEXT(cell, "00000")` to add leading zeroes to the indices (at least 5 digits are required, more can be added if necessary). In another column, concatenate the indices using `=CONCAT(cell1,"-",cell2,".",cell3,"-",cell4)`. Copy the `GRID_ID` and concatenated index numbers(important: with headers) into a separate spreadsheet and save as a CSV. This CSV will allow **naturf** to assign the correct index name to the corresponsing binary file.
 
 Spatial join and split by attribute
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -135,7 +135,7 @@ Frontal Area Density (1-60)
 Frontal area density is the frontal area at a certain height increment divided by the total plan area. **naturf** calculates frontal area density from the four cardinal directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters. Parameters 1-15 represent the north, parameters 16-30 represent the west, parameters 31-45 represent the south, and parameters 46-60 represent the east. For instance, parameter 1 gives the north-facing wall area for each building and its neighbors divided by the total plan area. [Burian2003]_ Eq. 14
 
 .. math::
-  FAD = \\frac{FA}{TPA}
+  FAD = \frac{FA}{TPA}
 
 where `FAD` is Frontal area density; `FA` is the frontal area of the wall from the current direction and height level in :math:`m^2`; `TPA` is the total plan area in :math:`m^2`.
 
@@ -145,7 +145,7 @@ Plan Area Density (61-75)
 Plan area density is the ratio of building plan area to the total plan area, calculated in 5 meter increments from ground level to 75 meters. **naturf** projects the building footprint vertically to the building height, meaning plan area density is the same at every vertical level. [Burian2003]_ Eq. 7
 
 .. math::
-  PAD = \\frac{BPA}{TPA}
+  PAD = \frac{BPA}{TPA}
 
 where, `PAD` is the plan area density; `BPA` is the building plan area in :math:`m^2`; `TPA` is the total plan area in :math:`m^2`.
 
@@ -175,7 +175,8 @@ Area Weighted Mean of Building Heights (94)
 The average height of all buildings within the total plan area weighted by the total plan area. [Burian2003]_ Eq. 3
 
 .. math::
-  AWMH = \\frac{\\Sigma{A_i zh_i}}{\\Sigma{A_i}}
+
+  AWMH = \frac{\Sigma{A_i zh_i}}{\Sigma{A_i}}
 
 where, `AWMH` is the area weighted mean height in m; `A_i` is the current building plan area in `m^2`; `zh_i` is the current building height in m.
 
@@ -190,7 +191,7 @@ Frontal Area Index (96-99)
 Frontal area index is the ratio of the entire frontal area of a building to the total plan area. **naturf** calculates the frontal area index from the four cardinal directions. Because buildings often do not face a cardinal direction head on, **naturf** uses the average alongwind and crosswind distance from the current building centroid to all other building centroids for the total plan area. [Burian2003]_ Eq. 12
 
 .. math::
-  FAI = \\frac{FA}{TPA}
+  FAI = \frac{FA}{TPA}
 
 where, `FAI` is frontal area index; `FA` is the frontal area of the wall from the current direction in :math:`m^2`; `TPA` is the total plan area in :math:`m^2`.
 
@@ -200,7 +201,7 @@ Complete Aspect Ratio (100)
 The ratio of building surface area and exposed ground area to the total plan area. [Burian2003]_ Eq. 15
 
 .. math::
-  CAR = \\frac{BSA + (PA - BPA)}{TPA}
+  CAR = \frac{BSA + (PA - BPA)}{TPA}
 
 where, `BSA` is the building surface area in :math:`m^2`; `BPA` is the building plan area in :math:`m^2`; `TPA` is the total plan area in :math:`m^2`.
 
@@ -210,9 +211,9 @@ Height-to-Width Ratio (101)
 The ratio of the building height to the street width. **naturf** generalizes this as the ratio of average height of buildings in the total plan area to average distance from the current building to all other buildings in the total plan area. If a building has no other buildings in its total plan area, the average distance is set to a default value. [Burian2003]_ Eq. 18
 
 .. math::
-  \\overline{\\lambda_s} = \\frac{\\overline{z_h}}{\\overline{W}}
+  \overline{\lambda_s} = \frac{\overline{z_h}}{\overline{W}}
 
-where, :math:`\\overline{\\lambda_s}` is the average height-to-width ratio; :math:`\\overline{z_h}` is the average building height in m; :math:`\\overline{W}` is the average distance between buildings.
+where, :math:`\overline{\lambda_s}` is the average height-to-width ratio; :math:`\overline{z_h}` is the average building height in m; :math:`\overline{W}` is the average distance between buildings.
 
 Sky-View Factor (102)
 ^^^^^^^^^^^^^^^^^^^^^
@@ -220,9 +221,9 @@ Sky-View Factor (102)
 The fraction of visible sky in a given area. **naturf** generalizes the distance between buildings to be the average distance between the current building and all other buildings in the total plan area.  [Dirksen2019]_ Eq. 1
 
 .. math::
-  SVF = cos(arctan(\\frac{H}{0.5W}))
+  SVF = cos(arctan(\frac{H}{0.5W}))
 
-where, `SVF`` is the sky-view factor; `H` is the building height in m; `W` is the distance between buildings in m.
+where, `SVF` is the sky-view factor; `H` is the building height in m; `W` is the distance between buildings in m.
 
 Grimmond & Oke Roughness Length (103)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -230,7 +231,7 @@ Grimmond & Oke Roughness Length (103)
 [GrimmondOke1999]_ Eq. 2
 
 .. math::
-  GORL = 0.1 \\cdot zh
+  GORL = 0.1 \cdot zh
 
 where, `GORL` is Grimmond & Oke rougness length in m; `zh` is the building height in m.
 
@@ -240,7 +241,7 @@ Grimmond & Oke Displacement Height (104)
 [GrimmondOke1999]_ Eq. 1
 
 .. math::
-  GODH = 0.67 \\cdot zh
+  GODH = 0.67 \cdot zh
 
 where, `GODH` is Grimmond & Oke displacement height in m; `zh` is building height in m.
 
@@ -251,9 +252,9 @@ Raupach Roughness Length (105, 107, 109, 111)
 [Raupach1994]_ Eq. 4
 
 .. math::
-  RRL = zh \\cdot (1 - \\frac{RDH}{zh}) \\cdot exp(-\\kappa \\cdot (C_{S} + C_{R} \\cdot \\lambda)^{-0.5} - \\Psi_{h})
+  RRL = zh \cdot (1 - \frac{RDH}{zh}) \cdot exp(-\kappa \cdot (C_{S} + C_{R} \cdot \lambda)^{-0.5} - \Psi_{h})
 
-where, `RRL` is the Raupach roughness length in m; `RDH` is the Raupach displacement height in m; :math:`\\kappa` is von Kármán's constant = 0.4; `C_S` is the substrate-surface drag coefficient = 0.003; `C_R` is the roughness-element drag coefficient = 0.3; :math:`\\lambda` is the frontal area index; :math:`\\Psi_h` is the roughness-sublayer influence function = 0.193.
+where, `RRL` is the Raupach roughness length in m; `RDH` is the Raupach displacement height in m; :math:`\kappa` is von Kármán's constant = 0.4; `C_S` is the substrate-surface drag coefficient = 0.003; `C_R` is the roughness-element drag coefficient = 0.3; :math:`\lambda` is the frontal area index; :math:`\Psi_h` is the roughness-sublayer influence function = 0.193.
 
 
 Raupach Displacment Height (106, 108, 110, 112)
@@ -262,9 +263,9 @@ Raupach Displacment Height (106, 108, 110, 112)
 [Raupach1994]_ Eq. 8
 
 .. math::
-  RDH = zh \\cdot (1 - (\\frac{1 - \\exp(-\\sqrt(c_{d1} \\cdot \\Lambda))}{\\sqrt(c_{d1} \\cdot \\Lambda)}))
+  RDH = zh \cdot (1 - (\frac{1 - \exp(-\sqrt(c_{d1} \cdot \Lambda))}{\sqrt(c_{d1} \cdot \Lambda)}))
 
-where, `RDH` is the Raupach displacement height in m; :math:`c_{d1}` is a constant = 7.5; :math:`\\Lambda` is frontal area index times 2.
+where, `RDH` is the Raupach displacement height in m; :math:`c_{d1}` is a constant = 7.5; :math:`\Lambda` is frontal area index times 2.
 
 Macdonald et al. Roughness Length (113-116)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -272,9 +273,9 @@ Macdonald et al. Roughness Length (113-116)
 [Macdonald1998]_ Eq. 22
 
 .. math::
-  MRL = zh \\cdot (1 - \\frac{MDH}{zh})\\exp(-(0.5*\\beta\\frac{C_{D}}{\\kappa^2}(1 - \\frac{MDH}{zh})\\frac{A_{f}}{A_{l}})^{-0.5})
+  MRL = zh \cdot (1 - \frac{MDH}{zh})\exp(-(0.5*\beta\frac{C_{D}}{\kappa^2}(1 - \frac{MDH}{zh})\frac{A_{f}}{A_{l}})^{-0.5})
 
-where, `MRL` is the Macdonald roughness length in m; `zh` is the building height in m; `MDH` is the Macdonald displacement height in m; :math:`\\beta`` is the beta coefficient = 1; :math:`C_D` is the obstacle drag coefficient = 1.12; :math:`\\kappa`` is von Kármán's constant = 0.4; :math:`A_f` is the frontal area of the building in :math:`m^2`; :math:`A_l` is the lot area of the building in :math:`m^2`.
+where, `MRL` is the Macdonald roughness length in m; `zh` is the building height in m; `MDH` is the Macdonald displacement height in m; :math:`\beta` is the beta coefficient = 1; :math:`C_D` is the obstacle drag coefficient = 1.12; :math:`\kappa` is von Kármán's constant = 0.4; :math:`A_f` is the frontal area of the building in :math:`m^2`; :math:`A_l` is the lot area of the building in :math:`m^2`.
 
 Macdonald et al. Displacement Height (117)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -282,9 +283,9 @@ Macdonald et al. Displacement Height (117)
 [Macdonald1998]_ Eq. 23
 
 .. math::
-  MDH = zh \\cdot (1 + \\frac{1}{A^\\lambda} \\cdot (\\lambda - 1))
+  MDH = zh \cdot (1 + \frac{1}{A^\lambda} \cdot (\lambda - 1))
 
-where, `MDH` is the Macdonald displacement height in m; `zh` is the building height in m; `A` is a constant = 3.59; :math:`\\lambda` is the plan area density.
+where, `MDH` is the Macdonald displacement height in m; `zh` is the building height in m; `A` is a constant = 3.59; :math:`\lambda` is the plan area density.
 
 Vertical Distribution of Building Heights (118-132)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
