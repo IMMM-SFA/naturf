@@ -2,6 +2,7 @@
 Quickstarter
 ============
 
+
 Data input
 ----------
 
@@ -27,7 +28,7 @@ Edit config file
 
 The *config.py* file in the naturf/ directory sets the default names for variables used in the *naturf* workflow. The two variables below need to be modified to reflect the ID field and the building height field of the input shapefile.
 
-.. code:: ipython3
+.. code:: python
 
     data_id_field_name
     data_height_field_name
