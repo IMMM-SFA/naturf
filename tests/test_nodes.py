@@ -1502,6 +1502,53 @@ class TestNodes(unittest.TestCase):
                 f"wall_length test {case.name} failed, expected {expected}, actual {actual}",
             )
 
+    def test_write_index(self):
+        """Test that the function `write_index()` writes an index file and contains the correct values."""
+
+        raster_to_numpy = np.zeros((132, 10, 10))
+        polygon1 = Polygon([[0, 0], [0, 1], [1, 1], [1, 0]])
+        polygon2 = Polygon([[3, 3], [3, 4], [4, 4], [4, 3]])
+        building_geometry = pd.Series([polygon1, polygon2])
+        target_crs = "epsg:3857"
+        test_index_filename = "text_index"
+
+        nodes.write_index(
+            raster_to_numpy, building_geometry, target_crs, index_filename=test_index_filename
+        )
+
+        assert os.path.exists(test_index_filename), "Index file was not created."
+        with open("index", "r") as index:
+            content = index.read()
+            assert "type=continuous" in content, "Index file type is not as expected."
+            assert "projection=albers_nad83" in content, "Index file projection is not as expected."
+            assert (
+                "missing_value=-999900." in content
+            ), "Index file missing_value is not as expected."
+            assert "dy=100." in content, "Index file dy is not as expected."
+            assert "dx=100." in content, "Index file dx is not as expected."
+            assert "known_x=1" in content, "Index file known_x is not as expected."
+            assert "known_y=1" in content, "Index file known_y is not as expected."
+            assert "known_lat=0.0" in content, "Index file known_lat is not as expected."
+            assert "known_lon=0.0" in content, "Index file known_lon is not as expected."
+            assert "truelat1=45.5" in content, "Index file truelat1 is not as expected."
+            assert "truelat2=29.5" in content, "Index file truelat2 is not as expected."
+            assert (
+                "stdlon=1.7966305682390428e-05" in content
+            ), "Index file stdlon is not as expected."
+            assert "wordsize=4" in content, "Index file wordsize is not as expected."
+            assert "endian=big" in content, "Index file endian is not as expected."
+            assert "signed=no" in content, "Index file signed is not as expected."
+            assert "tile_x=10" in content, "Index file tile_x is not as expected."
+            assert "tile_y=10" in content, "Index file tile_y is not as expected."
+            assert "tile_z=132" in content, "Index file tile_z is not as expected."
+            assert 'units="dimensionless"' in content, "Index file units is not as expected."
+            assert "scale_factor=0.0001" in content, "Index file scale_factor is not as expected."
+            assert (
+                'description="Urban_Parameters"' in content
+            ), "Index file description is not as expected."
+
+        os.remove(test_index_filename)
+
 
 if __name__ == "__main__":
     unittest.main()
