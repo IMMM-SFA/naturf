@@ -2,95 +2,10 @@
 User guide
 ===============
 
-Generalization
---------------
+Data Requirements
+-----------------
 
-Though **naturf** is demonstrated for the conterminous United States (CONUS), the package could easily be used in research ranging from regional to global analysis.
-
-**naturf** requires the following inputs to be able to operate:
-
-- A shapefile of buildings as polygons with height data.
-- A shapefile of square polygons tessellated over the study area.
-- A CSV file matching each tile name to its index number.
-
- Let us know if you are using **naturf** in your research in our `discussion thread <https://github.com/IMMM-SFA/naturf/discussions>`_!
-
-
-Setting up a **naturf** run
----------------------------
-
-The following with indroduce you to the input data required by **naturf** and how to set up a configuration file to run **naturf**.
-
-Splitting the building shapefile into tiles
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-**naturf** works optimally with inputs of building shapefiles as regular square tiles that can be processed in parallel. Experiments with Los Angeles found that tiles of 3.2 km by 3.2 km were the most computationally efficient at 100 meter output resolution.
-
-Generate a tessellation
-^^^^^^^^^^^^^^^^^^^^^^^
-
-The first step to splitting the input building shapefile into tiles is to load the shapefile into any GIS software (ArcPro, ArcMap, QGIS, etc.) and run the `Generate Tessellation`_ tool for ArcPro/ArcMap; `Create Grid`_ for QGIS) with the desired tile size. After the tessellation is created, note the center latitude and longitude in decimal degrees as well as the coordinates of the bottom left corner of the tessellation. All of those coordinates will be needed to set the projection of the output data and to tell WRF where to start placing the data.
-
-.. _Generate Tessellation: https://pro.arcgis.com/en/pro-app/2.8/tool-reference/data-management/generatetesellation.htm
-.. _Create Grid: https://docs.qgis.org/2.6/en/docs/user_manual/processing_algs/qgis/vector_creation_tools/creategrid.html
-
-Assign index numbers
-^^^^^^^^^^^^^^^^^^^^
-
-After the tessellation is created, the next step is to use the "Calculate Field" tool to assign index numbers to each tile. By default, the "Generate Tessellation" tool assigns each tile an ID associated with its location, with the letters representing the columns and x-positions and the numbers representing the rows and the y-position. The letters go from A to Z, AA to ZZ, etc. from left to right and the numbers increase as they go top to bottom. The following fields will need to be created and calculated: Columns, Rows, Let_To_Num, First_Index_X, Second_Index_X, First_Index_Y, and Second_Index_Y.
-
-First, split the IDs into fields representing their columns and rows:
-
-.. code-block::
-
-  Columns = !GRID_ID!.split("-")[0]
-  Rows = !GRID_ID!.split("-")[1]
-
-Next, assign the y-indices (Note: WRF requires the indexing to begin from the bottom left corner of the dataset):
-
-.. code-block::
-
-  Second_Index_Y = 32 * ((Number of rows) - !Rows! + 1)
-  First_Index_Y = !Second_Index_Y! - 31
-
-The x-indices require an additional step. First, calculate the `Let_To_Num` field by turning the letters in the Columns field into numbers using the code below, which can be adjusted to accomodated as many columns as needed:
-
-.. code-block::
-
-  Expression:
-  LetToNum(!Columns!)
-
-.. code-block::
-
-  def LetToNum(feat):
-      letters = list(feat)
-      if len(letters) == 1:
-          number = ord(letters[0]) - 64
-      elif letters[0] == 'A':
-          number = 26 + ord(letters[1]) - 64
-      else:
-          number = 52 + ord(letters[1]) - 64
-      return number
-
-Then, calculate the X indices much the same as the Y indices.
-
-.. code-block::
-
-  Second_Index_X = 32 * !Let_To_Num!
-  First_Index_X = !Second_Index_X! - 31
-
-The attribute table should then be exported to an Excel file using the "Table to Table" tool, and the rest of the indexing will be done in Excel.
-
-Create CSV file
-^^^^^^^^^^^^^^^
-
-Now that the tessellation attribute table is an Excel file, all columns can be deleted except for the grid ID column and the indices columns. In new columns, use `=TEXT(cell, "00000")` to add leading zeroes to the indices (at least 5 digits are required, more can be added if necessary). In another column, concatenate the indices using `=CONCAT(cell1,"-",cell2,".",cell3,"-",cell4)`. Copy the `GRID_ID` and concatenated index numbers(important: with headers) into a separate spreadsheet and save as a CSV. This CSV will allow **naturf** to assign the correct index name to the corresponsing binary file.
-
-Spatial join and split by attribute
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Back in the GIS software, perform a spatial join with the buildings shapefile being the target features and the tessellation shapefile being the join features. This will create a buildings shapefile where every building has a grid ID associated with it. The last step is to use the "Split by Attribute" tool to separate the buildings into shapefiles for each tile. These shapefiles will be the input to **naturf** along with the CSV with index names.
-
+The only input data required for *naturf* is a shapefile with building footprints and height data. There should be a field with a unique ID for each building the shapefile, and it should be projected in WGS 84 (EPSG:4326). Single neighborhoods can be processed in seconds to minutes, but larger datasets (e.g. city-scale) can take several days to process, and are best suited for HPC.
 
 Fundamental equations and concepts
 ----------------------------------
