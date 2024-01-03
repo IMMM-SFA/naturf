@@ -1248,7 +1248,7 @@ def merge_parameters(
 
     gdf = gpd.GeoDataFrame(df, geometry=Settings.geometry_field, crs=target_crs)
 
-    return gdf
+    return gdf.to_crs(4326)
 
 
 def numpy_to_binary(raster_to_numpy: np.ndarray) -> bytes:
@@ -1875,7 +1875,7 @@ def write_index(raster_to_numpy: np.ndarray, building_geometry: pd.Series, targe
         index.writelines(
             [
                 "type=continuous\n",
-                "  projection=albers_nad83\n",
+                "  projection=regular_ll\n",
                 "  missing_value=-999900.\n",
                 "  dy=" + str(dy) + "\n",
                 "  dx=" + str(dx) + "\n",
