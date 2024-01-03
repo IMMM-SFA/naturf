@@ -4,6 +4,7 @@ import pandas as pd
 from hamilton import driver
 
 import naturf.nodes as nodes
+import naturf.output as output
 
 
 class Model:
@@ -15,7 +16,7 @@ class Model:
         self.outputs = outputs
 
         # instantiate driver with function definitions
-        self.dr = driver.Driver(self.inputs, nodes)
+        self.dr = driver.Driver(self.inputs, nodes, output)
 
     def execute(self) -> pd.DataFrame:
         """Run the driver."""
