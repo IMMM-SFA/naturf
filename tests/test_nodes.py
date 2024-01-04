@@ -6,9 +6,8 @@ from dataclasses import dataclass
 import numpy as np
 import geopandas as gpd
 import pandas as pd
-from shapely.geometry import Point, Polygon, JOIN_STYLE
+from shapely.geometry import Polygon, JOIN_STYLE
 from typing import List
-import xarray as xr
 
 from naturf.driver import Model
 import naturf.nodes as nodes
@@ -21,112 +20,6 @@ class TestNodes(unittest.TestCase):
         "radius": 100,
         "cap_style": 1,
     }
-
-    def test_aggregate_rasters(self):
-        "Test that the function `aggregate_rasters()` returns the correct Xarray."
-        rasterize_parameters = xr.Dataset(
-            data_vars=dict(
-                var0=(["x", "y"], np.array([[0, 1], [2, 3]])),
-                var1=(["x", "y"], np.array([[10, 15.5], [314159, 75]])),
-                building_count=(["x", "y"], np.array([[0, 1], [10, 75]])),
-            ),
-            coords=dict(
-                lat=(["x"], [0, 1]),
-                lon=(["y"], [0, 1]),
-            ),
-        )
-
-        expected = xr.Dataset(
-            data_vars=dict(
-                var0=(["x", "y"], np.array([[0.0, 1.0], [0.2, 0.04]])),
-                var1=(["x", "y"], np.array([[math.inf, 15.5], [31415.9, 1.0]])),
-                building_count=(["x", "y"], np.array([[0.0, 1.0], [1.0, 1.0]])),
-            ),
-            coords=dict(
-                lat=(["x"], [0, 1]),
-                lon=(["y"], [0, 1]),
-            ),
-        )
-        actual = nodes.aggregate_rasters(rasterize_parameters)
-        xr.testing.assert_equal(expected, actual)
-
-    def test_angle_in_degrees_to_neighbor(self):
-        "Test that the function `angle_in_degrees_to_neighbor()` returns the correct angle."
-
-        @dataclass
-        class TestCase:
-            name: str
-            target_input: List[Point]
-            neighbor_input: List[Point]
-            expected: List[int | float | str]
-
-        testcases = [
-            TestCase(
-                name="same_centroid",
-                target_input=[Point(1, 1), Point(0, 0)],
-                neighbor_input=[Point(1, 1), Point(0, 0)],
-                expected=[0.0, 0.0],
-            ),
-            TestCase(
-                name="east",
-                target_input=[Point(0, 0)],
-                neighbor_input=[Point(1, 0)],
-                expected=[0.0],
-            ),
-            TestCase(
-                name="west",
-                target_input=[Point(0, 0)],
-                neighbor_input=[Point(-1, 0)],
-                expected=[180.0],
-            ),
-            TestCase(
-                name="north",
-                target_input=[Point(0, 0)],
-                neighbor_input=[Point(0, 1)],
-                expected=[90.0],
-            ),
-            TestCase(
-                name="south",
-                target_input=[Point(0, 0)],
-                neighbor_input=[Point(0, -1)],
-                expected=[270.0],
-            ),
-            TestCase(
-                name="northeast",
-                target_input=[Point(0, 0)],
-                neighbor_input=[Point(10, 10 * np.sqrt(3))],
-                expected=[60.0],
-            ),
-            TestCase(
-                name="northwest",
-                target_input=[Point(0, 0)],
-                neighbor_input=[Point(-10, 10 * np.sqrt(3))],
-                expected=[120.0],
-            ),
-            TestCase(
-                name="southeast",
-                target_input=[Point(0, 0)],
-                neighbor_input=[Point(10, -10 * np.sqrt(3))],
-                expected=[300.0],
-            ),
-            TestCase(
-                name="southwest",
-                target_input=[Point(0, 0)],
-                neighbor_input=[Point(-10, -10 * np.sqrt(3))],
-                expected=[240.0],
-            ),
-        ]
-
-        for case in testcases:
-            actual = nodes.angle_in_degrees_to_neighbor(
-                gpd.GeoSeries(case.target_input), gpd.GeoSeries(case.neighbor_input)
-            )
-            expected = pd.Series(case.expected)
-            pd.testing.assert_series_equal(
-                expected,
-                actual,
-                f"angle_in_degrees_to_neighbor test {case.name} failed, expected {expected}, actual {actual}",
-            )
 
     def test_area_weighted_mean_of_building_heights(self):
         "Test that the function `area_weighted_mean_of_building_heights()` returns the correct value."
@@ -982,37 +875,6 @@ class TestNodes(unittest.TestCase):
             actual,
             f"mean_building_height test failed, expected {expected}, actual {actual}",
         )
-
-    def test_orientation_to_neighbor(self):
-        """Test that the function `orientation_to_neighbor()` returns either `north_south` or `east_west` correctly."""
-
-        @dataclass
-        class TestCase:
-            name: str
-            input: List[int | float]
-            expected: List[int | str]
-
-        east_west = Settings.east_west
-        north_south = Settings.north_south
-
-        testcases = [
-            TestCase(name="zero_degrees", input=[0.0, -0.0], expected=[east_west, east_west]),
-            TestCase(name="north_south", input=[90, 270], expected=[north_south, north_south]),
-            TestCase(
-                name="east_west",
-                input=[45, 135, 225, 315, 360],
-                expected=[east_west, east_west, east_west, east_west, east_west],
-            ),
-        ]
-
-        for case in testcases:
-            actual = nodes.orientation_to_neighbor(pd.Series(case.input))
-            expected = pd.Series(case.expected)
-            pd.testing.assert_series_equal(
-                expected,
-                actual,
-                f"orientation_to_neighbor test {case.name} failed, expected {expected}, actual {actual}",
-            )
 
     def test_plan_area_density(self):
         """Test that the function `plan_area_density()` returns the correct value."""

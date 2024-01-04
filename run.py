@@ -1,4 +1,5 @@
 import naturf.nodes as nodes
+import naturf.output as output
 import time
 
 from hamilton import driver
@@ -6,7 +7,7 @@ from hamilton import driver
 if __name__ == "__main__":
     path = "example/shapefile/C-5.shp"
     config = {}
-    dr = driver.Driver(config, nodes)
+    dr = driver.Driver(config, nodes, output)
 
     output_columns = ["write_binary", "write_index"]
     inputs = {"input_shapefile": path}
