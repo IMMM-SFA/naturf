@@ -765,7 +765,6 @@ def mean_building_height(buildings_intersecting_plan_area: gpd.GeoDataFrame) -> 
 
     return pd.Series(df.values)
 
-
 def plan_area_density(
     building_plan_area: pd.Series, building_height: pd.Series, total_plan_area: pd.Series
 ) -> pd.DataFrame:

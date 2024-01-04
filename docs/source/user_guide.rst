@@ -5,7 +5,7 @@ User guide
 Data Requirements
 -----------------
 
-The only input data required for *naturf* is a shapefile with building footprints and height data. There should be a field with a unique ID for each building the shapefile, and it should be projected in WGS 84 (EPSG:4326). Single neighborhoods can be processed in seconds to minutes, but larger datasets (e.g. city-scale) can take several days to process, and are best suited for HPC.
+The only input data required for *naturf* is a shapefile with building footprints and height data. There should be a field with a unique ID for each building the shapefile, and it should be in a projected coordinate system such as Alber Equal Area Conic. For input to the Weather Research and Forecasting model (WRF), the computed parameters for each building will be projected into WGS 84. Single neighborhoods can be processed in seconds to minutes, but larger datasets (e.g. city-scale) can take several days to process, and are best suited for HPC.
 
 Fundamental equations and concepts
 ----------------------------------
