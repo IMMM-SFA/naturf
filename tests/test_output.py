@@ -106,7 +106,7 @@ class TestNodes(unittest.TestCase):
             {Settings.vertical_distribution_of_building_heights: [10, 20]}
         )
         building_geometry = pd.Series([Point(0, 0), Point(1, 1)])
-        target_crs = "epsg:3857"
+        target_crs = Settings.OUTPUT_CRS
 
         result = output.merge_parameters(
             frontal_area_density,
@@ -220,12 +220,12 @@ class TestNodes(unittest.TestCase):
             "building_count",
         ], "Output keys are not as expected"
         assert result["parameter1"].shape == (
-            1,
-            1,
+            2400,
+            2400,
         ), "Output shape for 'parameter1' is not as expected"
         assert result["parameter2"].shape == (
-            1,
-            1,
+            2400,
+            2400,
         ), "Output shape for 'parameter2' is not as expected"
 
     def test_write_binary(self):
@@ -266,8 +266,8 @@ class TestNodes(unittest.TestCase):
             assert (
                 "missing_value=-999900." in content
             ), "Index file missing_value is not as expected."
-            assert "dy=100." in content, "Index file dy is not as expected."
-            assert "dx=100." in content, "Index file dx is not as expected."
+            assert "dy=0.00083333333" in content, "Index file dy is not as expected."
+            assert "dx=0.00083333333" in content, "Index file dx is not as expected."
             assert "known_x=1" in content, "Index file known_x is not as expected."
             assert "known_y=1" in content, "Index file known_y is not as expected."
             assert (
@@ -282,8 +282,8 @@ class TestNodes(unittest.TestCase):
             assert "wordsize=4" in content, "Index file wordsize is not as expected."
             assert "endian=big" in content, "Index file endian is not as expected."
             assert "signed=no" in content, "Index file signed is not as expected."
-            assert "tile_x=26" in content, "Index file tile_x is not as expected."
-            assert "tile_y=25" in content, "Index file tile_y is not as expected."
+            assert "tile_x=35" in content, "Index file tile_x is not as expected."
+            assert "tile_y=26" in content, "Index file tile_y is not as expected."
             assert "tile_z=132" in content, "Index file tile_z is not as expected."
             assert 'units="dimensionless"' in content, "Index file units is not as expected."
             assert "scale_factor=0.0001" in content, "Index file scale_factor is not as expected."

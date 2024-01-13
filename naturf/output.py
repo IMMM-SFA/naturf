@@ -169,7 +169,7 @@ def merge_parameters(
 
     gdf = gpd.GeoDataFrame(df, geometry=Settings.geometry_field, crs=target_crs)
 
-    return gdf
+    return gdf.to_crs(Settings.OUTPUT_CRS)
 
 
 def numpy_to_binary(raster_to_numpy: np.ndarray) -> bytes:
