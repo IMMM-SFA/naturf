@@ -5,7 +5,7 @@ import time
 from hamilton import driver
 
 if __name__ == "__main__":
-    path = "example/shapefile/C-5.shp"
+    path = "naturf/data/C-5.shp"
     config = {}
     dr = driver.Driver(config, nodes, output)
 

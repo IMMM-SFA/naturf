@@ -14,7 +14,7 @@ from naturf.config import Settings
 
 class TestNodes(unittest.TestCase):
     INPUTS = {
-        "input_shapefile": os.path.join("naturf", "data", "inputs", "C-5.shp"),
+        "input_shapefile": os.path.join("naturf", "data", "C-5.shp"),
         "radius": 100,
         "cap_style": 1,
     }
