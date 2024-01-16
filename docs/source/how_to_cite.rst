@@ -1,4 +1,4 @@
 How to cite **naturf**
 ======================
 
-Allen-Dumas, Melissa R., Sweet-Breu, Levi, Seals, Matthew, Berres, Andy, Vernon, Chris, and Rexer, Em. NATURF. Computer Software. https://github.com/IMMM-SFA/naturf. USDOE Office of Science (SC), Biological and Environmental Research (BER). Earth and Environmental Systems Science Division. 31 Aug. 2022. Web. doi:10.11578/dc.20220803.4.
+Sweet-Breu, L. T., Rexer, E., Vernon, C. R., & Allen-Dumas, M. R. naturf: a package for generating urban parameters for numerical weather modeling [Computer software]. https://doi.org/10.5281/zenodo.7036191
