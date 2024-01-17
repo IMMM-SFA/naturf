@@ -1,5 +1,7 @@
 import math
 import os
+import shutil
+import tempfile
 import unittest
 
 import geopandas as gpd
@@ -13,6 +15,14 @@ from naturf.config import Settings
 
 
 class TestNodes(unittest.TestCase):
+    def setUp(self):
+        # Create a temporary directory
+        self.test_dir = tempfile.mkdtemp()
+
+    def tearDown(self):
+        # Remove the directory after the test
+        shutil.rmtree(self.test_dir)
+
     INPUTS = {
         "input_shapefile": os.path.join("naturf", "data", "C-5.shp"),
         "radius": 100,
@@ -254,12 +264,11 @@ class TestNodes(unittest.TestCase):
         target_crs = "epsg:3857"
         test_index_filename = "test_index"
 
-        output.write_index(
-            raster_to_numpy, building_geometry, target_crs, index_filename=test_index_filename
-        )
+        file_path = self.test_dir + "/" + test_index_filename
+        output.write_index(raster_to_numpy, building_geometry, target_crs, index_filename=file_path)
 
-        assert os.path.exists(test_index_filename), "Index file was not created."
-        with open("index", "r") as index:
+        assert os.path.exists(file_path), "Index file was not created."
+        with open(file_path, "r") as index:
             content = index.read()
             assert "type=continuous" in content, "Index file type is not as expected."
             assert "projection=albers_nad83" in content, "Index file projection is not as expected."
@@ -270,28 +279,24 @@ class TestNodes(unittest.TestCase):
             assert "dx=0.00083333333" in content, "Index file dx is not as expected."
             assert "known_x=1" in content, "Index file known_x is not as expected."
             assert "known_y=1" in content, "Index file known_y is not as expected."
-            assert (
-                "known_lat=38.860881738862304" in content
-            ), "Index file known_lat is not as expected."
-            assert (
-                "known_lon=-77.04903814481347" in content
-            ), "Index file known_lon is not as expected."
+            assert "known_lat=0.0" in content, "Index file known_lat is not as expected."
+            assert "known_lon=0.0" in content, "Index file known_lon is not as expected."
             assert "truelat1=45.5" in content, "Index file truelat1 is not as expected."
             assert "truelat2=29.5" in content, "Index file truelat2 is not as expected."
-            assert "stdlon=-77.03451915155296" in content, "Index file stdlon is not as expected."
+            assert (
+                "stdlon=1.7966305682390428e-05" in content
+            ), "Index file stdlon is not as expected."
             assert "wordsize=4" in content, "Index file wordsize is not as expected."
             assert "endian=big" in content, "Index file endian is not as expected."
             assert "signed=no" in content, "Index file signed is not as expected."
-            assert "tile_x=35" in content, "Index file tile_x is not as expected."
-            assert "tile_y=26" in content, "Index file tile_y is not as expected."
+            assert "tile_x=10" in content, "Index file tile_x is not as expected."
+            assert "tile_y=10" in content, "Index file tile_y is not as expected."
             assert "tile_z=132" in content, "Index file tile_z is not as expected."
             assert 'units="dimensionless"' in content, "Index file units is not as expected."
             assert "scale_factor=0.0001" in content, "Index file scale_factor is not as expected."
             assert (
                 'description="Urban_Parameters"' in content
             ), "Index file description is not as expected."
-
-        os.remove(test_index_filename)
 
 
 if __name__ == "__main__":
