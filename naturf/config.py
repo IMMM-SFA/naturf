@@ -1,4 +1,8 @@
 class Settings:
+    """
+    This class is used to define variables for the naturf application.
+    """
+
     BUILDING_HEIGHT_INTERVAL = 5
     VONKARMANCONSTANT = 0.4
     OBSTACLEDRAGCOEFFICIENT = 1.12
@@ -28,7 +32,6 @@ class Settings:
     SOUTHWEST_DEGREES = 225
     SOUTHWEST_DEGREES_ARCTAN = -135
     START_OF_CIRCLE_DEGREES = 0
-    ZXCV_FACTOR = 3.5
     DEFAULT_STREET_WIDTH = 15
     DEFAULT_OUTPUT_RESOLUTION = [0.00083333333, 0.00083333333]
     DEFAULT_FILL_VALUE = 0
