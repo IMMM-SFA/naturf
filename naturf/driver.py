@@ -2,7 +2,7 @@ import os
 from typing import List, Union
 
 import pandas as pd
-from hamilton import driver
+from hamilton import driver, base
 from hamilton.plugins import h_tqdm
 
 import naturf.nodes as nodes
@@ -23,6 +23,7 @@ class Model:
 
         # instantiate any adapters we want
         hamilton_adatpers = [
+            base.SimplePythonDataFrameGraphAdapter(),
             h_tqdm.ProgressBar("Naturf DAG"),
         ]
         if DAGWORKS_API_KEY and DAGWORKS_USERNAME and DAGWORKS_PROJECT_ID:
