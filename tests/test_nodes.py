@@ -610,25 +610,25 @@ class TestNodes(unittest.TestCase):
 
         columns_north, columns_east, columns_south, columns_west = (
             [
-                f"{Settings.FRONTAL_AREA_NORTH}_{i}" f"{Settings.frontal_area_north}_{i}"
+                f"{Settings.FRONTAL_AREA_NORTH}_{i}"
                 for i in range(
                     int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL)
                 )
             ],
             [
-                f"{Settings.frontal_area_east}_{i}"
+                f"{Settings.FRONTAL_AREA_EAST}_{i}"
                 for i in range(
                     int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL)
                 )
             ],
             [
-                f"{Settings.frontal_area_south}_{i}"
+                f"{Settings.FRONTAL_AREA_SOUTH}_{i}"
                 for i in range(
                     int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL)
                 )
             ],
             [
-                f"{Settings.frontal_area_west}_{i}"
+                f"{Settings.FRONTAL_AREA_WEST}_{i}"
                 for i in range(
                     int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL)
                 )
@@ -645,10 +645,10 @@ class TestNodes(unittest.TestCase):
             ],
             axis=1,
         )
+        # f"frontal_area_density test failed, expected {expected}, actual {actual}",
         pd.testing.assert_frame_equal(
             expected,
             actual,
-            f"frontal_area_density test failed, expected {expected}, actual {actual}",
         )
 
     def test_frontal_area_index(self):
@@ -670,16 +670,16 @@ class TestNodes(unittest.TestCase):
             ]
         )
         expected.columns = [
-            Settings.frontal_area_index_north,
-            Settings.frontal_area_index_east,
-            Settings.frontal_area_index_south,
-            Settings.frontal_area_index_west,
+            Settings.FRONTAL_AREA_INDEX_NORTH,
+            Settings.FRONTAL_AREA_INDEX_EAST,
+            Settings.FRONTAL_AREA_INDEX_SOUTH,
+            Settings.FRONTAL_AREA_INDEX_WEST,
         ]
         actual = nodes.frontal_area_index(frontal_area, total_plan_area)
+        # f"frontal_area_index test failed, expected {expected}, actual {actual}",
         pd.testing.assert_frame_equal(
             expected,
             actual,
-            f"frontal_area_index test failed, expected {expected}, actual {actual}",
         )
 
     def test_frontal_length(self):
@@ -698,10 +698,10 @@ class TestNodes(unittest.TestCase):
         # wall_length_south tests that addition works correctly when one building does not have a wall facing a given direction.
         # wall_length_west tests that addition works correctly when neither building has a wall facing a given direction.
 
-        wall_length_north = pd.Series([1.0, 1.0], name=Settings.wall_length_north)
-        wall_length_east = pd.Series([1.0, 3.0], name=Settings.wall_length_east)
-        wall_length_south = pd.Series([0, 1.0], name=Settings.wall_length_south)
-        wall_length_west = pd.Series([0, 0], name=Settings.wall_length_west)
+        wall_length_north = pd.Series([1.0, 1.0], name=Settings.WALL_LENGTH_NORTH)
+        wall_length_east = pd.Series([1.0, 3.0], name=Settings.WALL_LENGTH_EAST)
+        wall_length_south = pd.Series([0, 1.0], name=Settings.WALL_LENGTH_SOUTH)
+        wall_length_west = pd.Series([0, 0], name=Settings.WALL_LENGTH_WEST)
 
         wall_length = pd.concat(
             [
@@ -713,10 +713,10 @@ class TestNodes(unittest.TestCase):
             axis=1,
         )
 
-        frontal_length_north = Settings.frontal_length_north
-        frontal_length_east = Settings.frontal_length_east
-        frontal_length_south = Settings.frontal_length_south
-        frontal_length_west = Settings.frontal_length_west
+        frontal_length_north = Settings.FRONTAL_LENGTH_NORTH
+        frontal_length_east = Settings.FRONTAL_LENGTH_EAST
+        frontal_length_south = Settings.FRONTAL_LENGTH_SOUTH
+        frontal_length_west = Settings.FRONTAL_LENGTH_WEST
 
         total_plan_area_geometry = pd.Series([polygon1.buffer(5), polygon2.buffer(5)])
 
@@ -740,8 +740,10 @@ class TestNodes(unittest.TestCase):
             ],
             axis=1,
         )
+        # f"frontal_length test failed, expected {expected}, actual {actual}"
         pd.testing.assert_frame_equal(
-            expected, actual, f"frontal_length test failed, expected {expected}, actual {actual}"
+            expected,
+            actual,
         )
 
     def test_grimmond_oke_displacement_height(self):
@@ -749,10 +751,10 @@ class TestNodes(unittest.TestCase):
         building_height = pd.Series([0, 1, 10.5, 75])
         expected = pd.Series([0.0, 0.67, 7.035, 50.25])
         actual = nodes.grimmond_oke_displacement_height(building_height)
+        # f"grimmond_oke_displacement_height test failed, expected {expected}, actual {actual}",
         pd.testing.assert_series_equal(
             expected,
             actual,
-            f"grimmond_oke_displacement_height test failed, expected {expected}, actual {actual}",
         )
 
     def test_grimmond_oke_roughness_length(self):
@@ -760,10 +762,10 @@ class TestNodes(unittest.TestCase):
         building_height = pd.Series([0, 1, 10.5, 75])
         expected = pd.Series([0.0, 0.1, 1.05, 7.5])
         actual = nodes.grimmond_oke_roughness_length(building_height)
+        # f"grimmond_oke_roughness_length test failed, expected {expected}, actual {actual}",
         pd.testing.assert_series_equal(
             expected,
             actual,
-            f"grimmond_oke_roughness_length test failed, expected {expected}, actual {actual}",
         )
 
     def test_height_to_width_ratio(self):
@@ -774,10 +776,10 @@ class TestNodes(unittest.TestCase):
         actual = nodes.height_to_width_ratio(
             mean_building_height, average_distance_between_buildings
         )
+        # f"height_to_width_ratio test failed, expected {expected}, actual {actual}",
         pd.testing.assert_series_equal(
             expected,
             actual,
-            f"height_to_width_ratio test failed, expected {expected}, actual {actual}",
         )
 
     def test_lot_area(self):
@@ -787,17 +789,17 @@ class TestNodes(unittest.TestCase):
             [[0, 0], [0, 1], [1, 0], [0, 2], [2, 2], [1, 1]]
         )
         buildings_intersecting_plan_area.columns = [
-            Settings.target_id_field,
-            f"index_{Settings.neighbor}",
+            Settings.TARGET_ID_FIELD,
+            f"index_{Settings.NEIGHBOR}",
         ]
         building_surface_area = pd.Series([1, 10, 100])
 
         expected = pd.Series([37.0, 5.5, 100.0])
         actual = nodes.lot_area(buildings_intersecting_plan_area, building_surface_area)
+        # f"lot_area test failed, expected {expected}, actual {actual}",
         pd.testing.assert_series_equal(
             expected,
             actual,
-            f"lot_area test failed, expected {expected}, actual {actual}",
         )
 
     def test_macdonald_displacement_height(self):
@@ -816,10 +818,10 @@ class TestNodes(unittest.TestCase):
             copy=False,
         )
         actual = nodes.macdonald_displacement_height(building_height, plan_area_fraction)
+        # f"macdonald_displacement_height test failed, expected {expected}, actual {actual}",
         pd.testing.assert_series_equal(
             expected,
             actual,
-            f"macdonald_displacement_height test failed, expected {expected}, actual {actual}",
         )
 
     def test_macdonald_roughness_length(self):
@@ -829,10 +831,10 @@ class TestNodes(unittest.TestCase):
         frontal_area = pd.DataFrame(
             [[0, 1, 1.5, 75], [0, 1, 1.5, 75], [0, 1, 1.5, 75]],
             columns=[
-                Settings.frontal_area_index_north,
-                Settings.frontal_area_index_east,
-                Settings.frontal_area_index_south,
-                Settings.frontal_area_index_west,
+                Settings.FRONTAL_AREA_INDEX_NORTH,
+                Settings.FRONTAL_AREA_INDEX_EAST,
+                Settings.FRONTAL_AREA_INDEX_SOUTH,
+                Settings.FRONTAL_AREA_INDEX_WEST,
             ],
         )
         lot_area = pd.Series([10.5, 1, 1])
@@ -844,18 +846,18 @@ class TestNodes(unittest.TestCase):
             ]
         )
         expected.columns = [
-            Settings.macdonald_roughness_length_north,
-            Settings.macdonald_roughness_length_east,
-            Settings.macdonald_roughness_length_south,
-            Settings.macdonald_roughness_length_west,
+            Settings.MACDONALD_ROUGHNESS_LENGTH_NORTH,
+            Settings.MACDONALD_ROUGHNESS_LENGTH_EAST,
+            Settings.MACDONALD_ROUGHNESS_LENGTH_SOUTH,
+            Settings.MACDONALD_ROUGHNESS_LENGTH_WEST,
         ]
         actual = nodes.macdonald_roughness_length(
             building_height, macdonald_displacement_height, frontal_area, lot_area
         )
+        # f"macdonald_displacement_height test failed, expected {expected}, actual {actual}",
         pd.testing.assert_frame_equal(
             expected,
             actual,
-            f"macdonald_displacement_height test failed, expected {expected}, actual {actual}",
         )
 
     def test_mean_building_height(self):
@@ -865,15 +867,15 @@ class TestNodes(unittest.TestCase):
             [[0, 10], [0, 5], [1, 0], [2, 3.14], [2, 11358], [0, 15]]
         )
         buildings_intersecting_plan_area.columns = [
-            Settings.target_id_field,
-            Settings.neighbor_height_field,
+            Settings.TARGET_ID_FIELD,
+            Settings.NEIGHBOR_HEIGHT_FIELD,
         ]
         expected = pd.Series([10, 0.0, 5680.57])
         actual = nodes.mean_building_height(buildings_intersecting_plan_area)
+        # f"mean_building_height test failed, expected {expected}, actual {actual}",
         pd.testing.assert_series_equal(
             expected,
             actual,
-            f"mean_building_height test failed, expected {expected}, actual {actual}",
         )
 
     def test_plan_area_density(self):
@@ -905,15 +907,17 @@ class TestNodes(unittest.TestCase):
             plan_area_density[3][i] = 0.35
 
         columns_plan_area_density = [
-            f"{Settings.plan_area_density}_{i}"
+            f"{Settings.PLAN_AREA_DENSITY}_{i}"
             for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
         ]
 
         actual = nodes.plan_area_density(building_plan_area, building_height, total_plan_area)
         expected = pd.DataFrame(plan_area_density, columns=columns_plan_area_density)
 
+        # f"plan_area_density test failed, expected {expected}, actual {actual}"
         pd.testing.assert_frame_equal(
-            expected, actual, f"plan_area_density test failed, expected {expected}, actual {actual}"
+            expected,
+            actual,
         )
 
     def test_plan_area_fraction(self):
@@ -923,10 +927,10 @@ class TestNodes(unittest.TestCase):
         total_plan_area = pd.Series([1, 1, 0.1, 0])
         expected = pd.Series([0.0, 0.01, 700, math.inf])
         actual = nodes.plan_area_fraction(building_plan_area, total_plan_area)
+        # f"plan_area_fraction test failed, expected {expected}, actual {actual}",
         pd.testing.assert_series_equal(
             expected,
             actual,
-            f"plan_area_fraction test failed, expected {expected}, actual {actual}",
         )
 
     def test_raupach_displacement_height(self):
@@ -964,16 +968,16 @@ class TestNodes(unittest.TestCase):
             ]
         )
         expected.columns = [
-            Settings.raupach_displacement_height_north,
-            Settings.raupach_displacement_height_east,
-            Settings.raupach_displacement_height_south,
-            Settings.raupach_displacement_height_west,
+            Settings.RAUPACH_DISPLACEMENT_HEIGHT_NORTH,
+            Settings.RAUPACH_DISPLACEMENT_HEIGHT_EAST,
+            Settings.RAUPACH_DISPLACEMENT_HEIGHT_SOUTH,
+            Settings.RAUPACH_DISPLACEMENT_HEIGHT_WEST,
         ]
         actual = nodes.raupach_displacement_height(building_height, frontal_area_index)
+        # f"raupach_displacement_height test failed, expected {expected}, actual {actual}",
         pd.testing.assert_frame_equal(
             expected,
             actual,
-            f"raupach_displacement_height test failed, expected {expected}, actual {actual}",
         )
 
     def test_raupach_roughness_length(self):
@@ -991,18 +995,18 @@ class TestNodes(unittest.TestCase):
             ]
         )
         expected.columns = [
-            Settings.raupach_roughness_length_north,
-            Settings.raupach_roughness_length_east,
-            Settings.raupach_roughness_length_south,
-            Settings.raupach_roughness_length_west,
+            Settings.RAUPACH_ROUGHNESS_LENGTH_NORTH,
+            Settings.RAUPACH_ROUGHNESS_LENGTH_EAST,
+            Settings.RAUPACH_ROUGHNESS_LENGTH_SOUTH,
+            Settings.RAUPACH_ROUGHNESS_LENGTH_WEST,
         ]
         actual = nodes.raupach_roughness_length(
             building_height, frontal_area_index, raupach_displacement_height
         )
+        # f"raupach_roughness_length test failed, expected {expected}, actual {actual}",
         pd.testing.assert_frame_equal(
             expected,
             actual,
-            f"raupach_roughness_length test failed, expected {expected}, actual {actual}",
         )
 
     def test_rooftop_area_density(self):
@@ -1033,15 +1037,15 @@ class TestNodes(unittest.TestCase):
             ]
         )
         columns_rooftop_area_density = [
-            f"{Settings.rooftop_area_density}_{i}"
+            f"{Settings.ROOFTOP_AREA_DENSITY}_{i}"
             for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
         ]
         expected.columns = columns_rooftop_area_density
         actual = nodes.rooftop_area_density(plan_area_density)
+        # f"rooftop_area_density test failed, expected {expected}, actual {actual}",
         pd.testing.assert_frame_equal(
             expected,
             actual,
-            f"rooftop_area_density test failed, expected {expected}, actual {actual}",
         )
 
     def test_sky_view_factor(self):
@@ -1059,10 +1063,10 @@ class TestNodes(unittest.TestCase):
             ]
         )
         actual = nodes.sky_view_factor(building_height, average_distance_between_buildings)
+        # f"sky_view_factor test failed, expected {expected}, actual {actual}",
         pd.testing.assert_series_equal(
             expected,
             actual,
-            f"sky_view_factor test failed, expected {expected}, actual {actual}",
         )
 
     def test_standard_deviation_of_building_heights(self):
@@ -1072,16 +1076,16 @@ class TestNodes(unittest.TestCase):
             [[0, 10], [0, 1], [1, 0.1], [1, 0], [2, 112358], [0, 100]]
         )
         buildings_intersecting_plan_area.columns = [
-            Settings.target_id_field,
-            Settings.neighbor_height_field,
+            Settings.TARGET_ID_FIELD,
+            Settings.NEIGHBOR_HEIGHT_FIELD,
         ]
         expected = pd.Series([54.74486277268398, 0.07071067811865477, 0])
 
         actual = nodes.standard_deviation_of_building_heights(buildings_intersecting_plan_area)
+        # f"standard_deviation_of_building_heights test failed, expected {expected}, actual {actual}",
         pd.testing.assert_series_equal(
             expected,
             actual,
-            f"standard_deviation_of_building_heights test failed, expected {expected}, actual {actual}",
         )
 
     def test_wall_angle_direction_length(self):
@@ -1090,14 +1094,14 @@ class TestNodes(unittest.TestCase):
         polygon_exterior = [[0, 1], [1, 1], [1, 0], [0, 0], [0, 1]]
         polygon_interior = [[0.25, 0.25], [0.25, 0.75], [0.75, 0.75], [0.75, 0.25]]
 
-        north = Settings.north
-        south = Settings.south
-        east = Settings.east
-        west = Settings.west
+        north = Settings.NORTH
+        south = Settings.SOUTH
+        east = Settings.EAST
+        west = Settings.WEST
 
-        wall_angle = Settings.wall_angle
-        wall_direction = Settings.wall_direction
-        wall_length = Settings.wall_length
+        wall_angle = Settings.WALL_ANGLE
+        wall_direction = Settings.WALL_DIRECTION
+        wall_length = Settings.WALL_LENGTH
 
         square_root_one_half = 0.7071067811865476
 
@@ -1255,10 +1259,10 @@ class TestNodes(unittest.TestCase):
             ],
         )
         actual = nodes.vertical_distribution_of_building_heights(building_height)
+        # f"vertical_distribution_of_building_heights test failed, expected {expected}, actual {actual}",
         pd.testing.assert_frame_equal(
             expected,
             actual,
-            f"vertical_distribution_of_building_heights test failed, expected {expected}, actual {actual}",
         )
 
     def test_wall_length(self):
