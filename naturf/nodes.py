@@ -22,16 +22,16 @@ def area_weighted_mean_of_building_heights(
                                                 building's plan area.
     """
 
-    buildings_intersecting_plan_area[Settings.neighbor_volume_field] = (
-        buildings_intersecting_plan_area[Settings.neighbor_height_field]
-        * buildings_intersecting_plan_area[Settings.neighbor_area_field]
+    buildings_intersecting_plan_area[Settings.NEIGHBOR_VOLUME_FIELD] = (
+        buildings_intersecting_plan_area[Settings.NEIGHBOR_HEIGHT_FIELD]
+        * buildings_intersecting_plan_area[Settings.NEIGHBOR_AREA_FIELD]
     )
 
-    volume_sum = buildings_intersecting_plan_area.groupby(Settings.target_id_field)[
-        Settings.neighbor_volume_field
+    volume_sum = buildings_intersecting_plan_area.groupby(Settings.TARGET_ID_FIELD)[
+        Settings.NEIGHBOR_VOLUME_FIELD
     ].sum()
-    area_sum = buildings_intersecting_plan_area.groupby(Settings.target_id_field)[
-        Settings.neighbor_area_field
+    area_sum = buildings_intersecting_plan_area.groupby(Settings.TARGET_ID_FIELD)[
+        Settings.NEIGHBOR_AREA_FIELD
     ].sum()
 
     df = volume_sum / area_sum
@@ -52,17 +52,17 @@ def average_distance_between_buildings(distance_between_buildings: pd.Series) ->
 
     df = distance_between_buildings.replace(0, np.nan)
     df = (
-        df.groupby(Settings.neighbor_id_field)
+        df.groupby(Settings.NEIGHBOR_ID_FIELD)
         .mean()
         .reset_index()
         .replace(np.nan, Settings.DEFAULT_STREET_WIDTH)
         .rename(
             columns={
-                Settings.distance_between_buildings: Settings.average_distance_between_buildings
+                Settings.DISTANCE_BETWEEN_BUILDINGS: Settings.AVERAGE_DISTANCE_BETWEEN_BUILDINGS
             }
         )
     )
-    return df[Settings.average_distance_between_buildings]
+    return df[Settings.AVERAGE_DISTANCE_BETWEEN_BUILDINGS]
 
 
 def building_area(building_geometry: pd.Series) -> pd.Series:
@@ -88,8 +88,8 @@ def buildings_intersecting_plan_area(
     target_crs: CRS,
     join_type: str = "left",
     join_predicate: str = "intersects",
-    join_lsuffix: str = Settings.target,
-    join_rsuffix: str = Settings.neighbor,
+    join_lsuffix: str = Settings.TARGET,
+    join_rsuffix: str = Settings.NEIGHBOR,
 ) -> gpd.GeoDataFrame:
     """Conduct a spatial join to get the building areas that intersect the buffered target buildings.
 
@@ -134,21 +134,21 @@ def buildings_intersecting_plan_area(
 
     df = pd.DataFrame(
         {
-            Settings.id_field: building_id,
-            Settings.height_field: building_height,
-            Settings.area_field: building_area,
-            Settings.geometry_field: building_geometry,
-            Settings.buffered_field: total_plan_area_geometry,
-            Settings.wall_length_north: wall_length[Settings.wall_length_north],
-            Settings.wall_length_east: wall_length[Settings.wall_length_east],
-            Settings.wall_length_south: wall_length[Settings.wall_length_south],
-            Settings.wall_length_west: wall_length[Settings.wall_length_west],
+            Settings.ID_FIELD: building_id,
+            Settings.HEIGHT_FIELD: building_height,
+            Settings.AREA_FIELD: building_area,
+            Settings.GEOMETRY_FIELD: building_geometry,
+            Settings.BUFFERED_FIELD: total_plan_area_geometry,
+            Settings.WALL_LENGTH_NORTH: wall_length[Settings.WALL_LENGTH_NORTH],
+            Settings.WALL_LENGTH_EAST: wall_length[Settings.WALL_LENGTH_EAST],
+            Settings.WALL_LENGTH_SOUTH: wall_length[Settings.WALL_LENGTH_SOUTH],
+            Settings.WALL_LENGTH_WEST: wall_length[Settings.WALL_LENGTH_WEST],
         }
     )
 
     # Create left and right GeoDataFrames.
-    left_gdf = gpd.GeoDataFrame(df, geometry=Settings.buffered_field, crs=target_crs)
-    right_gdf = gpd.GeoDataFrame(df, geometry=Settings.geometry_field, crs=target_crs)
+    left_gdf = gpd.GeoDataFrame(df, geometry=Settings.BUFFERED_FIELD, crs=target_crs)
+    right_gdf = gpd.GeoDataFrame(df, geometry=Settings.GEOMETRY_FIELD, crs=target_crs)
 
     # Spatially join the building areas to the target buffered areas.
     xdf = gpd.sjoin(
@@ -162,22 +162,22 @@ def buildings_intersecting_plan_area(
 
     # Add the neighbor building geometry.
     xdf = (
-        xdf.set_index(f"{Settings.id_field}_{join_rsuffix}")
+        xdf.set_index(f"{Settings.ID_FIELD}_{join_rsuffix}")
         .join(
-            right_gdf.set_index(Settings.id_field)[Settings.geometry_field].rename(
-                Settings.neighbor_geometry_field
+            right_gdf.set_index(Settings.ID_FIELD)[Settings.GEOMETRY_FIELD].rename(
+                Settings.NEIGHBOR_GEOMETRY_FIELD
             )
         )
         .sort_index()
     )
 
-    return gpd.GeoDataFrame(xdf).set_geometry(Settings.geometry_field)
+    return gpd.GeoDataFrame(xdf).set_geometry(Settings.GEOMETRY_FIELD)
 
 
 def building_plan_area(
     buildings_intersecting_plan_area: gpd.GeoDataFrame,
     join_predicate: str = "intersection",
-    join_rsuffix: str = Settings.neighbor,
+    join_rsuffix: str = Settings.NEIGHBOR,
 ) -> pd.Series:
     """Calculate the building plan area from the GeoDataFrame of buildings intersecting the plan area.
 
@@ -204,18 +204,18 @@ def building_plan_area(
     for target_building_id in np.sort(buildings_intersecting_plan_area.building_id_target.unique()):
         # Get DataFrame with any building that intersects the target_building_id plan area.
         target_building_gdf = buildings_intersecting_plan_area.loc[
-            buildings_intersecting_plan_area[Settings.target_id_field] == target_building_id
+            buildings_intersecting_plan_area[Settings.TARGET_ID_FIELD] == target_building_id
         ].reset_index()
 
         # Create GeoDataFrames with building and neighbor info.
         target_gdf = (
-            target_building_gdf[[Settings.target_id_field, Settings.target_buffered_field]]
-            .set_geometry(Settings.target_buffered_field)
+            target_building_gdf[[Settings.TARGET_ID_FIELD, Settings.TARGET_BUFFERED_FIELD]]
+            .set_geometry(Settings.TARGET_BUFFERED_FIELD)
             .drop_duplicates()
         )
         neighbor_gdf = target_building_gdf[
-            [f"index_{join_rsuffix}", Settings.neighbor_geometry_field]
-        ].set_geometry(Settings.neighbor_geometry_field)
+            [f"index_{join_rsuffix}", Settings.NEIGHBOR_GEOMETRY_FIELD]
+        ].set_geometry(Settings.NEIGHBOR_GEOMETRY_FIELD)
 
         # Create a new GeoDataFrame with the area of intersection.
         intersection_gdf = gpd.overlay(
@@ -223,7 +223,7 @@ def building_plan_area(
         )
 
         # Sum up the area of intersection and add to the output list.
-        building_plan_area.append(intersection_gdf[Settings.data_geometry_field_name].area.sum())
+        building_plan_area.append(intersection_gdf[Settings.DATA_GEOMETRY_FIELD_NAME].area.sum())
 
         index += 1
 
@@ -304,14 +304,14 @@ def distance_between_buildings(buildings_intersecting_plan_area: gpd.GeoDataFram
     :return:                                    The distance between each building and its neighbors in a Pandas Series.
     """
 
-    neighbor_geometry = buildings_intersecting_plan_area[Settings.neighbor_geometry_field]
+    neighbor_geometry = buildings_intersecting_plan_area[Settings.NEIGHBOR_GEOMETRY_FIELD]
 
     return buildings_intersecting_plan_area.distance(neighbor_geometry).rename(
-        Settings.distance_between_buildings
+        Settings.DISTANCE_BETWEEN_BUILDINGS
     )
 
 
-@extract_columns(*[Settings.id_field, Settings.height_field, Settings.geometry_field])
+@extract_columns(*[Settings.ID_FIELD, Settings.HEIGHT_FIELD, Settings.GEOMETRY_FIELD])
 def filter_height_range(standardize_column_names_df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     """Filter out any zero height buildings and reindex the data frame.  Extract the building_id,
     building_height, and geometry fields to nodes.
@@ -324,12 +324,12 @@ def filter_height_range(standardize_column_names_df: gpd.GeoDataFrame) -> gpd.Ge
     """
 
     standardize_column_names_df.loc[
-        standardize_column_names_df[Settings.height_field] > Settings.MAX_BUILDING_HEIGHT,
-        Settings.height_field,
+        standardize_column_names_df[Settings.HEIGHT_FIELD] > Settings.MAX_BUILDING_HEIGHT,
+        Settings.HEIGHT_FIELD,
     ] = Settings.MAX_BUILDING_HEIGHT
 
     return standardize_column_names_df.loc[
-        standardize_column_names_df[Settings.height_field] > 0
+        standardize_column_names_df[Settings.HEIGHT_FIELD] > 0
     ].reset_index(drop=True)
 
 
@@ -348,10 +348,10 @@ def frontal_area(frontal_length: pd.DataFrame, building_height: pd.Series) -> pd
     frontal_area = frontal_length.mul(building_height, axis=0)
 
     frontal_area.columns = [
-        Settings.frontal_area_north,
-        Settings.frontal_area_east,
-        Settings.frontal_area_south,
-        Settings.frontal_area_west,
+        Settings.FRONTAL_AREA_NORTH,
+        Settings.FRONTAL_AREA_EAST,
+        Settings.FRONTAL_AREA_SOUTH,
+        Settings.FRONTAL_AREA_WEST,
     ]
 
     return frontal_area
@@ -399,28 +399,28 @@ def frontal_area_density(
                 frontal_area_north[building][
                     int(building_height_index / Settings.BUILDING_HEIGHT_INTERVAL)
                 ] = (
-                    building_frontal_length[Settings.frontal_length_north]
+                    building_frontal_length[Settings.FRONTAL_LENGTH_NORTH]
                     * Settings.BUILDING_HEIGHT_INTERVAL
                     / total_plan_area[building]
                 )
                 frontal_area_east[building][
                     int(building_height_index / Settings.BUILDING_HEIGHT_INTERVAL)
                 ] = (
-                    building_frontal_length[Settings.frontal_length_east]
+                    building_frontal_length[Settings.FRONTAL_LENGTH_EAST]
                     * Settings.BUILDING_HEIGHT_INTERVAL
                     / total_plan_area[building]
                 )
                 frontal_area_south[building][
                     int(building_height_index / Settings.BUILDING_HEIGHT_INTERVAL)
                 ] = (
-                    building_frontal_length[Settings.frontal_length_south]
+                    building_frontal_length[Settings.FRONTAL_LENGTH_SOUTH]
                     * Settings.BUILDING_HEIGHT_INTERVAL
                     / total_plan_area[building]
                 )
                 frontal_area_west[building][
                     int(building_height_index / Settings.BUILDING_HEIGHT_INTERVAL)
                 ] = (
-                    building_frontal_length[Settings.frontal_length_west]
+                    building_frontal_length[Settings.FRONTAL_LENGTH_WEST]
                     * Settings.BUILDING_HEIGHT_INTERVAL
                     / total_plan_area[building]
                 )
@@ -428,7 +428,7 @@ def frontal_area_density(
                 frontal_area_north[building][
                     int(building_height_index / Settings.BUILDING_HEIGHT_INTERVAL)
                 ] = (
-                    building_frontal_length[Settings.frontal_length_north]
+                    building_frontal_length[Settings.FRONTAL_LENGTH_NORTH]
                     * (
                         Settings.BUILDING_HEIGHT_INTERVAL
                         - building_height_counter
@@ -439,7 +439,7 @@ def frontal_area_density(
                 frontal_area_east[building][
                     int(building_height_index / Settings.BUILDING_HEIGHT_INTERVAL)
                 ] = (
-                    building_frontal_length[Settings.frontal_length_east]
+                    building_frontal_length[Settings.FRONTAL_LENGTH_EAST]
                     * (
                         Settings.BUILDING_HEIGHT_INTERVAL
                         - building_height_counter
@@ -450,7 +450,7 @@ def frontal_area_density(
                 frontal_area_south[building][
                     int(building_height_index / Settings.BUILDING_HEIGHT_INTERVAL)
                 ] = (
-                    building_frontal_length[Settings.frontal_length_south]
+                    building_frontal_length[Settings.FRONTAL_LENGTH_SOUTH]
                     * (
                         Settings.BUILDING_HEIGHT_INTERVAL
                         - building_height_counter
@@ -461,7 +461,7 @@ def frontal_area_density(
                 frontal_area_west[building][
                     int(building_height_index / Settings.BUILDING_HEIGHT_INTERVAL)
                 ] = (
-                    building_frontal_length[Settings.frontal_length_west]
+                    building_frontal_length[Settings.FRONTAL_LENGTH_WEST]
                     * (
                         Settings.BUILDING_HEIGHT_INTERVAL
                         - building_height_counter
@@ -474,19 +474,19 @@ def frontal_area_density(
 
     columns_north, columns_east, columns_south, columns_west = (
         [
-            f"{Settings.frontal_area_north}_{i}"
+            f"{Settings.FRONTAL_AREA_NORTH}_{i}"
             for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
         ],
         [
-            f"{Settings.frontal_area_east}_{i}"
+            f"{Settings.FRONTAL_AREA_EAST}_{i}"
             for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
         ],
         [
-            f"{Settings.frontal_area_south}_{i}"
+            f"{Settings.FRONTAL_AREA_SOUTH}_{i}"
             for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
         ],
         [
-            f"{Settings.frontal_area_west}_{i}"
+            f"{Settings.FRONTAL_AREA_WEST}_{i}"
             for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
         ],
     )
@@ -516,10 +516,10 @@ def frontal_area_index(frontal_area: pd.DataFrame, total_plan_area: pd.Series) -
 
     frontal_area_index = frontal_area.div(total_plan_area, axis=0)
     frontal_area_index.columns = [
-        Settings.frontal_area_index_north,
-        Settings.frontal_area_index_east,
-        Settings.frontal_area_index_south,
-        Settings.frontal_area_index_west,
+        Settings.FRONTAL_AREA_INDEX_NORTH,
+        Settings.FRONTAL_AREA_INDEX_EAST,
+        Settings.FRONTAL_AREA_INDEX_SOUTH,
+        Settings.FRONTAL_AREA_INDEX_WEST,
     ]
 
     return frontal_area_index
@@ -552,31 +552,31 @@ def frontal_length(
     for target_building_id in np.sort(buildings_intersecting_plan_area.building_id_target.unique()):
         # Get DataFrame with any building that intersects the target_building_id plan area.
         target_building_gdf = buildings_intersecting_plan_area.loc[
-            buildings_intersecting_plan_area[Settings.target_id_field] == target_building_id
+            buildings_intersecting_plan_area[Settings.TARGET_ID_FIELD] == target_building_id
         ].reset_index()
 
         # Sum frontal length for each cardinal direction
         frontal_length_north[index] = target_building_gdf[
-            f"{Settings.wall_length_north}_{Settings.neighbor}"
+            f"{Settings.WALL_LENGTH_NORTH}_{Settings.NEIGHBOR}"
         ].sum()
         frontal_length_east[index] = target_building_gdf[
-            f"{Settings.wall_length_east}_{Settings.neighbor}"
+            f"{Settings.WALL_LENGTH_EAST}_{Settings.NEIGHBOR}"
         ].sum()
         frontal_length_south[index] = target_building_gdf[
-            f"{Settings.wall_length_south}_{Settings.neighbor}"
+            f"{Settings.WALL_LENGTH_SOUTH}_{Settings.NEIGHBOR}"
         ].sum()
         frontal_length_west[index] = target_building_gdf[
-            f"{Settings.wall_length_west}_{Settings.neighbor}"
+            f"{Settings.WALL_LENGTH_WEST}_{Settings.NEIGHBOR}"
         ].sum()
 
         index += 1
 
     return pd.concat(
         [
-            pd.Series(frontal_length_north, name=Settings.frontal_length_north),
-            pd.Series(frontal_length_east, name=Settings.frontal_length_east),
-            pd.Series(frontal_length_south, name=Settings.frontal_length_south),
-            pd.Series(frontal_length_west, name=Settings.frontal_length_west),
+            pd.Series(frontal_length_north, name=Settings.FRONTAL_LENGTH_NORTH),
+            pd.Series(frontal_length_east, name=Settings.FRONTAL_LENGTH_EAST),
+            pd.Series(frontal_length_south, name=Settings.FRONTAL_LENGTH_SOUTH),
+            pd.Series(frontal_length_west, name=Settings.FRONTAL_LENGTH_WEST),
         ],
         axis=1,
     )
@@ -638,11 +638,11 @@ def input_shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
 
     gdf = gpd.read_file(input_shapefile)[
         [
-            Settings.data_id_field_name,
-            Settings.data_height_field_name,
-            Settings.data_geometry_field_name,
+            Settings.DATA_ID_FIELD_NAME,
+            Settings.DATA_HEIGHT_FIELD_NAME,
+            Settings.DATA_GEOMETRY_FIELD_NAME,
         ]
-    ].set_geometry(Settings.data_geometry_field_name)
+    ].set_geometry(Settings.DATA_GEOMETRY_FIELD_NAME)
 
     return gdf
 
@@ -664,11 +664,11 @@ def lot_area(
     """
 
     df = buildings_intersecting_plan_area.join(
-        building_surface_area.rename(Settings.building_surface_area),
-        on=f"index_{Settings.neighbor}",
+        building_surface_area.rename(Settings.BUILDING_SURFACE_AREA),
+        on=f"index_{Settings.NEIGHBOR}",
         how="left",
     )
-    df = df.groupby(Settings.target_id_field)[Settings.building_surface_area].mean()
+    df = df.groupby(Settings.TARGET_ID_FIELD)[Settings.BUILDING_SURFACE_AREA].mean()
 
     return pd.Series(df.values)
 
@@ -740,10 +740,10 @@ def macdonald_roughness_length(
     macdonald_roughness_length = right_side.mul(building_height, axis=0)
 
     macdonald_roughness_length.columns = [
-        Settings.macdonald_roughness_length_north,
-        Settings.macdonald_roughness_length_east,
-        Settings.macdonald_roughness_length_south,
-        Settings.macdonald_roughness_length_west,
+        Settings.MACDONALD_ROUGHNESS_LENGTH_NORTH,
+        Settings.MACDONALD_ROUGHNESS_LENGTH_EAST,
+        Settings.MACDONALD_ROUGHNESS_LENGTH_SOUTH,
+        Settings.MACDONALD_ROUGHNESS_LENGTH_WEST,
     ]
 
     return macdonald_roughness_length
@@ -759,8 +759,8 @@ def mean_building_height(buildings_intersecting_plan_area: gpd.GeoDataFrame) -> 
     :return:                                    The mean building height for all buildings within the target building's plan area.
     """
 
-    df = buildings_intersecting_plan_area.groupby(Settings.target_id_field)[
-        Settings.neighbor_height_field
+    df = buildings_intersecting_plan_area.groupby(Settings.TARGET_ID_FIELD)[
+        Settings.NEIGHBOR_HEIGHT_FIELD
     ].mean()
 
     return pd.Series(df.values)
@@ -802,7 +802,7 @@ def plan_area_density(
             building_height_counter += Settings.BUILDING_HEIGHT_INTERVAL
 
     columns_plan_area_density = [
-        f"{Settings.plan_area_density}_{i}"
+        f"{Settings.PLAN_AREA_DENSITY}_{i}"
         for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
     ]
     return pd.DataFrame(plan_area_density, columns=columns_plan_area_density)
@@ -850,10 +850,10 @@ def raupach_displacement_height(
     )
 
     raupach_displacement_height.columns = [
-        Settings.raupach_displacement_height_north,
-        Settings.raupach_displacement_height_east,
-        Settings.raupach_displacement_height_south,
-        Settings.raupach_displacement_height_west,
+        Settings.RAUPACH_DISPLACEMENT_HEIGHT_NORTH,
+        Settings.RAUPACH_DISPLACEMENT_HEIGHT_EAST,
+        Settings.RAUPACH_DISPLACEMENT_HEIGHT_SOUTH,
+        Settings.RAUPACH_DISPLACEMENT_HEIGHT_WEST,
     ]
 
     return raupach_displacement_height
@@ -880,10 +880,10 @@ def raupach_roughness_length(
     """
 
     cols = [
-        Settings.raupach_roughness_length_north,
-        Settings.raupach_roughness_length_east,
-        Settings.raupach_roughness_length_south,
-        Settings.raupach_roughness_length_west,
+        Settings.RAUPACH_ROUGHNESS_LENGTH_NORTH,
+        Settings.RAUPACH_ROUGHNESS_LENGTH_EAST,
+        Settings.RAUPACH_ROUGHNESS_LENGTH_SOUTH,
+        Settings.RAUPACH_ROUGHNESS_LENGTH_WEST,
     ]
 
     cols_fai = frontal_area_index.columns
@@ -926,7 +926,7 @@ def rooftop_area_density(plan_area_density: pd.DataFrame) -> pd.DataFrame:
     """
 
     columns_rooftop_area_density = [
-        f"{Settings.rooftop_area_density}_{i}"
+        f"{Settings.ROOFTOP_AREA_DENSITY}_{i}"
         for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
     ]
 
@@ -964,8 +964,8 @@ def standard_deviation_of_building_heights(
     """
 
     df = (
-        buildings_intersecting_plan_area.groupby(Settings.target_id_field)[
-            Settings.neighbor_height_field
+        buildings_intersecting_plan_area.groupby(Settings.TARGET_ID_FIELD)[
+            Settings.NEIGHBOR_HEIGHT_FIELD
         ]
         .std()
         .fillna(0)
@@ -987,14 +987,14 @@ def standardize_column_names_df(input_shapefile_df: gpd.GeoDataFrame) -> gpd.Geo
     # standardize field names from data to reference names in code
     input_shapefile_df.rename(
         columns={
-            Settings.data_id_field_name: Settings.id_field,
-            Settings.data_height_field_name: Settings.height_field,
-            Settings.data_geometry_field_name: Settings.geometry_field,
+            Settings.DATA_ID_FIELD_NAME: Settings.ID_FIELD,
+            Settings.DATA_HEIGHT_FIELD_NAME: Settings.HEIGHT_FIELD,
+            Settings.DATA_GEOMETRY_FIELD_NAME: Settings.GEOMETRY_FIELD,
         },
         inplace=True,
     )
 
-    return input_shapefile_df.set_geometry(Settings.geometry_field)
+    return input_shapefile_df.set_geometry(Settings.GEOMETRY_FIELD)
 
 
 def target_crs(input_shapefile_df: gpd.GeoDataFrame) -> CRS:
@@ -1007,7 +1007,7 @@ def target_crs(input_shapefile_df: gpd.GeoDataFrame) -> CRS:
 
     """
 
-    return input_shapefile_df.set_geometry(Settings.geometry_field).crs
+    return input_shapefile_df.set_geometry(Settings.GEOMETRY_FIELD).crs
 
 
 def total_plan_area(total_plan_area_geometry: gpd.GeoSeries) -> pd.Series:
@@ -1074,7 +1074,7 @@ def vertical_distribution_of_building_heights(building_height: pd.Series) -> pd.
             building_height_counter += Settings.BUILDING_HEIGHT_INTERVAL
 
     columns_vertical_distribution_of_building_heights = [
-        f"{Settings.vertical_distribution_of_building_heights}_{i}"
+        f"{Settings.VERTICAL_DISTRIBUTION_OF_BUILDING_HEIGHTS}_{i}"
         for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
     ]
 
@@ -1121,21 +1121,21 @@ def wall_angle_direction_length(building_geometry: pd.Series) -> pd.DataFrame:
                     <= wall_angle[building][index - 1]
                     < Settings.NORTHWEST_DEGREES
                 ):
-                    wall_direction[building].append(Settings.west)
+                    wall_direction[building].append(Settings.WEST)
                 elif (
                     Settings.SOUTHEAST_DEGREES_ARCTAN
                     <= wall_angle[building][index - 1]
                     < Settings.NORTHEAST_DEGREES
                 ):
-                    wall_direction[building].append(Settings.north)
+                    wall_direction[building].append(Settings.NORTH)
                 elif (
                     Settings.SOUTHWEST_DEGREES_ARCTAN
                     <= wall_angle[building][index - 1]
                     < Settings.SOUTHEAST_DEGREES_ARCTAN
                 ):
-                    wall_direction[building].append(Settings.east)
+                    wall_direction[building].append(Settings.EAST)
                 else:
-                    wall_direction[building].append(Settings.south)
+                    wall_direction[building].append(Settings.SOUTH)
 
                 wall_length[building].append(np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2))
 
@@ -1144,9 +1144,9 @@ def wall_angle_direction_length(building_geometry: pd.Series) -> pd.DataFrame:
 
     return pd.concat(
         [
-            pd.Series(wall_angle, name=Settings.wall_angle),
-            pd.Series(wall_direction, name=Settings.wall_direction),
-            pd.Series(wall_length, name=Settings.wall_length),
+            pd.Series(wall_angle, name=Settings.WALL_ANGLE),
+            pd.Series(wall_direction, name=Settings.WALL_DIRECTION),
+            pd.Series(wall_length, name=Settings.WALL_LENGTH),
         ],
         axis=1,
     )
@@ -1170,22 +1170,22 @@ def wall_length(wall_angle_direction_length: pd.DataFrame) -> pd.DataFrame:
     )
 
     for index, row in wall_angle_direction_length.iterrows():
-        for j in range(len(row[Settings.wall_direction])):
-            if row[Settings.wall_direction][j] == Settings.north:
-                wall_length_north[index] += row[Settings.wall_length][j]
-            elif row[Settings.wall_direction][j] == Settings.east:
-                wall_length_east[index] += row[Settings.wall_length][j]
-            elif row[Settings.wall_direction][j] == Settings.south:
-                wall_length_south[index] += row[Settings.wall_length][j]
+        for j in range(len(row[Settings.WALL_DIRECTION])):
+            if row[Settings.WALL_DIRECTION][j] == Settings.NORTH:
+                wall_length_north[index] += row[Settings.WALL_LENGTH][j]
+            elif row[Settings.WALL_DIRECTION][j] == Settings.EAST:
+                wall_length_east[index] += row[Settings.WALL_LENGTH][j]
+            elif row[Settings.WALL_DIRECTION][j] == Settings.SOUTH:
+                wall_length_south[index] += row[Settings.WALL_LENGTH][j]
             else:
-                wall_length_west[index] += row[Settings.wall_length][j]
+                wall_length_west[index] += row[Settings.WALL_LENGTH][j]
 
     return pd.concat(
         [
-            pd.Series(wall_length_north, name=Settings.wall_length_north),
-            pd.Series(wall_length_east, name=Settings.wall_length_east),
-            pd.Series(wall_length_south, name=Settings.wall_length_south),
-            pd.Series(wall_length_west, name=Settings.wall_length_west),
+            pd.Series(wall_length_north, name=Settings.WALL_LENGTH_NORTH),
+            pd.Series(wall_length_east, name=Settings.WALL_LENGTH_EAST),
+            pd.Series(wall_length_south, name=Settings.WALL_LENGTH_SOUTH),
+            pd.Series(wall_length_west, name=Settings.WALL_LENGTH_WEST),
         ],
         axis=1,
     )

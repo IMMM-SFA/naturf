@@ -16,7 +16,10 @@ if __name__ == "__main__":
 
     df = dr.execute(output_columns, inputs=inputs)
     dr.visualize_execution(
-        output_columns, inputs=inputs, output_file_path="dag", render_kwargs={"format": "png"}
+        output_columns,
+        inputs=inputs,
+        output_file_path="notebooks/dag",
+        render_kwargs={"format": "png"},
     )
 
     end_time = time.perf_counter()

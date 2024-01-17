@@ -120,54 +120,54 @@ def merge_parameters(
 
     df = pd.concat([frontal_area_density, plan_area_density, rooftop_area_density], axis=1)
 
-    df[Settings.plan_area_fraction] = plan_area_fraction
-    df[Settings.mean_building_height] = mean_building_height
-    df[Settings.standard_deviation_of_building_heights] = standard_deviation_of_building_heights
-    df[Settings.area_weighted_mean_of_building_heights] = area_weighted_mean_of_building_heights
-    df[Settings.building_surface_area_to_plan_area_ratio] = building_surface_area_to_plan_area_ratio
+    df[Settings.PLAN_AREA_FRACTION] = plan_area_fraction
+    df[Settings.MEAN_BUILDING_HEIGHT] = mean_building_height
+    df[Settings.STANDARD_DEVIATION_OF_BUILDING_HEIGHTS] = standard_deviation_of_building_heights
+    df[Settings.AREA_WEIGHTED_MEAN_OF_BUILDING_HEIGHTS] = area_weighted_mean_of_building_heights
+    df[Settings.BUILDING_SURFACE_AREA_TO_PLAN_AREA_RATIO] = building_surface_area_to_plan_area_ratio
 
     df = pd.concat([df, frontal_area_index], axis=1)
 
-    df[Settings.complete_aspect_ratio] = complete_aspect_ratio
-    df[Settings.height_to_width_ratio] = height_to_width_ratio
-    df[Settings.sky_view_factor] = sky_view_factor
-    df[Settings.grimmond_oke_roughness_length] = grimmond_oke_roughness_length
-    df[Settings.grimmond_oke_displacement_height] = grimmond_oke_displacement_height
+    df[Settings.COMPLETE_ASPECT_RATIO] = complete_aspect_ratio
+    df[Settings.HEIGHT_TO_WIDTH_RATIO] = height_to_width_ratio
+    df[Settings.SKY_VIEW_FACTOR] = sky_view_factor
+    df[Settings.GRIMMOND_OKE_ROUGHNESS_LENGTH] = grimmond_oke_roughness_length
+    df[Settings.GRIMMOND_OKE_DISPLACEMENT_HEIGHT] = grimmond_oke_displacement_height
 
-    df[Settings.raupach_roughness_length_north] = raupach_roughness_length[
-        Settings.raupach_roughness_length_north
+    df[Settings.RAUPACH_ROUGHNESS_LENGTH_NORTH] = raupach_roughness_length[
+        Settings.RAUPACH_ROUGHNESS_LENGTH_NORTH
     ]
-    df[Settings.raupach_displacement_height_north] = raupach_displacement_height[
-        Settings.raupach_displacement_height_north
+    df[Settings.RAUPACH_DISPLACEMENT_HEIGHT_NORTH] = raupach_displacement_height[
+        Settings.RAUPACH_DISPLACEMENT_HEIGHT_NORTH
     ]
-    df[Settings.raupach_roughness_length_east] = raupach_roughness_length[
-        Settings.raupach_roughness_length_east
+    df[Settings.RAUPACH_ROUGHNESS_LENGTH_EAST] = raupach_roughness_length[
+        Settings.RAUPACH_ROUGHNESS_LENGTH_EAST
     ]
-    df[Settings.raupach_displacement_height_east] = raupach_displacement_height[
-        Settings.raupach_displacement_height_east
+    df[Settings.RAUPACH_DISPLACEMENT_HEIGHT_EAST] = raupach_displacement_height[
+        Settings.RAUPACH_DISPLACEMENT_HEIGHT_EAST
     ]
-    df[Settings.raupach_roughness_length_south] = raupach_roughness_length[
-        Settings.raupach_roughness_length_south
+    df[Settings.RAUPACH_ROUGHNESS_LENGTH_SOUTH] = raupach_roughness_length[
+        Settings.RAUPACH_ROUGHNESS_LENGTH_SOUTH
     ]
-    df[Settings.raupach_displacement_height_south] = raupach_displacement_height[
-        Settings.raupach_displacement_height_south
+    df[Settings.RAUPACH_DISPLACEMENT_HEIGHT_SOUTH] = raupach_displacement_height[
+        Settings.RAUPACH_DISPLACEMENT_HEIGHT_SOUTH
     ]
-    df[Settings.raupach_roughness_length_west] = raupach_roughness_length[
-        Settings.raupach_roughness_length_west
+    df[Settings.RAUPACH_ROUGHNESS_LENGTH_WEST] = raupach_roughness_length[
+        Settings.RAUPACH_ROUGHNESS_LENGTH_WEST
     ]
-    df[Settings.raupach_displacement_height_west] = raupach_displacement_height[
-        Settings.raupach_displacement_height_west
+    df[Settings.RAUPACH_DISPLACEMENT_HEIGHT_WEST] = raupach_displacement_height[
+        Settings.RAUPACH_DISPLACEMENT_HEIGHT_WEST
     ]
 
     df = pd.concat([df, macdonald_roughness_length], axis=1)
 
-    df[Settings.macdonald_displacement_height] = macdonald_displacement_height
+    df[Settings.MACDONALD_DISPLACEMENT_HEIGHT] = macdonald_displacement_height
 
     df = pd.concat([df, vertical_distribution_of_building_heights], axis=1)
 
-    df[Settings.geometry_field] = building_geometry
+    df[Settings.GEOMETRY_FIELD] = building_geometry
 
-    gdf = gpd.GeoDataFrame(df, geometry=Settings.geometry_field, crs=target_crs)
+    gdf = gpd.GeoDataFrame(df, geometry=Settings.GEOMETRY_FIELD, crs=target_crs)
 
     return gdf.to_crs(Settings.OUTPUT_CRS)
 
@@ -232,13 +232,13 @@ def rasterize_parameters(merge_parameters: gpd.GeoDataFrame) -> xr.Dataset:
     """
 
     merge_parameters["building_count"] = 1
-    measurements = merge_parameters.columns[merge_parameters.columns != Settings.geometry_field]
+    measurements = merge_parameters.columns[merge_parameters.columns != Settings.GEOMETRY_FIELD]
     resolution = Settings.DEFAULT_OUTPUT_RESOLUTION
     fill = Settings.DEFAULT_FILL_VALUE
 
     return make_geocube(
         vector_data=merge_parameters.rename(
-            columns={Settings.geometry_field: "geometry"}
+            columns={Settings.GEOMETRY_FIELD: "geometry"}
         ).set_geometry("geometry"),
         measurements=measurements,
         resolution=resolution,

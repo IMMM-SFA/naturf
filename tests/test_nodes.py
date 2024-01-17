@@ -30,9 +30,9 @@ class TestNodes(unittest.TestCase):
         buildings_intersecting_plan_area = pd.DataFrame(
             data,
             columns=[
-                Settings.target_id_field,
-                Settings.neighbor_height_field,
-                Settings.neighbor_area_field,
+                Settings.TARGET_ID_FIELD,
+                Settings.NEIGHBOR_HEIGHT_FIELD,
+                Settings.NEIGHBOR_AREA_FIELD,
             ],
         )
         expected = pd.Series([10.0, 1.5, 0.7701863354037267])
@@ -51,16 +51,16 @@ class TestNodes(unittest.TestCase):
         # Building 3 tests that a distance of zero (representing a building considered its own neighbor) does not affect the mean.
         # Building 4 tests that a building with only itself as a neighbor returns the default street width.
 
-        index = pd.Index([0, 0, 1, 1, 2, 2, 3, 3, 3, 4], name=Settings.neighbor_id_field)
+        index = pd.Index([0, 0, 1, 1, 2, 2, 3, 3, 3, 4], name=Settings.NEIGHBOR_ID_FIELD)
         distance = pd.Series(
-            [1, 2, 1, 3, 1, 1, 3, 0, 3, 0], index, name=Settings.distance_between_buildings
+            [1, 2, 1, 3, 1, 1, 3, 0, 3, 0], index, name=Settings.DISTANCE_BETWEEN_BUILDINGS
         )
 
         default_street_width = Settings.DEFAULT_STREET_WIDTH
 
         expected = pd.Series(
             [1.5, 2.0, 1.0, 3.0, default_street_width],
-            name=Settings.average_distance_between_buildings,
+            name=Settings.AVERAGE_DISTANCE_BETWEEN_BUILDINGS,
         )
 
         actual = nodes.average_distance_between_buildings(distance)
@@ -82,10 +82,10 @@ class TestNodes(unittest.TestCase):
         building_area = pd.Series([polygon1.area, polygon2.area])
         crs = "epsg:3857"
 
-        wall_length_north = pd.Series([1.0, 1.0], name=Settings.wall_length_north)
-        wall_length_east = pd.Series([1.0, 1.0], name=Settings.wall_length_east)
-        wall_length_south = pd.Series([1.0, 1.0], name=Settings.wall_length_south)
-        wall_length_west = pd.Series([1.0, 1.0], name=Settings.wall_length_west)
+        wall_length_north = pd.Series([1.0, 1.0], name=Settings.WALL_LENGTH_NORTH)
+        wall_length_east = pd.Series([1.0, 1.0], name=Settings.WALL_LENGTH_EAST)
+        wall_length_south = pd.Series([1.0, 1.0], name=Settings.WALL_LENGTH_SOUTH)
+        wall_length_west = pd.Series([1.0, 1.0], name=Settings.WALL_LENGTH_WEST)
 
         wall_length = pd.concat(
             [
@@ -508,10 +508,10 @@ class TestNodes(unittest.TestCase):
         expected = pd.DataFrame([[0.0, 0.125, 0.25, 3750.0], [0.0, 235.61925, 787.5, 7500.0]])
         actual = nodes.frontal_area(frontal_length, building_height)
         expected.columns = [
-            Settings.frontal_area_north,
-            Settings.frontal_area_east,
-            Settings.frontal_area_south,
-            Settings.frontal_area_west,
+            Settings.FRONTAL_AREA_NORTH,
+            Settings.FRONTAL_AREA_EAST,
+            Settings.FRONTAL_AREA_SOUTH,
+            Settings.FRONTAL_AREA_WEST,
         ]
         pd.testing.assert_frame_equal(
             expected,
@@ -528,10 +528,10 @@ class TestNodes(unittest.TestCase):
         # Building 3 is 21m tall to test that using a height >5m but less than a full bin works correctly.
         # Building 4 is 75m tall to test that a full-height building works correctly.
 
-        frontal_length_north = Settings.frontal_length_north
-        frontal_length_east = Settings.frontal_length_east
-        frontal_length_south = Settings.frontal_length_south
-        frontal_length_west = Settings.frontal_length_west
+        frontal_length_north = Settings.FRONTAL_LENGTH_NORTH
+        frontal_length_east = Settings.FRONTAL_LENGTH_EAST
+        frontal_length_south = Settings.FRONTAL_LENGTH_SOUTH
+        frontal_length_west = Settings.FRONTAL_LENGTH_WEST
 
         frontal_lengths = pd.concat(
             [
@@ -610,7 +610,7 @@ class TestNodes(unittest.TestCase):
 
         columns_north, columns_east, columns_south, columns_west = (
             [
-                f"{Settings.frontal_area_north}_{i}"
+                f"{Settings.FRONTAL_AREA_NORTH}_{i}" f"{Settings.frontal_area_north}_{i}"
                 for i in range(
                     int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL)
                 )
@@ -1235,7 +1235,7 @@ class TestNodes(unittest.TestCase):
         """Test that the function `vertical_distribution_of_building_heights()` returns the correct dataframe."""
         building_height = pd.Series([0, 5, 5, 6, 7.5, 75])
         [
-            f"{Settings.vertical_distribution_of_building_heights}_{i}"
+            f"{Settings.VERTICAL_DISTRIBUTION_OF_BUILDING_HEIGHTS}_{i}"
             for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
         ]
         expected = pd.DataFrame(
@@ -1248,7 +1248,7 @@ class TestNodes(unittest.TestCase):
                 [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
             ],
             columns=[
-                f"{Settings.vertical_distribution_of_building_heights}_{i}"
+                f"{Settings.VERTICAL_DISTRIBUTION_OF_BUILDING_HEIGHTS}_{i}"
                 for i in range(
                     int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL)
                 )
@@ -1264,19 +1264,19 @@ class TestNodes(unittest.TestCase):
     def test_wall_length(self):
         """Test that the function `wall_length()` returns the correct length."""
 
-        north = Settings.north
-        south = Settings.south
-        east = Settings.east
-        west = Settings.west
+        north = Settings.NORTH
+        south = Settings.SOUTH
+        east = Settings.EAST
+        west = Settings.WEST
 
-        wall_angle = Settings.wall_angle
-        wall_direction = Settings.wall_direction
-        wall_length = Settings.wall_length
+        wall_angle = Settings.WALL_ANGLE
+        wall_direction = Settings.WALL_DIRECTION
+        wall_length = Settings.WALL_LENGTH
 
-        wall_length_north = Settings.wall_length_north
-        wall_length_south = Settings.wall_length_south
-        wall_length_east = Settings.wall_length_east
-        wall_length_west = Settings.wall_length_west
+        wall_length_north = Settings.WALL_LENGTH_NORTH
+        wall_length_south = Settings.WALL_LENGTH_SOUTH
+        wall_length_east = Settings.WALL_LENGTH_EAST
+        wall_length_west = Settings.WALL_LENGTH_WEST
 
         square_root_one_half = 0.7071067811865476
 

@@ -51,14 +51,14 @@ class TestNodes(unittest.TestCase):
 
         frontal_area_density = pd.DataFrame(
             {
-                Settings.frontal_area_north: [0.1, 0.2],
-                Settings.frontal_area_east: [0.3, 0.4],
-                Settings.frontal_area_south: [0.5, 0.6],
-                Settings.frontal_area_west: [0.7, 0.8],
+                Settings.FRONTAL_AREA_NORTH: [0.1, 0.2],
+                Settings.FRONTAL_AREA_EAST: [0.3, 0.4],
+                Settings.FRONTAL_AREA_SOUTH: [0.5, 0.6],
+                Settings.FRONTAL_AREA_WEST: [0.7, 0.8],
             }
         )
-        plan_area_density = pd.DataFrame({Settings.plan_area_density: [0.5, 0.6]})
-        rooftop_area_density = pd.DataFrame({Settings.rooftop_area_density: [0.9, 1.0]})
+        plan_area_density = pd.DataFrame({Settings.PLAN_AREA_DENSITY: [0.5, 0.6]})
+        rooftop_area_density = pd.DataFrame({Settings.ROOFTOP_AREA_DENSITY: [0.9, 1.0]})
         plan_area_fraction = pd.Series([0.5, 0.5])
         mean_building_height = pd.Series([10, 20])
         standard_deviation_of_building_heights = pd.Series([2, 3])
@@ -66,10 +66,10 @@ class TestNodes(unittest.TestCase):
         building_surface_area_to_plan_area_ratio = pd.Series([1.2, 1.3])
         frontal_area_index = pd.DataFrame(
             {
-                Settings.frontal_area_index_north: [0.0, 0.1],
-                Settings.frontal_area_index_east: [0.2, 0.3],
-                Settings.frontal_area_index_south: [0.4, 0.5],
-                Settings.frontal_area_index_west: [0.6, 0.7],
+                Settings.FRONTAL_AREA_INDEX_NORTH: [0.0, 0.1],
+                Settings.FRONTAL_AREA_INDEX_EAST: [0.2, 0.3],
+                Settings.FRONTAL_AREA_INDEX_SOUTH: [0.4, 0.5],
+                Settings.FRONTAL_AREA_INDEX_WEST: [0.6, 0.7],
             }
         )
         complete_aspect_ratio = pd.Series([1.5, 1.6])
@@ -79,31 +79,31 @@ class TestNodes(unittest.TestCase):
         grimmond_oke_displacement_height = pd.Series([0.5, 0.4])
         raupach_roughness_length = pd.DataFrame(
             {
-                Settings.raupach_roughness_length_north: [0.3, 0.2],
-                Settings.raupach_roughness_length_east: [0.2, 0.3],
-                Settings.raupach_roughness_length_south: [0.4, 0.5],
-                Settings.raupach_roughness_length_west: [0.6, 0.7],
+                Settings.RAUPACH_ROUGHNESS_LENGTH_NORTH: [0.3, 0.2],
+                Settings.RAUPACH_ROUGHNESS_LENGTH_EAST: [0.2, 0.3],
+                Settings.RAUPACH_ROUGHNESS_LENGTH_SOUTH: [0.4, 0.5],
+                Settings.RAUPACH_ROUGHNESS_LENGTH_WEST: [0.6, 0.7],
             }
         )
         raupach_displacement_height = pd.DataFrame(
             {
-                Settings.raupach_displacement_height_north: [0.0, 0.1],
-                Settings.raupach_displacement_height_east: [0.2, 0.3],
-                Settings.raupach_displacement_height_south: [0.4, 0.5],
-                Settings.raupach_displacement_height_west: [0.6, 0.7],
+                Settings.RAUPACH_DISPLACEMENT_HEIGHT_NORTH: [0.0, 0.1],
+                Settings.RAUPACH_DISPLACEMENT_HEIGHT_EAST: [0.2, 0.3],
+                Settings.RAUPACH_DISPLACEMENT_HEIGHT_SOUTH: [0.4, 0.5],
+                Settings.RAUPACH_DISPLACEMENT_HEIGHT_WEST: [0.6, 0.7],
             }
         )
         macdonald_roughness_length = pd.DataFrame(
             {
-                Settings.macdonald_roughness_length_north: [0.0, 0.1],
-                Settings.macdonald_roughness_length_east: [0.2, 0.3],
-                Settings.macdonald_roughness_length_south: [0.4, 0.5],
-                Settings.macdonald_roughness_length_west: [0.6, 0.7],
+                Settings.MACDONALD_ROUGHNESS_LENGTH_NORTH: [0.0, 0.1],
+                Settings.MACDONALD_ROUGHNESS_LENGTH_EAST: [0.2, 0.3],
+                Settings.MACDONALD_ROUGHNESS_LENGTH_SOUTH: [0.4, 0.5],
+                Settings.MACDONALD_ROUGHNESS_LENGTH_WEST: [0.6, 0.7],
             }
         )
         macdonald_displacement_height = pd.Series([0.8, 0.9])
         vertical_distribution_of_building_heights = pd.DataFrame(
-            {Settings.vertical_distribution_of_building_heights: [10, 20]}
+            {Settings.VERTICAL_DISTRIBUTION_OF_BUILDING_HEIGHTS: [10, 20]}
         )
         building_geometry = pd.Series([Point(0, 0), Point(1, 1)])
         target_crs = Settings.OUTPUT_CRS
@@ -207,7 +207,7 @@ class TestNodes(unittest.TestCase):
             {
                 "parameter1": [1, 2, 3],
                 "parameter2": [4, 5, 6],
-                Settings.geometry_field: [Point(0, 0), Point(1, 1), Point(2, 2)],
+                Settings.GEOMETRY_FIELD: [Point(0, 0), Point(1, 1), Point(2, 2)],
             }
         )
 
