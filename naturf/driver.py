@@ -22,14 +22,14 @@ class Model:
         self.outputs = outputs
 
         # instantiate any adapters we want
-        hamilton_adatpers = [
+        hamilton_adapters = [
             base.SimplePythonDataFrameGraphAdapter(),
             h_tqdm.ProgressBar("Naturf DAG"),
         ]
         if DAGWORKS_API_KEY and DAGWORKS_USERNAME and DAGWORKS_PROJECT_ID:
             from dagworks import adapters
 
-            hamilton_adatpers.append(
+            hamilton_adapters.append(
                 adapters.DAGWorksTracker(
                     project_id=int(DAGWORKS_PROJECT_ID),
                     api_key=DAGWORKS_API_KEY,
@@ -44,7 +44,7 @@ class Model:
             driver.Builder()
             .with_config(self.inputs)
             .with_modules(nodes, output)
-            .with_adapters(*hamilton_adatpers)
+            .with_adapters(*hamilton_adapters)
             .build()
         )
 
