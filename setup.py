@@ -37,6 +37,7 @@ setup(
         "rtree>=1.0.0",
         "shapely>=1.8.2,<2",
         "geopandas>=0.10.2",
-        "sf-hamilton[visualization]>=1.10",
+        "sf-hamilton[visualization]>=1.45",
+        "tqdm",
     ],
 )

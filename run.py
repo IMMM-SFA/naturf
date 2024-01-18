@@ -2,12 +2,23 @@ import naturf.nodes as nodes
 import naturf.output as output
 import time
 
-from hamilton import driver
+from hamilton import driver, base
+from hamilton.plugins import h_tqdm
 
 if __name__ == "__main__":
     path = "naturf/data/C-5.shp"
     config = {}
-    dr = driver.Driver(config, nodes, output)
+    hamilton_adapters = [
+        base.SimplePythonDataFrameGraphAdapter(),
+        h_tqdm.ProgressBar("NATURF"),
+    ]
+    dr = (
+        driver.Builder()
+        .with_config(config)
+        .with_modules(nodes, output)
+        .with_adapters(*hamilton_adapters)
+        .build()
+    )
 
     output_columns = ["write_binary", "write_index"]
     inputs = {"input_shapefile": path}
