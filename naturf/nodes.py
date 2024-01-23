@@ -1024,7 +1024,7 @@ def total_plan_area(total_plan_area_geometry: gpd.GeoSeries) -> pd.Series:
 
 
 def total_plan_area_geometry(
-    building_geometry: pd.Series, radius: int = Settings.RADIUS, cap_style: int = 3
+    building_geometry: pd.Series, radius: int = Settings.RADIUS, cap_style: int = Settings.CAP_STYLE
 ) -> gpd.GeoSeries:
     """Calculate the geometry of the total plan area which is the buffer of the building for the desired radius and cap style.
 
