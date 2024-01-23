@@ -1,18 +1,19 @@
 cff-version: 1.0.3
 message: "If you use this software in your work, please cite it using the following metadata"
 authors:
-  - family-names: Rexer
-    given-names: Em
-    orcid: "https://orcid.org/0000-0002-0327-183X"
-  - family-names: Sweet-Breu
-    given-names: Levi T.
-    orcid: "https://orcid.org/0000-0003-3325-8086"
-  - family-names: Vernon
-    given-names: Chris R.
-    orcid: "https://orcid.org/0000-0002-3406-6214"
   - family-names: Allen-Dumas
     given-names: Melissa R.
     orcid: "https://orcid.org/0000-0002-3319-0846"
+  - family-names: Sweet-Breu
+    given-names: Levi T.
+    orcid: "https://orcid.org/0000-0003-3325-8086"
+  - family-names: Rexer
+    given-names: Em
+    orcid: "https://orcid.org/0000-0002-0327-183X"
+  - family-names: Vernon
+    given-names: Chris R.
+    orcid: "https://orcid.org/0000-0002-3406-6214"
+
 title: "naturf: a package for generating urban parameters for numerical weather modeling"
 doi: 10.5281/zenodo.7036191
 url: "https://github.com/IMMM-SFA/naturf"
