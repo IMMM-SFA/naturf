@@ -6,9 +6,11 @@ tags:
 authors:
   - name: Levi T. Sweet-Breu
     orcid: 0000-0003-3325-8086
+    equal-contrib: true
     affiliation: "1, 2"
   - name: Em Rexer
     orcid: 0000-0002-0327-183X
+    equal-contrib: true
     affiliation: 3
   - name: Chris R. Vernon
     orcid: 0000-0002-3406-6214
