@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "naturf"
+version = "1.0.0"
+description = 'The Neighborhood Adaptive Tissues for Urban Resilience Futures tool (NATURF) is a Python workflow that generates data readable by the Weather Research and Forecasting (WRF) model. The NATURF Python modules use shapefiles containing building footprint and height data as input to calculate 132 building parameters at any resolution and converts the parameters into a binary file format.'
+readme = "README.md"
+requires-python = ">=3.8"
+keywords = []
+authors = [
+  { name = "Em Rexer", email = "emily.rexer@pnnl.gov" },
+  { name="Levi Sweet-Breu", email="levi_sweetbreu1@baylor.edu" },
+  { name="Melissa Allen-Dumas", email="allenmr@ornl.gov" },
+  { name="Chris Vernon", email="chris.vernon@pnnl.gov" },
+]
+
+classifiers = [
+  "License :: OSI Approved :: BSD License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+
+]
+
+dependencies = [
+  "numpy>=1.22.4",
+  "pandas>=1.4.2",
+  "geocube>=0.3.1",
+  "rasterio>=1.2.10",
+  "xarray>=2022.3.0",
+  "joblib>=1.0.1",
+  "fiona>=1.8.19",
+  "pyproj>=3.0.1",
+  "rtree>=1.0.0",
+  "shapely>=1.8.2, <2",
+  "geopandas>=0.10.2",
+  "sf-hamilton[visualization]>=1.10",
+]
+
+[project.urls]
+Homepage = "https://immm-sfa.github.io/naturf/index.html"
+Repository = "https://github.com/IMMM-SFA/naturf"
+Issues = "https://github.com/IMMM-SFA/naturf/issues"

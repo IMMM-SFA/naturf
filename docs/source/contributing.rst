@@ -48,7 +48,7 @@ The following is the recommended workflow for contributing to **naturf**:
 
     git commit -m '<my short message>'
 
-  Changes to the documenation can be made in the ``naturf/docs/source`` directory containing the RST files.  To view your changes, ensure you have the development dependencies of **naturf** installed and run the following from the ``naturf/docs/source`` directory:
+  Changes to the documentation can be made in the ``naturf/docs/source`` directory containing the RST files.  To view your changes, ensure you have the development dependencies of **naturf** installed and run the following from the ``naturf/docs/source`` directory:
 
   .. code-block:: bash
 
@@ -67,4 +67,25 @@ The following is the recommended workflow for contributing to **naturf**:
   - **Purpose**:  The reason for your pull request in short
   - **Summary**:  A description of the environment you are using (OS, Python version, etc.), logic, any caveats, and a summary of changes that were made.
 
-6. If approved, your pull request will be merged into the main branch by a  **naturf** admin and a release will be conducted subsequently.  **naturf** uses `semantic naming <https://semver.org/>`_ for versioned releases.  Each release receives a DOI via a linked Zenodo service automatically.
+6. If approved, your pull request will be merged into the main branch by a **naturf** admin and a release will be conducted subsequently. **naturf** uses `semantic naming <https://semver.org/>`_ for versioned releases.  Each release receives a DOI via a linked Zenodo service automatically.
+
+
+Developer Guide
+_______________
+
+To push **naturf** to pypi, you should first have ``build`` and ``twine`` installed:
+
+.. code-block:: bash
+
+  python3 -m pip install --upgrade build
+
+  python3 -m pip install --upgrade twine
+
+You also need to set up a `PyPi account <https://pypi.org/>` and `API token <https://pypi.org/help/#apitoken>`
+
+Then run:
+.. code-block:: bash
+
+  python -m build
+
+  twine upload dist/*
