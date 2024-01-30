@@ -1,8 +1,11 @@
 [![DOI](https://zenodo.org/badge/487911703.svg)](https://zenodo.org/badge/latestdoi/487911703)
 [![codecov](https://codecov.io/gh/IMMM-SFA/naturf/graph/badge.svg?token=SoIfjdS6BL)](https://codecov.io/gh/IMMM-SFA/naturf)
+<<<<<<< HEAD
 [![build](https://github.com/IMMM-SFA/naturf/actions/workflows/build.yml/badge.svg)](https://github.com/IMMM-SFA/naturf/actions/workflows/build.yml)
 
 # naturf
+=======
+>>>>>>> 3bda76b (add codecov badge)
 
 #### `naturf` (Neighborhood Adaptive Tissues for Urban Resilience Futures) is an open-source geospatial Python package for calculating urban building parameters to be compiled and input to the Weather Research and Forecasting model (WRF).
 
