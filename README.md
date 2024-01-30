@@ -18,6 +18,7 @@
 
 ### Install `naturf`
 
+<<<<<<< HEAD
 ```bash
 pip install naturf
 ```
@@ -45,6 +46,11 @@ The reference guide contains a detailed description of the `naturf` API. The ref
 
 To get started on development, install the pre-commit hooks to format code. Instructions for installation can be found [here](https://pre-commit.com/). Then install the hooks within the repo:
 
+=======
+First [install `pre-commit`](https://pre-commit.com/).
+
+Then install the hooks within the repo:
+>>>>>>> 77584d7 (remove mac-specific pre-commit install instructions)
 ```bash
 $ cd /PATH/TO/NATURF
 $ pre-commit install
