@@ -45,9 +45,8 @@ used in the compilation of the binary file, and a directory of TIF rasters that 
 # Developer Setup
 To get started on development, install the pre-commit hooks to format code.
 
-```bash
-$ brew install pre-commit
-```
+First [install `pre-commit`](https://pre-commit.com/).
+
 Then install the hooks within the repo:
 ```bash
 $ cd /PATH/TO/NATURF
