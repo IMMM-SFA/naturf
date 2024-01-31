@@ -209,8 +209,9 @@ def raster_to_numpy(aggregate_rasters: xr.Dataset) -> np.ndarray:
 
     parameters = list(aggregate_rasters.keys())
     parameters.remove("building_count")
-    rows = aggregate_rasters.dims["y"]
-    cols = aggregate_rasters.dims["x"]
+    # rows = aggregate_rasters.dims["y"]
+    rows = aggregate_rasters.sizes["y"]
+    cols = aggregate_rasters.sizes["x"]
     master = np.zeros((132, rows, cols), dtype=np.float32)
     i = 0
     for parameter in parameters:
@@ -232,15 +233,12 @@ def rasterize_parameters(merge_parameters: gpd.GeoDataFrame) -> xr.Dataset:
     """
 
     merge_parameters["building_count"] = 1
-    measurements = merge_parameters.columns[merge_parameters.columns != Settings.GEOMETRY_FIELD]
     resolution = Settings.DEFAULT_OUTPUT_RESOLUTION
     fill = Settings.DEFAULT_FILL_VALUE
+    vector_data = merge_parameters.set_geometry(Settings.GEOMETRY_FIELD).rename_geometry("geometry")
 
     return make_geocube(
-        vector_data=merge_parameters.rename(
-            columns={Settings.GEOMETRY_FIELD: "geometry"}
-        ).set_geometry("geometry"),
-        measurements=measurements,
+        vector_data=vector_data,
         resolution=resolution,
         fill=fill,
         rasterize_function=partial(rasterize_image, all_touched=True, merge_alg=MergeAlg.add),
