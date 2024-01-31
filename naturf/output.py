@@ -209,7 +209,6 @@ def raster_to_numpy(aggregate_rasters: xr.Dataset) -> np.ndarray:
 
     parameters = list(aggregate_rasters.keys())
     parameters.remove("building_count")
-    # rows = aggregate_rasters.dims["y"]
     rows = aggregate_rasters.sizes["y"]
     cols = aggregate_rasters.sizes["x"]
     master = np.zeros((132, rows, cols), dtype=np.float32)
