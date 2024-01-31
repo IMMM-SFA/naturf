@@ -1,10 +1,12 @@
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   paper:
     runs-on: ubuntu-latest
     name: Paper Draft
-    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
