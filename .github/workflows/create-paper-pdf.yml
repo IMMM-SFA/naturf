@@ -2,6 +2,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'paper/**'
 
 jobs:
   paper:
