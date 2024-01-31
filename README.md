@@ -2,9 +2,9 @@
 [![codecov](https://codecov.io/gh/IMMM-SFA/naturf/graph/badge.svg?token=SoIfjdS6BL)](https://codecov.io/gh/IMMM-SFA/naturf)
 [![build](https://github.com/IMMM-SFA/naturf/actions/workflows/build.yml/badge.svg)](https://github.com/IMMM-SFA/naturf/actions/workflows/build.yml)
 
-## naturf
+# naturf
 
-#### `naturf` is an open-source geospatial Python package for calculating urban building parameters to be compiled and input to the Weather Research and Forecasting model (WRF).
+#### `naturf` (Neighborhood Adaptive Tissues for Urban Resilience Futures) is an open-source geospatial Python package for calculating urban building parameters to be compiled and input to the Weather Research and Forecasting model (WRF).
 
 ### Purpose
 `naturf` was created to:
@@ -38,9 +38,34 @@ Whether you find a typo in the documentation, find a bug, or want to develop fun
 
 The reference guide contains a detailed description of the `naturf` API. The reference describes how the methods work and which parameters can be used. It assumes that you have an understanding of the key concepts. See [API Reference](https://immm-sfa.github.io/naturf/modules.html)
 
-### Pre-commit
+### Developer Setup
 
-`naturf` uses `pre-commit`. Instructions for installation can be found [here](https://pre-commit.com/)
+To get started on development, install the pre-commit hooks to format code.
+
+For `homebrew`:
+
+```bash
+$ brew install pre-commit
+```
+
+For `pip`:
+
+```bash
+$ pip install pre-commit
+```
+
+For `conda`:
+
+```bash
+$ conda install -c conda-forge pre-commit
+```
+
+Then install the hooks within the repo:
+
+```bash
+$ cd /PATH/TO/NATURF
+$ pre-commit install
+```
 
 ### Code citation
 
