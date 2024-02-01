@@ -4,10 +4,13 @@
 
 # naturf
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 3bda76b (add codecov badge)
 =======
 >>>>>>> 891f9cf (fix formatting)
+=======
+>>>>>>> main
 
 #### `naturf` (Neighborhood Adaptive Tissues for Urban Resilience Futures) is an open-source geospatial Python package for calculating urban building parameters to be compiled and input to the Weather Research and Forecasting model (WRF).
 
@@ -19,6 +22,7 @@
   - Prepare binary files to be fed into WRF to understand the effect of building morphology on the urban microclimate.
 
 ### Install `naturf`
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 ```bash
@@ -50,6 +54,36 @@ To get started on development, install the pre-commit hooks to format code.
 
 <<<<<<< HEAD
 =======
+=======
+
+```bash
+pip install naturf
+```
+### Check out a quickstart tutorial to run `naturf`
+
+Run `naturf` using the quickstart tutorial: [`naturf` Quickstarter](https://immm-sfa.github.io/naturf/quickstarter.html)
+
+### Getting started
+
+New to `naturf`? Get familiar with what `naturf` is all about in our [Getting Started](https://immm-sfa.github.io/naturf/getting_started.html)
+
+### User guide
+
+Our user guide provides in-depth information on the key concepts of `naturf` with useful background information and explanation. See our [User Guide](https://immm-sfa.github.io/naturf/user_guide.html)
+
+### Contributing to `naturf`
+
+Whether you find a typo in the documentation, find a bug, or want to develop functionality that you think will make `naturf` more robust, you are welcome to contribute! See our [Contribution Guidelines](https://immm-sfa.github.io/naturf/contributing.html)
+
+### API reference
+
+The reference guide contains a detailed description of the `naturf` API. The reference describes how the methods work and which parameters can be used. It assumes that you have an understanding of the key concepts. See [API Reference](https://immm-sfa.github.io/naturf/modules.html)
+
+### Developer Setup
+
+To get started on development, install the pre-commit hooks to format code.
+
+>>>>>>> main
 First [install `pre-commit`](https://pre-commit.com/).
 
 Then install the hooks within the repo:
