@@ -40,27 +40,7 @@ The reference guide contains a detailed description of the `naturf` API. The ref
 
 ### Developer Setup
 
-To get started on development, install the pre-commit hooks to format code.
-
-For `homebrew`:
-
-```bash
-$ brew install pre-commit
-```
-
-For `pip`:
-
-```bash
-$ pip install pre-commit
-```
-
-For `conda`:
-
-```bash
-$ conda install -c conda-forge pre-commit
-```
-
-Then install the hooks within the repo:
+To get started on development, install the pre-commit hooks to format code. Instructions for installation can be found [here](https://pre-commit.com/). Then install the hooks within the repo:
 
 ```bash
 $ cd /PATH/TO/NATURF
