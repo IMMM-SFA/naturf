@@ -1,11 +1,8 @@
 [![DOI](https://zenodo.org/badge/487911703.svg)](https://zenodo.org/badge/latestdoi/487911703)
 [![codecov](https://codecov.io/gh/IMMM-SFA/naturf/graph/badge.svg?token=SoIfjdS6BL)](https://codecov.io/gh/IMMM-SFA/naturf)
-<<<<<<< HEAD
 [![build](https://github.com/IMMM-SFA/naturf/actions/workflows/build.yml/badge.svg)](https://github.com/IMMM-SFA/naturf/actions/workflows/build.yml)
 
 # naturf
-=======
->>>>>>> main
 
 #### `naturf` (Neighborhood Adaptive Tissues for Urban Resilience Futures) is an open-source geospatial Python package for calculating urban building parameters to be compiled and input to the Weather Research and Forecasting model (WRF).
 
@@ -43,14 +40,11 @@ The reference guide contains a detailed description of the `naturf` API. The ref
 
 ### Developer Setup
 
-To get started on development, install the pre-commit hooks to format code. Instructions for installation can be found [here](https://pre-commit.com/). Then install the hooks within the repo:
+To get started on development, install the pre-commit hooks to format code.
 
-<<<<<<< HEAD
-=======
 First [install `pre-commit`](https://pre-commit.com/).
 
 Then install the hooks within the repo:
->>>>>>> main
 ```bash
 $ cd /PATH/TO/NATURF
 $ pre-commit install
