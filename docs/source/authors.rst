@@ -28,7 +28,8 @@ Product Tester
 Code Formatting
 ^^^^^^^^^^^^^^^
 
-* `black
-<https://black.readthedocs.io/en/stable/>`_
-* `ruff
-<https://beta.ruff.rs/docs/>`_
+* black_
+* ruff_
+
+.. _black: https://black.readthedocs.io/en/stable/
+.. _ruff: https://beta.ruff.rs/docs/
