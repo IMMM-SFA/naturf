@@ -13,8 +13,9 @@
 import os
 import sys
 
-version = "0.1.0"
+version = "1.0.1"
 
+# importlib.metadata.version(__package__ or __name__)
 
 sys.path.insert(0, os.path.abspath("../../"))
 
@@ -23,7 +24,7 @@ sys.path.insert(0, os.path.abspath("../../"))
 
 project = "naturf"
 copyright = "2022-2099, Battelle Memorial Institute"
-author = "author name"
+author = "Melissa Allen-Dumas"
 
 # The full version, including alpha/beta/rc tags
 release = version
@@ -35,18 +36,21 @@ release = version
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    "nbsphinx",
+    # "IPython.sphinxext.ipython_console_highlighting",
+    "sphinxcontrib.katex",
     "sphinx.ext.autodoc",
-    "sphinx.ext.autosectionlabel",
     "sphinx.ext.doctest",
-    "sphinx.ext.githubpages",
-    "sphinx.ext.imgmath",
-    "sphinx.ext.mathjax",
-    "sphinx.ext.napoleon",
     "sphinx.ext.todo",
+    # "sphinx.ext.mathjax",
+    # "sphinx.ext.imgmath",
     "sphinx.ext.viewcode",
-    "sphinx_panels",
+    "sphinx.ext.githubpages",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.autosectionlabel",
+    "sphinx_design",
     "sphinx_rtd_theme",
+    # "sphinx_panels",
+    "nbsphinx",
 ]
 
 # Add any paths that contain templates here, relative to this directory.

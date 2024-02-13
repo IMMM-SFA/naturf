@@ -19,75 +19,65 @@ naturf documentation
  3) Prepare binary files to be fed into WRF to understand the effect of building morphology on the urban microclimate.
 
 
-.. panels::
-    :card: + intro-card text-center
-    :column: col-lg-6 col-md-6 col-sm-6 col-xs-12 d-flex
+.. grid:: 2
+    :gutter: 4
 
+    .. grid-item-card::  Getting Started
+        :img-top: _static/index_getting_started.svg
+        :text-align: center
 
-    ---
-    :img-top: _static/index_getting_started.svg
+        New to **naturf**?  Get familiar with what **naturf** is all about.
 
-    Getting Started
-    ^^^^^^^^^^^^^^^
+        .. button-ref:: getting_started
+                :click-parent:
+                :color: primary
+                :expand:
 
-    New to **naturf**?  Get familiar with what **naturf** is all about.
+                Get started!
 
-    +++
+    .. grid-item-card:: User Guide
+        :img-top: _static/index_user_guide.svg
+        :text-align: center
 
-    .. link-button:: getting_started
-            :type: ref
-            :text: What naturf is all about
-            :classes: btn-block btn-secondary stretched-link
+        The user guide provides in-depth information on the
+        key concepts of **naturf**.
 
-    ---
-    :img-top: _static/index_user_guide.svg
+        .. button-ref:: user_guide
+                :click-parent:
+                :color: primary
+                :expand:
 
-    User Guide
-    ^^^^^^^^^^
+                See the User Guide
 
-    The user guide provides in-depth information on the
-    key concepts of **naturf**.
+    .. grid-item-card:: API Reference
+        :img-top: _static/index_api.svg
+        :text-align: center
 
-    +++
+        The reference guide contains a detailed description of
+        the **naturf** API. The reference describes how the methods
+        work and which parameters can be used.
 
-    .. link-button:: user_guide
-            :type: ref
-            :text: To the user guide
-            :classes: btn-block btn-secondary stretched-link
+        .. button-ref:: naturf
+                :click-parent:
+                :color: primary
+                :expand:
 
-    ---
-    :img-top: _static/index_api.svg
+                See the Reference Guide
 
-    API Reference
-    ^^^^^^^^^^^^^
+    .. grid-item-card:: Contributing to naturf
+        :img-top: _static/index_contribute.svg
+        :text-align: center
 
-    The reference guide contains a detailed description of
-    the **naturf** API. The reference describes how the methods
-    work and which parameters can be used.
+        Saw a typo in the documentation? Want to improve
+        existing functionalities? The contributing guidelines will guide
+        you through the process of improving **naturf**.
 
-    +++
+        .. button-ref:: contributing
+                :click-parent:
+                :color: primary
+                :expand:
 
-    .. link-button:: naturf
-            :type: ref
-            :text: To the reference guide
-            :classes: btn-block btn-secondary stretched-link
-
-    ---
-    :img-top: _static/index_contribute.svg
-
-    Contributing to naturf
-    ^^^^^^^^^^^^^^^^^^^^^^
-
-    Saw a typo in the documentation? Want to improve
-    existing functionalities? The contributing guidelines will guide
-    you through the process of improving **naturf**.
-
-    +++
-
-    .. link-button:: contributing
-            :type: ref
-            :text: To the development guide
-            :classes: btn-block btn-secondary stretched-link
+                See the development guide
 
 
 .. toctree::
