@@ -15,8 +15,6 @@ import sys
 
 version = "1.0.1"
 
-# importlib.metadata.version(__package__ or __name__)
-
 sys.path.insert(0, os.path.abspath("../../"))
 
 
@@ -36,21 +34,17 @@ release = version
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    # "IPython.sphinxext.ipython_console_highlighting",
+    "nbsphinx",
     "sphinxcontrib.katex",
     "sphinx.ext.autodoc",
     "sphinx.ext.doctest",
     "sphinx.ext.todo",
-    # "sphinx.ext.mathjax",
-    # "sphinx.ext.imgmath",
     "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
     "sphinx.ext.napoleon",
     "sphinx.ext.autosectionlabel",
     "sphinx_design",
     "sphinx_rtd_theme",
-    # "sphinx_panels",
-    "nbsphinx",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
