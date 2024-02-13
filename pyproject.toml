@@ -48,7 +48,6 @@ dependencies = [
 docs = [
   "Sphinx>=7.2.6",
   "nbsphinx>=0.9.3",
-  "sphinx_panels>=0.6.0",
 ]
 
 [project.urls]
