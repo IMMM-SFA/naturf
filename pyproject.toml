@@ -44,6 +44,13 @@ dependencies = [
   "xarray>=2022.3.0",
 ]
 
+[project.optional-dependencies]
+docs = [
+  "Sphinx>=7.2.6",
+  "nbsphinx>=0.9.3",
+  "sphinx_panels>=0.6.0",
+]
+
 [project.urls]
 Homepage = "https://immm-sfa.github.io/naturf/index.html"
 Repository = "https://github.com/IMMM-SFA/naturf"
