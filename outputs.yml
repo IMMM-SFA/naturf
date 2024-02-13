@@ -1,0 +1,277 @@
+---
+# list of fundamental equations and concepts from
+# * https://github.com/IMMM-SFA/naturf/blob/docs/docs/source/user_guide.rst
+# * NATURF_Output_Documentation.pdf (link?)
+
+frontal_area_density:
+  equation_number: 14
+  formula: \frac{\text{frontal_area}}{\text{building_plan_area}}
+  # TODO: should we list units as .NAN or an empty string?
+  long_description: >
+    The frontal area of a building at a certain height increment
+    divided by the building plan area. naturf calculates frontal
+    area density from the four cardinal directions (east, north,
+    west, south) and at 5 meter increments from ground level to
+    75 meters. Parameters 1-15 represent the north, paramters
+    16-30 represent the west, parameters 31-45 represent the south,
+    and parameters 46-60 represent the east."
+  parameters: "1-60"
+  reference: "Burian et al.2003"
+  short_description: "The ratio of front area to building plan area."
+  units: \frac{m^2}{m^2}
+  values_100_meter_resolution: "0-0.04"
+
+plan_area_density:
+  equation_number: 7
+  formula: \frac{\text{building_footprint_area}}{\text{total_lot_area}}
+  long_description: >
+    The ratio of building footprint areas within the building
+    plan area to the entire building plan area, calculated in
+    5 meter increments from ground level to 75 meters. naturf
+    projects the building footprint vertically to the building
+    height, meaning plan area density is the same at every
+    vertical level.
+  parameters: "61-75"
+  reference: "Burian et al.2003"
+  short_description: "The ratio of building footprint areas to total lot area."
+  units: \frac{m^2}{m^2}
+  values_100_meter_resolution: "0-0.5"
+
+rooftop_area_density:
+  equation_number: 7
+  formula: \frac{\text{roof_area}}{\text{total_lot_area}}
+  long_description: >
+    The ratio of building rooftop area to the building plan area,
+    calculated in 5 meter increments from ground level to 75
+    meters. Because naturf projects building footprints vertically
+    to the building height, these parameters are equal to the
+    plan area density.
+  parameters: "79-60"
+  reference: "Burian et al.2003"
+  short_description: "rooftop_area_density is the same as plan_area_density."
+  units: \frac{m^2}{m^2}
+  # TODO: why is the resolution different than plan_area_density
+  values_100_meter_resolution: "0-0.25"
+
+plan_area_fraction:
+  equation_number: 4
+  formula: \text{plan_area_density}
+  long_description: >
+    The ratio of building footprint areas within the building plan
+    area to the entire building plan area, calculated at ground
+    level. For naturf, this is equal to plan area density at any
+    height increment.
+  parameters: "91"
+  reference: "Burian et al.2003"
+  short_description: "plan_area_fraction is the same as plan_area_density."
+  units: \frac{m^2}{m^2}
+  # TODO: why is the resolution different than plan_area_density
+  values_100_meter_resolution: "0-1"
+
+mean_building_height:
+  # TODO: what do we do if there isn't an equation number
+  equation_number: .NAN
+  formula: \frac{\text{building_height}_1+\text{building_height}_2+...+\text{building_height}_\text{number_of_buildings}}{\text{number_of_buildings}}
+  long_description: >
+    The average building height of all buildings within the building plan area.
+  parameters: "92"
+  reference: "Burian et al.2003"
+  short_description: "The average building height of all buildings within the building plan area."
+  units: "m"
+  values_100_meter_resolution: "0-400"
+
+standard_deviation_building_heights:
+  equation_number: .NAN
+  # TODO: do we start counting at 0 or 1?
+  formula: \sqrt{\frac{ \sum_{\mathclap{i=0}}^{\text{number_of_buildings}} (\text{building_height}_i-\text{mean_building_height})^2}{\text{number_of_buildings}}
+
+  \sum_{\mathclap{n=-\infty}}^{+\infty}
+
+  long_description: >
+    The standard deviation of building heights for all buildings within the building plan area.
+  parameters: "93"
+  reference: "Burian et al.2003"
+  short_description: "The standard deviation of building heights for all buildings within the building plan area."
+  units: "m"
+  values_100_meter_resolution: "0-40"
+
+
+area_weighted_mean_building_heights:
+  equation_number: 3
+  formula: \frac{\sum{\text{building_plan_area}_i\text{building_height}_i}}{\sum{\text{building_plan_area}_i}}
+  long_description: >
+    The average height of all buildings within the plan area weighted by the plan area.
+  parameters: "94"
+  reference: "Burian et al.2003"
+  short_description: "The average height of all buildings within the plan area weighted by the plan area."
+  units: "m"
+  values_100_meter_resolution: "0-40"
+
+building_surface_area_to_plan_area_ratio:
+  equation_number: 16
+  formula: \frac{\text{building_surface_area}}{\text{total_lot_area}}
+  long_description: >
+    The ratio of all the surface areas of a building to the building plan area.
+  parameters: "95"
+  reference: "Burian et al.2003"
+  short_description: "The ratio of all the surface areas of a building to the building plan area."
+  units: \frac{m^2}{m^2}
+  values_100_meter_resolution: "0-1.5"
+
+frontal_area_index:
+  equation_number: 12
+  # TODO: do we need to specify that we're using building centroids to calculate distance or is that assumption mentioned elsewhere
+  formula: \frac{\text{building_wall_length} \cdot \text{building_height}}{\text{average_alongwind_distance_between_building_centroids} \cdot \text{average_crosswind_distance_between_building_centroids}}
+  long_description: >
+    The ratio of the entire frontal area of a building to
+    the building plan area. naturf calculates the frontal
+    area index from the four cardinal directions. Because
+    buildings often do not face a cardinal direction head
+    on, naturf uses the average alongwind and crosswind
+    distance from the current building centroid to all
+    other building centroids for the building plan area.
+  parameters: "96-99"
+  reference: "Burian et al.2003"
+  short_description: "The ratio of the frontal building area to the building plan area."
+  units: \frac{m^2}{m^2}
+  values_100_meter_resolution: "0-0.9"
+
+complete_aspect_ratio:
+  equation_number:
+  # TODO: formula varies depending on source
+  formula: \frac{building_surface_area + (building_plan_area - total_buildings_area)}{building_plan_area}
+  long_description: >
+    The sum of the target building surface area and the
+    exposed ground area divided by the total plan area.
+    NATURF does not look at vegetation, so this is equal
+    to the ratio of surface area to plan area.
+  parameters: "100"
+  reference: "Burian et al.2003"
+  short_description: "The ratio of building surface area and exposed ground area to the total building plan area."
+  units: \frac{m^2}{m^2}
+  values_100_meter_resolution: "1-2"
+
+height_to_width_ratio:
+  equation_number: 18
+  # TODO: is this formula correct? The long_decscription makes it seem like its incorrect.
+  # TODO: Discuss about description, current calculation method
+  formula: \frac{\text{building_height}}{\text{street_width}}
+  long_description: >
+    The ratio of the building height to the street width.
+    naturf generalizes this as the ratio of average height
+    of buildings in the current plan area to average
+    distance from the current building to all other
+    buildings in the current plan area.
+  parameters: "101"
+  reference: "Burian et al.2003"
+  short_description: "The ratio of the building height to the street width."
+  units: \frac{m}{m}
+  values_100_meter_resolution: "0-2"
+
+sky_view_factor:
+  equation_number: 1
+  formula: cos(arctan(\frac{\text{building_height}}{0.5 \cdot \text{distance_between_buildings}}))
+  # TODO: descriptions are inconsistent.
+  long_description: >
+    For a point in the street canyon, the angle between
+    the building and the street
+  parameters: "102"
+  reference: "Dirksen et al.2019"
+  short_description: "For a point in the street canyon, the angle between
+    the building and the street"
+  # TODO: what does "frac" mean for units?
+  units: frac
+  values_100_meter_resolution: "0-1"
+
+grimmond_oke_roughness_length:
+  equation_number: 2
+  formula: 0.1 \cdot \text{building_height}
+  long_description: >
+    "The distance above the displacement height plane at which the velocity goes to zero."
+  parameters: "103"
+  reference: "Grimmond and Oke1999"
+  short_description: "The distance above the displacement height plane at which the velocity goes to zero."
+  units: m
+  values_100_meter_resolution: "0.2-1.3"
+
+grimmond_oke_displacement_height:
+  equation_number: 1
+  formula: 0.67 \cdot \text{building_height}
+  long_description: >
+    "The height of a surface formed by distributing the aggregate volume of roughness elements
+    and their wake re-circulation cavities uniformly over the underlying surface."
+  parameters: "104"
+  reference: "Grimmond and Oke1999"
+  short_description: "Distance above the building to account for roughness elements and wake re-circulation cavities."
+  units: m
+  values_100_meter_resolution: "2-5"
+
+raupach_roughness_length:
+  equation_number: 4
+  formula: \text{building_height}(1 - \text{raupach_displacement_height}) \cdot exp(-\text{von_karmans_constant}(\text{substrate_surface_drag_constant} + \text{roughness_element_drag_constant} \text{frontal_area_index})^{-0.5} - \text{roughness_sublayer_influence_function_constant}))
+  long_description: >
+    "The distance above the displacement height plane at which the velocity goes to zero."
+    * von_karmans_constant = 0.4
+    * substrate_surface_drag_constant = 0.003
+    * roughness_element_drag_constant = 0.3
+    * roughness_sublayer_influence_function_constant = 0.193
+  parameters: "105, 107, 109, 111"
+  reference: "Raupach1994"
+  short_description: "The distance above the displacement height plane at which the velocity goes to zero."
+  units: m
+  values_100_meter_resolution: "0-3"
+
+raupach_displacement_height:
+  equation_number: 8
+  formula: \text{building_height} \cdot (1 - (\frac{1 - \exp(-\sqrt(2 \text{raupach_displacement_height_constant} \cdot \text{frontal_area_index}*2))}{\sqrt(2 \text{raupach_displacement_height_constant} \cdot \text{frontal_area_index}*2)}))
+  long_description: >
+    "The height of a surface formed by distributing the aggregate volume of roughness elements
+    and their wake re-circulation cavities uniformly over the underlying surface"
+    * raupach_displacement_height_constant = 7.5
+  parameters: "106, 108, 110, 112"
+  reference: "Raupach1994"
+  short_description: "Distance above the building to account for roughness elements and wake re-circulation cavities."
+  units: m
+  values_100_meter_resolution: "1-13"
+
+macdonald_roughness_length:
+  equation_number: 22
+  formula: \text{building_height} \cdot (1 - \text{raupach_displacement_height})\exp(-(0.5\frac{\text{obstacle_drag_constant}}{\text{von_karmans_constant}^2}(1 - \text{raupach_displacement_height}) \frac{\text{building_frontal_area}} \cdot {\text{average_building_surface_area}})^{-0.5})
+  long_description: >
+    "The distance above the displacement height plane at which the velocity goes to zero."
+    * obstacle_drag_constant = 1.12
+    * von_karmans_constant = 0.4
+    * average_building_surface_area = total surface area of the buildings in the plan area divided by the number of buildings, m^2
+  parameters: "113-116"
+  reference: "Macdonald et al.1998"
+  short_description: "Macdonald roughness length."
+  units: m
+  values_100_meter_resolution: "0-4"
+
+macdonald_displacement_height:
+  equation_number: 23
+  formula: \text{building_height} \cdot (1 + \frac{1}{3.59^{\text{plan_area_density}}} \cdot (\text{plan_area_density} - 1))
+  long_description: >
+    "The height of a surface formed by distributing the aggregate volume of roughness elements
+    and their wake re-circulation cavities uniformly over the underlying surface"
+  parameters: "117"
+  reference: "Macdonald et al.1998"
+  short_description: "Macdonald displacement height"
+  units: m
+  values_100_meter_resolution: "1-12"
+
+vertical_distribution_building_heights:
+  equation_number: .NAN
+  formula: \frac{\text{total_buildings_with_frontal_area_density_at_the_vertical_level}}{\text{total_buildings_with_frontal_area_density_at_all_levels}}
+  long_description: >
+    The vertical distribution of building heights is a
+    representation of where buildings are located at
+    each vertical level. naturf represents buildings as
+    arbitrary float values in an array, and each
+    vertical dimension of the array shows how many
+    buildings reach that height.
+  parameters: "118-132"
+  reference: "Burian et al.2003"
+  short_description: "A representation of where buildings are located at each vertical level."
+  units: frac
+  values_100_meter_resolution: "0-1"
