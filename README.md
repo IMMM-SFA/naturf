@@ -5,7 +5,7 @@
 
 # naturf
 
-#### `naturf` (Neighborhood Adaptive Tissues for Urban Resilience Futures) is an open-source geospatial Python package for calculating urban building parameters to be compiled and input to the Weather Research and Forecasting model (WRF).
+#### Neighborhood Adaptive Tissues for Urban Resilience Futures (`naturf`) is an open-source geospatial Python package that calculates and compiles urban building parameters to be input to the Weather Research and Forecasting model (WRF).
 
 ### Purpose
 `naturf` was created to:
@@ -14,7 +14,7 @@
   - Compile the parameters at sub-kilometer resolutions into binary files,
   - Prepare binary files to be fed into WRF to understand the effect of building morphology on the urban microclimate.
 
-### Install `naturf`
+### Install
 
 ```bash
 pip install naturf
@@ -26,9 +26,9 @@ Run `naturf` using the quickstart tutorial: [`naturf` Quickstarter](https://immm
 
 ### User guide
 
-Our user guide provides in-depth information on the key concepts of `naturf` with useful background information and explanation. See our [User Guide](https://immm-sfa.github.io/naturf/user_guide.html)
+Our [user guide](https://immm-sfa.github.io/naturf/user_guide.html) provides in-depth information on the key concepts of `naturf` with useful background information and explanation.
 
-### Contributing to `naturf`
+### Contributing
 
 Whether you find a typo in the documentation, find a bug, or want to develop functionality that you think will make `naturf` more robust, you are welcome to contribute! See our [Contribution Guidelines](https://immm-sfa.github.io/naturf/contributing.html)
 
