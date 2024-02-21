@@ -21,12 +21,19 @@ The following is the recommended workflow for contributing to **naturf**:
 
     git clone https://github.com/<your-user-name>/naturf
 
-  Cloning the repository will give you access to the test suite.  It is important to install the package in development mode before running tests.  This will give you the flexibility to make changes in the code without having to rebuild your package before running tests.  To do this run the following from your terminal in the **naturf** directory containing your ``setup.py`` script:
+  Cloning the repository will give you access to the test suite.  It is important to install the package in development mode before running tests.  This will give you the flexibility to make changes in the code without having to rebuild your package before running tests. :
 
   .. code-block:: bash
 
-      python setup.py develop
+      cd naturf
 
+      pip install -e .
+
+  `Install \`pre-commit\` <https://pre-commit.com/>`_, then install the hooks within the repo to auto format code:
+
+  .. code-block:: bash
+
+      pre-commit install
 
 2. Create a branch for your changes
 

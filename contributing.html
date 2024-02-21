@@ -116,8 +116,14 @@
 <div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/&lt;your-user-name&gt;/naturf
 </pre></div>
 </div>
-<p>Cloning the repository will give you access to the test suite.  It is important to install the package in development mode before running tests.  This will give you the flexibility to make changes in the code without having to rebuild your package before running tests.  To do this run the following from your terminal in the <strong>naturf</strong> directory containing your <code class="docutils literal notranslate"><span class="pre">setup.py</span></code> script:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>setup.py<span class="w"> </span>develop
+<p>Cloning the repository will give you access to the test suite.  It is important to install the package in development mode before running tests.  This will give you the flexibility to make changes in the code without having to rebuild your package before running tests. :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>naturf
+
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+<p><a class="reference external" href="https://pre-commit.com/">Install `pre-commit`</a>, then install the hooks within the repo to auto format code:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pre-commit<span class="w"> </span>install
 </pre></div>
 </div>
 </div></blockquote>
