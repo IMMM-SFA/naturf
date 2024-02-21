@@ -19,16 +19,24 @@ naturf documentation
  3) Prepare binary files to be fed into WRF to understand the effect of building morphology on the urban microclimate.
 
 
+About
+-----
+
+The Neighborhood Adaptive Tissues for Urban Resilience Futures tool (**naturf**) enables the examination of the effect of urban morphology at variable resolutions on the urban microclimate through the Weather Research and Forecasting model (WRF). Following the work of Ching et al. (citation) on NUDAPT/WUDAPT, **naturf** calculates 132 urban parameters based on shapefiles of building footprints and heights; however, **naturf** is capable of compiling these urban parameters at finer, sub-kilometer resolutions than offered by NUDAPT/WUDAPT.
+
+**naturf** takes in building polygon shapefiles with height data and uses the Python package **geopandas** to calculate 132 urban parameters for each building that are compiled into a binary file. The name of the binary file as well as an automatically generated index file instructs WRF to place the binary data into the correct location in a geogrid.  **naturf** also uses **hamilton** as a means of organizing, streamlining, and visualizing its workflow.
+
+
 .. grid:: 2
     :gutter: 4
 
-    .. grid-item-card::  Getting Started
-        :img-top: _static/index_getting_started.svg
+    .. grid-item-card::  Quickstarter
+        :img-top: _static/index_quickstarter.svg
         :text-align: center
 
-        New to **naturf**?  Get familiar with what **naturf** is all about.
+        New to **naturf**?  Follow the quickstarter for a quick start.
 
-        .. button-ref:: getting_started
+        .. button-ref:: quickstarter
                 :click-parent:
                 :color: primary
                 :expand:
@@ -84,7 +92,6 @@ naturf documentation
    :maxdepth: 2
    :hidden:
 
-   getting_started
    quickstarter
    user_guide
    modules
