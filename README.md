@@ -24,10 +24,6 @@ pip install naturf
 
 Run `naturf` using the quickstart tutorial: [`naturf` Quickstarter](https://immm-sfa.github.io/naturf/quickstarter.html)
 
-### Getting started
-
-New to `naturf`? Get familiar with what `naturf` is all about in our [Getting Started](https://immm-sfa.github.io/naturf/getting_started.html)
-
 ### User guide
 
 Our user guide provides in-depth information on the key concepts of `naturf` with useful background information and explanation. See our [User Guide](https://immm-sfa.github.io/naturf/user_guide.html)
