@@ -207,6 +207,27 @@ Vertical Distribution of Building Heights (118-132)
 
 The vertical distribution of building heights is a representation of where buildings are located at each vertical level. **naturf** represents buildings as arbitrary float values in an array, and each vertical dimension of the array shows how many buildings reach that height. [Burian2003]_
 
+Dependencies
+____________
+
+==========================  ===============
+Dependency                  Minimum Version
+==========================  ===============
+fiona                       1.8.19
+geocube                     0.3.1
+geopandas                   0.10.2
+joblib                      1.0.1
+numpy                       1.22.4
+pandas                      1.4.2
+pyproj                      3.0.1
+rasterio                    1.2.10
+rtree                       1.0.0
+sf-hamilton[visualization]  1.45
+shapely                     1.8.2, <2
+tqdm                        4.66.1
+xarray                      2022.3.0
+==========================  ===============
+
 References
 ----------
 

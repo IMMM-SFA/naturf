@@ -4,6 +4,12 @@ Release notes
 This is the list of changes to **naturf** between each release. For full details,
 see the `commit logs <https://github.com/IMMM-SFA/naturf/commits>`_.
 
+Version 1.0.1
+_____________
+
+- See the `v1.0.1 release notes <https://github.com/IMMM-SFA/naturf/releases/tag/v1.0.1>`_.
+
+
 Version 1.0.0
 _____________
 

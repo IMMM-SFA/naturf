@@ -81,9 +81,10 @@ To push **naturf** to pypi, you should first have ``build`` and ``twine`` instal
 
   python3 -m pip install --upgrade twine
 
-You also need to set up a `PyPi account <https://pypi.org/>` and `API token <https://pypi.org/help/#apitoken>`
+You also need to set up a `PyPi account <https://pypi.org/>`_ and `API token <https://pypi.org/help/#apitoken>`_
 
 Then run:
+
 .. code-block:: bash
 
   python -m build
