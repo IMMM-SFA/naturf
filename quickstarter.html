@@ -60,8 +60,8 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstarter</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#data-input">Data input</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#install-naturf">Install ``naturf`</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#edit-config-file">Edit config file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-naturf">Install <cite>naturf</cite></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#edit-config-variables-and-create-run-script">Edit config variables and create run script</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#run-naturf">Run <cite>naturf</cite></a></li>
 </ul>
 </li>
@@ -104,27 +104,44 @@
 <h1>Quickstarter<a class="headerlink" href="#quickstarter" title="Link to this heading"></a></h1>
 <section id="data-input">
 <h2>Data input<a class="headerlink" href="#data-input" title="Link to this heading"></a></h2>
-<p>The only input data required for <em>naturf</em> is a shapefile with building footprints and height data. There should be a field with a unique ID for each building the shapefile, and it should be in a projected coordinate system such as Alber Equal Area Conic. For input to the Weather Research and Forecasting model (WRF), the computed parameters for each building will be projected into WGS 84.</p>
+<p>The only input data required for <cite>naturf</cite> is a shapefile with building footprints and height data. There should be a field with a unique ID for each building the shapefile, and it should be in a projected coordinate system such as Alber Equal Area Conic. For input to the Weather Research and Forecasting model (WRF), the computed parameters for each building will be projected into WGS 84.</p>
 <p>Either check out our interactive <a class="reference internal" href="#"><span class="doc">quickstarter</span></a>, or continue below to run <cite>naturf</cite> using a python file.</p>
 </section>
 <section id="install-naturf">
-<h2>Install <a href="#id2"><span class="problematic" id="id3">``</span></a>naturf`<a class="headerlink" href="#install-naturf" title="Link to this heading"></a></h2>
+<h2>Install <cite>naturf</cite><a class="headerlink" href="#install-naturf" title="Link to this heading"></a></h2>
+<p>In a clean virtual or Conda environment, install <cite>naturf</cite>. NOTE: For Conda environments using Python 3.12, the <cite>setuptools</cite> package does not work as intended. One workaround is to create a Conda environment in Python 3.11.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>naturf
 </pre></div>
 </div>
 </section>
-<section id="edit-config-file">
-<h2>Edit config file<a class="headerlink" href="#edit-config-file" title="Link to this heading"></a></h2>
-<p>The <em>config.py</em> file in the naturf/ directory sets the default names for variables used in the <em>naturf</em> workflow. The two variables below need to be modified to reflect the ID field and the building height field of the input shapefile.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_id_field_name</span>
-<span class="n">data_height_field_name</span>
+<section id="edit-config-variables-and-create-run-script">
+<h2>Edit config variables and create run script<a class="headerlink" href="#edit-config-variables-and-create-run-script" title="Link to this heading"></a></h2>
+<p>The <cite>config</cite> module in <cite>naturf</cite> sets the default names for variables used in the <cite>naturf</cite> workflow. The two variables below need to be modified to reflect the ID field and the building height field of the input shapefile. Instructions on changing field names will be given further below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DATA_ID_FIELD_NAME</span>
+<span class="n">DATA_HEIGHT_FIELD_NAME</span>
 </pre></div>
 </div>
-<p>Create a python script called <cite>run.py</cite> to run <cite>naturf</cite></p>
+<p>Create a python script called <cite>run.py</cite> to run <cite>naturf</cite>. The code below runs the example data.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">importlib.resources</span> <span class="kn">import</span> <span class="n">files</span>
 <span class="kn">from</span> <span class="nn">naturf</span> <span class="kn">import</span> <span class="n">driver</span>
 
 <span class="n">input_shapefile_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">files</span><span class="p">(</span><span class="s2">&quot;naturf.data&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">&quot;C-5.shp&quot;</span><span class="p">))</span>
+<span class="n">inputs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;input_shapefile&quot;</span><span class="p">:</span> <span class="n">input_shapefile_path</span><span class="p">}</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;write_binary&quot;</span><span class="p">,</span> <span class="s2">&quot;write_index&quot;</span><span class="p">]</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">graph</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>To run data other than the example data, create the <cite>run.py</cite> below.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">naturf</span> <span class="kn">import</span> <span class="n">driver</span>
+<span class="kn">from</span> <span class="nn">naturf.config</span> <span class="kn">import</span> <span class="n">Settings</span>
+
+<span class="n">Settings</span><span class="o">.</span><span class="n">DATA_ID_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;YOUR_ID_FIELD_NAME_HERE&quot;</span>
+<span class="n">Settings</span><span class="o">.</span><span class="n">DATA_HEIGHT_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;YOUR_HEIGHT_FIELD_NAME_HERE&quot;</span>
+
+<span class="n">input_shapefile_path</span> <span class="o">=</span> <span class="s2">&quot;PATH_TO_YOUR_DATA&quot;</span>
 <span class="n">inputs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;input_shapefile&quot;</span><span class="p">:</span> <span class="n">input_shapefile_path</span><span class="p">}</span>
 <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;write_binary&quot;</span><span class="p">,</span> <span class="s2">&quot;write_index&quot;</span><span class="p">]</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">)</span>
