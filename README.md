@@ -22,7 +22,7 @@ pip install naturf
 
 ### Check out a quickstart tutorial to run `naturf`
 
-Run `naturf` using the quickstart tutorial: [`naturf` Quickstarter](https://immm-sfa.github.io/naturf/quickstarter.html)
+Run `naturf`! Check out the [`naturf` ipynb Quickstarter](https://github.com/IMMM-SFA/naturf/blob/main/notebooks/quickstarter.ipynb) or the [`naturf` Python Quickstarter](https://immm-sfa.github.io/naturf/quickstarter.html).
 
 ### User guide
 
