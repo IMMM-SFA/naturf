@@ -63,10 +63,63 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">naturf</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">naturf package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#naturf-model-module">naturf.model module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#naturf-params-module">naturf.params module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#naturf-utils-module">naturf.utils module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-naturf">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-naturf.config">naturf.config module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.config.Settings"><code class="docutils literal notranslate"><span class="pre">Settings</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-naturf.driver">naturf.driver module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.driver.Model"><code class="docutils literal notranslate"><span class="pre">Model</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-naturf.nodes">naturf.nodes module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.area_weighted_mean_of_building_heights"><code class="docutils literal notranslate"><span class="pre">area_weighted_mean_of_building_heights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.average_distance_between_buildings"><code class="docutils literal notranslate"><span class="pre">average_distance_between_buildings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.building_area"><code class="docutils literal notranslate"><span class="pre">building_area()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.building_plan_area"><code class="docutils literal notranslate"><span class="pre">building_plan_area()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.building_surface_area"><code class="docutils literal notranslate"><span class="pre">building_surface_area()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.building_surface_area_to_plan_area_ratio"><code class="docutils literal notranslate"><span class="pre">building_surface_area_to_plan_area_ratio()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.buildings_intersecting_plan_area"><code class="docutils literal notranslate"><span class="pre">buildings_intersecting_plan_area()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.complete_aspect_ratio"><code class="docutils literal notranslate"><span class="pre">complete_aspect_ratio()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.distance_between_buildings"><code class="docutils literal notranslate"><span class="pre">distance_between_buildings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.filter_height_range"><code class="docutils literal notranslate"><span class="pre">filter_height_range()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.frontal_area"><code class="docutils literal notranslate"><span class="pre">frontal_area()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.frontal_area_density"><code class="docutils literal notranslate"><span class="pre">frontal_area_density()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.frontal_area_index"><code class="docutils literal notranslate"><span class="pre">frontal_area_index()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.frontal_length"><code class="docutils literal notranslate"><span class="pre">frontal_length()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.grimmond_oke_displacement_height"><code class="docutils literal notranslate"><span class="pre">grimmond_oke_displacement_height()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.grimmond_oke_roughness_length"><code class="docutils literal notranslate"><span class="pre">grimmond_oke_roughness_length()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.height_to_width_ratio"><code class="docutils literal notranslate"><span class="pre">height_to_width_ratio()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.input_shapefile_df"><code class="docutils literal notranslate"><span class="pre">input_shapefile_df()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.lot_area"><code class="docutils literal notranslate"><span class="pre">lot_area()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.macdonald_displacement_height"><code class="docutils literal notranslate"><span class="pre">macdonald_displacement_height()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.macdonald_roughness_length"><code class="docutils literal notranslate"><span class="pre">macdonald_roughness_length()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.mean_building_height"><code class="docutils literal notranslate"><span class="pre">mean_building_height()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.plan_area_density"><code class="docutils literal notranslate"><span class="pre">plan_area_density()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.plan_area_fraction"><code class="docutils literal notranslate"><span class="pre">plan_area_fraction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.raupach_displacement_height"><code class="docutils literal notranslate"><span class="pre">raupach_displacement_height()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.raupach_roughness_length"><code class="docutils literal notranslate"><span class="pre">raupach_roughness_length()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.rooftop_area_density"><code class="docutils literal notranslate"><span class="pre">rooftop_area_density()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.sky_view_factor"><code class="docutils literal notranslate"><span class="pre">sky_view_factor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.standard_deviation_of_building_heights"><code class="docutils literal notranslate"><span class="pre">standard_deviation_of_building_heights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.standardize_column_names_df"><code class="docutils literal notranslate"><span class="pre">standardize_column_names_df()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.target_crs"><code class="docutils literal notranslate"><span class="pre">target_crs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.total_plan_area"><code class="docutils literal notranslate"><span class="pre">total_plan_area()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.total_plan_area_geometry"><code class="docutils literal notranslate"><span class="pre">total_plan_area_geometry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.vertical_distribution_of_building_heights"><code class="docutils literal notranslate"><span class="pre">vertical_distribution_of_building_heights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.wall_angle_direction_length"><code class="docutils literal notranslate"><span class="pre">wall_angle_direction_length()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.nodes.wall_length"><code class="docutils literal notranslate"><span class="pre">wall_length()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-naturf.output">naturf.output module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.output.aggregate_rasters"><code class="docutils literal notranslate"><span class="pre">aggregate_rasters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.output.merge_parameters"><code class="docutils literal notranslate"><span class="pre">merge_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.output.numpy_to_binary"><code class="docutils literal notranslate"><span class="pre">numpy_to_binary()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.output.raster_to_numpy"><code class="docutils literal notranslate"><span class="pre">raster_to_numpy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.output.rasterize_parameters"><code class="docutils literal notranslate"><span class="pre">rasterize_parameters()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.output.write_binary"><code class="docutils literal notranslate"><span class="pre">write_binary()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naturf.output.write_index"><code class="docutils literal notranslate"><span class="pre">write_index()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -110,17 +163,1371 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 </section>
-<section id="naturf-model-module">
-<h2>naturf.model module<a class="headerlink" href="#naturf-model-module" title="Link to this heading"></a></h2>
+<section id="module-naturf.config">
+<span id="naturf-config-module"></span><h2>naturf.config module<a class="headerlink" href="#module-naturf.config" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="naturf.config.Settings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">naturf.config.</span></span><span class="sig-name descname"><span class="pre">Settings</span></span><a class="reference internal" href="_modules/naturf/config.html#Settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.config.Settings" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class is used to define variables for the naturf application.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.ALPHACOEFFICIENT">
+<span class="sig-name descname"><span class="pre">ALPHACOEFFICIENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3.59</span></em><a class="headerlink" href="#naturf.config.Settings.ALPHACOEFFICIENT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.AREA_FIELD">
+<span class="sig-name descname"><span class="pre">AREA_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_area'</span></em><a class="headerlink" href="#naturf.config.Settings.AREA_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.AREA_WEIGHTED_MEAN_OF_BUILDING_HEIGHTS">
+<span class="sig-name descname"><span class="pre">AREA_WEIGHTED_MEAN_OF_BUILDING_HEIGHTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'area_weighted_mean_of_building_heights'</span></em><a class="headerlink" href="#naturf.config.Settings.AREA_WEIGHTED_MEAN_OF_BUILDING_HEIGHTS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.AVERAGE_DISTANCE_BETWEEN_BUILDINGS">
+<span class="sig-name descname"><span class="pre">AVERAGE_DISTANCE_BETWEEN_BUILDINGS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'average_distance_between_buildings'</span></em><a class="headerlink" href="#naturf.config.Settings.AVERAGE_DISTANCE_BETWEEN_BUILDINGS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.BETACOEFFICIENT">
+<span class="sig-name descname"><span class="pre">BETACOEFFICIENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></em><a class="headerlink" href="#naturf.config.Settings.BETACOEFFICIENT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.BUFFERED_FIELD">
+<span class="sig-name descname"><span class="pre">BUFFERED_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_buffered'</span></em><a class="headerlink" href="#naturf.config.Settings.BUFFERED_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.BUILDING_HEIGHT_INTERVAL">
+<span class="sig-name descname"><span class="pre">BUILDING_HEIGHT_INTERVAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#naturf.config.Settings.BUILDING_HEIGHT_INTERVAL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.BUILDING_PLAN_AREA_FIELD">
+<span class="sig-name descname"><span class="pre">BUILDING_PLAN_AREA_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_plan_area'</span></em><a class="headerlink" href="#naturf.config.Settings.BUILDING_PLAN_AREA_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.BUILDING_SURFACE_AREA">
+<span class="sig-name descname"><span class="pre">BUILDING_SURFACE_AREA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_surface_area'</span></em><a class="headerlink" href="#naturf.config.Settings.BUILDING_SURFACE_AREA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.BUILDING_SURFACE_AREA_TO_PLAN_AREA_RATIO">
+<span class="sig-name descname"><span class="pre">BUILDING_SURFACE_AREA_TO_PLAN_AREA_RATIO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_surface_area_to_plan_area_ratio'</span></em><a class="headerlink" href="#naturf.config.Settings.BUILDING_SURFACE_AREA_TO_PLAN_AREA_RATIO" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.CAP_STYLE">
+<span class="sig-name descname"><span class="pre">CAP_STYLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#naturf.config.Settings.CAP_STYLE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.CENTROID_FIELD">
+<span class="sig-name descname"><span class="pre">CENTROID_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_centroid'</span></em><a class="headerlink" href="#naturf.config.Settings.CENTROID_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.COMPLETE_ASPECT_RATIO">
+<span class="sig-name descname"><span class="pre">COMPLETE_ASPECT_RATIO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'complete_aspect_ratio'</span></em><a class="headerlink" href="#naturf.config.Settings.COMPLETE_ASPECT_RATIO" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.CONSTANT_15">
+<span class="sig-name descname"><span class="pre">CONSTANT_15</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#naturf.config.Settings.CONSTANT_15" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.CONSTANT_75">
+<span class="sig-name descname"><span class="pre">CONSTANT_75</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">7.5</span></em><a class="headerlink" href="#naturf.config.Settings.CONSTANT_75" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.DATA_GEOMETRY_FIELD_NAME">
+<span class="sig-name descname"><span class="pre">DATA_GEOMETRY_FIELD_NAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'geometry'</span></em><a class="headerlink" href="#naturf.config.Settings.DATA_GEOMETRY_FIELD_NAME" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.DATA_HEIGHT_FIELD_NAME">
+<span class="sig-name descname"><span class="pre">DATA_HEIGHT_FIELD_NAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Max_HOUSE_'</span></em><a class="headerlink" href="#naturf.config.Settings.DATA_HEIGHT_FIELD_NAME" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.DATA_ID_FIELD_NAME">
+<span class="sig-name descname"><span class="pre">DATA_ID_FIELD_NAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'OBJECTID'</span></em><a class="headerlink" href="#naturf.config.Settings.DATA_ID_FIELD_NAME" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.DEFAULT_FILL_VALUE">
+<span class="sig-name descname"><span class="pre">DEFAULT_FILL_VALUE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#naturf.config.Settings.DEFAULT_FILL_VALUE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.DEFAULT_OUTPUT_RESOLUTION">
+<span class="sig-name descname"><span class="pre">DEFAULT_OUTPUT_RESOLUTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[0.00083333333,</span> <span class="pre">0.00083333333]</span></em><a class="headerlink" href="#naturf.config.Settings.DEFAULT_OUTPUT_RESOLUTION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.DEFAULT_STREET_WIDTH">
+<span class="sig-name descname"><span class="pre">DEFAULT_STREET_WIDTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">15</span></em><a class="headerlink" href="#naturf.config.Settings.DEFAULT_STREET_WIDTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.DEGREES_IN_CIRCLE">
+<span class="sig-name descname"><span class="pre">DEGREES_IN_CIRCLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">360</span></em><a class="headerlink" href="#naturf.config.Settings.DEGREES_IN_CIRCLE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.DILAREA_DEFAULT">
+<span class="sig-name descname"><span class="pre">DILAREA_DEFAULT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10000</span></em><a class="headerlink" href="#naturf.config.Settings.DILAREA_DEFAULT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.DISPLACEMENT_HEIGHT_FACTOR">
+<span class="sig-name descname"><span class="pre">DISPLACEMENT_HEIGHT_FACTOR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.67</span></em><a class="headerlink" href="#naturf.config.Settings.DISPLACEMENT_HEIGHT_FACTOR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.DISTANCE_BETWEEN_BUILDINGS">
+<span class="sig-name descname"><span class="pre">DISTANCE_BETWEEN_BUILDINGS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'distance_between_buildings'</span></em><a class="headerlink" href="#naturf.config.Settings.DISTANCE_BETWEEN_BUILDINGS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.DISTANCE_TO_NEIGHBOR_BY_CENTROID">
+<span class="sig-name descname"><span class="pre">DISTANCE_TO_NEIGHBOR_BY_CENTROID</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'distance_to_neighbor_by_centroid'</span></em><a class="headerlink" href="#naturf.config.Settings.DISTANCE_TO_NEIGHBOR_BY_CENTROID" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.DRAGCOEFFICIENT_0003">
+<span class="sig-name descname"><span class="pre">DRAGCOEFFICIENT_0003</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.003</span></em><a class="headerlink" href="#naturf.config.Settings.DRAGCOEFFICIENT_0003" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.DRAGCOEFFICIENT_03">
+<span class="sig-name descname"><span class="pre">DRAGCOEFFICIENT_03</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.3</span></em><a class="headerlink" href="#naturf.config.Settings.DRAGCOEFFICIENT_03" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.EAST">
+<span class="sig-name descname"><span class="pre">EAST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'east'</span></em><a class="headerlink" href="#naturf.config.Settings.EAST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.EAST_WEST">
+<span class="sig-name descname"><span class="pre">EAST_WEST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'east_west'</span></em><a class="headerlink" href="#naturf.config.Settings.EAST_WEST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.FRONTAL_AREA_EAST">
+<span class="sig-name descname"><span class="pre">FRONTAL_AREA_EAST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'frontal_area_east'</span></em><a class="headerlink" href="#naturf.config.Settings.FRONTAL_AREA_EAST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.FRONTAL_AREA_INDEX_EAST">
+<span class="sig-name descname"><span class="pre">FRONTAL_AREA_INDEX_EAST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'frontal_area_index_east'</span></em><a class="headerlink" href="#naturf.config.Settings.FRONTAL_AREA_INDEX_EAST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.FRONTAL_AREA_INDEX_NORTH">
+<span class="sig-name descname"><span class="pre">FRONTAL_AREA_INDEX_NORTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'frontal_area_index_north'</span></em><a class="headerlink" href="#naturf.config.Settings.FRONTAL_AREA_INDEX_NORTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.FRONTAL_AREA_INDEX_SOUTH">
+<span class="sig-name descname"><span class="pre">FRONTAL_AREA_INDEX_SOUTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'frontal_area_index_south'</span></em><a class="headerlink" href="#naturf.config.Settings.FRONTAL_AREA_INDEX_SOUTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.FRONTAL_AREA_INDEX_WEST">
+<span class="sig-name descname"><span class="pre">FRONTAL_AREA_INDEX_WEST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'frontal_area_index_west'</span></em><a class="headerlink" href="#naturf.config.Settings.FRONTAL_AREA_INDEX_WEST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.FRONTAL_AREA_NORTH">
+<span class="sig-name descname"><span class="pre">FRONTAL_AREA_NORTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'frontal_area_north'</span></em><a class="headerlink" href="#naturf.config.Settings.FRONTAL_AREA_NORTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.FRONTAL_AREA_SOUTH">
+<span class="sig-name descname"><span class="pre">FRONTAL_AREA_SOUTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'frontal_area_south'</span></em><a class="headerlink" href="#naturf.config.Settings.FRONTAL_AREA_SOUTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.FRONTAL_AREA_WEST">
+<span class="sig-name descname"><span class="pre">FRONTAL_AREA_WEST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'frontal_area_west'</span></em><a class="headerlink" href="#naturf.config.Settings.FRONTAL_AREA_WEST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.FRONTAL_LENGTH_EAST">
+<span class="sig-name descname"><span class="pre">FRONTAL_LENGTH_EAST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'frontal_length_east'</span></em><a class="headerlink" href="#naturf.config.Settings.FRONTAL_LENGTH_EAST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.FRONTAL_LENGTH_NORTH">
+<span class="sig-name descname"><span class="pre">FRONTAL_LENGTH_NORTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'frontal_length_north'</span></em><a class="headerlink" href="#naturf.config.Settings.FRONTAL_LENGTH_NORTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.FRONTAL_LENGTH_SOUTH">
+<span class="sig-name descname"><span class="pre">FRONTAL_LENGTH_SOUTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'frontal_length_south'</span></em><a class="headerlink" href="#naturf.config.Settings.FRONTAL_LENGTH_SOUTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.FRONTAL_LENGTH_WEST">
+<span class="sig-name descname"><span class="pre">FRONTAL_LENGTH_WEST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'frontal_length_west'</span></em><a class="headerlink" href="#naturf.config.Settings.FRONTAL_LENGTH_WEST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.GEOMETRY_FIELD">
+<span class="sig-name descname"><span class="pre">GEOMETRY_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_geometry'</span></em><a class="headerlink" href="#naturf.config.Settings.GEOMETRY_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.GRIMMOND_OKE_DISPLACEMENT_HEIGHT">
+<span class="sig-name descname"><span class="pre">GRIMMOND_OKE_DISPLACEMENT_HEIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'grimmond_oke_displacement_height'</span></em><a class="headerlink" href="#naturf.config.Settings.GRIMMOND_OKE_DISPLACEMENT_HEIGHT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.GRIMMOND_OKE_ROUGHNESS_LENGTH">
+<span class="sig-name descname"><span class="pre">GRIMMOND_OKE_ROUGHNESS_LENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'grimmond_oke_roughness_length'</span></em><a class="headerlink" href="#naturf.config.Settings.GRIMMOND_OKE_ROUGHNESS_LENGTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.HEIGHT_FIELD">
+<span class="sig-name descname"><span class="pre">HEIGHT_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_height'</span></em><a class="headerlink" href="#naturf.config.Settings.HEIGHT_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.HEIGHT_TO_WIDTH_RATIO">
+<span class="sig-name descname"><span class="pre">HEIGHT_TO_WIDTH_RATIO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'height_to_width_ratio'</span></em><a class="headerlink" href="#naturf.config.Settings.HEIGHT_TO_WIDTH_RATIO" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.ID_FIELD">
+<span class="sig-name descname"><span class="pre">ID_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_id'</span></em><a class="headerlink" href="#naturf.config.Settings.ID_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.MACDONALD_DISPLACEMENT_HEIGHT">
+<span class="sig-name descname"><span class="pre">MACDONALD_DISPLACEMENT_HEIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'macdonald_displacement_height'</span></em><a class="headerlink" href="#naturf.config.Settings.MACDONALD_DISPLACEMENT_HEIGHT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.MACDONALD_ROUGHNESS_LENGTH_EAST">
+<span class="sig-name descname"><span class="pre">MACDONALD_ROUGHNESS_LENGTH_EAST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'macdonald_roughness_length_east'</span></em><a class="headerlink" href="#naturf.config.Settings.MACDONALD_ROUGHNESS_LENGTH_EAST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.MACDONALD_ROUGHNESS_LENGTH_NORTH">
+<span class="sig-name descname"><span class="pre">MACDONALD_ROUGHNESS_LENGTH_NORTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'macdonald_roughness_length_north'</span></em><a class="headerlink" href="#naturf.config.Settings.MACDONALD_ROUGHNESS_LENGTH_NORTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.MACDONALD_ROUGHNESS_LENGTH_SOUTH">
+<span class="sig-name descname"><span class="pre">MACDONALD_ROUGHNESS_LENGTH_SOUTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'macdonald_roughness_length_south'</span></em><a class="headerlink" href="#naturf.config.Settings.MACDONALD_ROUGHNESS_LENGTH_SOUTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.MACDONALD_ROUGHNESS_LENGTH_WEST">
+<span class="sig-name descname"><span class="pre">MACDONALD_ROUGHNESS_LENGTH_WEST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'macdonald_roughness_length_west'</span></em><a class="headerlink" href="#naturf.config.Settings.MACDONALD_ROUGHNESS_LENGTH_WEST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.MAX_BUILDING_HEIGHT">
+<span class="sig-name descname"><span class="pre">MAX_BUILDING_HEIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">75</span></em><a class="headerlink" href="#naturf.config.Settings.MAX_BUILDING_HEIGHT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.MEAN_BUILDING_HEIGHT">
+<span class="sig-name descname"><span class="pre">MEAN_BUILDING_HEIGHT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mean_building_height'</span></em><a class="headerlink" href="#naturf.config.Settings.MEAN_BUILDING_HEIGHT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.NEIGHBOR">
+<span class="sig-name descname"><span class="pre">NEIGHBOR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'neighbor'</span></em><a class="headerlink" href="#naturf.config.Settings.NEIGHBOR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.NEIGHBOR_AREA_FIELD">
+<span class="sig-name descname"><span class="pre">NEIGHBOR_AREA_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_area_neighbor'</span></em><a class="headerlink" href="#naturf.config.Settings.NEIGHBOR_AREA_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.NEIGHBOR_CENTROID_FIELD">
+<span class="sig-name descname"><span class="pre">NEIGHBOR_CENTROID_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_centroid_neighbor'</span></em><a class="headerlink" href="#naturf.config.Settings.NEIGHBOR_CENTROID_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.NEIGHBOR_GEOMETRY_FIELD">
+<span class="sig-name descname"><span class="pre">NEIGHBOR_GEOMETRY_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_geometry_neighbor'</span></em><a class="headerlink" href="#naturf.config.Settings.NEIGHBOR_GEOMETRY_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.NEIGHBOR_HEIGHT_FIELD">
+<span class="sig-name descname"><span class="pre">NEIGHBOR_HEIGHT_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_height_neighbor'</span></em><a class="headerlink" href="#naturf.config.Settings.NEIGHBOR_HEIGHT_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.NEIGHBOR_ID_FIELD">
+<span class="sig-name descname"><span class="pre">NEIGHBOR_ID_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_id_neighbor'</span></em><a class="headerlink" href="#naturf.config.Settings.NEIGHBOR_ID_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.NEIGHBOR_VOLUME_FIELD">
+<span class="sig-name descname"><span class="pre">NEIGHBOR_VOLUME_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'volume_field_neighbor'</span></em><a class="headerlink" href="#naturf.config.Settings.NEIGHBOR_VOLUME_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.NORTH">
+<span class="sig-name descname"><span class="pre">NORTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'north'</span></em><a class="headerlink" href="#naturf.config.Settings.NORTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.NORTHEAST_DEGREES">
+<span class="sig-name descname"><span class="pre">NORTHEAST_DEGREES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">45</span></em><a class="headerlink" href="#naturf.config.Settings.NORTHEAST_DEGREES" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.NORTHWEST_DEGREES">
+<span class="sig-name descname"><span class="pre">NORTHWEST_DEGREES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">135</span></em><a class="headerlink" href="#naturf.config.Settings.NORTHWEST_DEGREES" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.NORTH_SOUTH">
+<span class="sig-name descname"><span class="pre">NORTH_SOUTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'north_south'</span></em><a class="headerlink" href="#naturf.config.Settings.NORTH_SOUTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.OBSTACLEDRAGCOEFFICIENT">
+<span class="sig-name descname"><span class="pre">OBSTACLEDRAGCOEFFICIENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.12</span></em><a class="headerlink" href="#naturf.config.Settings.OBSTACLEDRAGCOEFFICIENT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.OUTPUT_CRS">
+<span class="sig-name descname"><span class="pre">OUTPUT_CRS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'EPSG:4326'</span></em><a class="headerlink" href="#naturf.config.Settings.OUTPUT_CRS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.PLAN_AREA_DENSITY">
+<span class="sig-name descname"><span class="pre">PLAN_AREA_DENSITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'plan_area_density'</span></em><a class="headerlink" href="#naturf.config.Settings.PLAN_AREA_DENSITY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.PLAN_AREA_FRACTION">
+<span class="sig-name descname"><span class="pre">PLAN_AREA_FRACTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'plan_area_fraction'</span></em><a class="headerlink" href="#naturf.config.Settings.PLAN_AREA_FRACTION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.PSI_H">
+<span class="sig-name descname"><span class="pre">PSI_H</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.193</span></em><a class="headerlink" href="#naturf.config.Settings.PSI_H" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.RADIUS">
+<span class="sig-name descname"><span class="pre">RADIUS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100</span></em><a class="headerlink" href="#naturf.config.Settings.RADIUS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.RAUPACH_DISPLACEMENT_HEIGHT_EAST">
+<span class="sig-name descname"><span class="pre">RAUPACH_DISPLACEMENT_HEIGHT_EAST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'raupach_displacement_height_east'</span></em><a class="headerlink" href="#naturf.config.Settings.RAUPACH_DISPLACEMENT_HEIGHT_EAST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.RAUPACH_DISPLACEMENT_HEIGHT_NORTH">
+<span class="sig-name descname"><span class="pre">RAUPACH_DISPLACEMENT_HEIGHT_NORTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'raupach_displacement_height_north'</span></em><a class="headerlink" href="#naturf.config.Settings.RAUPACH_DISPLACEMENT_HEIGHT_NORTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.RAUPACH_DISPLACEMENT_HEIGHT_SOUTH">
+<span class="sig-name descname"><span class="pre">RAUPACH_DISPLACEMENT_HEIGHT_SOUTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'raupach_displacement_height_south'</span></em><a class="headerlink" href="#naturf.config.Settings.RAUPACH_DISPLACEMENT_HEIGHT_SOUTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.RAUPACH_DISPLACEMENT_HEIGHT_WEST">
+<span class="sig-name descname"><span class="pre">RAUPACH_DISPLACEMENT_HEIGHT_WEST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'raupach_displacement_height_west'</span></em><a class="headerlink" href="#naturf.config.Settings.RAUPACH_DISPLACEMENT_HEIGHT_WEST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.RAUPACH_ROUGHNESS_LENGTH_EAST">
+<span class="sig-name descname"><span class="pre">RAUPACH_ROUGHNESS_LENGTH_EAST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'raupach_roughness_length_east'</span></em><a class="headerlink" href="#naturf.config.Settings.RAUPACH_ROUGHNESS_LENGTH_EAST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.RAUPACH_ROUGHNESS_LENGTH_NORTH">
+<span class="sig-name descname"><span class="pre">RAUPACH_ROUGHNESS_LENGTH_NORTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'raupach_roughness_length_north'</span></em><a class="headerlink" href="#naturf.config.Settings.RAUPACH_ROUGHNESS_LENGTH_NORTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.RAUPACH_ROUGHNESS_LENGTH_SOUTH">
+<span class="sig-name descname"><span class="pre">RAUPACH_ROUGHNESS_LENGTH_SOUTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'raupach_roughness_length_south'</span></em><a class="headerlink" href="#naturf.config.Settings.RAUPACH_ROUGHNESS_LENGTH_SOUTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.RAUPACH_ROUGHNESS_LENGTH_WEST">
+<span class="sig-name descname"><span class="pre">RAUPACH_ROUGHNESS_LENGTH_WEST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'raupach_roughness_length_west'</span></em><a class="headerlink" href="#naturf.config.Settings.RAUPACH_ROUGHNESS_LENGTH_WEST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.RDH_THRESHOLD_MAX">
+<span class="sig-name descname"><span class="pre">RDH_THRESHOLD_MAX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#naturf.config.Settings.RDH_THRESHOLD_MAX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.RDH_THRESHOLD_MIN">
+<span class="sig-name descname"><span class="pre">RDH_THRESHOLD_MIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#naturf.config.Settings.RDH_THRESHOLD_MIN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.ROOFTOP_AREA_DENSITY">
+<span class="sig-name descname"><span class="pre">ROOFTOP_AREA_DENSITY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'rooftop_area_density'</span></em><a class="headerlink" href="#naturf.config.Settings.ROOFTOP_AREA_DENSITY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.ROUGHNESS_LENGTH_FACTOR">
+<span class="sig-name descname"><span class="pre">ROUGHNESS_LENGTH_FACTOR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.1</span></em><a class="headerlink" href="#naturf.config.Settings.ROUGHNESS_LENGTH_FACTOR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.RRL_THRESHOLD_MAX">
+<span class="sig-name descname"><span class="pre">RRL_THRESHOLD_MAX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#naturf.config.Settings.RRL_THRESHOLD_MAX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.RRL_THRESHOLD_MIN">
+<span class="sig-name descname"><span class="pre">RRL_THRESHOLD_MIN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#naturf.config.Settings.RRL_THRESHOLD_MIN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.SCALING_FACTOR">
+<span class="sig-name descname"><span class="pre">SCALING_FACTOR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#naturf.config.Settings.SCALING_FACTOR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.SKY_VIEW_FACTOR">
+<span class="sig-name descname"><span class="pre">SKY_VIEW_FACTOR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'sky_view_factor'</span></em><a class="headerlink" href="#naturf.config.Settings.SKY_VIEW_FACTOR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.SMALL_DECIMAL">
+<span class="sig-name descname"><span class="pre">SMALL_DECIMAL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1e-31</span></em><a class="headerlink" href="#naturf.config.Settings.SMALL_DECIMAL" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.SOUTH">
+<span class="sig-name descname"><span class="pre">SOUTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'south'</span></em><a class="headerlink" href="#naturf.config.Settings.SOUTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.SOUTHEAST_DEGREES">
+<span class="sig-name descname"><span class="pre">SOUTHEAST_DEGREES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">315</span></em><a class="headerlink" href="#naturf.config.Settings.SOUTHEAST_DEGREES" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.SOUTHEAST_DEGREES_ARCTAN">
+<span class="sig-name descname"><span class="pre">SOUTHEAST_DEGREES_ARCTAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-45</span></em><a class="headerlink" href="#naturf.config.Settings.SOUTHEAST_DEGREES_ARCTAN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.SOUTHWEST_DEGREES">
+<span class="sig-name descname"><span class="pre">SOUTHWEST_DEGREES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">225</span></em><a class="headerlink" href="#naturf.config.Settings.SOUTHWEST_DEGREES" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.SOUTHWEST_DEGREES_ARCTAN">
+<span class="sig-name descname"><span class="pre">SOUTHWEST_DEGREES_ARCTAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-135</span></em><a class="headerlink" href="#naturf.config.Settings.SOUTHWEST_DEGREES_ARCTAN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.SPATIAL_JOIN_LIST">
+<span class="sig-name descname"><span class="pre">SPATIAL_JOIN_LIST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['building_height_target',</span> <span class="pre">'building_height_neighbor',</span> <span class="pre">'building_id_target',</span> <span class="pre">'building_id_neighbor',</span> <span class="pre">'building_area_target',</span> <span class="pre">'building_area_neighbor',</span> <span class="pre">'building_geometry_target',</span> <span class="pre">'building_geometry_neighbor']</span></em><a class="headerlink" href="#naturf.config.Settings.SPATIAL_JOIN_LIST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.STANDARD_DEVIATION_OF_BUILDING_HEIGHTS">
+<span class="sig-name descname"><span class="pre">STANDARD_DEVIATION_OF_BUILDING_HEIGHTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'standard_deviation_of_building_heights'</span></em><a class="headerlink" href="#naturf.config.Settings.STANDARD_DEVIATION_OF_BUILDING_HEIGHTS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.START_OF_CIRCLE_DEGREES">
+<span class="sig-name descname"><span class="pre">START_OF_CIRCLE_DEGREES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#naturf.config.Settings.START_OF_CIRCLE_DEGREES" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.TARGET">
+<span class="sig-name descname"><span class="pre">TARGET</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'target'</span></em><a class="headerlink" href="#naturf.config.Settings.TARGET" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.TARGET_AREA_FIELD">
+<span class="sig-name descname"><span class="pre">TARGET_AREA_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_area_target'</span></em><a class="headerlink" href="#naturf.config.Settings.TARGET_AREA_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.TARGET_BUFFERED_FIELD">
+<span class="sig-name descname"><span class="pre">TARGET_BUFFERED_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_buffered_target'</span></em><a class="headerlink" href="#naturf.config.Settings.TARGET_BUFFERED_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.TARGET_CENTROID_FIELD">
+<span class="sig-name descname"><span class="pre">TARGET_CENTROID_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_centroid_target'</span></em><a class="headerlink" href="#naturf.config.Settings.TARGET_CENTROID_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.TARGET_GEOMETRY_FIELD">
+<span class="sig-name descname"><span class="pre">TARGET_GEOMETRY_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_geometry_target'</span></em><a class="headerlink" href="#naturf.config.Settings.TARGET_GEOMETRY_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.TARGET_HEIGHT_FIELD">
+<span class="sig-name descname"><span class="pre">TARGET_HEIGHT_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_height_target'</span></em><a class="headerlink" href="#naturf.config.Settings.TARGET_HEIGHT_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.TARGET_ID_FIELD">
+<span class="sig-name descname"><span class="pre">TARGET_ID_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'building_id_target'</span></em><a class="headerlink" href="#naturf.config.Settings.TARGET_ID_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.TOTAL_PLAN_AREA">
+<span class="sig-name descname"><span class="pre">TOTAL_PLAN_AREA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'total_plan_area'</span></em><a class="headerlink" href="#naturf.config.Settings.TOTAL_PLAN_AREA" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.TOTAL_PLAN_AREA_GEOMETRY">
+<span class="sig-name descname"><span class="pre">TOTAL_PLAN_AREA_GEOMETRY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'total_plan_area_geometry'</span></em><a class="headerlink" href="#naturf.config.Settings.TOTAL_PLAN_AREA_GEOMETRY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.VERTICAL_DISTRIBUTION_OF_BUILDING_HEIGHTS">
+<span class="sig-name descname"><span class="pre">VERTICAL_DISTRIBUTION_OF_BUILDING_HEIGHTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'vertical_distribution_of_building_heights'</span></em><a class="headerlink" href="#naturf.config.Settings.VERTICAL_DISTRIBUTION_OF_BUILDING_HEIGHTS" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.VOLUME_FIELD">
+<span class="sig-name descname"><span class="pre">VOLUME_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'volume_field'</span></em><a class="headerlink" href="#naturf.config.Settings.VOLUME_FIELD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.VONKARMANCONSTANT">
+<span class="sig-name descname"><span class="pre">VONKARMANCONSTANT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.4</span></em><a class="headerlink" href="#naturf.config.Settings.VONKARMANCONSTANT" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.WALL_ANGLE">
+<span class="sig-name descname"><span class="pre">WALL_ANGLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'wall_angle'</span></em><a class="headerlink" href="#naturf.config.Settings.WALL_ANGLE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.WALL_DIRECTION">
+<span class="sig-name descname"><span class="pre">WALL_DIRECTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'wall_direction'</span></em><a class="headerlink" href="#naturf.config.Settings.WALL_DIRECTION" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.WALL_LENGTH">
+<span class="sig-name descname"><span class="pre">WALL_LENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'wall_length'</span></em><a class="headerlink" href="#naturf.config.Settings.WALL_LENGTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.WALL_LENGTH_EAST">
+<span class="sig-name descname"><span class="pre">WALL_LENGTH_EAST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'wall_length_east'</span></em><a class="headerlink" href="#naturf.config.Settings.WALL_LENGTH_EAST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.WALL_LENGTH_NORTH">
+<span class="sig-name descname"><span class="pre">WALL_LENGTH_NORTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'wall_length_north'</span></em><a class="headerlink" href="#naturf.config.Settings.WALL_LENGTH_NORTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.WALL_LENGTH_SOUTH">
+<span class="sig-name descname"><span class="pre">WALL_LENGTH_SOUTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'wall_length_south'</span></em><a class="headerlink" href="#naturf.config.Settings.WALL_LENGTH_SOUTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.WALL_LENGTH_WEST">
+<span class="sig-name descname"><span class="pre">WALL_LENGTH_WEST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'wall_length_west'</span></em><a class="headerlink" href="#naturf.config.Settings.WALL_LENGTH_WEST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="naturf.config.Settings.WEST">
+<span class="sig-name descname"><span class="pre">WEST</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'west'</span></em><a class="headerlink" href="#naturf.config.Settings.WEST" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="naturf-params-module">
-<h2>naturf.params module<a class="headerlink" href="#naturf-params-module" title="Link to this heading"></a></h2>
+<section id="module-naturf.driver">
+<span id="naturf-driver-module"></span><h2>naturf.driver module<a class="headerlink" href="#module-naturf.driver" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="naturf.driver.Model">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">naturf.driver.</span></span><span class="sig-name descname"><span class="pre">Model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/naturf/driver.html#Model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.driver.Model" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="naturf.driver.Model.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/driver.html#Model.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.driver.Model.execute" title="Link to this definition"></a></dt>
+<dd><p>Run the driver.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="naturf.driver.Model.graph">
+<span class="sig-name descname"><span class="pre">graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">view</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="reference internal" href="_modules/naturf/driver.html#Model.graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.driver.Model.graph" title="Link to this definition"></a></dt>
+<dd><p>Show the DAG. Return the graph object for the given inputs to execute.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="naturf.driver.Model.list_parameters">
+<span class="sig-name descname"><span class="pre">list_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/naturf/driver.html#Model.list_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.driver.Model.list_parameters" title="Link to this definition"></a></dt>
+<dd><p>List all available parameters.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="naturf-utils-module">
-<h2>naturf.utils module<a class="headerlink" href="#naturf-utils-module" title="Link to this heading"></a></h2>
+<section id="module-naturf.nodes">
+<span id="naturf-nodes-module"></span><h2>naturf.nodes module<a class="headerlink" href="#module-naturf.nodes" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.area_weighted_mean_of_building_heights">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">area_weighted_mean_of_building_heights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buildings_intersecting_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#area_weighted_mean_of_building_heights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.area_weighted_mean_of_building_heights" title="Link to this definition"></a></dt>
+<dd><p>Calculate the area weighted mean of building heights for each target building in a GeoPandas GeoDataFrame.
+The entire area of buildings considered to be neighbors are included in the calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>buildings_intersecting_plan_area</strong> (<em>gpd.GeoDataFrame</em>) – Geometry field for the neighboring buildings from the spatially
+joined data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The area weighted mean of building heights for all buildings within the target
+building’s plan area.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.average_distance_between_buildings">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">average_distance_between_buildings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distance_between_buildings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#average_distance_between_buildings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.average_distance_between_buildings" title="Link to this definition"></a></dt>
+<dd><p>Calculate the average distance from the target building to all neighboring buildings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>distance_between_buildings</strong> (<em>pd.Series</em>) – distance from the target building to each
+neighbor building.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.building_area">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">building_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#building_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.building_area" title="Link to this definition"></a></dt>
+<dd><p>Calculate the area of the building geometry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>building_geometry</strong> (<em>pd.Series</em>) – Building Geometry.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.building_plan_area">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">building_plan_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buildings_intersecting_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">join_predicate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'intersection'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">join_rsuffix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'neighbor'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#building_plan_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.building_plan_area" title="Link to this definition"></a></dt>
+<dd><p>Calculate the building plan area from the GeoDataFrame of buildings intersecting the plan area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buildings_intersecting_plan_area</strong> (<em>gpd.GeoDataFrame</em>) – Geometry field for the neighboring buildings from the spatially
+joined data.</p></li>
+<li><p><strong>join_predicate</strong> (<em>str</em>) – Selected topology of join.
+DEFAULT: <cite>intersection</cite></p></li>
+<li><p><strong>join_rsuffix</strong> (<em>str</em>) – Suffix of the right object in the join.
+DEFAULT: <cite>neighbor</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The building plan area for each unique building in the
+<cite>buildings_intersecting_plan_area</cite> GeoDataFrame.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.building_surface_area">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">building_surface_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wall_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#building_surface_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.building_surface_area" title="Link to this definition"></a></dt>
+<dd><p>Calculate the building surface area for each building in a Panda Series. In naturf, the building footprint area is the
+same as the roof area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wall_length</strong> (<em>pd.DataFrame</em>) – Wall length in each cardinal direction for each building.</p></li>
+<li><p><strong>building_height</strong> (<em>pd.Series</em>) – Building height for each building.</p></li>
+<li><p><strong>building_area</strong> (<em>pd.Series</em>) – Building area field.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Panda Series with building surface area.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.building_surface_area_to_plan_area_ratio">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">building_surface_area_to_plan_area_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_surface_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#building_surface_area_to_plan_area_ratio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.building_surface_area_to_plan_area_ratio" title="Link to this definition"></a></dt>
+<dd><p>Calculate the building surface area to plan area ratio for each building in a Pandas Series. In naturf, the building footprint area is the
+same as the roof area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>building_surface_area</strong> (<em>pd.Series</em>) – Building surface area for each building.</p></li>
+<li><p><strong>total_plan_area</strong> (<em>pd.Series</em>) – Total plan area for each building.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Panda Series with building surface area to plan area ratio.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.buildings_intersecting_plan_area">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">buildings_intersecting_plan_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_plan_area_geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wall_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CRS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">join_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'left'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">join_predicate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'intersects'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">join_lsuffix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'target'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">join_rsuffix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'neighbor'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">GeoDataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#buildings_intersecting_plan_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.buildings_intersecting_plan_area" title="Link to this definition"></a></dt>
+<dd><p>Conduct a spatial join to get the building areas that intersect the buffered target buildings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>building_id</strong> (<em>pd.Series</em>) – Building ID field.</p></li>
+<li><p><strong>building_height</strong> (<em>pd.Series</em>) – Building height field.</p></li>
+<li><p><strong>building_geometry</strong> (<em>pd.Series</em>) – Geometry field for the buildings.</p></li>
+<li><p><strong>building_area</strong> (<em>pd.Series</em>) – Building area field.</p></li>
+<li><p><strong>total_plan_area_geometry</strong> (<em>pd.Series</em>) – Geometry of the buffered building.</p></li>
+<li><p><strong>target_crs</strong> (<em>pd.Series</em>) – Coordinate reference system field of the parent geometry.</p></li>
+<li><p><strong>join_type</strong> (<em>str</em>) – Type of join desired.
+DEFAULT: <cite>left</cite></p></li>
+<li><p><strong>join_predicate</strong> (<em>str</em>) – Selected topology of join.
+DEFAULT: <cite>intersects</cite></p></li>
+<li><p><strong>join_lsuffix</strong> (<em>str</em>) – Suffix of the left object in the join.
+DEFAULT: <cite>target</cite></p></li>
+<li><p><strong>join_rsuffix</strong> (<em>str</em>) – Suffix of the right object in the join.
+DEFAULT: <cite>neighbor</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GeoDataFrame of building areas that intersect the buffered target
+buildings and their attributes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.complete_aspect_ratio">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">complete_aspect_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_surface_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#complete_aspect_ratio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.complete_aspect_ratio" title="Link to this definition"></a></dt>
+<dd><p>Calculate the complete aspect ratio for each building in a Pandas Series. In naturf, the building footprint area is the
+same as the roof area, and the exposed ground is the difference between total plan area and building plan area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>building_surface_area</strong> (<em>pd.Series</em>) – Building surface area for each building.</p></li>
+<li><p><strong>total_plan_area</strong> (<em>pd.Series</em>) – Total plan area for each building.</p></li>
+<li><p><strong>building_plan_area</strong> (<em>pd.Series</em>) – Building plan area for each building.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Panda Series with complete aspect ratio.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.distance_between_buildings">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">distance_between_buildings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buildings_intersecting_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#distance_between_buildings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.distance_between_buildings" title="Link to this definition"></a></dt>
+<dd><p>Calculate the distance between each building and its neighbor as defined in buildings_intersecting_plan_area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>buildings_intersecting_plan_area</strong> (<em>gpd.GeoDataFrame</em>) – Geometry field for the neighboring buildings from the spatially
+joined data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The distance between each building and its neighbors in a Pandas Series.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.filter_height_range">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">filter_height_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">standardize_column_names_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">GeoDataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#filter_height_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.filter_height_range" title="Link to this definition"></a></dt>
+<dd><p>Filter out any zero height buildings and reindex the data frame.  Extract the building_id,
+building_height, and geometry fields to nodes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>standardize_column_names_df</strong> (<em>gpd.GeoDataFrame</em>) – GeoDataFrame of the input shapefile with renamed columns.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.frontal_area">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">frontal_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frontal_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#frontal_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.frontal_area" title="Link to this definition"></a></dt>
+<dd><p>Calculate the frontal area for each building in a Pandas DataFrame in each cardinal direction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frontal_length</strong> (<em>pd.DataFrame</em>) – Frontal length in each cardinal direction for each building.</p></li>
+<li><p><strong>building_height</strong> (<em>pd.Series</em>) – Building height for each building.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pandas DataFrame with frontal area in each cardinal direction.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.frontal_area_density">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">frontal_area_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frontal_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#frontal_area_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.frontal_area_density" title="Link to this definition"></a></dt>
+<dd><p>Calculate the frontal area density for each building in a GeoPandas GeoSeries. Frontal area density is the frontal area of a
+building at a specific height increment divided by the total plan area. naturf calculates frontal area density from the four cardinal
+directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters unless otherwise specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frontal_length</strong> (<em>pd.DataFrame</em>) – Frontal length in each cardinal direction for each building.</p></li>
+<li><p><strong>building_height</strong> (<em>pd.Series</em>) – Building height for each building.</p></li>
+<li><p><strong>total_plan_area</strong> (<em>pd.Series</em>) – Total plan area for each building.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pandas DataFrame with frontal area density for each cardinal direction and
+each BUILDING_HEIGHT_INTERVAL for each building.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.frontal_area_index">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">frontal_area_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frontal_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#frontal_area_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.frontal_area_index" title="Link to this definition"></a></dt>
+<dd><p>Calculate the frontal area index for each building in a Pandas DataFrame in each cardinal direction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frontal_area</strong> (<em>pd.DataFrame</em>) – Frontal area in each cardinal direction for each building.</p></li>
+<li><p><strong>total_plan_area</strong> (<em>pd.Series</em>) – Total plan area for each building.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pandas DataFrame with frontal area index in each cardinal direction.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.frontal_length">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">frontal_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buildings_intersecting_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#frontal_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.frontal_length" title="Link to this definition"></a></dt>
+<dd><p>Calculate the frontal length for each cardinal direction from the GeoDataFrame of buildings intersecting the plan area.
+<cite>buildings_intersecting_plan_area()</cite> needs to include <cite>wall_length</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>buildings_intersecting_plan_area</strong> (<em>gpd.GeoDataFrame</em>) – Geometry field for the neighboring buildings from the spatially
+joined data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The frontal area for each cardinal direction for each unique building in the
+<cite>buildings_intersecting_plan_area</cite> GeoDataFrame.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.grimmond_oke_displacement_height">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">grimmond_oke_displacement_height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#grimmond_oke_displacement_height"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.grimmond_oke_displacement_height" title="Link to this definition"></a></dt>
+<dd><p>Calculate the Grimmond &amp; Oke displacement height for each building</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>building_height</strong> (<em>pd.Series</em>) – Building height field.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.grimmond_oke_roughness_length">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">grimmond_oke_roughness_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#grimmond_oke_roughness_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.grimmond_oke_roughness_length" title="Link to this definition"></a></dt>
+<dd><p>Calculate the Grimmond &amp; Oke roughness length for each building</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>building_height</strong> (<em>pd.Series</em>) – Building height field.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.height_to_width_ratio">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">height_to_width_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean_building_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">average_distance_between_buildings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#height_to_width_ratio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.height_to_width_ratio" title="Link to this definition"></a></dt>
+<dd><p>Calculate the height to width ratio for each building.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mean_building_height</strong> (<em>pd.Series</em>) – Series of mean building height for all buildings within the target building’s plan area</p></li>
+<li><p><strong>average_distance_between_buildings</strong> (<em>pd.Series</em>) – Series of average distance from each building to all neighboring buildings</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.input_shapefile_df">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">input_shapefile_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_shapefile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">GeoDataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#input_shapefile_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.input_shapefile_df" title="Link to this definition"></a></dt>
+<dd><p>Import shapefile to GeoDataFrame using only desired columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Params input_shapefile<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Full path with file name and extension to the input shapefile.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.lot_area">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">lot_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buildings_intersecting_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_surface_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#lot_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.lot_area" title="Link to this definition"></a></dt>
+<dd><p>Calculate the lot area for each building in a Panda Series. Lot area is the total surface area of all buildings
+within a given building’s plan area divided by the number of buildings in the plan area.”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buildings_intersecting_plan_area</strong> (<em>gpd.GeoDataFrame</em>) – Geometry field for the neighboring buildings from the spatially
+joined data.</p></li>
+<li><p><strong>building_surface_area</strong> (<em>pd.Series</em>) – Building surface area for each building.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Panda Series of lot area for each building.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.macdonald_displacement_height">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">macdonald_displacement_height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plan_area_fraction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#macdonald_displacement_height"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.macdonald_displacement_height" title="Link to this definition"></a></dt>
+<dd><p>Calculate the Macdonald et al. displacement height for each building in a Pandas Series.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>building_height</strong> (<em>pd.Series</em>) – Building height for each building.</p></li>
+<li><p><strong>plan_area_fraction</strong> (<em>pd.Series</em>) – Plan area fraction for each building.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.macdonald_roughness_length">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">macdonald_roughness_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">macdonald_displacement_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frontal_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lot_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#macdonald_roughness_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.macdonald_roughness_length" title="Link to this definition"></a></dt>
+<dd><p>Calculate the Macdonald et al. roughness length for each building in a Pandas Series.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>building_height</strong> (<em>pd.Series</em>) – Building height for each building.</p></li>
+<li><p><strong>macdonald_displacement_height</strong> (<em>pd.Series</em>) – Macdonald displacement height for each building.</p></li>
+<li><p><strong>frontal_area</strong> (<em>pd.DataFrame</em>) – Frontal area  for each building in each cardinal direction.</p></li>
+<li><p><strong>lot_area</strong> (<em>pd.Series</em>) – Lot area for each building.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Panda Series with Macdonald roughness length for each building in each cardinal direction.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.mean_building_height">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">mean_building_height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buildings_intersecting_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#mean_building_height"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.mean_building_height" title="Link to this definition"></a></dt>
+<dd><p>Calculate the mean building height for all buildings within the target building’s total plan area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>buildings_intersecting_plan_area</strong> (<em>gpd.GeoDataFrame</em>) – Geometry field for the neighboring buildings from the spatially
+joined data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The mean building height for all buildings within the target building’s plan area.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.plan_area_density">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">plan_area_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#plan_area_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.plan_area_density" title="Link to this definition"></a></dt>
+<dd><p>Calculate the plan area density for each building in a GeoPandas GeoSeries. Plan area density is the building plan area
+at a specific height increment divided by the total plan area. naturf calculates plan area density from the four cardinal
+directions (north, east, south, west) and at 5-meter increments from ground level to 75 meters unless otherwise specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>building_plan_area</strong> (<em>pd.Series</em>) – Building plan area for each building.</p></li>
+<li><p><strong>building_height</strong> (<em>pd.Series</em>) – Building height for each building.</p></li>
+<li><p><strong>total_plan_area</strong> (<em>pd.Series</em>) – Total plan area for each building.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pandas DataFrame with plan area density for each BUILDING_HEIGHT_INTERVAL for each building.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.plan_area_fraction">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">plan_area_fraction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#plan_area_fraction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.plan_area_fraction" title="Link to this definition"></a></dt>
+<dd><p>Calculate the plan area fraction for each building in a Pandas Series. Plan area fraction is the building plan area at ground level
+for each building divided by the total plan area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>building_plan_area</strong> (<em>pd.Series</em>) – Building plan area for each building.</p></li>
+<li><p><strong>total_plan_area</strong> (<em>pd.Series</em>) – Total plan area for each building.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pandas Series with plan area fraction for each building.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.raupach_displacement_height">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">raupach_displacement_height</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frontal_area_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#raupach_displacement_height"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.raupach_displacement_height" title="Link to this definition"></a></dt>
+<dd><p>Calculate the Raupach displacement height for each building in each cardinal direction in a Panda Series. Default values for constants are set
+in the config file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>building_height</strong> (<em>pd.Series</em>) – Building height for each building.</p></li>
+<li><p><strong>frontal_area_index</strong> (<em>pd.DataFrame</em>) – Frontal area index for each building in each cardinal direction.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pandas DataFrame with Raupach displacement height in each cardinal direction.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.raupach_roughness_length">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">raupach_roughness_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frontal_area_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raupach_displacement_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#raupach_roughness_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.raupach_roughness_length" title="Link to this definition"></a></dt>
+<dd><p>Calculate the Raupach roughness length for each building in each cardinal direction in a Panda Series. Default values for constants are set
+in the config file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>building_height</strong> (<em>pd.Series</em>) – Building height for each building.</p></li>
+<li><p><strong>frontal_area_index</strong> (<em>pd.DataFrame</em>) – Frontal area index for each building in each cardinal direction.</p></li>
+<li><p><strong>raupach_displacment_height</strong> (<em>pd.DataFrame</em>) – Raupach displacment height for each building in each cardinal direction.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pandas DataFrame with Raupach roughness length in each cardinal direction.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.rooftop_area_density">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">rooftop_area_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plan_area_density</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#rooftop_area_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.rooftop_area_density" title="Link to this definition"></a></dt>
+<dd><p>Calculate the rooftop area density for each building in a Pandas DataFrame. Rooftop area density is the roof area
+of all buildings within the total plan area  at a specified height increment divided by the total plan area. naturf
+projects building footprints vertically to the building height, meaning that rooftop area density is equal to the plan area
+density.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>plan_area_density</strong> (<em>pd.DataFrame</em>) – Plan area density at each specified height increment.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pandas DataFrame with rooftop area density for each BUILDING_HEIGHT_INTERVAL for each building.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.sky_view_factor">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">sky_view_factor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">average_distance_between_buildings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#sky_view_factor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.sky_view_factor" title="Link to this definition"></a></dt>
+<dd><p>Calculate the 2D sky view factor for each building.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>building_height</strong> (<em>pd.Series</em>) – Building height field.</p></li>
+<li><p><strong>average_distance_between_buildings</strong> (<em>float</em>) – Average distance between the target building and all neighboring buildings.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.standard_deviation_of_building_heights">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">standard_deviation_of_building_heights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buildings_intersecting_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#standard_deviation_of_building_heights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.standard_deviation_of_building_heights" title="Link to this definition"></a></dt>
+<dd><p>Calculate the standard deviation of building heights for all buildings within the target building’s total plan area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>buildings_intersecting_plan_area</strong> (<em>gpd.GeoDataFrame</em>) – Geometry field for the neighboring buildings from the spatially
+joined data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The standard deviation of building heights for all buildings within the target building’s plan area.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.standardize_column_names_df">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">standardize_column_names_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_shapefile_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">GeoDataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#standardize_column_names_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.standardize_column_names_df" title="Link to this definition"></a></dt>
+<dd><p>Standardize field names so use throughout code will be consistent throughout.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Params input_shapefile_df<span class="colon">:</span></dt>
+<dd class="field-odd"><p>GeoDataFrame of from the input shapefile.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>GeoDataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.target_crs">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">target_crs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_shapefile_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CRS</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#target_crs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.target_crs" title="Link to this definition"></a></dt>
+<dd><p>Extract coordinate reference system from geometry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Params input_shapefile_df<span class="colon">:</span></dt>
+<dd class="field-odd"><p>GeoDataFrame of from the input shapefile.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>pyproj Coordinate Reference System (CRS) object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.total_plan_area">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">total_plan_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">total_plan_area_geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoSeries</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#total_plan_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.total_plan_area" title="Link to this definition"></a></dt>
+<dd><p>Calculate the total plan area for each building in a GeoPandas GeoSeries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>geometry</strong> (<em>gpd.GeoSeries</em>) – Geometry for a series of buildings.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pandas Series with total plan area for each building.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.total_plan_area_geometry">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">total_plan_area_geometry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cap_style</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">GeoSeries</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#total_plan_area_geometry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.total_plan_area_geometry" title="Link to this definition"></a></dt>
+<dd><p>Calculate the geometry of the total plan area which is the buffer of the building for the desired radius and cap style.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>building_geometry</strong> (<em>pd.Series</em>) – Geometry of the building.</p></li>
+<li><p><strong>radius</strong> (<em>int</em>) – The radius of the buffer.
+100 (default, set in config.py)</p></li>
+<li><p><strong>cap_style</strong> – The shape of the buffer.
+1 == Round
+2 == Flat
+3 == Square (default)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.vertical_distribution_of_building_heights">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">vertical_distribution_of_building_heights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#vertical_distribution_of_building_heights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.vertical_distribution_of_building_heights" title="Link to this definition"></a></dt>
+<dd><p>Represent the location of buildings at 5m increments from ground level to 75m unless otherwise specified. If is within a
+given height bin, it will be given a 1 and it will be given a 0 otherwise.”</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>building_height</strong> (<em>pd.Series</em>) – Building height for each building.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pandas DataFrame with the distribution of building heights at each
+BUILDING_HEIGHT_INTERVAL for each building.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.wall_angle_direction_length">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">wall_angle_direction_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#wall_angle_direction_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.wall_angle_direction_length" title="Link to this definition"></a></dt>
+<dd><p>Calculate the wall angle, direction, and length for each building in a GeoPandas GeoSeries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>geometry</strong> (<em>pd.Series</em>) – Geometry for a series of buildings.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pandas DataFrame with wall angle, direction, and length for each building.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.nodes.wall_length">
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">wall_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wall_angle_direction_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#wall_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.wall_length" title="Link to this definition"></a></dt>
+<dd><p>Calculate the wall length for each building in a GeoPandas GeoSeries.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>wall_angle_direction_length</strong> (<em>pd.DataFrame</em>) – Wall angle, direction, and length for a series of buildings.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pandas DataFrame with wall area for each cardinal direction for each building.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="module-naturf">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-naturf" title="Link to this heading"></a></h2>
+<section id="module-naturf.output">
+<span id="naturf-output-module"></span><h2>naturf.output module<a class="headerlink" href="#module-naturf.output" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.output.aggregate_rasters">
+<span class="sig-prename descclassname"><span class="pre">naturf.output.</span></span><span class="sig-name descname"><span class="pre">aggregate_rasters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rasterize_parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dataset</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dataset</span></span></span><a class="reference internal" href="_modules/naturf/output.html#aggregate_rasters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.output.aggregate_rasters" title="Link to this definition"></a></dt>
+<dd><p>Divide each raster by the number of buildings in the cell to get the average parameter value for each cell.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rasterize_parameters</strong> (<em>Xr.Dataset</em>) – Xr.Dataset with rasterized parameters summed at the defined resolution.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Xr.Dataset containing rasterized parameter values averaged at the defined resolution.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.output.merge_parameters">
+<span class="sig-prename descclassname"><span class="pre">naturf.output.</span></span><span class="sig-name descname"><span class="pre">merge_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frontal_area_density</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plan_area_density</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rooftop_area_density</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plan_area_fraction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_building_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standard_deviation_of_building_heights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area_weighted_mean_of_building_heights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_surface_area_to_plan_area_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frontal_area_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">complete_aspect_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height_to_width_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sky_view_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grimmond_oke_roughness_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grimmond_oke_displacement_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raupach_roughness_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raupach_displacement_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">macdonald_roughness_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">macdonald_displacement_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_distribution_of_building_heights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CRS</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">GeoDataFrame</span></span></span><a class="reference internal" href="_modules/naturf/output.html#merge_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.output.merge_parameters" title="Link to this definition"></a></dt>
+<dd><p>Merge all parameters into one Pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frontal_area_density</strong> (<em>pd.DataFrame</em>) – Frontal area density at each specified height increment and each cardinal direction.</p></li>
+<li><p><strong>plan_area_density</strong> (<em>pd.DataFrame</em>) – Plan area density at each specified height increment.</p></li>
+<li><p><strong>rooftop_area_density</strong> (<em>pd.DataFrame</em>) – Rooftop area density at each specified height increment.</p></li>
+<li><p><strong>plan_area_fraction</strong> (<em>pd.Series</em>) – Plan area fraction for each building.</p></li>
+<li><p><strong>mean_building_height</strong> (<em>pd.Series</em>) – Series of mean building height for all buildings within the target building’s total plan area.</p></li>
+<li><p><strong>standard_deviation_of_building_heights</strong> (<em>pd.Series</em>) – Series of standard deviation of building height for all buildings within the target building’s
+total plan area.</p></li>
+<li><p><strong>area_weighted_mean_of_building_heights</strong> (<em>pd.Series</em>) – Series of area weighted mean building heights for each building.</p></li>
+<li><p><strong>building_surface_area_to_plan_area_ratio</strong> (<em>pd.Series</em>) – Series of building surface area to plan area ratio for each building.</p></li>
+<li><p><strong>frontal_area_index</strong> (<em>pd.DataFrame</em>) – Frontal area index for each building in each cardinal direction.</p></li>
+<li><p><strong>complete_aspect_ratio</strong> (<em>pd.Series</em>) – Complete aspect ratio for each building.</p></li>
+<li><p><strong>height_to_width_ratio</strong> (<em>pd.Series</em>) – Height-to-width ratio for each building.</p></li>
+<li><p><strong>sky_view_factor</strong> (<em>pd.Series</em>) – Sky view factor for each building.</p></li>
+<li><p><strong>grimmond_oke_roughness_length</strong> (<em>pd.Series</em>) – Grimmond &amp; Oke roughness length for each building.</p></li>
+<li><p><strong>grimmond_oke_displacement_height</strong> (<em>pd.Series</em>) – Grimmond &amp; Oke displacement height for each building.</p></li>
+<li><p><strong>raupach_roughness_length</strong> (<em>pd.DataFrame</em>) – Raupach roughness length for each building in each cardinal direction.</p></li>
+<li><p><strong>raupach_displacment_height</strong> (<em>pd.DataFrame</em>) – Raupach displacment height for each building in each cardinal direction.</p></li>
+<li><p><strong>macdonald_roughness_length</strong> (<em>pd.DataFrame</em>) – Macdonald roughness_length for each building in each cardinal direction.</p></li>
+<li><p><strong>macdonald_displacement_height</strong> (<em>pd.Series</em>) – Macdonald displacement height for each building.</p></li>
+<li><p><strong>vertical_distribution_of_building_heights</strong> (<em>pd.DataFrame</em>) – Distribution of building heights for each building ata each height increment.</p></li>
+<li><p><strong>building_geometry</strong> (<em>pd.Series</em>) – Geometry field for the buildings.</p></li>
+<li><p><strong>target_crs</strong> (<em>CRS</em>) – Coordinate reference system field of the parent geometry.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pandas DataFrame with all parameters merged together.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.output.numpy_to_binary">
+<span class="sig-prename descclassname"><span class="pre">naturf.output.</span></span><span class="sig-name descname"><span class="pre">numpy_to_binary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster_to_numpy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="reference internal" href="_modules/naturf/output.html#numpy_to_binary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.output.numpy_to_binary" title="Link to this definition"></a></dt>
+<dd><p>Turn the master numpy array containing all 132 aggregated parameters into a binary stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>raster_to_numpy</strong> (<em>np.ndarray</em>) – 132 level numpy array with each level being an aggregated parameter.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Binary object containing the parameter data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.output.raster_to_numpy">
+<span class="sig-prename descclassname"><span class="pre">naturf.output.</span></span><span class="sig-name descname"><span class="pre">raster_to_numpy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aggregate_rasters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dataset</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/naturf/output.html#raster_to_numpy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.output.raster_to_numpy" title="Link to this definition"></a></dt>
+<dd><p>Stack all 132 rasterized parameters into one numpy array for conversion to a binary file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>aggregate_rasters</strong> (<em>xr.Dataset</em>) – Dataset with rasterized parameter values averaged at the defined resolution.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>132 level numpy array with each level being an aggregated parameter.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.output.rasterize_parameters">
+<span class="sig-prename descclassname"><span class="pre">naturf.output.</span></span><span class="sig-name descname"><span class="pre">rasterize_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">merge_parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dataset</span></span></span><a class="reference internal" href="_modules/naturf/output.html#rasterize_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.output.rasterize_parameters" title="Link to this definition"></a></dt>
+<dd><p>Rasterize parameters in preparation for conversion to numpy arrays. Raster will be of resolution Settings.DEFAULT_OUTPUT_RESOLUTION
+and each cell will be the sum of each parameter value within. By default all_touched is True so that every building that is within a cell is
+included in the sum.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>merge_parameters</strong> (<em>Pandas.GeoDataFrame</em>) – Pandas.GeoDataFrame with all selected urban parameters for each building.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Xr.Dataset containing rasterization of selected urban parameters.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.output.write_binary">
+<span class="sig-prename descclassname"><span class="pre">naturf.output.</span></span><span class="sig-name descname"><span class="pre">write_binary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numpy_to_binary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raster_to_numpy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/naturf/output.html#write_binary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.output.write_binary" title="Link to this definition"></a></dt>
+<dd><p>Write the binary file that will be input to WRF.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>numpy_to_binary</strong> (<em>bytes</em>) – Binary object containing the parameter data.</p></li>
+<li><p><strong>raster_to_numpy</strong> (<em>np.ndarray</em>) – 132 level numpy array with each level being an aggregated parameter.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="naturf.output.write_index">
+<span class="sig-prename descclassname"><span class="pre">naturf.output.</span></span><span class="sig-name descname"><span class="pre">write_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster_to_numpy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CRS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'index'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/naturf/output.html#write_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.output.write_index" title="Link to this definition"></a></dt>
+<dd><p>Write the index file that will accompany the output binary file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>raster_to_numpy</strong> (<em>np.ndarray</em>) – 132 level numpy array with each level being an aggregated parameter.</p></li>
+<li><p><strong>building_geometry</strong> (<em>pd.Series</em>) – Geometry field for the buildings.</p></li>
+<li><p><strong>target_crs</strong> (<em>crs</em>) – Coordinate reference system field of the parent geometry.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 

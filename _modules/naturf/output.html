@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>naturf.output &mdash; naturf 1.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/katex-math.css?v=91adb8b6" />
+      <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/naturf.css?v=f9b8f5c0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/getting_started.css?v=be86cd7f" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=292eb321"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/katex.min.js?v=48ec3933"></script>
+        <script src="../../_static/auto-render.min.js?v=8b9f325c"></script>
+        <script src="../../_static/katex_autorenderer.js?v=bebc588a"></script>
+        <script src="../../_static/design-tabs.js?v=36754332"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            naturf
+          </a>
+              <div class="version">
+                1.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstarter.html">Quickstarter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">naturf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing to <strong>naturf</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_cite.html">How to cite <strong>naturf</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Authors and Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../footer.html">Acknowledgement</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">naturf</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">naturf.output</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for naturf.output</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pyproj.crs</span> <span class="kn">import</span> <span class="n">CRS</span>
+<span class="kn">import</span> <span class="nn">struct</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">rasterio.enums</span> <span class="kn">import</span> <span class="n">MergeAlg</span>
+<span class="kn">from</span> <span class="nn">geocube.api.core</span> <span class="kn">import</span> <span class="n">make_geocube</span>
+<span class="kn">from</span> <span class="nn">geocube.rasterize</span> <span class="kn">import</span> <span class="n">rasterize_image</span>
+
+<span class="kn">from</span> <span class="nn">.config</span> <span class="kn">import</span> <span class="n">Settings</span>
+
+
+<div class="viewcode-block" id="aggregate_rasters">
+<a class="viewcode-back" href="../../naturf.html#naturf.output.aggregate_rasters">[docs]</a>
+<span class="k">def</span> <span class="nf">aggregate_rasters</span><span class="p">(</span><span class="n">rasterize_parameters</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Divide each raster by the number of buildings in the cell to get the average parameter value for each cell.</span>
+
+<span class="sd">    :param rasterize_parameters:                    Xr.Dataset with rasterized parameters summed at the defined resolution.</span>
+<span class="sd">    :type rasterize_parameters:                     Xr.Dataset</span>
+
+<span class="sd">    :return:                                        Xr.Dataset containing rasterized parameter values averaged at the defined resolution.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">rasterize_parameters</span> <span class="o">/</span> <span class="n">rasterize_parameters</span><span class="p">[</span><span class="s2">&quot;building_count&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="merge_parameters">
+<a class="viewcode-back" href="../../naturf.html#naturf.output.merge_parameters">[docs]</a>
+<span class="k">def</span> <span class="nf">merge_parameters</span><span class="p">(</span>
+    <span class="n">frontal_area_density</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">plan_area_density</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">rooftop_area_density</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">plan_area_fraction</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="n">mean_building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="n">standard_deviation_of_building_heights</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="n">area_weighted_mean_of_building_heights</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="n">building_surface_area_to_plan_area_ratio</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="n">frontal_area_index</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">complete_aspect_ratio</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="n">height_to_width_ratio</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="n">sky_view_factor</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="n">grimmond_oke_roughness_length</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="n">grimmond_oke_displacement_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="n">raupach_roughness_length</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">raupach_displacement_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">macdonald_roughness_length</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">macdonald_displacement_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="n">vertical_distribution_of_building_heights</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">building_geometry</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="n">target_crs</span><span class="p">:</span> <span class="n">CRS</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Merge all parameters into one Pandas DataFrame.</span>
+
+<span class="sd">    :param frontal_area_density:                       Frontal area density at each specified height increment and each cardinal direction.</span>
+<span class="sd">    :type frontal_area_density:                        pd.DataFrame</span>
+
+<span class="sd">    :param plan_area_density:                          Plan area density at each specified height increment.</span>
+<span class="sd">    :type plan_area_density:                           pd.DataFrame</span>
+
+<span class="sd">    :param rooftop_area_density:                       Rooftop area density at each specified height increment.</span>
+<span class="sd">    :type rooftop_area_density:                        pd.DataFrame</span>
+
+<span class="sd">    :param plan_area_fraction:                         Plan area fraction for each building.</span>
+<span class="sd">    :type plan_area_fraction:                          pd.Series</span>
+
+<span class="sd">    :param mean_building_height:                      Series of mean building height for all buildings within the target building&#39;s total plan area.</span>
+<span class="sd">    :type mean_building_height:                       pd.Series</span>
+
+<span class="sd">    :param standard_deviation_of_building_heights:     Series of standard deviation of building height for all buildings within the target building&#39;s</span>
+<span class="sd">                                                       total plan area.</span>
+<span class="sd">    :type standard_deviation_of_building_heights:      pd.Series</span>
+
+<span class="sd">    :param area_weighted_mean_of_building_heights:     Series of area weighted mean building heights for each building.</span>
+<span class="sd">    :type area_weighted_mean_of_building_heights:      pd.Series</span>
+
+<span class="sd">    :param building_surface_area_to_plan_area_ratio:   Series of building surface area to plan area ratio for each building.</span>
+<span class="sd">    :type building_surface_area_to_plan_area_ratio:    pd.Series</span>
+
+<span class="sd">    :param frontal_area_index:                         Frontal area index for each building in each cardinal direction.</span>
+<span class="sd">    :type frontal_area_index:                          pd.DataFrame</span>
+
+<span class="sd">    :param complete_aspect_ratio:                      Complete aspect ratio for each building.</span>
+<span class="sd">    :type complete_aspect_ratio:                       pd.Series</span>
+
+<span class="sd">    :param height_to_width_ratio:                      Height-to-width ratio for each building.</span>
+<span class="sd">    :type height_to_width_ratio:                       pd.Series</span>
+
+<span class="sd">    :param sky_view_factor:                            Sky view factor for each building.</span>
+<span class="sd">    :type sky_view_factor:                             pd.Series</span>
+
+<span class="sd">    :param grimmond_oke_roughness_length:              Grimmond &amp; Oke roughness length for each building.</span>
+<span class="sd">    :type grimmond_oke_roughness_length:               pd.Series</span>
+
+<span class="sd">    :param grimmond_oke_displacement_height:           Grimmond &amp; Oke displacement height for each building.</span>
+<span class="sd">    :type grimmond_oke_displacement_height:            pd.Series</span>
+
+<span class="sd">    :param raupach_roughness_length:                   Raupach roughness length for each building in each cardinal direction.</span>
+<span class="sd">    :type raupach_roughness_length:                    pd.DataFrame</span>
+
+<span class="sd">    :param raupach_displacment_height:                 Raupach displacment height for each building in each cardinal direction.</span>
+<span class="sd">    :type raupach_displacment_height:                  pd.DataFrame</span>
+
+<span class="sd">    :param macdonald_roughness_length:                 Macdonald roughness_length for each building in each cardinal direction.</span>
+<span class="sd">    :type macdonald_roughness_length:                  pd.DataFrame</span>
+
+<span class="sd">    :param macdonald_displacement_height:              Macdonald displacement height for each building.</span>
+<span class="sd">    :type macdonald_displacement_height:               pd.Series</span>
+
+<span class="sd">    :param vertical_distribution_of_building_heights:  Distribution of building heights for each building ata each height increment.</span>
+<span class="sd">    :type vertical_distribution_of_building_heights:   pd.DataFrame</span>
+
+<span class="sd">    :param building_geometry:                          Geometry field for the buildings.</span>
+<span class="sd">    :type building_geometry:                           pd.Series</span>
+
+<span class="sd">    :param target_crs:                                 Coordinate reference system field of the parent geometry.</span>
+<span class="sd">    :type target_crs:                                  CRS</span>
+
+<span class="sd">    :return:                                           Pandas DataFrame with all parameters merged together.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">frontal_area_density</span><span class="p">,</span> <span class="n">plan_area_density</span><span class="p">,</span> <span class="n">rooftop_area_density</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">PLAN_AREA_FRACTION</span><span class="p">]</span> <span class="o">=</span> <span class="n">plan_area_fraction</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">MEAN_BUILDING_HEIGHT</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean_building_height</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">STANDARD_DEVIATION_OF_BUILDING_HEIGHTS</span><span class="p">]</span> <span class="o">=</span> <span class="n">standard_deviation_of_building_heights</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">AREA_WEIGHTED_MEAN_OF_BUILDING_HEIGHTS</span><span class="p">]</span> <span class="o">=</span> <span class="n">area_weighted_mean_of_building_heights</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">BUILDING_SURFACE_AREA_TO_PLAN_AREA_RATIO</span><span class="p">]</span> <span class="o">=</span> <span class="n">building_surface_area_to_plan_area_ratio</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">frontal_area_index</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">COMPLETE_ASPECT_RATIO</span><span class="p">]</span> <span class="o">=</span> <span class="n">complete_aspect_ratio</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">HEIGHT_TO_WIDTH_RATIO</span><span class="p">]</span> <span class="o">=</span> <span class="n">height_to_width_ratio</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">SKY_VIEW_FACTOR</span><span class="p">]</span> <span class="o">=</span> <span class="n">sky_view_factor</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">GRIMMOND_OKE_ROUGHNESS_LENGTH</span><span class="p">]</span> <span class="o">=</span> <span class="n">grimmond_oke_roughness_length</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">GRIMMOND_OKE_DISPLACEMENT_HEIGHT</span><span class="p">]</span> <span class="o">=</span> <span class="n">grimmond_oke_displacement_height</span>
+
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">RAUPACH_ROUGHNESS_LENGTH_NORTH</span><span class="p">]</span> <span class="o">=</span> <span class="n">raupach_roughness_length</span><span class="p">[</span>
+        <span class="n">Settings</span><span class="o">.</span><span class="n">RAUPACH_ROUGHNESS_LENGTH_NORTH</span>
+    <span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">RAUPACH_DISPLACEMENT_HEIGHT_NORTH</span><span class="p">]</span> <span class="o">=</span> <span class="n">raupach_displacement_height</span><span class="p">[</span>
+        <span class="n">Settings</span><span class="o">.</span><span class="n">RAUPACH_DISPLACEMENT_HEIGHT_NORTH</span>
+    <span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">RAUPACH_ROUGHNESS_LENGTH_EAST</span><span class="p">]</span> <span class="o">=</span> <span class="n">raupach_roughness_length</span><span class="p">[</span>
+        <span class="n">Settings</span><span class="o">.</span><span class="n">RAUPACH_ROUGHNESS_LENGTH_EAST</span>
+    <span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">RAUPACH_DISPLACEMENT_HEIGHT_EAST</span><span class="p">]</span> <span class="o">=</span> <span class="n">raupach_displacement_height</span><span class="p">[</span>
+        <span class="n">Settings</span><span class="o">.</span><span class="n">RAUPACH_DISPLACEMENT_HEIGHT_EAST</span>
+    <span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">RAUPACH_ROUGHNESS_LENGTH_SOUTH</span><span class="p">]</span> <span class="o">=</span> <span class="n">raupach_roughness_length</span><span class="p">[</span>
+        <span class="n">Settings</span><span class="o">.</span><span class="n">RAUPACH_ROUGHNESS_LENGTH_SOUTH</span>
+    <span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">RAUPACH_DISPLACEMENT_HEIGHT_SOUTH</span><span class="p">]</span> <span class="o">=</span> <span class="n">raupach_displacement_height</span><span class="p">[</span>
+        <span class="n">Settings</span><span class="o">.</span><span class="n">RAUPACH_DISPLACEMENT_HEIGHT_SOUTH</span>
+    <span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">RAUPACH_ROUGHNESS_LENGTH_WEST</span><span class="p">]</span> <span class="o">=</span> <span class="n">raupach_roughness_length</span><span class="p">[</span>
+        <span class="n">Settings</span><span class="o">.</span><span class="n">RAUPACH_ROUGHNESS_LENGTH_WEST</span>
+    <span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">RAUPACH_DISPLACEMENT_HEIGHT_WEST</span><span class="p">]</span> <span class="o">=</span> <span class="n">raupach_displacement_height</span><span class="p">[</span>
+        <span class="n">Settings</span><span class="o">.</span><span class="n">RAUPACH_DISPLACEMENT_HEIGHT_WEST</span>
+    <span class="p">]</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">macdonald_roughness_length</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">MACDONALD_DISPLACEMENT_HEIGHT</span><span class="p">]</span> <span class="o">=</span> <span class="n">macdonald_displacement_height</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">vertical_distribution_of_building_heights</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">df</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">GEOMETRY_FIELD</span><span class="p">]</span> <span class="o">=</span> <span class="n">building_geometry</span>
+
+    <span class="n">gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">geometry</span><span class="o">=</span><span class="n">Settings</span><span class="o">.</span><span class="n">GEOMETRY_FIELD</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">target_crs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">gdf</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="n">Settings</span><span class="o">.</span><span class="n">OUTPUT_CRS</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="numpy_to_binary">
+<a class="viewcode-back" href="../../naturf.html#naturf.output.numpy_to_binary">[docs]</a>
+<span class="k">def</span> <span class="nf">numpy_to_binary</span><span class="p">(</span><span class="n">raster_to_numpy</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Turn the master numpy array containing all 132 aggregated parameters into a binary stream.</span>
+
+<span class="sd">    :param raster_to_numpy:         132 level numpy array with each level being an aggregated parameter.</span>
+<span class="sd">    :type raster_to_numpy:          np.ndarray</span>
+
+<span class="sd">    :return:                        Binary object containing the parameter data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">master_out</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raster_to_numpy</span><span class="p">)):</span>
+        <span class="n">master_outi</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raster_to_numpy</span><span class="p">[</span><span class="n">i</span><span class="p">])):</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raster_to_numpy</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])):</span>
+                <span class="n">master_outi</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s2">&quot;&gt;i&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">raster_to_numpy</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]))</span>
+        <span class="n">master_out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">master_outi</span><span class="p">)</span>
+
+    <span class="n">master_out_final</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">master_out</span><span class="p">)):</span>
+        <span class="n">master_out_final</span> <span class="o">+=</span> <span class="n">master_out</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">master_out_final</span></div>
+
+
+
+<div class="viewcode-block" id="raster_to_numpy">
+<a class="viewcode-back" href="../../naturf.html#naturf.output.raster_to_numpy">[docs]</a>
+<span class="k">def</span> <span class="nf">raster_to_numpy</span><span class="p">(</span><span class="n">aggregate_rasters</span><span class="p">:</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stack all 132 rasterized parameters into one numpy array for conversion to a binary file.</span>
+
+<span class="sd">    :param aggregate_rasters:                 Dataset with rasterized parameter values averaged at the defined resolution.</span>
+<span class="sd">    :type aggregate_rasters:                  xr.Dataset</span>
+
+<span class="sd">    :return:                                  132 level numpy array with each level being an aggregated parameter.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">parameters</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">aggregate_rasters</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">parameters</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;building_count&quot;</span><span class="p">)</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">aggregate_rasters</span><span class="o">.</span><span class="n">sizes</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="n">aggregate_rasters</span><span class="o">.</span><span class="n">sizes</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span>
+    <span class="n">master</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">132</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
+        <span class="n">master</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">aggregate_rasters</span><span class="p">[</span><span class="n">parameter</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">master</span> <span class="o">*</span> <span class="mi">10</span><span class="o">**</span><span class="n">Settings</span><span class="o">.</span><span class="n">SCALING_FACTOR</span></div>
+
+
+
+<div class="viewcode-block" id="rasterize_parameters">
+<a class="viewcode-back" href="../../naturf.html#naturf.output.rasterize_parameters">[docs]</a>
+<span class="k">def</span> <span class="nf">rasterize_parameters</span><span class="p">(</span><span class="n">merge_parameters</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Rasterize parameters in preparation for conversion to numpy arrays. Raster will be of resolution Settings.DEFAULT_OUTPUT_RESOLUTION</span>
+<span class="sd">    and each cell will be the sum of each parameter value within. By default all_touched is True so that every building that is within a cell is</span>
+<span class="sd">    included in the sum.</span>
+
+<span class="sd">    :param merge_parameters:             Pandas.GeoDataFrame with all selected urban parameters for each building.</span>
+<span class="sd">    :type merge_parameters:              Pandas.GeoDataFrame</span>
+
+<span class="sd">    :return:                             Xr.Dataset containing rasterization of selected urban parameters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">merge_parameters</span><span class="p">[</span><span class="s2">&quot;building_count&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">resolution</span> <span class="o">=</span> <span class="n">Settings</span><span class="o">.</span><span class="n">DEFAULT_OUTPUT_RESOLUTION</span>
+    <span class="n">fill</span> <span class="o">=</span> <span class="n">Settings</span><span class="o">.</span><span class="n">DEFAULT_FILL_VALUE</span>
+    <span class="n">vector_data</span> <span class="o">=</span> <span class="n">merge_parameters</span><span class="o">.</span><span class="n">set_geometry</span><span class="p">(</span><span class="n">Settings</span><span class="o">.</span><span class="n">GEOMETRY_FIELD</span><span class="p">)</span><span class="o">.</span><span class="n">rename_geometry</span><span class="p">(</span><span class="s2">&quot;geometry&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">make_geocube</span><span class="p">(</span>
+        <span class="n">vector_data</span><span class="o">=</span><span class="n">vector_data</span><span class="p">,</span>
+        <span class="n">resolution</span><span class="o">=</span><span class="n">resolution</span><span class="p">,</span>
+        <span class="n">fill</span><span class="o">=</span><span class="n">fill</span><span class="p">,</span>
+        <span class="n">rasterize_function</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">rasterize_image</span><span class="p">,</span> <span class="n">all_touched</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">merge_alg</span><span class="o">=</span><span class="n">MergeAlg</span><span class="o">.</span><span class="n">add</span><span class="p">),</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="write_index">
+<a class="viewcode-back" href="../../naturf.html#naturf.output.write_index">[docs]</a>
+<span class="k">def</span> <span class="nf">write_index</span><span class="p">(</span>
+    <span class="n">raster_to_numpy</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">building_geometry</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="n">target_crs</span><span class="p">:</span> <span class="n">CRS</span><span class="p">,</span>
+    <span class="n">index_filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;index&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write the index file that will accompany the output binary file.</span>
+
+<span class="sd">    :param raster_to_numpy:                 132 level numpy array with each level being an aggregated parameter.</span>
+<span class="sd">    :type raster_to_numpy:                  np.ndarray</span>
+
+<span class="sd">    :param building_geometry:               Geometry field for the buildings.</span>
+<span class="sd">    :type building_geometry:                pd.Series</span>
+
+<span class="sd">    :param target_crs:                      Coordinate reference system field of the parent geometry.</span>
+<span class="sd">    :type target_crs:                       crs</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">dy</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">Settings</span><span class="o">.</span><span class="n">DEFAULT_OUTPUT_RESOLUTION</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">Settings</span><span class="o">.</span><span class="n">DEFAULT_OUTPUT_RESOLUTION</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">building_geometry</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoSeries</span><span class="p">(</span><span class="n">building_geometry</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">target_crs</span><span class="p">)</span>
+
+    <span class="n">building_geometry_project</span> <span class="o">=</span> <span class="n">building_geometry</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="n">crs</span><span class="o">=</span><span class="mi">4326</span><span class="p">)</span>
+
+    <span class="n">bounds</span> <span class="o">=</span> <span class="n">building_geometry_project</span><span class="o">.</span><span class="n">total_bounds</span>
+
+    <span class="n">known_lat</span> <span class="o">=</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">known_lon</span> <span class="o">=</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">stdlon</span> <span class="o">=</span> <span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+
+    <span class="n">tile_x</span> <span class="o">=</span> <span class="n">raster_to_numpy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">tile_y</span> <span class="o">=</span> <span class="n">raster_to_numpy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">scale_factor</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**-</span><span class="n">Settings</span><span class="o">.</span><span class="n">SCALING_FACTOR</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">index_filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">index</span><span class="p">:</span>
+        <span class="n">index</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="s2">&quot;type=continuous</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;  projection=albers_nad83</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;  missing_value=-999900.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;  dy=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dy</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;  dx=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">dx</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;  known_x=1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;  known_y=1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;  known_lat=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">known_lat</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;  known_lon=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">known_lon</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;  truelat1=45.5</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;  truelat2=29.5</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;  stdlon=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">stdlon</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;  wordsize=4</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;  endian=big</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;  signed=no</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;  tile_x=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">tile_x</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;  tile_y=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">tile_y</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;  tile_z=132</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s1">&#39;  units=&quot;dimensionless&quot;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span>
+                <span class="s2">&quot;  scale_factor=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">scale_factor</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="s1">&#39;  description=&quot;Urban_Parameters&quot;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="write_binary">
+<a class="viewcode-back" href="../../naturf.html#naturf.output.write_binary">[docs]</a>
+<span class="k">def</span> <span class="nf">write_binary</span><span class="p">(</span><span class="n">numpy_to_binary</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">raster_to_numpy</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Write the binary file that will be input to WRF.</span>
+
+<span class="sd">    :param numpy_to_binary:                 Binary object containing the parameter data.</span>
+<span class="sd">    :type numpy_to_binary:                  bytes</span>
+
+<span class="sd">    :param raster_to_numpy:                 132 level numpy array with each level being an aggregated parameter.</span>
+<span class="sd">    :type raster_to_numpy:                  np.ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">raster_to_numpy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="n">raster_to_numpy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="n">first_y_index</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:05d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">second_y_index</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:05d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+
+    <span class="n">first_x_index</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:05d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">second_x_index</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:05d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
+
+    <span class="n">out_binary_name</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">first_x_index</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">second_x_index</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">first_y_index</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">second_y_index</span>
+    <span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_binary_name</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tile</span><span class="p">:</span>
+        <span class="n">tile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">numpy_to_binary</span><span class="p">)</span>
+        <span class="n">tile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2099, Battelle Memorial Institute.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

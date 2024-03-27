@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>naturf.driver &mdash; naturf 1.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/katex-math.css?v=91adb8b6" />
+      <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/naturf.css?v=f9b8f5c0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/getting_started.css?v=be86cd7f" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=292eb321"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/katex.min.js?v=48ec3933"></script>
+        <script src="../../_static/auto-render.min.js?v=8b9f325c"></script>
+        <script src="../../_static/katex_autorenderer.js?v=bebc588a"></script>
+        <script src="../../_static/design-tabs.js?v=36754332"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            naturf
+          </a>
+              <div class="version">
+                1.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstarter.html">Quickstarter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">naturf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing to <strong>naturf</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_cite.html">How to cite <strong>naturf</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Authors and Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../footer.html">Acknowledgement</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">naturf</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">naturf.driver</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for naturf.driver</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">hamilton</span> <span class="kn">import</span> <span class="n">driver</span><span class="p">,</span> <span class="n">base</span>
+<span class="kn">from</span> <span class="nn">hamilton.plugins</span> <span class="kn">import</span> <span class="n">h_tqdm</span>
+
+<span class="kn">import</span> <span class="nn">naturf.nodes</span> <span class="k">as</span> <span class="nn">nodes</span>
+<span class="kn">import</span> <span class="nn">naturf.output</span> <span class="k">as</span> <span class="nn">output</span>
+
+<span class="n">DAGWORKS_API_KEY</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;DAGWORKS_API_KEY&quot;</span><span class="p">)</span>
+<span class="n">DAGWORKS_USERNAME</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;DAGWORKS_USERNAME&quot;</span><span class="p">)</span>
+<span class="n">DAGWORKS_PROJECT_ID</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;DAGWORKS_PROJECT_ID&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Model">
+<a class="viewcode-back" href="../../naturf.html#naturf.driver.Model">[docs]</a>
+<span class="k">class</span> <span class="nc">Model</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># dictionary of parameter inputs required to construct the DAG</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span>
+
+        <span class="c1"># desired output parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="n">outputs</span>
+
+        <span class="c1"># instantiate any adapters we want</span>
+        <span class="n">hamilton_adapters</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">base</span><span class="o">.</span><span class="n">SimplePythonDataFrameGraphAdapter</span><span class="p">(),</span>
+            <span class="n">h_tqdm</span><span class="o">.</span><span class="n">ProgressBar</span><span class="p">(</span><span class="s2">&quot;Naturf DAG&quot;</span><span class="p">),</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">DAGWORKS_API_KEY</span> <span class="ow">and</span> <span class="n">DAGWORKS_USERNAME</span> <span class="ow">and</span> <span class="n">DAGWORKS_PROJECT_ID</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">dagworks</span> <span class="kn">import</span> <span class="n">adapters</span>
+
+            <span class="n">hamilton_adapters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">adapters</span><span class="o">.</span><span class="n">DAGWorksTracker</span><span class="p">(</span>
+                    <span class="n">project_id</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">DAGWORKS_PROJECT_ID</span><span class="p">),</span>
+                    <span class="n">api_key</span><span class="o">=</span><span class="n">DAGWORKS_API_KEY</span><span class="p">,</span>
+                    <span class="n">username</span><span class="o">=</span><span class="n">DAGWORKS_USERNAME</span><span class="p">,</span>
+                    <span class="n">dag_name</span><span class="o">=</span><span class="s2">&quot;naturf-dag&quot;</span><span class="p">,</span>
+                    <span class="n">tags</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;env&quot;</span><span class="p">:</span> <span class="s2">&quot;dev&quot;</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;development&quot;</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">},</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># instantiate driver with function definitions &amp; adapters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dr</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">driver</span><span class="o">.</span><span class="n">Builder</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">with_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">with_modules</span><span class="p">(</span><span class="n">nodes</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">with_adapters</span><span class="p">(</span><span class="o">*</span><span class="n">hamilton_adapters</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">build</span><span class="p">()</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="Model.execute">
+<a class="viewcode-back" href="../../naturf.html#naturf.driver.Model.execute">[docs]</a>
+    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the driver.&quot;&quot;&quot;</span>
+
+        <span class="c1"># generate initial data frame</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="Model.graph">
+<a class="viewcode-back" href="../../naturf.html#naturf.driver.Model.graph">[docs]</a>
+    <span class="k">def</span> <span class="nf">graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">output_file_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Show the DAG. Return the graph object for the given inputs to execute.&quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">.</span><span class="n">visualize_execution</span><span class="p">(</span>
+            <span class="n">final_vars</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">,</span> <span class="n">output_file_path</span><span class="o">=</span><span class="n">output_file_path</span><span class="p">,</span> <span class="n">render_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;view&quot;</span><span class="p">:</span> <span class="n">view</span><span class="p">}</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Model.list_parameters">
+<a class="viewcode-back" href="../../naturf.html#naturf.driver.Model.list_parameters">[docs]</a>
+    <span class="k">def</span> <span class="nf">list_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List all available parameters.&quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">.</span><span class="n">list_available_variables</span><span class="p">()</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2099, Battelle Memorial Institute.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>naturf.config &mdash; naturf 1.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/katex-math.css?v=91adb8b6" />
+      <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/naturf.css?v=f9b8f5c0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/getting_started.css?v=be86cd7f" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=292eb321"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/katex.min.js?v=48ec3933"></script>
+        <script src="../../_static/auto-render.min.js?v=8b9f325c"></script>
+        <script src="../../_static/katex_autorenderer.js?v=bebc588a"></script>
+        <script src="../../_static/design-tabs.js?v=36754332"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            naturf
+          </a>
+              <div class="version">
+                1.0.1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstarter.html">Quickstarter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user_guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">naturf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing to <strong>naturf</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../publications.html">Publications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../how_to_cite.html">How to cite <strong>naturf</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../authors.html">Authors and Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../footer.html">Acknowledgement</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">naturf</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">naturf.config</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for naturf.config</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="Settings">
+<a class="viewcode-back" href="../../naturf.html#naturf.config.Settings">[docs]</a>
+<span></span><span class="k">class</span> <span class="nc">Settings</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is used to define variables for the naturf application.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">BUILDING_HEIGHT_INTERVAL</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">VONKARMANCONSTANT</span> <span class="o">=</span> <span class="mf">0.4</span>
+    <span class="n">OBSTACLEDRAGCOEFFICIENT</span> <span class="o">=</span> <span class="mf">1.12</span>
+    <span class="n">PSI_H</span> <span class="o">=</span> <span class="mf">0.193</span>
+    <span class="n">DRAGCOEFFICIENT_03</span> <span class="o">=</span> <span class="mf">0.3</span>
+    <span class="n">DRAGCOEFFICIENT_0003</span> <span class="o">=</span> <span class="mf">0.003</span>
+    <span class="n">ALPHACOEFFICIENT</span> <span class="o">=</span> <span class="mf">3.59</span>
+    <span class="n">BETACOEFFICIENT</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">CAP_STYLE</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">CONSTANT_15</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="n">CONSTANT_75</span> <span class="o">=</span> <span class="mf">7.5</span>
+    <span class="n">DEGREES_IN_CIRCLE</span> <span class="o">=</span> <span class="mi">360</span>
+    <span class="n">DILAREA_DEFAULT</span> <span class="o">=</span> <span class="mi">10000</span>
+    <span class="n">DISPLACEMENT_HEIGHT_FACTOR</span> <span class="o">=</span> <span class="mf">0.67</span>
+    <span class="n">MAX_BUILDING_HEIGHT</span> <span class="o">=</span> <span class="mi">75</span>
+    <span class="n">NORTHEAST_DEGREES</span> <span class="o">=</span> <span class="mi">45</span>
+    <span class="n">NORTHWEST_DEGREES</span> <span class="o">=</span> <span class="mi">135</span>
+    <span class="n">OUTPUT_CRS</span> <span class="o">=</span> <span class="s2">&quot;EPSG:4326&quot;</span>
+    <span class="n">RADIUS</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">RDH_THRESHOLD_MAX</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">RDH_THRESHOLD_MIN</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">ROUGHNESS_LENGTH_FACTOR</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">RRL_THRESHOLD_MAX</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">RRL_THRESHOLD_MIN</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">SMALL_DECIMAL</span> <span class="o">=</span> <span class="mf">0.0000000000000000000000000000001</span>
+    <span class="n">SOUTHEAST_DEGREES</span> <span class="o">=</span> <span class="mi">315</span>
+    <span class="n">SOUTHEAST_DEGREES_ARCTAN</span> <span class="o">=</span> <span class="o">-</span><span class="mi">45</span>
+    <span class="n">SOUTHWEST_DEGREES</span> <span class="o">=</span> <span class="mi">225</span>
+    <span class="n">SOUTHWEST_DEGREES_ARCTAN</span> <span class="o">=</span> <span class="o">-</span><span class="mi">135</span>
+    <span class="n">START_OF_CIRCLE_DEGREES</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">DEFAULT_STREET_WIDTH</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="n">DEFAULT_OUTPUT_RESOLUTION</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.00083333333</span><span class="p">,</span> <span class="mf">0.00083333333</span><span class="p">]</span>
+    <span class="n">DEFAULT_FILL_VALUE</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">SCALING_FACTOR</span> <span class="o">=</span> <span class="mi">4</span>
+
+    <span class="n">DATA_ID_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;OBJECTID&quot;</span>
+    <span class="n">DATA_HEIGHT_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;Max_HOUSE_&quot;</span>
+    <span class="n">DATA_GEOMETRY_FIELD_NAME</span> <span class="o">=</span> <span class="s2">&quot;geometry&quot;</span>
+    <span class="n">TARGET</span> <span class="o">=</span> <span class="s2">&quot;target&quot;</span>
+    <span class="n">NEIGHBOR</span> <span class="o">=</span> <span class="s2">&quot;neighbor&quot;</span>
+    <span class="n">NORTH</span> <span class="o">=</span> <span class="s2">&quot;north&quot;</span>
+    <span class="n">EAST</span> <span class="o">=</span> <span class="s2">&quot;east&quot;</span>
+    <span class="n">SOUTH</span> <span class="o">=</span> <span class="s2">&quot;south&quot;</span>
+    <span class="n">WEST</span> <span class="o">=</span> <span class="s2">&quot;west&quot;</span>
+    <span class="n">NORTH_SOUTH</span> <span class="o">=</span> <span class="s2">&quot;north_south&quot;</span>
+    <span class="n">EAST_WEST</span> <span class="o">=</span> <span class="s2">&quot;east_west&quot;</span>
+
+    <span class="n">ID_FIELD</span> <span class="o">=</span> <span class="s2">&quot;building_id&quot;</span>
+    <span class="n">HEIGHT_FIELD</span> <span class="o">=</span> <span class="s2">&quot;building_height&quot;</span>
+    <span class="n">GEOMETRY_FIELD</span> <span class="o">=</span> <span class="s2">&quot;building_geometry&quot;</span>
+    <span class="n">AREA_FIELD</span> <span class="o">=</span> <span class="s2">&quot;building_area&quot;</span>
+    <span class="n">BUILDING_PLAN_AREA_FIELD</span> <span class="o">=</span> <span class="s2">&quot;building_plan_area&quot;</span>
+    <span class="n">CENTROID_FIELD</span> <span class="o">=</span> <span class="s2">&quot;building_centroid&quot;</span>
+    <span class="n">BUFFERED_FIELD</span> <span class="o">=</span> <span class="s2">&quot;building_buffered&quot;</span>
+    <span class="n">TOTAL_PLAN_AREA</span> <span class="o">=</span> <span class="s2">&quot;total_plan_area&quot;</span>
+    <span class="n">TOTAL_PLAN_AREA_GEOMETRY</span> <span class="o">=</span> <span class="s2">&quot;total_plan_area_geometry&quot;</span>
+    <span class="n">VOLUME_FIELD</span> <span class="o">=</span> <span class="s2">&quot;volume_field&quot;</span>
+
+    <span class="n">TARGET_HEIGHT_FIELD</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">HEIGHT_FIELD</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">TARGET</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">NEIGHBOR_HEIGHT_FIELD</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">HEIGHT_FIELD</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">NEIGHBOR</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">TARGET_ID_FIELD</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ID_FIELD</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">TARGET</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">NEIGHBOR_ID_FIELD</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ID_FIELD</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">NEIGHBOR</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">TARGET_AREA_FIELD</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">AREA_FIELD</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">TARGET</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">NEIGHBOR_AREA_FIELD</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">AREA_FIELD</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">NEIGHBOR</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">TARGET_GEOMETRY_FIELD</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">GEOMETRY_FIELD</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">TARGET</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">NEIGHBOR_GEOMETRY_FIELD</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">GEOMETRY_FIELD</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">NEIGHBOR</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">TARGET_CENTROID_FIELD</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">CENTROID_FIELD</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">TARGET</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">NEIGHBOR_CENTROID_FIELD</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">CENTROID_FIELD</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">NEIGHBOR</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">NEIGHBOR_VOLUME_FIELD</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">VOLUME_FIELD</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">NEIGHBOR</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="n">TARGET_BUFFERED_FIELD</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">BUFFERED_FIELD</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">TARGET</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="n">DISTANCE_TO_NEIGHBOR_BY_CENTROID</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;distance_to_</span><span class="si">{</span><span class="n">NEIGHBOR</span><span class="si">}</span><span class="s2">_by_centroid&quot;</span>
+    <span class="n">DISTANCE_BETWEEN_BUILDINGS</span> <span class="o">=</span> <span class="s2">&quot;distance_between_buildings&quot;</span>
+    <span class="n">AVERAGE_DISTANCE_BETWEEN_BUILDINGS</span> <span class="o">=</span> <span class="s2">&quot;average_distance_between_buildings&quot;</span>
+
+    <span class="n">SPATIAL_JOIN_LIST</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">TARGET_HEIGHT_FIELD</span><span class="p">,</span>
+        <span class="n">NEIGHBOR_HEIGHT_FIELD</span><span class="p">,</span>
+        <span class="n">TARGET_ID_FIELD</span><span class="p">,</span>
+        <span class="n">NEIGHBOR_ID_FIELD</span><span class="p">,</span>
+        <span class="n">TARGET_AREA_FIELD</span><span class="p">,</span>
+        <span class="n">NEIGHBOR_AREA_FIELD</span><span class="p">,</span>
+        <span class="n">TARGET_GEOMETRY_FIELD</span><span class="p">,</span>
+        <span class="n">NEIGHBOR_GEOMETRY_FIELD</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="n">WALL_ANGLE</span> <span class="o">=</span> <span class="s2">&quot;wall_angle&quot;</span>
+    <span class="n">WALL_DIRECTION</span> <span class="o">=</span> <span class="s2">&quot;wall_direction&quot;</span>
+    <span class="n">WALL_LENGTH</span> <span class="o">=</span> <span class="s2">&quot;wall_length&quot;</span>
+    <span class="n">WALL_LENGTH_NORTH</span> <span class="o">=</span> <span class="s2">&quot;wall_length_north&quot;</span>
+    <span class="n">WALL_LENGTH_EAST</span> <span class="o">=</span> <span class="s2">&quot;wall_length_east&quot;</span>
+    <span class="n">WALL_LENGTH_SOUTH</span> <span class="o">=</span> <span class="s2">&quot;wall_length_south&quot;</span>
+    <span class="n">WALL_LENGTH_WEST</span> <span class="o">=</span> <span class="s2">&quot;wall_length_west&quot;</span>
+    <span class="n">FRONTAL_LENGTH_NORTH</span> <span class="o">=</span> <span class="s2">&quot;frontal_length_north&quot;</span>
+    <span class="n">FRONTAL_LENGTH_EAST</span> <span class="o">=</span> <span class="s2">&quot;frontal_length_east&quot;</span>
+    <span class="n">FRONTAL_LENGTH_SOUTH</span> <span class="o">=</span> <span class="s2">&quot;frontal_length_south&quot;</span>
+    <span class="n">FRONTAL_LENGTH_WEST</span> <span class="o">=</span> <span class="s2">&quot;frontal_length_west&quot;</span>
+    <span class="n">FRONTAL_AREA_NORTH</span> <span class="o">=</span> <span class="s2">&quot;frontal_area_north&quot;</span>
+    <span class="n">FRONTAL_AREA_EAST</span> <span class="o">=</span> <span class="s2">&quot;frontal_area_east&quot;</span>
+    <span class="n">FRONTAL_AREA_SOUTH</span> <span class="o">=</span> <span class="s2">&quot;frontal_area_south&quot;</span>
+    <span class="n">FRONTAL_AREA_WEST</span> <span class="o">=</span> <span class="s2">&quot;frontal_area_west&quot;</span>
+    <span class="n">PLAN_AREA_DENSITY</span> <span class="o">=</span> <span class="s2">&quot;plan_area_density&quot;</span>
+    <span class="n">ROOFTOP_AREA_DENSITY</span> <span class="o">=</span> <span class="s2">&quot;rooftop_area_density&quot;</span>
+    <span class="n">PLAN_AREA_FRACTION</span> <span class="o">=</span> <span class="s2">&quot;plan_area_fraction&quot;</span>
+    <span class="n">MEAN_BUILDING_HEIGHT</span> <span class="o">=</span> <span class="s2">&quot;mean_building_height&quot;</span>
+    <span class="n">STANDARD_DEVIATION_OF_BUILDING_HEIGHTS</span> <span class="o">=</span> <span class="s2">&quot;standard_deviation_of_building_heights&quot;</span>
+    <span class="n">AREA_WEIGHTED_MEAN_OF_BUILDING_HEIGHTS</span> <span class="o">=</span> <span class="s2">&quot;area_weighted_mean_of_building_heights&quot;</span>
+    <span class="n">BUILDING_SURFACE_AREA</span> <span class="o">=</span> <span class="s2">&quot;building_surface_area&quot;</span>
+    <span class="n">BUILDING_SURFACE_AREA_TO_PLAN_AREA_RATIO</span> <span class="o">=</span> <span class="s2">&quot;building_surface_area_to_plan_area_ratio&quot;</span>
+    <span class="n">FRONTAL_AREA_INDEX_NORTH</span> <span class="o">=</span> <span class="s2">&quot;frontal_area_index_north&quot;</span>
+    <span class="n">FRONTAL_AREA_INDEX_EAST</span> <span class="o">=</span> <span class="s2">&quot;frontal_area_index_east&quot;</span>
+    <span class="n">FRONTAL_AREA_INDEX_SOUTH</span> <span class="o">=</span> <span class="s2">&quot;frontal_area_index_south&quot;</span>
+    <span class="n">FRONTAL_AREA_INDEX_WEST</span> <span class="o">=</span> <span class="s2">&quot;frontal_area_index_west&quot;</span>
+    <span class="n">COMPLETE_ASPECT_RATIO</span> <span class="o">=</span> <span class="s2">&quot;complete_aspect_ratio&quot;</span>
+    <span class="n">HEIGHT_TO_WIDTH_RATIO</span> <span class="o">=</span> <span class="s2">&quot;height_to_width_ratio&quot;</span>
+    <span class="n">SKY_VIEW_FACTOR</span> <span class="o">=</span> <span class="s2">&quot;sky_view_factor&quot;</span>
+    <span class="n">GRIMMOND_OKE_ROUGHNESS_LENGTH</span> <span class="o">=</span> <span class="s2">&quot;grimmond_oke_roughness_length&quot;</span>
+    <span class="n">GRIMMOND_OKE_DISPLACEMENT_HEIGHT</span> <span class="o">=</span> <span class="s2">&quot;grimmond_oke_displacement_height&quot;</span>
+    <span class="n">RAUPACH_DISPLACEMENT_HEIGHT_NORTH</span> <span class="o">=</span> <span class="s2">&quot;raupach_displacement_height_north&quot;</span>
+    <span class="n">RAUPACH_DISPLACEMENT_HEIGHT_EAST</span> <span class="o">=</span> <span class="s2">&quot;raupach_displacement_height_east&quot;</span>
+    <span class="n">RAUPACH_DISPLACEMENT_HEIGHT_SOUTH</span> <span class="o">=</span> <span class="s2">&quot;raupach_displacement_height_south&quot;</span>
+    <span class="n">RAUPACH_DISPLACEMENT_HEIGHT_WEST</span> <span class="o">=</span> <span class="s2">&quot;raupach_displacement_height_west&quot;</span>
+    <span class="n">RAUPACH_ROUGHNESS_LENGTH_NORTH</span> <span class="o">=</span> <span class="s2">&quot;raupach_roughness_length_north&quot;</span>
+    <span class="n">RAUPACH_ROUGHNESS_LENGTH_EAST</span> <span class="o">=</span> <span class="s2">&quot;raupach_roughness_length_east&quot;</span>
+    <span class="n">RAUPACH_ROUGHNESS_LENGTH_SOUTH</span> <span class="o">=</span> <span class="s2">&quot;raupach_roughness_length_south&quot;</span>
+    <span class="n">RAUPACH_ROUGHNESS_LENGTH_WEST</span> <span class="o">=</span> <span class="s2">&quot;raupach_roughness_length_west&quot;</span>
+    <span class="n">MACDONALD_ROUGHNESS_LENGTH_NORTH</span> <span class="o">=</span> <span class="s2">&quot;macdonald_roughness_length_north&quot;</span>
+    <span class="n">MACDONALD_ROUGHNESS_LENGTH_EAST</span> <span class="o">=</span> <span class="s2">&quot;macdonald_roughness_length_east&quot;</span>
+    <span class="n">MACDONALD_ROUGHNESS_LENGTH_SOUTH</span> <span class="o">=</span> <span class="s2">&quot;macdonald_roughness_length_south&quot;</span>
+    <span class="n">MACDONALD_ROUGHNESS_LENGTH_WEST</span> <span class="o">=</span> <span class="s2">&quot;macdonald_roughness_length_west&quot;</span>
+    <span class="n">MACDONALD_DISPLACEMENT_HEIGHT</span> <span class="o">=</span> <span class="s2">&quot;macdonald_displacement_height&quot;</span>
+    <span class="n">VERTICAL_DISTRIBUTION_OF_BUILDING_HEIGHTS</span> <span class="o">=</span> <span class="s2">&quot;vertical_distribution_of_building_heights&quot;</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2099, Battelle Memorial Institute.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

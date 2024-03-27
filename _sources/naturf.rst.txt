@@ -4,34 +4,34 @@ naturf package
 Submodules
 ----------
 
-naturf.model module
--------------------
-
-.. automodule:: naturf.model
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-naturf.params module
+naturf.config module
 --------------------
 
-.. automodule:: naturf.params
+.. automodule:: naturf.config
    :members:
    :undoc-members:
    :show-inheritance:
 
-naturf.utils module
+naturf.driver module
+--------------------
+
+.. automodule:: naturf.driver
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+naturf.nodes module
 -------------------
 
-.. automodule:: naturf.utils
+.. automodule:: naturf.nodes
    :members:
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
+naturf.output module
+--------------------
 
-.. automodule:: naturf
+.. automodule:: naturf.output
    :members:
    :undoc-members:
    :show-inheritance:
