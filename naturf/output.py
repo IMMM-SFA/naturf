@@ -1,6 +1,5 @@
 import geopandas as gpd
 import numpy as np
-import os
 import pandas as pd
 from pyproj.crs import CRS
 import struct
@@ -319,8 +318,6 @@ def write_binary(numpy_to_binary: bytes, raster_to_numpy: np.ndarray) -> None:
     :type raster_to_numpy:                  np.ndarray
     """
 
-    np.save("temporary.npy", numpy_to_binary)
-
     rows = raster_to_numpy.shape[1]
     cols = raster_to_numpy.shape[2]
 
@@ -334,7 +331,6 @@ def write_binary(numpy_to_binary: bytes, raster_to_numpy: np.ndarray) -> None:
         first_x_index + "-" + second_x_index + "." + first_y_index + "-" + second_y_index
     )
 
-    with open("temporary.npy", "rb") as tile, open(out_binary_name, "wb") as tile2:
-        tile2.write(tile.read()[20 * 4 :])
-
-    os.remove("temporary.npy")
+    with open(out_binary_name, "wb") as tile:
+        tile.write(numpy_to_binary)
+        tile.close()
