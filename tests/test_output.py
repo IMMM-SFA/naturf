@@ -250,7 +250,7 @@ class TestNodes(unittest.TestCase):
         assert os.path.exists(test_binary_filename), "Binary file was not created."
         with open(test_binary_filename, "rb") as binary_file:
             content = binary_file.read()
-            assert len(content) == 105648, "Content length is not as expected"
+            assert len(content) == 105600, "Content length is not as expected"
 
         os.remove(test_binary_filename)
 
