@@ -8,7 +8,7 @@ Input data
 
 The only input data required for `naturf` is a shapefile with building footprints and height data. There should be a field with a unique ID for each building the shapefile, and it should be in a projected coordinate system such as Alber Equal Area Conic. For input to the Weather Research and Forecasting model (WRF), the computed parameters for each building will be projected into WGS 84.
 
-Either check out our interactive `quickstarter <quickstarter.rst>`_, or continue below to run `naturf` using a python file.
+Either check out our interactive `quickstarter <quickstarter.rst>`_, or continue below to run `naturf` using a python file. Users need to have `graphviz <https://graphviz.org/download/>`_ installed to visualize the Directed Acyclic Graph (DAG).
 
 1. Install `naturf`
 -------------------
@@ -17,7 +17,7 @@ In a clean virtual or Conda environment, install `naturf`. NOTE: For Conda envir
 
 .. code:: bash
 
-    pip install naturf
+    $ pip install naturf
 
 2. Edit config variables and create run script
 ----------------------------------------------
@@ -74,14 +74,22 @@ This will run all functions required to create the output specified in the `run.
 Run using the `DAGWorks Platform <app.dagworks.io>`_
 ----------------------------------------------------
 
-Import os and the DAGWorks Tracker:
+Set the DAGWorks API Key as an environment variable:
+
+.. code:: bash
+
+    $ export DAGWORKS_API_KEY="<your API Key>"
+
+
+Start with the `run.py` file from above (using either the example data or your own data) and add the following. Import os and DAGWorks adapters, which contains the tracker:
 
 .. code:: python3
 
     import os
     from dagworks import adapters
 
-Add this to `run.py` at the top of main:
+
+Initialize the DAGWorks tracker:
 
 .. code:: python3
 
@@ -90,16 +98,11 @@ Add this to `run.py` at the top of main:
             api_key=os.environ["DAGWORKS_API_KEY"],
             username="<your username>",
             dag_name="<name of the DAG>",
-            tags={"environment": "DEV", "team": "MY_TEAM", "version": "X"}
+            tags={"environment": "DEV", "team": "MY_TEAM", "version": "X"},
         )
 
-Set the API Key as an environment variable:
 
-.. code:: bash
-
-    $ export DAGWORKS_API_KEY="<your API Key>"
-
-Add `tracker` in the `hamilton_adaptors` list:
+Add `tracker` to the `hamilton_adaptors` list:
 
 .. code:: python3
 
@@ -108,3 +111,13 @@ Add `tracker` in the `hamilton_adaptors` list:
                 h_tqdm.ProgressBar("Naturf DAG"),
                 tracker,
             ]
+
+
+Run the python file!
+
+.. code:: bash
+
+    $ python run.py
+
+
+You should see a tracked run on the `DAGWorks Platform <app.dagworks.io>`_!
