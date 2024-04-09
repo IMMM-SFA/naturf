@@ -68,7 +68,7 @@ This will run all functions required to create the output specified in the `run.
 
 .. code:: bash
 
-    python run.py
+    $ python run.py
 
 
 Run using the `DAGWorks Platform <app.dagworks.io>`_
@@ -120,4 +120,4 @@ Run the python file!
     $ python run.py
 
 
-You should see a tracked run on the `DAGWorks Platform <app.dagworks.io>`_!
+You should see a run on the `DAGWorks Platform <app.dagworks.io>`_!
