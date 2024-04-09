@@ -3,15 +3,15 @@ Quickstarter
 ============
 
 
-Data input
+Input data
 ----------
 
 The only input data required for `naturf` is a shapefile with building footprints and height data. There should be a field with a unique ID for each building the shapefile, and it should be in a projected coordinate system such as Alber Equal Area Conic. For input to the Weather Research and Forecasting model (WRF), the computed parameters for each building will be projected into WGS 84.
 
 Either check out our interactive `quickstarter <quickstarter.rst>`_, or continue below to run `naturf` using a python file.
 
-Install `naturf`
------------------
+1. Install `naturf`
+-------------------
 
 In a clean virtual or Conda environment, install `naturf`. NOTE: For Conda environments using Python 3.12, the `setuptools` package does not work as intended. One workaround is to create a Conda environment in Python 3.11.
 
@@ -19,8 +19,8 @@ In a clean virtual or Conda environment, install `naturf`. NOTE: For Conda envir
 
     pip install naturf
 
-Edit config variables and create run script
--------------------------------------------
+2. Edit config variables and create run script
+----------------------------------------------
 
 The `config` module in `naturf` sets the default names for variables used in the `naturf` workflow. The two variables below need to be modified to reflect the ID field and the building height field of the input shapefile. Instructions on changing field names will be given further below.
 
@@ -62,10 +62,49 @@ To run data other than the example data, create the `run.py` below.
     df = model.execute()
     model.graph()
 
-Run `naturf`
-------------
+3. Run `naturf`
+---------------
 This will run all functions required to create the output specified in the `run.py` `output_columns` variable. Currently `write_binary` and `write_index`. The `path` variable should point towards the input shapefile.
 
 .. code:: bash
 
     python run.py
+
+
+Run using the `DAGWorks Platform <app.dagworks.io>`_
+----------------------------------------------------
+
+Import os and the DAGWorks Tracker:
+
+.. code:: python3
+
+    import os
+    from dagworks import adapters
+
+Add this to `run.py` at the top of main:
+
+.. code:: python3
+
+    tracker = adapters.DAGWorksTracker(
+            project_id=<your project ID>,
+            api_key=os.environ["DAGWORKS_API_KEY"],
+            username="<your username>",
+            dag_name="<name of the DAG>",
+            tags={"environment": "DEV", "team": "MY_TEAM", "version": "X"}
+        )
+
+Set the API Key as an environment variable:
+
+.. code:: bash
+
+    $ export DAGWORKS_API_KEY="<your API Key>"
+
+Add `tracker` in the `hamilton_adaptors` list:
+
+.. code:: python3
+
+    hamilton_adapters = [
+                base.SimplePythonDataFrameGraphAdapter(),
+                h_tqdm.ProgressBar("Naturf DAG"),
+                tracker,
+            ]
