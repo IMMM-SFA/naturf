@@ -106,12 +106,12 @@
 <section id="input-data">
 <h2>Input data<a class="headerlink" href="#input-data" title="Link to this heading"></a></h2>
 <p>The only input data required for <cite>naturf</cite> is a shapefile with building footprints and height data. There should be a field with a unique ID for each building the shapefile, and it should be in a projected coordinate system such as Alber Equal Area Conic. For input to the Weather Research and Forecasting model (WRF), the computed parameters for each building will be projected into WGS 84.</p>
-<p>Either check out our interactive <a class="reference internal" href="#"><span class="doc">quickstarter</span></a>, or continue below to run <cite>naturf</cite> using a python file.</p>
+<p>Either check out our interactive <a class="reference internal" href="#"><span class="doc">quickstarter</span></a>, or continue below to run <cite>naturf</cite> using a python file. Users need to have <a class="reference external" href="https://graphviz.org/download/">graphviz</a> installed to visualize the Directed Acyclic Graph (DAG).</p>
 </section>
 <section id="install-naturf">
 <h2>1. Install <cite>naturf</cite><a class="headerlink" href="#install-naturf" title="Link to this heading"></a></h2>
 <p>In a clean virtual or Conda environment, install <cite>naturf</cite>. NOTE: For Conda environments using Python 3.12, the <cite>setuptools</cite> package does not work as intended. One workaround is to create a Conda environment in Python 3.11.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>naturf
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>naturf
 </pre></div>
 </div>
 </section>
@@ -155,32 +155,32 @@
 <section id="run-naturf">
 <h2>3. Run <cite>naturf</cite><a class="headerlink" href="#run-naturf" title="Link to this heading"></a></h2>
 <p>This will run all functions required to create the output specified in the <cite>run.py</cite> <cite>output_columns</cite> variable. Currently <cite>write_binary</cite> and <cite>write_index</cite>. The <cite>path</cite> variable should point towards the input shapefile.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>run.py
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>run.py
 </pre></div>
 </div>
 </section>
 <section id="run-using-the-dagworks-platform">
 <h2>Run using the <a class="reference external" href="app.dagworks.io">DAGWorks Platform</a><a class="headerlink" href="#run-using-the-dagworks-platform" title="Link to this heading"></a></h2>
-<p>Import os and the DAGWorks Tracker:</p>
+<p>Set the DAGWorks API Key as an environment variable:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">DAGWORKS_API_KEY</span><span class="o">=</span><span class="s2">&quot;&lt;your API Key&gt;&quot;</span>
+</pre></div>
+</div>
+<p>Start with the <cite>run.py</cite> file from above (using either the example data or your own data) and add the following. Import os and DAGWorks adapters, which contains the tracker:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">dagworks</span> <span class="kn">import</span> <span class="n">adapters</span>
 </pre></div>
 </div>
-<p>Add this to <cite>run.py</cite> at the top of main:</p>
+<p>Initialize the DAGWorks tracker:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">tracker</span> <span class="o">=</span> <span class="n">adapters</span><span class="o">.</span><span class="n">DAGWorksTracker</span><span class="p">(</span>
         <span class="n">project_id</span><span class="o">=&lt;</span><span class="n">your</span> <span class="n">project</span> <span class="n">ID</span><span class="o">&gt;</span><span class="p">,</span>
         <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DAGWORKS_API_KEY&quot;</span><span class="p">],</span>
         <span class="n">username</span><span class="o">=</span><span class="s2">&quot;&lt;your username&gt;&quot;</span><span class="p">,</span>
         <span class="n">dag_name</span><span class="o">=</span><span class="s2">&quot;&lt;name of the DAG&gt;&quot;</span><span class="p">,</span>
-        <span class="n">tags</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;environment&quot;</span><span class="p">:</span> <span class="s2">&quot;DEV&quot;</span><span class="p">,</span> <span class="s2">&quot;team&quot;</span><span class="p">:</span> <span class="s2">&quot;MY_TEAM&quot;</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;X&quot;</span><span class="p">}</span>
+        <span class="n">tags</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;environment&quot;</span><span class="p">:</span> <span class="s2">&quot;DEV&quot;</span><span class="p">,</span> <span class="s2">&quot;team&quot;</span><span class="p">:</span> <span class="s2">&quot;MY_TEAM&quot;</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;X&quot;</span><span class="p">},</span>
     <span class="p">)</span>
 </pre></div>
 </div>
-<p>Set the API Key as an environment variable:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">DAGWORKS_API_KEY</span><span class="o">=</span><span class="s2">&quot;&lt;your API Key&gt;&quot;</span>
-</pre></div>
-</div>
-<p>Add <cite>tracker</cite> in the <cite>hamilton_adaptors</cite> list:</p>
+<p>Add <cite>tracker</cite> to the <cite>hamilton_adaptors</cite> list:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">hamilton_adapters</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">base</span><span class="o">.</span><span class="n">SimplePythonDataFrameGraphAdapter</span><span class="p">(),</span>
             <span class="n">h_tqdm</span><span class="o">.</span><span class="n">ProgressBar</span><span class="p">(</span><span class="s2">&quot;Naturf DAG&quot;</span><span class="p">),</span>
@@ -188,6 +188,11 @@
         <span class="p">]</span>
 </pre></div>
 </div>
+<p>Run the python file!</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>run.py
+</pre></div>
+</div>
+<p>You should see a run on the <a class="reference external" href="app.dagworks.io">DAGWorks Platform</a>!</p>
 </section>
 </section>
 
