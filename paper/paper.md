@@ -18,6 +18,9 @@ authors:
   - name: Melissa R. Allen-Dumas
     orcid: 0000-0002-3319-0846
     affiliation: 1
+  - name: Stefan Krawczyk
+    orcid: 0009-0006-1112-1459
+    affiliation: 4
 affiliations:
   - name: Computational Sciences and Engineering Division, Oak Ridge National Laboratory, One Bethel Valley Road, Oak Ridge, TN. 37831
     index: 1
@@ -25,7 +28,9 @@ affiliations:
     index: 2
   - name: Pacific Northwest National Laboratory, Richland, WA., USA
     index: 3
-date: 14 December 2023
+  - name: DAGWorks Inc.
+    index: 4
+date: 2 May 2024
 bibliography: paper.bib
 ---
 

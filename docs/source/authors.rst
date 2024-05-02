@@ -8,6 +8,7 @@ Authors
 * **Em Rexer (@erexer)**
 * **Chris R. Vernon (@crvernon)**
 * **Melissa R. Allen-Dumas (@mallen2718)**
+* **Stefan Krawczyk (@skrawcz)**
 
 Contributors
 ------------
@@ -16,7 +17,6 @@ Additional Developers
 ^^^^^^^^^^^^^^^^^^^^^
 
 * **Matthew Seals**
-* **Stefan Krawczyk (@skrawcz)**
 * **Elijah ben Izzy (@elijahbenizzy)**
 * **Andy Berres (@q-rai)**
 
