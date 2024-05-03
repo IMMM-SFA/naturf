@@ -70,6 +70,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#building-height-limit">Building Height Limit</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#glossary-of-terms">Glossary of Terms</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#output-parameters">Output Parameters</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#frontal-area-density-1-60">Frontal Area Density (1-60)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#plan-area-density-61-75">Plan Area Density (61-75)</a></li>
@@ -164,25 +165,59 @@ within a given building’s total plan area divided by the number of buildings i
 <p>Following NUDAPT, <strong>naturf</strong> bins building heights into five meter increments from 0 to 75 meters. Any building with a height greater than 75 meters is considered as ending at 75 meters.</p>
 </section>
 </section>
+<section id="glossary-of-terms">
+<h3>Glossary of Terms<a class="headerlink" href="#glossary-of-terms" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><cite>FAD</cite>: Frontal area density (unitless)</p></li>
+<li><p><span class="math">\(A_f\)</span>: Frontal area of a wall from a given direction and height (<span class="math">\(m^2\)</span>)</p></li>
+<li><p><span class="math">\(A_F\)</span>: Total frontal area of a wall from a given direction (<span class="math">\(m^2\)</span>)</p></li>
+<li><p><span class="math">\(A_P\)</span>: Total plan area (<span class="math">\(m^2\)</span>)</p></li>
+<li><p><span class="math">\(\lambda_p\)</span>: Plan area density (unitless)</p></li>
+<li><p><span class="math">\(A_b\)</span>: Building plan area (<span class="math">\(m^2\)</span>)</p></li>
+<li><p><cite>AWMH</cite>: Area weighted mean of building heights (<cite>m</cite>)</p></li>
+<li><p><span class="math">\(z_h\)</span>: Building height (<cite>m</cite>)</p></li>
+<li><p><span class="math">\(\lambda_f\)</span>: Frontal area index from a given direction (unitless)</p></li>
+<li><p><cite>CAR</cite>: Complete aspect ratio (unitless)</p></li>
+<li><p><cite>BSA</cite>: Building surface area (<span class="math">\(m^2\)</span>)</p></li>
+<li><p><span class="math">\(\overline{\lambda_s}\)</span>: Average height-to-width ratio for given building and neighbors (unitless)</p></li>
+<li><p><span class="math">\(\overline{z_h}\)</span>: Average building height for given building and neighbors (<cite>m</cite>)</p></li>
+<li><p><cite>SVF</cite>: Sky-view factor (unitless)</p></li>
+<li><p><span class="math">\(\overline{W}\)</span>: Average distance between given building and neighbors (<cite>m</cite>)</p></li>
+<li><p><span class="math">\(rl_{go}\)</span>: Grimmond &amp; Oke rougness length (<cite>m</cite>)</p></li>
+<li><p><span class="math">\(dh_{go}\)</span>: Grimmond &amp; Oke displacement height (<cite>m</cite>)</p></li>
+<li><p><span class="math">\(rl_r\)</span>: Raupach roughness length (<cite>m</cite>)</p></li>
+<li><p><span class="math">\(dh_r\)</span>: Raupach displacement height (<cite>m</cite>)</p></li>
+<li><p><span class="math">\(\kappa\)</span>: von Kármán’s constant = 0.4 (unitless)</p></li>
+<li><p><span class="math">\(C_S\)</span>: Substrate-surface drag coefficient = 0.003 (unitless)</p></li>
+<li><p><span class="math">\(C_R\)</span>: Roughness-element drag coefficient = 0.3 (unitless)</p></li>
+<li><p><span class="math">\(\Psi_h\)</span>: Roughness-sublayer influence function = 0.193 (unitless)</p></li>
+<li><p><span class="math">\(c_{d1}\)</span>: Constant = 7.5 (unitless)</p></li>
+<li><p><span class="math">\(\Lambda\)</span>: Frontal area index times 2 (unitless)</p></li>
+<li><p><span class="math">\(rl_m\)</span>: Macdonald roughness length (<cite>m</cite>)</p></li>
+<li><p><span class="math">\(dh_m\)</span>: Macdonald displacement height (<cite>m</cite>)</p></li>
+<li><p><span class="math">\(\beta\)</span> Beta coefficient = 1 (unitless)</p></li>
+<li><p><span class="math">\(C_D\)</span> Obstacle drag coefficient = 1.12 (unitless)</p></li>
+<li><p><span class="math">\(A_l\)</span> Lot area (<span class="math">\(m^2\)</span>)</p></li>
+<li><p><cite>A</cite>: Constant = 3.59 (unitless)</p></li>
+</ul>
+</section>
 <section id="output-parameters">
 <h3>Output Parameters<a class="headerlink" href="#output-parameters" title="Link to this heading"></a></h3>
 <section id="frontal-area-density-1-60">
 <h4>Frontal Area Density (1-60)<a class="headerlink" href="#frontal-area-density-1-60" title="Link to this heading"></a></h4>
 <p>Frontal area density is the frontal area at a certain height increment divided by the total plan area. <strong>naturf</strong> calculates frontal area density from the four cardinal directions (east, north, west, south) and at 5 meter increments from ground level to 75 meters. Parameters 1-15 represent the north, parameters 16-30 represent the west, parameters 31-45 represent the south, and parameters 46-60 represent the east. For instance, parameter 1 gives the north-facing wall area for each building and its neighbors divided by the total plan area. <a class="reference internal" href="#burian2003" id="id1"><span>[Burian2003]</span></a> Eq. 14</p>
 <div class="math">
-\[FAD = \frac{FA}{TPA}
+\[FAD = \frac{A_{f}}{A_{P}}
 
 \]</div>
-<p>where <cite>FAD</cite> is Frontal area density; <cite>FA</cite> is the frontal area of the wall from the current direction and height level in <span class="math">\(m^2\)</span>; <cite>TPA</cite> is the total plan area in <span class="math">\(m^2\)</span>.</p>
 </section>
 <section id="plan-area-density-61-75">
 <h4>Plan Area Density (61-75)<a class="headerlink" href="#plan-area-density-61-75" title="Link to this heading"></a></h4>
 <p>Plan area density is the ratio of building plan area to the total plan area, calculated in 5 meter increments from ground level to 75 meters. <strong>naturf</strong> projects the building footprint vertically to the building height, meaning plan area density is the same at every vertical level. <a class="reference internal" href="#burian2003" id="id2"><span>[Burian2003]</span></a> Eq. 7</p>
 <div class="math">
-\[PAD = \frac{BPA}{TPA}
+\[\lambda_p = \frac{A_{b}}{A_{P}}
 
 \]</div>
-<p>where, <cite>PAD</cite> is the plan area density; <cite>BPA</cite> is the building plan area in <span class="math">\(m^2\)</span>; <cite>TPA</cite> is the total plan area in <span class="math">\(m^2\)</span>.</p>
 </section>
 <section id="rooftop-area-density-76-90">
 <h4>Rooftop Area Density (76-90)<a class="headerlink" href="#rooftop-area-density-76-90" title="Link to this heading"></a></h4>
@@ -204,8 +239,7 @@ within a given building’s total plan area divided by the number of buildings i
 <h4>Area Weighted Mean of Building Heights (94)<a class="headerlink" href="#area-weighted-mean-of-building-heights-94" title="Link to this heading"></a></h4>
 <p>The average height of all buildings within the total plan area weighted by the total plan area. <a class="reference internal" href="#burian2003" id="id5"><span>[Burian2003]</span></a> Eq. 3</p>
 <div class="math">
-\[AWMH = \frac{\Sigma{A_i zh_i}}{\Sigma{A_i}}\]</div>
-<p>where, <cite>AWMH</cite> is the area weighted mean height in m; <cite>A_i</cite> is the current building plan area in <cite>m^2</cite>; <cite>zh_i</cite> is the current building height in m.</p>
+\[AWMH = \frac{\Sigma{A_{b} z_{h}}}{\Sigma{A_{b}}\]</div>
 </section>
 <section id="building-surface-area-to-plan-area-ratio-95">
 <h4>Building Surface Area to Plan Area Ratio (95)<a class="headerlink" href="#building-surface-area-to-plan-area-ratio-95" title="Link to this heading"></a></h4>
@@ -215,19 +249,17 @@ within a given building’s total plan area divided by the number of buildings i
 <h4>Frontal Area Index (96-99)<a class="headerlink" href="#frontal-area-index-96-99" title="Link to this heading"></a></h4>
 <p>Frontal area index is the ratio of the entire frontal area of a building to the total plan area. <strong>naturf</strong> calculates the frontal area index from the four cardinal directions. Because buildings often do not face a cardinal direction head on, <strong>naturf</strong> uses the average alongwind and crosswind distance from the current building centroid to all other building centroids for the total plan area. <a class="reference internal" href="#burian2003" id="id7"><span>[Burian2003]</span></a> Eq. 12</p>
 <div class="math">
-\[FAI = \frac{FA}{TPA}
+\[\lambda_{f} = \frac{A_{F}`}{A_{P}}
 
 \]</div>
-<p>where, <cite>FAI</cite> is frontal area index; <cite>FA</cite> is the frontal area of the wall from the current direction in <span class="math">\(m^2\)</span>; <cite>TPA</cite> is the total plan area in <span class="math">\(m^2\)</span>.</p>
 </section>
 <section id="complete-aspect-ratio-100">
 <h4>Complete Aspect Ratio (100)<a class="headerlink" href="#complete-aspect-ratio-100" title="Link to this heading"></a></h4>
 <p>The ratio of building surface area and exposed ground area to the total plan area. <a class="reference internal" href="#burian2003" id="id8"><span>[Burian2003]</span></a> Eq. 15</p>
 <div class="math">
-\[CAR = \frac{BSA + (PA - BPA)}{TPA}
+\[CAR = \frac{BSA + (A_{P} - A_{b)}{A_{P}}
 
 \]</div>
-<p>where, <cite>BSA</cite> is the building surface area in <span class="math">\(m^2\)</span>; <cite>BPA</cite> is the building plan area in <span class="math">\(m^2\)</span>; <cite>TPA</cite> is the total plan area in <span class="math">\(m^2\)</span>.</p>
 </section>
 <section id="height-to-width-ratio-101">
 <h4>Height-to-Width Ratio (101)<a class="headerlink" href="#height-to-width-ratio-101" title="Link to this heading"></a></h4>
@@ -236,70 +268,62 @@ within a given building’s total plan area divided by the number of buildings i
 \[\overline{\lambda_s} = \frac{\overline{z_h}}{\overline{W}}
 
 \]</div>
-<p>where, <span class="math">\(\overline{\lambda_s}\)</span> is the average height-to-width ratio; <span class="math">\(\overline{z_h}\)</span> is the average building height in m; <span class="math">\(\overline{W}\)</span> is the average distance between buildings.</p>
 </section>
 <section id="sky-view-factor-102">
 <h4>Sky-View Factor (102)<a class="headerlink" href="#sky-view-factor-102" title="Link to this heading"></a></h4>
 <p>The fraction of visible sky in a given area. <strong>naturf</strong> generalizes the distance between buildings to be the average distance between the current building and all other buildings in the total plan area.  <a class="reference internal" href="#dirksen2019" id="id10"><span>[Dirksen2019]</span></a> Eq. 1</p>
 <div class="math">
-\[SVF = cos(arctan(\frac{H}{0.5W}))
+\[SVF = cos(arctan(\frac{z_{h}}{0.5W}))
 
 \]</div>
-<p>where, <cite>SVF</cite> is the sky-view factor; <cite>H</cite> is the building height in m; <cite>W</cite> is the distance between buildings in m.</p>
 </section>
 <section id="grimmond-oke-roughness-length-103">
 <h4>Grimmond &amp; Oke Roughness Length (103)<a class="headerlink" href="#grimmond-oke-roughness-length-103" title="Link to this heading"></a></h4>
 <p><a class="reference internal" href="#grimmondoke1999" id="id11"><span>[GrimmondOke1999]</span></a> Eq. 2</p>
 <div class="math">
-\[GORL = 0.1 \cdot zh
+\[rl_{go} = 0.1 \cdot z_{h}
 
 \]</div>
-<p>where, <cite>GORL</cite> is Grimmond &amp; Oke rougness length in m; <cite>zh</cite> is the building height in m.</p>
 </section>
 <section id="grimmond-oke-displacement-height-104">
 <h4>Grimmond &amp; Oke Displacement Height (104)<a class="headerlink" href="#grimmond-oke-displacement-height-104" title="Link to this heading"></a></h4>
 <p><a class="reference internal" href="#grimmondoke1999" id="id12"><span>[GrimmondOke1999]</span></a> Eq. 1</p>
 <div class="math">
-\[GODH = 0.67 \cdot zh
+\[dh_{go} = 0.67 \cdot z_{h}
 
 \]</div>
-<p>where, <cite>GODH</cite> is Grimmond &amp; Oke displacement height in m; <cite>zh</cite> is building height in m.</p>
 </section>
 <section id="raupach-roughness-length-105-107-109-111">
 <h4>Raupach Roughness Length (105, 107, 109, 111)<a class="headerlink" href="#raupach-roughness-length-105-107-109-111" title="Link to this heading"></a></h4>
 <p><a class="reference internal" href="#raupach1994" id="id13"><span>[Raupach1994]</span></a> Eq. 4</p>
 <div class="math">
-\[RRL = zh \cdot (1 - \frac{RDH}{zh}) \cdot exp(-\kappa \cdot (C_{S} + C_{R} \cdot \lambda)^{-0.5} - \Psi_{h})
+\[rl_{r} = z_{h} \cdot (1 - \frac{dh_{r}}{z_{h}}) \cdot exp(-\kappa \cdot (C_{S} + C_{R} \cdot \lambda_{f})^{-0.5} - \Psi_{h})
 
 \]</div>
-<p>where, <cite>RRL</cite> is the Raupach roughness length in m; <cite>RDH</cite> is the Raupach displacement height in m; <span class="math">\(\kappa\)</span> is von Kármán’s constant = 0.4; <cite>C_S</cite> is the substrate-surface drag coefficient = 0.003; <cite>C_R</cite> is the roughness-element drag coefficient = 0.3; <span class="math">\(\lambda\)</span> is the frontal area index; <span class="math">\(\Psi_h\)</span> is the roughness-sublayer influence function = 0.193.</p>
 </section>
 <section id="raupach-displacment-height-106-108-110-112">
 <h4>Raupach Displacment Height (106, 108, 110, 112)<a class="headerlink" href="#raupach-displacment-height-106-108-110-112" title="Link to this heading"></a></h4>
 <p><a class="reference internal" href="#raupach1994" id="id14"><span>[Raupach1994]</span></a> Eq. 8</p>
 <div class="math">
-\[RDH = zh \cdot (1 - (\frac{1 - \exp(-\sqrt(c_{d1} \cdot \Lambda))}{\sqrt(c_{d1} \cdot \Lambda)}))
+\[dh_{r} = z_{h} \cdot (1 - (\frac{1 - \exp(-\sqrt(c_{d1} \cdot \Lambda))}{\sqrt(c_{d1} \cdot \Lambda)}))
 
 \]</div>
-<p>where, <cite>RDH</cite> is the Raupach displacement height in m; <span class="math">\(c_{d1}\)</span> is a constant = 7.5; <span class="math">\(\Lambda\)</span> is frontal area index times 2.</p>
 </section>
 <section id="macdonald-et-al-roughness-length-113-116">
 <h4>Macdonald et al. Roughness Length (113-116)<a class="headerlink" href="#macdonald-et-al-roughness-length-113-116" title="Link to this heading"></a></h4>
 <p><a class="reference internal" href="#macdonald1998" id="id15"><span>[Macdonald1998]</span></a> Eq. 22</p>
 <div class="math">
-\[MRL = zh \cdot (1 - \frac{MDH}{zh})\exp(-(0.5*\beta\frac{C_{D}}{\kappa^2}(1 - \frac{MDH}{zh})\frac{A_{f}}{A_{l}})^{-0.5})
+\[rl_{m} = z_{h} \cdot (1 - \frac{dh_{m}}{z_{h}})\exp(-(0.5*\beta\frac{C_{D}}{\kappa^2}(1 - \frac{MDH}{z_{h}})\frac{A_{F}}{A_{l}})^{-0.5})
 
 \]</div>
-<p>where, <cite>MRL</cite> is the Macdonald roughness length in m; <cite>zh</cite> is the building height in m; <cite>MDH</cite> is the Macdonald displacement height in m; <span class="math">\(\beta\)</span> is the beta coefficient = 1; <span class="math">\(C_D\)</span> is the obstacle drag coefficient = 1.12; <span class="math">\(\kappa\)</span> is von Kármán’s constant = 0.4; <span class="math">\(A_f\)</span> is the frontal area of the building in <span class="math">\(m^2\)</span>; <span class="math">\(A_l\)</span> is the lot area of the building in <span class="math">\(m^2\)</span>.</p>
 </section>
 <section id="macdonald-et-al-displacement-height-117">
 <h4>Macdonald et al. Displacement Height (117)<a class="headerlink" href="#macdonald-et-al-displacement-height-117" title="Link to this heading"></a></h4>
 <p><a class="reference internal" href="#macdonald1998" id="id16"><span>[Macdonald1998]</span></a> Eq. 23</p>
 <div class="math">
-\[MDH = zh \cdot (1 + \frac{1}{A^\lambda} \cdot (\lambda - 1))
+\[dh_{m} = z_{h} \cdot (1 + \frac{1}{A^\lambda_{p} \cdot (\lambda_{p} - 1))
 
 \]</div>
-<p>where, <cite>MDH</cite> is the Macdonald displacement height in m; <cite>zh</cite> is the building height in m; <cite>A</cite> is a constant = 3.59; <span class="math">\(\lambda\)</span> is the plan area density.</p>
 </section>
 <section id="vertical-distribution-of-building-heights-118-132">
 <h4>Vertical Distribution of Building Heights (118-132)<a class="headerlink" href="#vertical-distribution-of-building-heights-118-132" title="Link to this heading"></a></h4>
