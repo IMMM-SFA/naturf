@@ -124,7 +124,7 @@ The average height of all buildings within the total plan area weighted by the t
 
 .. math::
 
-  AWMH = \frac{\Sigma{A_{b} z_{h}}}{\Sigma{A_{b}}
+  AWMH = \frac{\Sigma{A_{b} z_{h}}{\Sigma{A_{b}}
 
 
 Building Surface Area to Plan Area Ratio (95)
@@ -138,7 +138,7 @@ Frontal Area Index (96-99)
 Frontal area index is the ratio of the entire frontal area of a building to the total plan area. **naturf** calculates the frontal area index from the four cardinal directions. Because buildings often do not face a cardinal direction head on, **naturf** uses the average alongwind and crosswind distance from the current building centroid to all other building centroids for the total plan area. [Burian2003]_ Eq. 12
 
 .. math::
-  \lambda_{f} = \frac{A_{F}`}{A_{P}}
+  \lambda_{f} = \frac{A_{F}}{A_{P}}
 
 
 Complete Aspect Ratio (100)
@@ -147,7 +147,7 @@ Complete Aspect Ratio (100)
 The ratio of building surface area and exposed ground area to the total plan area. [Burian2003]_ Eq. 15
 
 .. math::
-  CAR = \frac{BSA + (A_{P} - A_{b)}{A_{P}}
+  CAR = \frac{BSA + (A_{P} - A_{b})}{A_{P}}
 
 
 Height-to-Width Ratio (101)
@@ -165,7 +165,7 @@ Sky-View Factor (102)
 The fraction of visible sky in a given area. **naturf** generalizes the distance between buildings to be the average distance between the current building and all other buildings in the total plan area.  [Dirksen2019]_ Eq. 1
 
 .. math::
-  SVF = cos(arctan(\frac{z_{h}}{0.5W}))
+  SVF = cos(arctan(\frac{z_{h}}{0.5\overline{W}}))
 
 
 Grimmond & Oke Roughness Length (103)
@@ -220,7 +220,7 @@ Macdonald et al. Displacement Height (117)
 [Macdonald1998]_ Eq. 23
 
 .. math::
-  dh_{m} = z_{h} \cdot (1 + \frac{1}{A^\lambda_{p} \cdot (\lambda_{p} - 1))
+  dh_{m} = z_{h} \cdot (1 + \frac{1}{A^\lambda_{p}} \cdot (\lambda_{p} - 1))
 
 
 Vertical Distribution of Building Heights (118-132)
