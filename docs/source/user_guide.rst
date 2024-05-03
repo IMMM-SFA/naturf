@@ -41,6 +41,41 @@ Building Height Limit
 
 Following NUDAPT, **naturf** bins building heights into five meter increments from 0 to 75 meters. Any building with a height greater than 75 meters is considered as ending at 75 meters.
 
+Glossary of Terms
+~~~~~~~~~~~~~~~~~
+
+* `FAD`: Frontal area density (unitless)
+* :math:`A_f`: Frontal area of a wall from a given direction and height (:math:`m^2`)
+* :math:`A_F`: Total frontal area of a wall from a given direction (:math:`m^2`)
+* :math:`A_P`: Total plan area (:math:`m^2`)
+* :math:`\lambda_p`: Plan area density (unitless)
+* :math:`A_b`: Building plan area (:math:`m^2`)
+* `AWMH`: Area weighted mean of building heights (`m`)
+* :math:`z_h`: Building height (`m`)
+* :math:`\lambda_f`: Frontal area index from a given direction (unitless)
+* `CAR`: Complete aspect ratio (unitless)
+* `BSA`: Building surface area (:math:`m^2`)
+* :math:`\overline{\lambda_s}`: Average height-to-width ratio for given building and neighbors (unitless)
+* :math:`\overline{z_h}`: Average building height for given building and neighbors (`m`)
+* `SVF`: Sky-view factor (unitless)
+* `W`: Average distance between given building and neighbors (`m`)
+* :math:`rl_{go}`: Grimmond & Oke rougness length (`m`)
+* :math:`dh_{go}`: Grimmond & Oke displacement height (`m`)
+* :math:`rl_r`: Raupach roughness length (`m`)
+* :math:`dh_r`: Raupach displacement height (`m`)
+* :math:`\kappa`: von Kármán's constant = 0.4 (unitless)
+* :math:`C_S`: Substrate-surface drag coefficient = 0.003 (unitless)
+* :math:`C_R`: Roughness-element drag coefficient = 0.3 (unitless)
+* :math:`\Psi_h`: Roughness-sublayer influence function = 0.193 (unitless)
+* :math:`c_{d1}`: Constant = 7.5 (unitless)
+* :math:`\Lambda`: Frontal area index times 2 (unitless)
+* :math:`rl_m`: Macdonald roughness length (`m`)
+* :math:`dh_m`: Macdonald displacement height (`m`)
+* :math:`\beta` Beta coefficient = 1 (unitless)
+* :math:`C_D` Obstacle drag coefficient = 1.12 (unitless)
+* :math:`A_l` Lot area (:math:`m^2`)
+* `A`: Constant = 3.59 (unitless)
+
 Output Parameters
 ~~~~~~~~~~~~~~~~~
 
