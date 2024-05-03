@@ -87,7 +87,6 @@ Frontal area density is the frontal area at a certain height increment divided b
 .. math::
   FAD = \frac{A_{f}}{A_{P}}
 
-where `FAD` is Frontal area density; `FA` is the frontal area of the wall from the current direction and height level in :math:`m^2`; `TPA` is the total plan area in :math:`m^2`.
 
 Plan Area Density (61-75)
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -97,7 +96,6 @@ Plan area density is the ratio of building plan area to the total plan area, cal
 .. math::
   \lambda_p = \frac{A_{b}}{A_{P}}
 
-where, `PAD` is the plan area density; `BPA` is the building plan area in :math:`m^2`; `TPA` is the total plan area in :math:`m^2`.
 
 Rooftop Area Density (76-90)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -128,7 +126,6 @@ The average height of all buildings within the total plan area weighted by the t
 
   AWMH = \frac{\Sigma{A_{b} z_{h}}}{\Sigma{A_{b}}
 
-where, `AWMH` is the area weighted mean height in m; `A_i` is the current building plan area in `m^2`; `zh_i` is the current building height in m.
 
 Building Surface Area to Plan Area Ratio (95)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -143,7 +140,6 @@ Frontal area index is the ratio of the entire frontal area of a building to the 
 .. math::
   \lambda_{f} = \frac{A_{F}`}{A_{P}}
 
-where, `FAI` is frontal area index; `FA` is the frontal area of the wall from the current direction in :math:`m^2`; `TPA` is the total plan area in :math:`m^2`.
 
 Complete Aspect Ratio (100)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -153,7 +149,6 @@ The ratio of building surface area and exposed ground area to the total plan are
 .. math::
   CAR = \frac{BSA + (A_{P} - A_{b)}{A_{P}}
 
-where, `BSA` is the building surface area in :math:`m^2`; `BPA` is the building plan area in :math:`m^2`; `TPA` is the total plan area in :math:`m^2`.
 
 Height-to-Width Ratio (101)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -163,7 +158,6 @@ The ratio of the building height to the street width. **naturf** generalizes thi
 .. math::
   \overline{\lambda_s} = \frac{\overline{z_h}}{\overline{W}}
 
-where, :math:`\overline{\lambda_s}` is the average height-to-width ratio; :math:`\overline{z_h}` is the average building height in m; :math:`\overline{W}` is the average distance between buildings.
 
 Sky-View Factor (102)
 ^^^^^^^^^^^^^^^^^^^^^
@@ -173,7 +167,6 @@ The fraction of visible sky in a given area. **naturf** generalizes the distance
 .. math::
   SVF = cos(arctan(\frac{z_{h}}{0.5W}))
 
-where, `SVF` is the sky-view factor; `H` is the building height in m; `W` is the distance between buildings in m.
 
 Grimmond & Oke Roughness Length (103)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -183,7 +176,6 @@ Grimmond & Oke Roughness Length (103)
 .. math::
   rl_{go} = 0.1 \cdot z_{h}
 
-where, `GORL` is Grimmond & Oke rougness length in m; `zh` is the building height in m.
 
 Grimmond & Oke Displacement Height (104)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -193,7 +185,6 @@ Grimmond & Oke Displacement Height (104)
 .. math::
   dh_{go} = 0.67 \cdot z_{h}
 
-where, `GODH` is Grimmond & Oke displacement height in m; `zh` is building height in m.
 
 
 Raupach Roughness Length (105, 107, 109, 111)
@@ -204,8 +195,6 @@ Raupach Roughness Length (105, 107, 109, 111)
 .. math::
   rl_{r} = z_{h} \cdot (1 - \frac{dh_{r}}{z_{h}}) \cdot exp(-\kappa \cdot (C_{S} + C_{R} \cdot \lambda_{f})^{-0.5} - \Psi_{h})
 
-where, `RRL` is the Raupach roughness length in m; `RDH` is the Raupach displacement height in m; :math:`\kappa` is von Kármán's constant = 0.4; `C_S` is the substrate-surface drag coefficient = 0.003; `C_R` is the roughness-element drag coefficient = 0.3; :math:`\lambda` is the frontal area index; :math:`\Psi_h` is the roughness-sublayer influence function = 0.193.
-
 
 Raupach Displacment Height (106, 108, 110, 112)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -215,7 +204,6 @@ Raupach Displacment Height (106, 108, 110, 112)
 .. math::
   dh_{r} = z_{h} \cdot (1 - (\frac{1 - \exp(-\sqrt(c_{d1} \cdot \Lambda))}{\sqrt(c_{d1} \cdot \Lambda)}))
 
-where, `RDH` is the Raupach displacement height in m; :math:`c_{d1}` is a constant = 7.5; :math:`\Lambda` is frontal area index times 2.
 
 Macdonald et al. Roughness Length (113-116)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -225,7 +213,6 @@ Macdonald et al. Roughness Length (113-116)
 .. math::
   rl_{m} = z_{h} \cdot (1 - \frac{dh_{m}}{z_{h}})\exp(-(0.5*\beta\frac{C_{D}}{\kappa^2}(1 - \frac{MDH}{z_{h}})\frac{A_{F}}{A_{l}})^{-0.5})
 
-where, `MRL` is the Macdonald roughness length in m; `zh` is the building height in m; `MDH` is the Macdonald displacement height in m; :math:`\beta` is the beta coefficient = 1; :math:`C_D` is the obstacle drag coefficient = 1.12; :math:`\kappa` is von Kármán's constant = 0.4; :math:`A_f` is the frontal area of the building in :math:`m^2`; :math:`A_l` is the lot area of the building in :math:`m^2`.
 
 Macdonald et al. Displacement Height (117)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -235,7 +222,6 @@ Macdonald et al. Displacement Height (117)
 .. math::
   dh_{m} = z_{h} \cdot (1 + \frac{1}{A^\lambda_{p} \cdot (\lambda_{p} - 1))
 
-where, `MDH` is the Macdonald displacement height in m; `zh` is the building height in m; `A` is a constant = 3.59; :math:`\lambda` is the plan area density.
 
 Vertical Distribution of Building Heights (118-132)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
