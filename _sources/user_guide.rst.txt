@@ -124,7 +124,7 @@ The average height of all buildings within the total plan area weighted by the t
 
 .. math::
 
-  AWMH = \frac{\Sigma{A_{b} z_{h}}{\Sigma{A_{b}}}
+  AWMH = \frac{\Sigma{A_{b} z_{h}}}{\Sigma{A_{b}}}
 
 
 Building Surface Area to Plan Area Ratio (95)
