@@ -62,8 +62,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#input-data">Input data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#install-naturf">1. Install <cite>naturf</cite></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#edit-config-variables-and-create-run-script">2. Edit config variables and create run script</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#run-naturf">3. Run <cite>naturf</cite></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#run-using-the-dagworks-platform">Run using the DAGWorks Platform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-naturf">3. Run <cite>naturf</cite></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#track-execution-with-the-hamilton-ui">Track execution with the Hamilton UI</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="user_guide.html">User guide</a></li>
@@ -158,41 +160,42 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>run.py
 </pre></div>
 </div>
-</section>
-<section id="run-using-the-dagworks-platform">
-<h2>Run using the <a class="reference external" href="app.dagworks.io">DAGWorks Platform</a><a class="headerlink" href="#run-using-the-dagworks-platform" title="Link to this heading"></a></h2>
-<p>Set the DAGWorks API Key as an environment variable:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">DAGWORKS_API_KEY</span><span class="o">=</span><span class="s2">&quot;&lt;your API Key&gt;&quot;</span>
+<section id="track-execution-with-the-hamilton-ui">
+<h3>Track execution with the <a class="reference external" href="https://github.com/dagworks-inc/hamilton/tree/main/ui">Hamilton UI</a><a class="headerlink" href="#track-execution-with-the-hamilton-ui" title="Link to this heading"></a></h3>
+<p>If you would like to track the execution of the <cite>naturf</cite> workflow, there is an interactive UI
+available that allows you to track the progress of the workflow, view logs, and capture summary statistics of outputs.</p>
+<ol class="arabic simple">
+<li><p>Pre-requisites:</p></li>
+</ol>
+<ul>
+<li><p>Have the self-hosted Hamilton UI running and you have created a user and project. If not, follow the instructions in the <a class="reference external" href="https://github.com/dagworks-inc/hamilton/tree/main/ui">Hamilton UI README</a>.</p></li>
+<li><p>Or, have a free account on <a class="reference external" href="https://www.dagworks.io/hamilton">DAGWorks Inc.</a>, and have created a project and an API Key.</p></li>
+<li><p>Have the right SDK installed. If not, install it using the following command:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>sf-hamilton<span class="o">[</span>sdk<span class="o">]</span><span class="w">  </span><span class="c1"># if self-hosting the Hamilton UI</span>
+$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>dagworks-sdk<span class="w">  </span><span class="c1"># if using the hosted Hamilton UI via DAGWorks Inc.</span>
 </pre></div>
 </div>
-<p>Start with the <cite>run.py</cite> file from above (using either the example data or your own data) and add the following. Import os and DAGWorks adapters, which contains the tracker:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">dagworks</span> <span class="kn">import</span> <span class="n">adapters</span>
+</div></blockquote>
+</li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p>Set the requisite environment variables:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">HAMILTON_UI_USERNAME</span><span class="o">=</span><span class="s2">&quot;&lt;your username&gt;&quot;</span>
+$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">HAMILTON_UI_PROJECT_ID</span><span class="o">=</span><span class="s2">&quot;&lt;your project ID&gt;&quot;</span>
+$<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">DAGWORKS_API_KEY</span><span class="o">=</span><span class="s2">&quot;&lt;your DAGWorks API key&gt;&quot;</span><span class="w">  </span><span class="c1"># set this is you are using the hosted Hamilton UI via DAGWorks Inc.</span>
 </pre></div>
 </div>
-<p>Initialize the DAGWorks tracker:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">tracker</span> <span class="o">=</span> <span class="n">adapters</span><span class="o">.</span><span class="n">DAGWorksTracker</span><span class="p">(</span>
-        <span class="n">project_id</span><span class="o">=&lt;</span><span class="n">your</span> <span class="n">project</span> <span class="n">ID</span><span class="o">&gt;</span><span class="p">,</span>
-        <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DAGWORKS_API_KEY&quot;</span><span class="p">],</span>
-        <span class="n">username</span><span class="o">=</span><span class="s2">&quot;&lt;your username&gt;&quot;</span><span class="p">,</span>
-        <span class="n">dag_name</span><span class="o">=</span><span class="s2">&quot;&lt;name of the DAG&gt;&quot;</span><span class="p">,</span>
-        <span class="n">tags</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;environment&quot;</span><span class="p">:</span> <span class="s2">&quot;DEV&quot;</span><span class="p">,</span> <span class="s2">&quot;team&quot;</span><span class="p">:</span> <span class="s2">&quot;MY_TEAM&quot;</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;X&quot;</span><span class="p">},</span>
-    <span class="p">)</span>
-</pre></div>
-</div>
-<p>Add <cite>tracker</cite> to the <cite>hamilton_adaptors</cite> list:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">hamilton_adapters</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">base</span><span class="o">.</span><span class="n">SimplePythonDataFrameGraphAdapter</span><span class="p">(),</span>
-            <span class="n">h_tqdm</span><span class="o">.</span><span class="n">ProgressBar</span><span class="p">(</span><span class="s2">&quot;Naturf DAG&quot;</span><span class="p">),</span>
-            <span class="n">tracker</span><span class="p">,</span>
-        <span class="p">]</span>
-</pre></div>
-</div>
-<p>Run the python file!</p>
+<ol class="arabic simple" start="3">
+<li><p>Run the python file (again)!</p></li>
+</ol>
+<p>Underneath, in naturf driver, the correct SDK will be invoked and the execution will be tracked on the Hamilton UI.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>python<span class="w"> </span>run.py
 </pre></div>
 </div>
-<p>You should see a run on the <a class="reference external" href="app.dagworks.io">DAGWorks Platform</a>!</p>
+<p>You should see logs emitted that provide a URL to click to see execution!</p>
+</section>
 </section>
 </section>
 
