@@ -35,7 +35,7 @@ class Model:
                 # dagworks-sdk not installed
                 pass
             else:
-                hamilton_adapters.append(
+                hamilton_adapters.append(  # pragma: no cover
                     adapters.DAGWorksTracker(
                         project_id=int(HAMILTON_UI_PROJECT_ID),
                         api_key=DAGWORKS_API_KEY,
@@ -52,7 +52,7 @@ class Model:
                 # hamilton-sdk not installed
                 pass
             else:
-                hamilton_adapters.append(
+                hamilton_adapters.append(  # pragma: no cover
                     adapters.HamiltonTracker(
                         project_id=int(HAMILTON_UI_PROJECT_ID),
                         username=HAMILTON_UI_USERNAME,
