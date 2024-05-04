@@ -9,8 +9,9 @@ import naturf.nodes as nodes
 import naturf.output as output
 
 DAGWORKS_API_KEY = os.environ.get("DAGWORKS_API_KEY")
-DAGWORKS_USERNAME = os.environ.get("DAGWORKS_USERNAME")
-DAGWORKS_PROJECT_ID = os.environ.get("DAGWORKS_PROJECT_ID")
+HAMILTON_UI_PROJECT_ID = os.environ.get("HAMILTON_UI_PROJECT_ID")
+HAMILTON_UI_USERNAME = os.environ.get("HAMILTON_UI_USERNAME")
+ENV = os.environ.get("ENV", "dev")
 
 
 class Model:
@@ -26,18 +27,39 @@ class Model:
             base.SimplePythonDataFrameGraphAdapter(),
             h_tqdm.ProgressBar("Naturf DAG"),
         ]
-        if DAGWORKS_API_KEY and DAGWORKS_USERNAME and DAGWORKS_PROJECT_ID:
-            from dagworks import adapters
-
-            hamilton_adapters.append(
-                adapters.DAGWorksTracker(
-                    project_id=int(DAGWORKS_PROJECT_ID),
-                    api_key=DAGWORKS_API_KEY,
-                    username=DAGWORKS_USERNAME,
-                    dag_name="naturf-dag",
-                    tags={"env": "dev", "status": "development", "version": "1"},
+        # use the hosted version (there's a free tier) of the Hamilton UI to log telemetry to.
+        if DAGWORKS_API_KEY and HAMILTON_UI_USERNAME and HAMILTON_UI_PROJECT_ID:
+            try:
+                from dagworks import adapters
+            except ImportError:
+                # dagworks-sdk not installed
+                pass
+            else:
+                hamilton_adapters.append(
+                    adapters.DAGWorksTracker(
+                        project_id=int(HAMILTON_UI_PROJECT_ID),
+                        api_key=DAGWORKS_API_KEY,
+                        username=HAMILTON_UI_USERNAME,
+                        dag_name="naturf-dag",
+                        tags={"env": ENV},
+                    )
                 )
-            )
+        # use the self-hosted version of the Hamilton UI to log telemetry to.
+        elif HAMILTON_UI_USERNAME and HAMILTON_UI_PROJECT_ID:
+            try:
+                from hamilton_sdk import adapters
+            except ImportError:
+                # hamilton-sdk not installed
+                pass
+            else:
+                hamilton_adapters.append(
+                    adapters.HamiltonTracker(
+                        project_id=int(HAMILTON_UI_PROJECT_ID),
+                        username=HAMILTON_UI_USERNAME,
+                        dag_name="naturf-dag",
+                        tags={"env": ENV},
+                    )
+                )
 
         # instantiate driver with function definitions & adapters
         self.dr = (

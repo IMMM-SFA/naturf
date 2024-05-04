@@ -71,53 +71,37 @@ This will run all functions required to create the output specified in the `run.
     $ python run.py
 
 
-Run using the `DAGWorks Platform <app.dagworks.io>`_
-----------------------------------------------------
+Track execution with the `Hamilton UI <https://github.com/dagworks-inc/hamilton/tree/main/ui>`_
+___________________________________________________________________________________________________________
+If you would like to track the execution of the `naturf` workflow, there is an interactive UI
+available that allows you to track the progress of the workflow, view logs, and capture summary statistics of outputs.
 
-Set the DAGWorks API Key as an environment variable:
+1. Pre-requisites:
+
+* Have the self-hosted Hamilton UI running and you have created a user and project. If not, follow the instructions in the `Hamilton UI README <https://github.com/dagworks-inc/hamilton/tree/main/ui>`_.
+* Or, have a free account on `DAGWorks Inc. <https://www.dagworks.io/hamilton>`_, and have created a project and an API Key.
+* Have the right SDK installed. If not, install it using the following command:
+
+    .. code:: bash
+
+        $ pip install sf-hamilton[sdk]  # if self-hosting the Hamilton UI
+        $ pip install dagworks-sdk  # if using the hosted Hamilton UI via DAGWorks Inc.
+
+
+2. Set the requisite environment variables:
 
 .. code:: bash
 
-    $ export DAGWORKS_API_KEY="<your API Key>"
+    $ export HAMILTON_UI_USERNAME="<your username>"
+    $ export HAMILTON_UI_PROJECT_ID="<your project ID>"
+    $ export DAGWORKS_API_KEY="<your DAGWorks API key>"  # set this is you are using the hosted Hamilton UI via DAGWorks Inc.
 
+3. Run the python file (again)!
 
-Start with the `run.py` file from above (using either the example data or your own data) and add the following. Import os and DAGWorks adapters, which contains the tracker:
-
-.. code:: python3
-
-    import os
-    from dagworks import adapters
-
-
-Initialize the DAGWorks tracker:
-
-.. code:: python3
-
-    tracker = adapters.DAGWorksTracker(
-            project_id=<your project ID>,
-            api_key=os.environ["DAGWORKS_API_KEY"],
-            username="<your username>",
-            dag_name="<name of the DAG>",
-            tags={"environment": "DEV", "team": "MY_TEAM", "version": "X"},
-        )
-
-
-Add `tracker` to the `hamilton_adaptors` list:
-
-.. code:: python3
-
-    hamilton_adapters = [
-                base.SimplePythonDataFrameGraphAdapter(),
-                h_tqdm.ProgressBar("Naturf DAG"),
-                tracker,
-            ]
-
-
-Run the python file!
+Underneath, in naturf driver, the correct SDK will be invoked and the execution will be tracked on the Hamilton UI.
 
 .. code:: bash
 
     $ python run.py
 
-
-You should see a run on the `DAGWorks Platform <app.dagworks.io>`_!
+You should see logs emitted that provide a URL to click to see execution!
