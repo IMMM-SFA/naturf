@@ -14,18 +14,17 @@ authors = [
   { name="Levi Sweet-Breu", email="levi_sweetbreu1@baylor.edu" },
   { name="Melissa Allen-Dumas", email="allenmr@ornl.gov" },
   { name="Chris Vernon", email="chris.vernon@pnnl.gov" },
+  { name="Stefan Krawczyk", email="stefan@dagworks.io" },
 ]
 
 classifiers = [
-  "License :: OSI Approved :: BSD License",
+  "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
-
 ]
 
 dependencies = [
