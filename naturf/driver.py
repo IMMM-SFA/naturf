@@ -82,7 +82,10 @@ class Model:
         """Show the DAG. Return the graph object for the given inputs to execute."""
 
         return self.dr.visualize_execution(
-            final_vars=self.outputs, inputs=self.inputs, output_file_path=output_file_path, render_kwargs={"view": view}
+            final_vars=self.outputs,
+            inputs=self.inputs,
+            output_file_path=output_file_path,
+            render_kwargs={"view": view},
         )
 
     def list_parameters(self):
