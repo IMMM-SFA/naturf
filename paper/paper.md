@@ -45,7 +45,7 @@ Similar to NATURF, the open-source toolbox GeoClimate [@bocher2021geoclimate] ai
 # Design and Functionality
 NATURF uses *hamilton* for organization and visualization of its workflow. Function names become inputs to other functions, allowing for a delineation of dependencies for every function. This code format allows for easier troubleshooting and visualization of the workflow (See \autoref{fig:dag}). Additionally, *hamilton* allows for the calculation of a specified subset of variables if the entire workflow is not desired. The calculation of parameters itself is done through *geopandas*. The input shapefile is loaded in as a GeoDataFrame that can handle calculation of parameters for each building in one process as opposed to using long "for" or "while" loops. Likewise, the geospatial features of *geopandas* are conducive to calculating the urban parameters for NATURF which are based on the geometry of each building and its neighbors. \autoref{fig:bldg_ht} shows one of these parameters, mean building height at 100 meter resolution over Los Angeles County, California, USA using open-source building data from Model America [@modelamerica]. The calculated urban parameters can be found [here](https://doi.org/10.57931/2349436) [@urbparams].
 
-![NATURF workflow visualization. Desired variables can be specified as inputs and all dependent functions will be executed. \label{fig:dag}](figure_1.png)
+![NATURF workflow visualization. Desired variables can be specified as inputs and all dependent functions will be executed. \label{fig:dag}](figure_1.pdf)
 
 ![Average building height at 100 meter resolution for Los Angeles. \label{fig:bldg_ht}](figure_2.png)
 
