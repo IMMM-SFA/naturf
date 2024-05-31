@@ -2,6 +2,7 @@
 [![codecov](https://codecov.io/gh/IMMM-SFA/naturf/graph/badge.svg?token=SoIfjdS6BL)](https://codecov.io/gh/IMMM-SFA/naturf)
 [![build](https://github.com/IMMM-SFA/naturf/actions/workflows/build.yml/badge.svg)](https://github.com/IMMM-SFA/naturf/actions/workflows/build.yml)
 [![Deploy Documentation](https://github.com/IMMM-SFA/naturf/actions/workflows/deploy.yml/badge.svg)](https://github.com/IMMM-SFA/naturf/actions/workflows/deploy.yml)
+[![JOSS](https://joss.theoj.org/papers/e52937327089a970773a331a5cf643fd/status.svg)](https://joss.theoj.org/papers/e52937327089a970773a331a5cf643fd)
 
 # naturf
 
