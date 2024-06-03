@@ -1,5 +1,5 @@
-cff-version: 1.0.3
-message: "If you use this software in your work, please cite it using the following metadata"
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
 authors:
   - family-names: Allen-Dumas
     given-names: Melissa R.
@@ -15,5 +15,7 @@ authors:
     orcid: "https://orcid.org/0000-0002-3406-6214"
 
 title: "naturf: a package for generating urban parameters for numerical weather modeling"
+version: 1.0.3
 doi: 10.5281/zenodo.7036191
+date-released: 2024-06-03
 url: "https://github.com/IMMM-SFA/naturf"

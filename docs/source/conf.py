@@ -13,7 +13,7 @@
 import os
 import sys
 
-version = "1.0.2"
+version = "1.0.3"
 
 sys.path.insert(0, os.path.abspath("../../"))
 

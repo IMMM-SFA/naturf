@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "naturf"
-version = "1.0.2"
+version = "1.0.3"
 description = 'The Neighborhood Adaptive Tissues for Urban Resilience Futures tool (NATURF) is a Python workflow that generates data readable by the Weather Research and Forecasting (WRF) model. The NATURF Python modules use shapefiles containing building footprint and height data as input to calculate 132 building parameters at any resolution and converts the parameters into a binary file format.'
 readme = "README.md"
 requires-python = ">=3.9"
