@@ -50,9 +50,13 @@ $ cd /PATH/TO/NATURF
 $ pre-commit install
 ```
 
-### Code citation
+### Data Products and other citations
 
-> Allen-Dumas, Melissa Ree, Sweet-Breu, Levi, Seals, Matthew, Berres, Andy, Vernon, Chris R., Rexer, Emily, and USDOE Office of Science. NATURF. Computer software. https://www.osti.gov//servlets/purl/1879628. Vers. 0. USDOE Office of Science (SC), Biological and Environmental Research (BER). Earth and Environmental Systems Science Division. 31 Aug. 2022. Web. doi:10.11578/dc.20220803.4.
+> Allen-Dumas, Melissa R., Sweet-Breu, Levi, Rexer, Emily, and Vernon, Chris. Neighborhood Adaptive Tissues for Urban Resilience Futures (NATURF) V1.0. Computer Software. https://github.com/IMMM-SFA/naturf. USDOE Office of Science (SC), Biological and Environmental Research (BER). Earth & Environmental Systems Science (EESS). 03 Jun. 2024. Web. doi:10.11578/dc.20240531.1.
+
+> Sweet-Breu, L., & Allen-Dumas, M. (2024). Urban Parameters LA County 100m (Version v1) [Data set]. MSD-LIVE Data Repository. https://doi.org/10.57931/2349436
+
+> Allen-Dumas M ; Sweet-Breu L (2024): Urban Parameters Maricopa County 100m Grid Spacing. Southwest Urban Corridor Integrated Field Laboratory (SW-IFL), ESS-DIVE repository. Dataset. ess-dive-b6200929fa5b268-20240604T184443135 accessed via https://data.ess-dive.lbl.gov/datasets/ess-dive-b6200929fa5b268-20240604T184443135 on 2024-06-04.
 
 ### Sample data citation
 
