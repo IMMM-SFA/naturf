@@ -110,7 +110,7 @@ class TestNodes(unittest.TestCase):
                 "building_height_target": building_height,
                 "building_area_target": building_area,
                 "building_geometry": building_geometry,
-                "building_buffered": gpd.GeoSeries(total_plan_area_geometry_no_overlap),
+                "building_buffered_target": gpd.GeoSeries(total_plan_area_geometry_no_overlap),
                 "wall_length_north_target": wall_length_north,
                 "wall_length_east_target": wall_length_east,
                 "wall_length_south_target": wall_length_south,
@@ -142,7 +142,7 @@ class TestNodes(unittest.TestCase):
                         building_geometry[1],
                     ]
                 ),
-                "building_buffered": gpd.GeoSeries(
+                "building_buffered_target": gpd.GeoSeries(
                     [
                         total_plan_area_geometry_some_overlap[0],
                         total_plan_area_geometry_some_overlap[1],
@@ -195,7 +195,7 @@ class TestNodes(unittest.TestCase):
                         building_geometry[1],
                     ]
                 ),
-                "building_buffered": gpd.GeoSeries(
+                "building_buffered_target": gpd.GeoSeries(
                     [
                         total_plan_area_geometry_total_overlap[0],
                         total_plan_area_geometry_total_overlap[1],
@@ -301,7 +301,7 @@ class TestNodes(unittest.TestCase):
                 "building_height_target": building_height,
                 "building_area_target": building_area,
                 "building_geometry": building_geometry,
-                "building_buffered": gpd.GeoSeries(total_plan_area_geometry_no_overlap),
+                "building_buffered_target": gpd.GeoSeries(total_plan_area_geometry_no_overlap),
                 "index_neighbor": building_id,
                 "building_height_neighbor": building_height,
                 "building_area_neighbor": building_area,
@@ -325,7 +325,7 @@ class TestNodes(unittest.TestCase):
                         building_geometry[1],
                     ]
                 ),
-                "building_buffered": gpd.GeoSeries(
+                "building_buffered_target": gpd.GeoSeries(
                     [
                         total_plan_area_geometry_some_overlap[0],
                         total_plan_area_geometry_some_overlap[1],
@@ -370,7 +370,7 @@ class TestNodes(unittest.TestCase):
                         building_geometry[1],
                     ]
                 ),
-                "building_buffered": gpd.GeoSeries(
+                "building_buffered_target": gpd.GeoSeries(
                     [
                         total_plan_area_geometry_total_overlap[0],
                         total_plan_area_geometry_total_overlap[1],
