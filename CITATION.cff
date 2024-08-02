@@ -15,7 +15,7 @@ authors:
     orcid: "https://orcid.org/0000-0002-3406-6214"
 
 title: "naturf: a package for generating urban parameters for numerical weather modeling"
-version: 1.0.3
+version: 1.0.4
 doi: 10.5281/zenodo.7036191
 date-released: 2024-06-03
 url: "https://github.com/IMMM-SFA/naturf"
