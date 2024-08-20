@@ -1,14 +1,36 @@
+# Stage 1: Build Stage
+FROM quay.io/jupyter/minimal-notebook as builder
+
+USER root
+
+RUN apt-get update
+
+# Set up GDAL so users on ARM64 architectures can build the Fiona wheels
+ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
+ENV C_INCLUDE_PATH=/usr/include/gdal
+RUN apt-get install -y \
+    build-essential \
+    gdal-bin \
+    libgdal-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install naturf
+RUN pip install --upgrade pip
+RUN pip install naturf
+
+# Stage 2: Final Stage
 FROM quay.io/jupyter/minimal-notebook
 
 USER root
 
-RUN apt update
-RUN apt install -y graphviz
-RUN apt install -y wget
+# Install graphviz
+RUN apt-get update
+RUN apt-get install -y graphviz
 
-RUN python -m pip install --upgrade pip
-RUN python -m pip install naturf
+# Copy python packages installed/built from the builder stage
+COPY --from=builder /opt/conda/lib/python3.11/site-packages /opt/conda/lib/python3.11/site-packages
 
-RUN wget https://raw.githubusercontent.com/IMMM-SFA/naturf/main/notebooks/quickstarter.ipynb
-
-RUN rm -rf work
+# To test this container locally, run:
+# docker build -t naturf .
+# docker run --rm -p 8888:8888 naturf
