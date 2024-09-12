@@ -8,9 +8,9 @@ naturf documentation
 **Useful links**:
 `Source Repository <https://github.com/immm-sfa/naturf>`_ |
 `Issues & Ideas <https://github.com/immm-sfa/naturf/issues>`_ |
-`Interactive Quickstarter <quickstarter.rst>`_
+`Interactive Quickstarter <https://naturf.msdlive.org/>`_
 
-**naturf** is an open-source geospatial Python package for calculating urban building parameters to be compiled and input to the Weather Research and Forecasting model (WRF).  **naturf** was created to:
+**naturf** is an open-source geospatial Python package for calculating urban building parameters to be compiled and input to the Weather Research and Forecasting model (WRF). **naturf** was created to:
 
  1) Calculate 132 urban parameters based on building footprints and height,
 
@@ -34,9 +34,9 @@ The Neighborhood Adaptive Tissues for Urban Resilience Futures tool (**naturf**)
         :img-top: _static/index_quickstarter.svg
         :text-align: center
 
-        New to **naturf**?  Follow the quickstarter for a quick start.
+        New to **naturf**? Run the quickstarter in your browser.
 
-        .. button-ref:: quickstarter
+        .. button-ref:: https://naturf.msdlive.org/
                 :click-parent:
                 :color: primary
                 :expand:
