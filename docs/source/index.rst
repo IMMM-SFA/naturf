@@ -36,7 +36,7 @@ The Neighborhood Adaptive Tissues for Urban Resilience Futures tool (**naturf**)
 
         New to **naturf**? Run the quickstarter in your browser.
 
-        .. button-ref:: https://naturf.msdlive.org/
+        .. button-link:: https://naturf.msdlive.org/
                 :click-parent:
                 :color: primary
                 :expand:
