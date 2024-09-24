@@ -2,13 +2,16 @@
 Quickstarter
 ============
 
+.. note::
+   `Run the interactive Quickstarter in browser! <https://naturf.msdlive.org/>`_
+
+
+Continue below to run `naturf` using a python file.
 
 Input data
 ----------
 
 The only input data required for `naturf` is a shapefile with building footprints and height data. There should be a field with a unique ID for each building the shapefile, and it should be in a projected coordinate system such as Alber Equal Area Conic. For input to the Weather Research and Forecasting model (WRF), the computed parameters for each building will be projected into WGS 84.
-
-Either run the ipynb `quickstarter <https://github.com/IMMM-SFA/naturf/blob/main/notebooks/quickstarter.ipynb>`_, or continue below to run `naturf` using a python file.
 
 .. note::
     Users need to `download graphviz <https://graphviz.org/download/>`_ to visualize the Directed Acyclic Graph (DAG).
