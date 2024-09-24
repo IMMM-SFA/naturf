@@ -28,14 +28,16 @@ The Neighborhood Adaptive Tissues for Urban Resilience Futures tool (**naturf**)
 
 
 .. grid:: 2
-    :gutter: 4
+    :gutter: 5
 
     .. grid-item-card::  Quickstarter
         :img-top: _static/index_quickstarter.svg
+        :class-img-top: sd-px-5, sd-py-5
         :text-align: center
 
         New to **naturf**? Run the quickstarter in your browser.
 
+        +++
         .. button-link:: https://naturf.msdlive.org/
                 :click-parent:
                 :color: primary
@@ -45,11 +47,13 @@ The Neighborhood Adaptive Tissues for Urban Resilience Futures tool (**naturf**)
 
     .. grid-item-card:: User Guide
         :img-top: _static/index_user_guide.svg
+        :class-img-top: sd-px-5, sd-py-5
         :text-align: center
 
         The user guide provides in-depth information on the
         key concepts of **naturf**.
 
+        +++
         .. button-ref:: user_guide
                 :click-parent:
                 :color: primary
@@ -59,12 +63,14 @@ The Neighborhood Adaptive Tissues for Urban Resilience Futures tool (**naturf**)
 
     .. grid-item-card:: API Reference
         :img-top: _static/index_api.svg
+        :class-img-top: sd-px-5, sd-py-5
         :text-align: center
 
         The reference guide contains a detailed description of
         the **naturf** API. The reference describes how the methods
         work and which parameters can be used.
 
+        +++
         .. button-ref:: naturf
                 :click-parent:
                 :color: primary
@@ -74,12 +80,14 @@ The Neighborhood Adaptive Tissues for Urban Resilience Futures tool (**naturf**)
 
     .. grid-item-card:: Contributing to naturf
         :img-top: _static/index_contribute.svg
+        :class-img-top: sd-px-5, sd-py-5
         :text-align: center
 
         Saw a typo in the documentation? Want to improve
         existing functionalities? The contributing guidelines will guide
         you through the process of improving **naturf**.
 
+        +++
         .. button-ref:: contributing
                 :click-parent:
                 :color: primary
