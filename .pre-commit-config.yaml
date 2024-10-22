@@ -7,24 +7,24 @@
 repos:
 -   repo: https://github.com/charliermarsh/ruff-pre-commit
     # Ruff version.
-    rev: v0.1.7
+    rev: v0.6.9
     hooks:
         - id: ruff
           args: [ --fix, --exit-non-zero-on-fix ]
           exclude: .rst
 -   repo: https://github.com/ambv/black
-    rev: 23.11.0
+    rev: 24.10.0
     hooks:
     - id: black
       args: [--line-length=100]
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v5.0.0
     hooks:
     # Trims trailing whitespace.
     -   id: trailing-whitespace
     # Makes sure files end in a newline and only a newline.
     -   id: end-of-file-fixer
-    # sorts requirements
-    -   id: requirements-txt-fixer
+    # valid yaml file
+    -   id: check-ast
     # valid python file
     -   id: check-ast
