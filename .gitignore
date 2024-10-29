@@ -10,7 +10,8 @@ docs/build/
 .python-version
 
 # virtual environments
-venv/
+venv*/
+.venv*
 
 # jupyter
 .ipynb_checkpoints
