@@ -1,5 +1,5 @@
 # Stage 1: Build Stage
-FROM quay.io/jupyter/minimal-notebook as builder
+FROM ghcr.io/msd-live/jupyter/python-notebook:latest as builder
 
 USER root
 
@@ -20,7 +20,7 @@ RUN pip install --upgrade pip
 RUN pip install naturf
 
 # Stage 2: Final Stage
-FROM quay.io/jupyter/minimal-notebook
+FROM ghcr.io/msd-live/jupyter/python-notebook:latest
 
 USER root
 
