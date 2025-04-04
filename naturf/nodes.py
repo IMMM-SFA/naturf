@@ -11,7 +11,7 @@ from shapely.geometry import Polygon, MultiPolygon
 from shapely.geometry.base import BaseGeometry
 from joblib import Parallel, delayed
 
-from .config import Settings 
+from .config import Settings
 from .utils import log_execution_time
 
 
@@ -215,20 +215,23 @@ def building_plan_area(
     target_id_col = "building_id_target"
     target_buffer_col = "building_buffered_target"
     neighbor_geom_col = "building_geometry_neighbor"
-    area_col = 'intersection_area' # temporary column for calculated area
+    area_col = "intersection_area"  # temporary column for calculated area
 
     # Input validation
     required_columns = [target_id_col, target_buffer_col, neighbor_geom_col]
-    missing_cols = [col for col in required_columns if col not in buildings_intersecting_plan_area.columns]
+    missing_cols = [
+        col for col in required_columns if col not in buildings_intersecting_plan_area.columns
+    ]
     if missing_cols:
         raise ValueError(f"Missing required columns: {', '.join(missing_cols)}")
-        
-    if not hasattr(buildings_intersecting_plan_area[target_buffer_col], 'geom_type') or \
-       not hasattr(buildings_intersecting_plan_area[neighbor_geom_col], 'geom_type'):
+
+    if not hasattr(buildings_intersecting_plan_area[target_buffer_col], "geom_type") or not hasattr(
+        buildings_intersecting_plan_area[neighbor_geom_col], "geom_type"
+    ):
         raise TypeError(f"Columns '{target_buffer_col}' or '{neighbor_geom_col}' not GeoSeries.")
 
     # Work on a copy or directly on the input depending on whether modification is okay
-    gdf = buildings_intersecting_plan_area # Use directly for efficiency if input not needed later
+    gdf = buildings_intersecting_plan_area  # Use directly for efficiency if input not needed later
 
     # Calculate intersection geometry for each row
     intersection_geoms = gdf[target_buffer_col].intersection(gdf[neighbor_geom_col])
@@ -574,24 +577,23 @@ def frontal_length(
 
     # Input validation
     required_columns = [grouping_col, col_north, col_east, col_south, col_west]
-    missing_cols = [col for col in required_columns if col not in buildings_intersecting_plan_area.columns]
+    missing_cols = [
+        col for col in required_columns if col not in buildings_intersecting_plan_area.columns
+    ]
     if missing_cols:
-        raise ValueError(f"Missing required columns in input GeoDataFrame: {', '.join(missing_cols)}")
+        raise ValueError(
+            f"Missing required columns in input GeoDataFrame: {', '.join(missing_cols)}"
+        )
 
     # Define the aggregation operations
     # We want to sum each of the directional wall length columns
-    aggregations = {
-        col_north: 'sum',
-        col_east: 'sum',
-        col_south: 'sum',
-        col_west: 'sum'
-    }
+    aggregations = {col_north: "sum", col_east: "sum", col_south: "sum", col_west: "sum"}
 
     # Perform the groupby and aggregation
     # Group by the target building ID, then apply the sum aggregation
-    frontal_lengths_grouped = buildings_intersecting_plan_area.groupby(
-        grouping_col
-    ).agg(aggregations)
+    frontal_lengths_grouped = buildings_intersecting_plan_area.groupby(grouping_col).agg(
+        aggregations
+    )
 
     # Rename the resulting columns to the final desired names
     rename_map = {
@@ -1134,37 +1136,46 @@ def _get_polygon_segment_properties(polygon: Polygon) -> tuple[list, list, list]
     """
     Calculate the angles, directions, and lengths of each segment of a polygon's exterior.
 
-    This function processes the exterior coordinates of a given polygon to determine the 
-    angle in degrees, cardinal direction, and length of each segment. The direction is 
+    This function processes the exterior coordinates of a given polygon to determine the
+    angle in degrees, cardinal direction, and length of each segment. The direction is
     determined based on predefined degree ranges specified in the Settings.
 
     :param polygon: A Shapely Polygon object whose exterior segments are to be analyzed.
     :type polygon: Polygon
 
-    :return: A tuple containing three lists: angles (in degrees), directions (as strings), 
+    :return: A tuple containing three lists: angles (in degrees), directions (as strings),
              and lengths (as floats) for each segment of the polygon's exterior.
     :rtype: tuple[list, list, list]
     """
     angles, directions, lengths = [], [], []
     coords = list(polygon.exterior.coords)
 
-    if len(coords) < 2: 
+    if len(coords) < 2:
         return angles, directions, lengths
 
     for i in range(len(coords) - 1):
 
-        x1, y1 = coords[i]; x2, y2 = coords[i+1]
-        if x1 == x2 and y1 == y2: continue
+        x1, y1 = coords[i]
+        x2, y2 = coords[i + 1]
+        if x1 == x2 and y1 == y2:
+            continue
         angle_rad = np.arctan2(y2 - y1, x2 - x1)
         angle_deg = np.degrees(angle_rad)
-        length = np.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+        length = np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
         # Determine direction
-        if Settings.NORTHEAST_DEGREES <= angle_deg < Settings.NORTHWEST_DEGREES: direction = Settings.WEST
-        elif Settings.SOUTHEAST_DEGREES_ARCTAN <= angle_deg < Settings.NORTHEAST_DEGREES: direction = Settings.NORTH
-        elif Settings.SOUTHWEST_DEGREES_ARCTAN <= angle_deg < Settings.SOUTHEAST_DEGREES_ARCTAN: direction = Settings.EAST
-        else: direction = Settings.SOUTH
-        angles.append(angle_deg); directions.append(direction); lengths.append(length)
+        if Settings.NORTHEAST_DEGREES <= angle_deg < Settings.NORTHWEST_DEGREES:
+            direction = Settings.WEST
+        elif Settings.SOUTHEAST_DEGREES_ARCTAN <= angle_deg < Settings.NORTHEAST_DEGREES:
+            direction = Settings.NORTH
+        elif Settings.SOUTHWEST_DEGREES_ARCTAN <= angle_deg < Settings.SOUTHEAST_DEGREES_ARCTAN:
+            direction = Settings.EAST
+        else:
+            direction = Settings.SOUTH
+
+        angles.append(angle_deg)
+        directions.append(direction)
+        lengths.append(length)
 
     return angles, directions, lengths
 
@@ -1173,14 +1184,14 @@ def _process_single_geometry(geom: BaseGeometry | None) -> dict:
     """
     Process a single geometry object to extract wall angles, directions, and lengths.
 
-    This function handles both Polygon and MultiPolygon geometries, extracting the 
-    angles, cardinal directions, and lengths of each segment of the geometry's exterior. 
+    This function handles both Polygon and MultiPolygon geometries, extracting the
+    angles, cardinal directions, and lengths of each segment of the geometry's exterior.
     It is designed to be used with parallel processing via joblib.Parallel.
 
     :param geom: A geometry object which can be a Polygon, MultiPolygon, or None.
     :type geom: BaseGeometry or None
 
-    :return: A dictionary containing lists of wall angles, directions, and lengths. 
+    :return: A dictionary containing lists of wall angles, directions, and lengths.
              If the geometry is None or invalid, the lists will be empty.
     :rtype: dict
     """
@@ -1191,7 +1202,7 @@ def _process_single_geometry(geom: BaseGeometry | None) -> dict:
         return {
             Settings.WALL_ANGLE: building_angles,
             Settings.WALL_DIRECTION: building_directions,
-            Settings.WALL_LENGTH: building_lengths
+            Settings.WALL_LENGTH: building_lengths,
         }
 
     # Process Polygon or MultiPolygon
@@ -1212,7 +1223,7 @@ def _process_single_geometry(geom: BaseGeometry | None) -> dict:
     return {
         Settings.WALL_ANGLE: building_angles,
         Settings.WALL_DIRECTION: building_directions,
-        Settings.WALL_LENGTH: building_lengths
+        Settings.WALL_LENGTH: building_lengths,
     }
 
 
@@ -1221,18 +1232,18 @@ def wall_angle_direction_length(building_geometry: pd.Series, n_jobs: int = -1) 
     """
     Computes the wall angle, direction, and length for each building in a given GeoPandas GeoSeries.
 
-    This function processes each building's geometry to determine the angles, cardinal directions, 
-    and lengths of its walls. It utilizes parallel processing to enhance performance, especially 
+    This function processes each building's geometry to determine the angles, cardinal directions,
+    and lengths of its walls. It utilizes parallel processing to enhance performance, especially
     with large datasets.
 
     :param building_geometry: A series containing the geometries of buildings.
     :type building_geometry: pd.Series
 
-    :param n_jobs: The number of CPU cores to use for parallel processing. Defaults to -1, which 
+    :param n_jobs: The number of CPU cores to use for parallel processing. Defaults to -1, which
                    uses all available cores. If set to a value less than 1, it defaults to 1 core.
     :type n_jobs: int
 
-    :return: A DataFrame where each row corresponds to a building and contains lists of wall angles, 
+    :return: A DataFrame where each row corresponds to a building and contains lists of wall angles,
              directions, and lengths.
     :rtype: pd.DataFrame
 
@@ -1248,9 +1259,9 @@ def wall_angle_direction_length(building_geometry: pd.Series, n_jobs: int = -1) 
     if n_jobs == -1:
         num_cores = multiprocessing.cpu_count()
     elif n_jobs < 1:
-         num_cores = 1 # Ensure at least 1 core
+        num_cores = 1  # Ensure at least 1 core
     else:
-         num_cores = min(n_jobs, multiprocessing.cpu_count())
+        num_cores = min(n_jobs, multiprocessing.cpu_count())
 
     results_list = Parallel(n_jobs=num_cores)(
         delayed(_process_single_geometry)(geom) for geom in building_geometry
