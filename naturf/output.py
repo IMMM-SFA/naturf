@@ -32,7 +32,8 @@ def aggregate_rasters(rasterize_parameters: xr.Dataset) -> xr.Dataset:
     """
 
     return (rasterize_parameters / rasterize_parameters["building_count"]).fillna(0)
-
+    x = (rasterize_parameters / rasterize_parameters["building_count"]).fillna(0)
+    
 
 @log_execution_time
 def merge_parameters(

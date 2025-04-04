@@ -192,58 +192,55 @@ def buildings_intersecting_plan_area(
 @log_execution_time
 def building_plan_area(
     buildings_intersecting_plan_area: gpd.GeoDataFrame,
-    join_predicate: str = "intersection",
-    join_rsuffix: str = Settings.NEIGHBOR,
 ) -> pd.Series:
-    """Calculate the building plan area from the GeoDataFrame of buildings intersecting the plan area.
+    """
+    Optimized calculation of building plan area using row-wise intersection
+    and groupby sum.
 
-    :param buildings_intersecting_plan_area:    Geometry field for the neighboring buildings from the spatially
-                                                joined data.
-    :type buildings_intersecting_plan_area:     gpd.GeoDataFrame
+    Calculates the total area of intersection between each target's buffered
+    geometry and all its associated neighbors' original geometries.
 
-    :param join_predicate:                      Selected topology of join.
-                                                DEFAULT: `intersection`
-    :type join_predicate:                       str
-
-    :param join_rsuffix:                        Suffix of the right object in the join.
-                                                DEFAULT: `neighbor`
-    :type join_rsuffix:                         str
-
-    :return:                                    The building plan area for each unique building in the
-                                                `buildings_intersecting_plan_area` GeoDataFrame.
-
+    :param buildings_intersecting_plan_area: GeoDataFrame resulting from sjoin,
+                                             containing target IDs ('building_id_target'),
+                                             target buffered geometry ('building_buffered_target'),
+                                             and neighbor geometry ('building_geometry_neighbor')
+                                             per intersection pair.
+    :type buildings_intersecting_plan_area:  gpd.GeoDataFrame
+    :return:                                 Series indexed by 'building_id_target',
+                                             containing the total summed intersection area.
+    :rtype:                                  pd.Series
     """
 
-    building_plan_area = []
-    index = 0
+    # Define column names
+    target_id_col = "building_id_target"
+    target_buffer_col = "building_buffered_target"
+    neighbor_geom_col = "building_geometry_neighbor"
+    area_col = 'intersection_area' # temporary column for calculated area
 
-    for target_building_id in np.sort(buildings_intersecting_plan_area.building_id_target.unique()):
-        # Get DataFrame with any building that intersects the target_building_id plan area.
-        target_building_gdf = buildings_intersecting_plan_area.loc[
-            buildings_intersecting_plan_area[Settings.TARGET_ID_FIELD] == target_building_id
-        ].reset_index()
+    # Input validation
+    required_columns = [target_id_col, target_buffer_col, neighbor_geom_col]
+    missing_cols = [col for col in required_columns if col not in buildings_intersecting_plan_area.columns]
+    if missing_cols:
+        raise ValueError(f"Missing required columns: {', '.join(missing_cols)}")
+        
+    if not hasattr(buildings_intersecting_plan_area[target_buffer_col], 'geom_type') or \
+       not hasattr(buildings_intersecting_plan_area[neighbor_geom_col], 'geom_type'):
+        raise TypeError(f"Columns '{target_buffer_col}' or '{neighbor_geom_col}' not GeoSeries.")
 
-        # Create GeoDataFrames with building and neighbor info.
-        target_gdf = (
-            target_building_gdf[[Settings.TARGET_ID_FIELD, Settings.TARGET_BUFFERED_FIELD]]
-            .set_geometry(Settings.TARGET_BUFFERED_FIELD)
-            .drop_duplicates()
-        )
-        neighbor_gdf = target_building_gdf[
-            [f"index_{join_rsuffix}", Settings.NEIGHBOR_GEOMETRY_FIELD]
-        ].set_geometry(Settings.NEIGHBOR_GEOMETRY_FIELD)
+    # Work on a copy or directly on the input depending on whether modification is okay
+    gdf = buildings_intersecting_plan_area # Use directly for efficiency if input not needed later
 
-        # Create a new GeoDataFrame with the area of intersection.
-        intersection_gdf = gpd.overlay(
-            target_gdf, neighbor_gdf, how=join_predicate, keep_geom_type=False
-        )
+    # Calculate intersection geometry for each row
+    intersection_geoms = gdf[target_buffer_col].intersection(gdf[neighbor_geom_col])
 
-        # Sum up the area of intersection and add to the output list.
-        building_plan_area.append(intersection_gdf[Settings.DATA_GEOMETRY_FIELD_NAME].area.sum())
+    # Calculate area of each intersection
+    # Assign area directly. Empty or invalid intersections yield area 0.0.
+    gdf[area_col] = intersection_geoms.area
 
-        index += 1
+    # Group by target building ID and sum areas
+    total_plan_area_series = gdf.groupby(target_id_col)[area_col].sum()
 
-    return pd.Series(building_plan_area)
+    return total_plan_area_series
 
 
 @log_execution_time
