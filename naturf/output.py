@@ -1,4 +1,5 @@
 import logging
+import os
 
 import geopandas as gpd
 import numpy as np
@@ -182,29 +183,54 @@ def merge_parameters(
 
 @log_execution_time
 def numpy_to_binary(raster_to_numpy: np.ndarray) -> bytes:
-    """Turn the master numpy array containing all 132 aggregated parameters into a binary stream.
-
-    :param raster_to_numpy:         132 level numpy array with each level being an aggregated parameter.
-    :type raster_to_numpy:          np.ndarray
-
-    :return:                        Binary object containing the parameter data.
     """
+    Optimized conversion of a NumPy array to a binary string of packed big-endian integers.
 
-    master_out = []
+    This version uses NumPy's vectorized `astype` and `tobytes` methods for efficiency.
 
-    for i in range(len(raster_to_numpy)):
-        master_outi = bytes()
-        for j in range(len(raster_to_numpy[i])):
-            for k in range(len(raster_to_numpy[i][j])):
-                master_outi += struct.pack(">i", int(raster_to_numpy[i][j][k]))
-        master_out.append(master_outi)
+    :param raster_to_numpy: Input NumPy array (presumably 3D).
+                            Assumes numeric values that can be represented as int32.
+                            Floats will be truncated towards zero. NaNs will cause an error.
+    :type raster_to_numpy:  np.ndarray
+    :return:                Binary string containing packed data in C-contiguous order.
+    :rtype:                 bytes
+    :raises TypeError:      If input is not a NumPy array.
+    :raises ValueError:     If input contains NaN or values incompatible with int32 conversion.
+    """
+    if not isinstance(raster_to_numpy, np.ndarray):
+        raise TypeError("Input must be a NumPy array.")
 
-    master_out_final = bytes()
+    try:
+        # 1. Define the target NumPy dtype (Big-endian 4-byte signed integer)
+        #    '>' for big-endian, 'i4' for 4-byte signed integer.
+        target_dtype = np.dtype('>i4')
 
-    for i in range(len(master_out)):
-        master_out_final += master_out[i]
+        # 2. Convert the array to the target dtype.
+        #    - This handles the int() conversion and endianness simultaneously.
+        #    - WARNING: If raster_to_numpy contains NaNs, this will raise a ValueError.
+        #      Handle NaNs beforehand if necessary (e.g., using np.nan_to_num(raster_to_numpy, nan=0)
+        #      to replace NaNs with 0 before converting to int).
+        #    - WARNING: If values exceed the range of int32, they will wrap around (standard C behavior).
+        #      Consider using np.clip if you need to limit values before conversion.
+        logger.debug(f"Converting array of shape {raster_to_numpy.shape} and dtype {raster_to_numpy.dtype} to {target_dtype}...")
+        packed_array = raster_to_numpy.astype(target_dtype)
 
-    return master_out_final
+        # 3. Get the bytes directly from the array's data buffer.
+        #    '.tobytes()' is highly efficient. It defaults to C-order flattening.
+        logger.debug("Exporting array data to bytes...")
+        binary_data = packed_array.tobytes()
+
+        return binary_data
+
+    except ValueError as e:
+        logger.error(f"ValueError during dtype conversion. Input might contain NaN or incompatible values: {e}", exc_info=True)
+        raise
+
+    except Exception as e:
+        logger.error(f"An unexpected error occurred during NumPy to binary conversion: {e}", exc_info=True)
+        raise 
+
+
 
 
 @log_execution_time
@@ -322,7 +348,11 @@ def write_index(
 
 
 @log_execution_time
-def write_binary(numpy_to_binary: bytes, raster_to_numpy: np.ndarray) -> None:
+def write_binary(
+    numpy_to_binary: bytes, 
+    raster_to_numpy: np.ndarray,
+    binary_output_directory: str = ""
+) -> None:
     """Write the binary file that will be input to WRF.
 
     :param numpy_to_binary:                 Binary object containing the parameter data.
@@ -330,8 +360,10 @@ def write_binary(numpy_to_binary: bytes, raster_to_numpy: np.ndarray) -> None:
 
     :param raster_to_numpy:                 132 level numpy array with each level being an aggregated parameter.
     :type raster_to_numpy:                  np.ndarray
-    """
 
+    :param binary_output_directory:         Full path to the directory to write the binary file to.
+    :type binary_output_directory:          str
+    """
     rows = raster_to_numpy.shape[1]
     cols = raster_to_numpy.shape[2]
 
@@ -345,6 +377,8 @@ def write_binary(numpy_to_binary: bytes, raster_to_numpy: np.ndarray) -> None:
         first_x_index + "-" + second_x_index + "." + first_y_index + "-" + second_y_index
     )
 
-    with open(out_binary_name, "wb") as tile:
+    out_binary_path = os.path.join(binary_output_directory, out_binary_name)
+
+    with open(out_binary_path, "wb") as tile:
         tile.write(numpy_to_binary)
         tile.close()
