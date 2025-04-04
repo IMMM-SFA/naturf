@@ -533,58 +533,62 @@ def frontal_area_index(frontal_area: pd.DataFrame, total_plan_area: pd.Series) -
 def frontal_length(
     buildings_intersecting_plan_area: gpd.GeoDataFrame,
 ) -> pd.DataFrame:
-    """Calculate the frontal length for each cardinal direction from the GeoDataFrame of buildings intersecting the plan area.
-    `buildings_intersecting_plan_area()` needs to include `wall_length`.
+    """
+    Calculate the total frontal length for each cardinal direction per target building
+    using optimized pandas groupby aggregation.
 
-    :param buildings_intersecting_plan_area:    Geometry field for the neighboring buildings from the spatially
-                                                joined data.
-    :type buildings_intersecting_plan_area:     gpd.GeoDataFrame
+    Requires input GeoDataFrame to have columns like 'wall_length_north_neighbor', etc.,
+    and a column specified by Settings.TARGET_ID_FIELD.
 
-    :return:                                    The frontal area for each cardinal direction for each unique building in the
-                                                `buildings_intersecting_plan_area` GeoDataFrame.
-
+    :param buildings_intersecting_plan_area: GeoDataFrame with target building IDs
+                                             and neighbor wall lengths per direction.
+    :type buildings_intersecting_plan_area:  gpd.GeoDataFrame
+    :return:                                 DataFrame indexed by target_building_id
+                                             with total frontal lengths per direction.
+    :rtype:                                  pd.DataFrame
     """
 
-    number_target_buildings = len(buildings_intersecting_plan_area.building_id_target.unique())
-    frontal_length_north, frontal_length_east, frontal_length_south, frontal_length_west = (
-        [0] * number_target_buildings,
-        [0] * number_target_buildings,
-        [0] * number_target_buildings,
-        [0] * number_target_buildings,
-    )
-    index = 0
+    # Construct the specific column names required based on Settings
+    col_north = f"{Settings.WALL_LENGTH_NORTH}_{Settings.NEIGHBOR}"
+    col_east = f"{Settings.WALL_LENGTH_EAST}_{Settings.NEIGHBOR}"
+    col_south = f"{Settings.WALL_LENGTH_SOUTH}_{Settings.NEIGHBOR}"
+    col_west = f"{Settings.WALL_LENGTH_WEST}_{Settings.NEIGHBOR}"
+    grouping_col = Settings.TARGET_ID_FIELD
 
-    for target_building_id in np.sort(buildings_intersecting_plan_area.building_id_target.unique()):
-        # Get DataFrame with any building that intersects the target_building_id plan area.
-        target_building_gdf = buildings_intersecting_plan_area.loc[
-            buildings_intersecting_plan_area[Settings.TARGET_ID_FIELD] == target_building_id
-        ].reset_index()
+    # Input validation
+    required_columns = [grouping_col, col_north, col_east, col_south, col_west]
+    missing_cols = [col for col in required_columns if col not in buildings_intersecting_plan_area.columns]
+    if missing_cols:
+        raise ValueError(f"Missing required columns in input GeoDataFrame: {', '.join(missing_cols)}")
 
-        # Sum frontal length for each cardinal direction
-        frontal_length_north[index] = target_building_gdf[
-            f"{Settings.WALL_LENGTH_NORTH}_{Settings.NEIGHBOR}"
-        ].sum()
-        frontal_length_east[index] = target_building_gdf[
-            f"{Settings.WALL_LENGTH_EAST}_{Settings.NEIGHBOR}"
-        ].sum()
-        frontal_length_south[index] = target_building_gdf[
-            f"{Settings.WALL_LENGTH_SOUTH}_{Settings.NEIGHBOR}"
-        ].sum()
-        frontal_length_west[index] = target_building_gdf[
-            f"{Settings.WALL_LENGTH_WEST}_{Settings.NEIGHBOR}"
-        ].sum()
+    # Define the aggregation operations
+    # We want to sum each of the directional wall length columns
+    aggregations = {
+        col_north: 'sum',
+        col_east: 'sum',
+        col_south: 'sum',
+        col_west: 'sum'
+    }
 
-        index += 1
+    # Perform the groupby and aggregation
+    # Group by the target building ID, then apply the sum aggregation
+    frontal_lengths_grouped = buildings_intersecting_plan_area.groupby(
+        grouping_col
+    ).agg(aggregations)
 
-    return pd.concat(
-        [
-            pd.Series(frontal_length_north, name=Settings.FRONTAL_LENGTH_NORTH),
-            pd.Series(frontal_length_east, name=Settings.FRONTAL_LENGTH_EAST),
-            pd.Series(frontal_length_south, name=Settings.FRONTAL_LENGTH_SOUTH),
-            pd.Series(frontal_length_west, name=Settings.FRONTAL_LENGTH_WEST),
-        ],
-        axis=1,
-    )
+    # Rename the resulting columns to the final desired names
+    rename_map = {
+        col_north: Settings.FRONTAL_LENGTH_NORTH,
+        col_east: Settings.FRONTAL_LENGTH_EAST,
+        col_south: Settings.FRONTAL_LENGTH_SOUTH,
+        col_west: Settings.FRONTAL_LENGTH_WEST,
+    }
+    frontal_lengths_final = frontal_lengths_grouped.rename(columns=rename_map)
+
+    # drop index
+    frontal_lengths_final.reset_index(inplace=True, drop=True)
+
+    return frontal_lengths_final
 
 
 def grimmond_oke_displacement_height(building_height: pd.Series) -> pd.Series:
@@ -1106,19 +1110,25 @@ def _get_polygon_segment_properties(polygon: Polygon) -> tuple[list, list, list]
     """
     angles, directions, lengths = [], [], []
     coords = list(polygon.exterior.coords)
-    if len(coords) < 2: return angles, directions, lengths
+
+    if len(coords) < 2: 
+        return angles, directions, lengths
+
     for i in range(len(coords) - 1):
+
         x1, y1 = coords[i]; x2, y2 = coords[i+1]
         if x1 == x2 and y1 == y2: continue
         angle_rad = np.arctan2(y2 - y1, x2 - x1)
         angle_deg = np.degrees(angle_rad)
         length = np.sqrt((x2 - x1)**2 + (y2 - y1)**2)
-        # Determine direction based on Settings
+
+        # Determine direction
         if Settings.NORTHEAST_DEGREES <= angle_deg < Settings.NORTHWEST_DEGREES: direction = Settings.WEST
         elif Settings.SOUTHEAST_DEGREES_ARCTAN <= angle_deg < Settings.NORTHEAST_DEGREES: direction = Settings.NORTH
         elif Settings.SOUTHWEST_DEGREES_ARCTAN <= angle_deg < Settings.SOUTHEAST_DEGREES_ARCTAN: direction = Settings.EAST
         else: direction = Settings.SOUTH
         angles.append(angle_deg); directions.append(direction); lengths.append(length)
+
     return angles, directions, lengths
 
 
@@ -1161,9 +1171,7 @@ def _process_single_geometry(geom: BaseGeometry | None) -> dict:
                 building_angles.extend(angles)
                 building_directions.extend(directions)
                 building_lengths.extend(lengths)
-    # else: handle other types if necessary, currently ignored
 
-    # Return the dictionary of results for this geometry
     return {
         Settings.WALL_ANGLE: building_angles,
         Settings.WALL_DIRECTION: building_directions,
@@ -1204,19 +1212,12 @@ def wall_angle_direction_length(building_geometry: pd.Series, n_jobs: int = -1) 
     elif n_jobs < 1:
          num_cores = 1 # Ensure at least 1 core
     else:
-         num_cores = min(n_jobs, multiprocessing.cpu_count()) # Don't exceed available cores
+         num_cores = min(n_jobs, multiprocessing.cpu_count())
 
-    print(f"Starting parallel processing using {num_cores} cores...")
-
-    # Use joblib.Parallel to process geometries
-    # delayed() wraps the function and its arguments for parallel execution
     results_list = Parallel(n_jobs=num_cores)(
         delayed(_process_single_geometry)(geom) for geom in building_geometry
     )
 
-    print("Parallel processing finished.")
-
-    # Create the final DataFrame from the list of dictionaries
     output_df = pd.DataFrame(results_list, index=building_geometry.index)
 
     return output_df
