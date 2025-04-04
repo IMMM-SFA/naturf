@@ -1,5 +1,6 @@
 import math
-import multiprocessing 
+import multiprocessing
+import logging
 
 import geopandas as gpd
 import numpy as np
@@ -10,9 +11,15 @@ from shapely.geometry import Polygon, MultiPolygon
 from shapely.geometry.base import BaseGeometry
 from joblib import Parallel, delayed
 
-from .config import Settings
+from .config import Settings 
+from .utils import log_execution_time
 
 
+# Get a logger for this module (can be used for warnings)
+logger = logging.getLogger(__name__)
+
+
+@log_execution_time
 def area_weighted_mean_of_building_heights(
     buildings_intersecting_plan_area: gpd.GeoDataFrame,
 ) -> pd.Series:
@@ -44,6 +51,7 @@ def area_weighted_mean_of_building_heights(
     return pd.Series(df.values)
 
 
+@log_execution_time
 def average_distance_between_buildings(distance_between_buildings: pd.Series) -> pd.Series:
     """Calculate the average distance from the target building to all neighboring buildings.
 
@@ -70,6 +78,7 @@ def average_distance_between_buildings(distance_between_buildings: pd.Series) ->
     return df[Settings.AVERAGE_DISTANCE_BETWEEN_BUILDINGS]
 
 
+@log_execution_time
 def building_area(building_geometry: pd.Series) -> pd.Series:
     """Calculate the area of the building geometry.
 
@@ -83,6 +92,7 @@ def building_area(building_geometry: pd.Series) -> pd.Series:
     return building_geometry.area
 
 
+@log_execution_time
 def buildings_intersecting_plan_area(
     building_id: pd.Series,
     building_height: pd.Series,
@@ -179,6 +189,7 @@ def buildings_intersecting_plan_area(
     return gpd.GeoDataFrame(xdf).set_geometry(Settings.GEOMETRY_FIELD)
 
 
+@log_execution_time
 def building_plan_area(
     buildings_intersecting_plan_area: gpd.GeoDataFrame,
     join_predicate: str = "intersection",
@@ -235,6 +246,7 @@ def building_plan_area(
     return pd.Series(building_plan_area)
 
 
+@log_execution_time
 def building_surface_area(
     wall_length: pd.DataFrame, building_height: pd.Series, building_area: pd.Series
 ) -> pd.Series:
@@ -258,6 +270,7 @@ def building_surface_area(
     return wall_area + building_area
 
 
+@log_execution_time
 def building_surface_area_to_plan_area_ratio(
     building_surface_area: pd.Series, total_plan_area: pd.Series
 ) -> pd.Series:
@@ -276,6 +289,7 @@ def building_surface_area_to_plan_area_ratio(
     return building_surface_area / total_plan_area
 
 
+@log_execution_time
 def complete_aspect_ratio(
     building_surface_area: pd.Series, total_plan_area: pd.Series, building_plan_area: pd.Series
 ) -> pd.Series:
@@ -299,6 +313,7 @@ def complete_aspect_ratio(
     return (building_surface_area + exposed_ground) / total_plan_area
 
 
+@log_execution_time
 def distance_between_buildings(buildings_intersecting_plan_area: gpd.GeoDataFrame) -> pd.Series:
     """Calculate the distance between each building and its neighbor as defined in buildings_intersecting_plan_area.
 
@@ -316,6 +331,7 @@ def distance_between_buildings(buildings_intersecting_plan_area: gpd.GeoDataFram
     )
 
 
+@log_execution_time
 @extract_columns(*[Settings.ID_FIELD, Settings.HEIGHT_FIELD, Settings.GEOMETRY_FIELD])
 def filter_height_range(standardize_column_names_df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     """Filter out any zero height buildings and reindex the data frame.  Extract the building_id,
@@ -338,6 +354,7 @@ def filter_height_range(standardize_column_names_df: gpd.GeoDataFrame) -> gpd.Ge
     ].reset_index(drop=True)
 
 
+@log_execution_time
 def frontal_area(frontal_length: pd.DataFrame, building_height: pd.Series) -> pd.DataFrame:
     """Calculate the frontal area for each building in a Pandas DataFrame in each cardinal direction.
 
@@ -362,6 +379,7 @@ def frontal_area(frontal_length: pd.DataFrame, building_height: pd.Series) -> pd
     return frontal_area
 
 
+@log_execution_time
 def frontal_area_density(
     frontal_length: pd.DataFrame, building_height: pd.Series, total_plan_area: pd.Series
 ) -> pd.DataFrame:
@@ -507,6 +525,7 @@ def frontal_area_density(
     )
 
 
+@log_execution_time
 def frontal_area_index(frontal_area: pd.DataFrame, total_plan_area: pd.Series) -> pd.DataFrame:
     """Calculate the frontal area index for each building in a Pandas DataFrame in each cardinal direction.
 
@@ -530,6 +549,7 @@ def frontal_area_index(frontal_area: pd.DataFrame, total_plan_area: pd.Series) -
     return frontal_area_index
 
 
+@log_execution_time
 def frontal_length(
     buildings_intersecting_plan_area: gpd.GeoDataFrame,
 ) -> pd.DataFrame:
@@ -591,6 +611,7 @@ def frontal_length(
     return frontal_lengths_final
 
 
+@log_execution_time
 def grimmond_oke_displacement_height(building_height: pd.Series) -> pd.Series:
     """Calculate the Grimmond & Oke displacement height for each building
 
@@ -604,6 +625,7 @@ def grimmond_oke_displacement_height(building_height: pd.Series) -> pd.Series:
     return building_height * Settings.DISPLACEMENT_HEIGHT_FACTOR
 
 
+@log_execution_time
 def grimmond_oke_roughness_length(building_height: pd.Series) -> pd.Series:
     """Calculate the Grimmond & Oke roughness length for each building
 
@@ -617,6 +639,7 @@ def grimmond_oke_roughness_length(building_height: pd.Series) -> pd.Series:
     return building_height * Settings.ROUGHNESS_LENGTH_FACTOR
 
 
+@log_execution_time
 def height_to_width_ratio(
     mean_building_height: pd.Series, average_distance_between_buildings: pd.Series
 ) -> pd.Series:
@@ -635,6 +658,7 @@ def height_to_width_ratio(
     return mean_building_height / average_distance_between_buildings
 
 
+@log_execution_time
 def input_shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
     """Import shapefile to GeoDataFrame using only desired columns.
 
@@ -656,6 +680,7 @@ def input_shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
     return gdf
 
 
+@log_execution_time
 def lot_area(
     buildings_intersecting_plan_area: gpd.GeoDataFrame, building_surface_area: pd.Series
 ) -> pd.Series:
@@ -682,6 +707,7 @@ def lot_area(
     return pd.Series(df.values)
 
 
+@log_execution_time
 def macdonald_displacement_height(
     building_height: pd.Series, plan_area_fraction: pd.Series
 ) -> pd.Series:
@@ -705,6 +731,7 @@ def macdonald_displacement_height(
     return right_side * building_height
 
 
+@log_execution_time
 def macdonald_roughness_length(
     building_height: pd.Series,
     macdonald_displacement_height: pd.Series,
@@ -758,6 +785,7 @@ def macdonald_roughness_length(
     return macdonald_roughness_length
 
 
+@log_execution_time
 def mean_building_height(buildings_intersecting_plan_area: gpd.GeoDataFrame) -> pd.Series:
     """Calculate the mean building height for all buildings within the target building's total plan area.
 
@@ -775,6 +803,7 @@ def mean_building_height(buildings_intersecting_plan_area: gpd.GeoDataFrame) -> 
     return pd.Series(df.values)
 
 
+@log_execution_time
 def plan_area_density(
     building_plan_area: pd.Series, building_height: pd.Series, total_plan_area: pd.Series
 ) -> pd.DataFrame:
@@ -817,6 +846,7 @@ def plan_area_density(
     return pd.DataFrame(plan_area_density, columns=columns_plan_area_density)
 
 
+@log_execution_time
 def plan_area_fraction(building_plan_area: pd.Series, total_plan_area: pd.Series) -> pd.Series:
     """Calculate the plan area fraction for each building in a Pandas Series. Plan area fraction is the building plan area at ground level
     for each building divided by the total plan area.
@@ -833,6 +863,7 @@ def plan_area_fraction(building_plan_area: pd.Series, total_plan_area: pd.Series
     return building_plan_area / total_plan_area
 
 
+@log_execution_time
 def raupach_displacement_height(
     building_height: pd.Series, frontal_area_index: pd.DataFrame
 ) -> pd.DataFrame:
@@ -868,6 +899,7 @@ def raupach_displacement_height(
     return raupach_displacement_height
 
 
+@log_execution_time
 def raupach_roughness_length(
     building_height: pd.Series,
     frontal_area_index: pd.DataFrame,
@@ -922,6 +954,7 @@ def raupach_roughness_length(
     return raupach_roughness_length
 
 
+@log_execution_time
 def rooftop_area_density(plan_area_density: pd.DataFrame) -> pd.DataFrame:
     """Calculate the rooftop area density for each building in a Pandas DataFrame. Rooftop area density is the roof area
     of all buildings within the total plan area  at a specified height increment divided by the total plan area. naturf
@@ -942,6 +975,7 @@ def rooftop_area_density(plan_area_density: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(plan_area_density.values.tolist(), columns=columns_rooftop_area_density)
 
 
+@log_execution_time
 def sky_view_factor(
     building_height: pd.Series, average_distance_between_buildings: pd.Series
 ) -> pd.Series:
@@ -960,6 +994,7 @@ def sky_view_factor(
     return np.cos(np.arctan(building_height / (0.5 * average_distance_between_buildings)))
 
 
+@log_execution_time
 def standard_deviation_of_building_heights(
     buildings_intersecting_plan_area: gpd.GeoDataFrame,
 ) -> pd.Series:
@@ -983,6 +1018,7 @@ def standard_deviation_of_building_heights(
     return pd.Series(df.values)
 
 
+@log_execution_time
 def standardize_column_names_df(input_shapefile_df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     """Standardize field names so use throughout code will be consistent throughout.
 
@@ -1006,6 +1042,7 @@ def standardize_column_names_df(input_shapefile_df: gpd.GeoDataFrame) -> gpd.Geo
     return input_shapefile_df.set_geometry(Settings.GEOMETRY_FIELD)
 
 
+@log_execution_time
 def target_crs(input_shapefile_df: gpd.GeoDataFrame) -> CRS:
     """Extract coordinate reference system from geometry.
 
@@ -1019,6 +1056,7 @@ def target_crs(input_shapefile_df: gpd.GeoDataFrame) -> CRS:
     return input_shapefile_df.set_geometry(Settings.GEOMETRY_FIELD).crs
 
 
+@log_execution_time
 def total_plan_area(total_plan_area_geometry: gpd.GeoSeries) -> pd.Series:
     """Calculate the total plan area for each building in a GeoPandas GeoSeries.
 
@@ -1032,6 +1070,7 @@ def total_plan_area(total_plan_area_geometry: gpd.GeoSeries) -> pd.Series:
     return total_plan_area_geometry.area
 
 
+@log_execution_time
 def total_plan_area_geometry(
     building_geometry: pd.Series, radius: int = Settings.RADIUS, cap_style: int = Settings.CAP_STYLE
 ) -> gpd.GeoSeries:
@@ -1056,6 +1095,7 @@ def total_plan_area_geometry(
     return building_geometry.buffer(distance=radius, cap_style=cap_style)
 
 
+@log_execution_time
 def vertical_distribution_of_building_heights(building_height: pd.Series) -> pd.DataFrame:
     """Represent the location of buildings at 5m increments from ground level to 75m unless otherwise specified. If is within a
     given height bin, it will be given a 1 and it will be given a 0 otherwise."
@@ -1179,6 +1219,7 @@ def _process_single_geometry(geom: BaseGeometry | None) -> dict:
     }
 
 
+@log_execution_time
 def wall_angle_direction_length(building_geometry: pd.Series, n_jobs: int = -1) -> pd.DataFrame:
     """
     Computes the wall angle, direction, and length for each building in a given GeoPandas GeoSeries.
@@ -1223,6 +1264,7 @@ def wall_angle_direction_length(building_geometry: pd.Series, n_jobs: int = -1) 
     return output_df
 
 
+@log_execution_time
 def wall_length(wall_angle_direction_length: pd.DataFrame) -> pd.DataFrame:
     """Calculate the wall length for each building in a GeoPandas GeoSeries.
 

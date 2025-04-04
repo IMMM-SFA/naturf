@@ -1,3 +1,5 @@
+import logging
+
 import geopandas as gpd
 import numpy as np
 import pandas as pd
@@ -11,8 +13,14 @@ from geocube.api.core import make_geocube
 from geocube.rasterize import rasterize_image
 
 from .config import Settings
+from .utils import log_execution_time
 
 
+# Get a logger for this module (can be used for warnings)
+logger = logging.getLogger(__name__)
+
+
+@log_execution_time
 def aggregate_rasters(rasterize_parameters: xr.Dataset) -> xr.Dataset:
     """Divide each raster by the number of buildings in the cell to get the average parameter value for each cell.
 
@@ -25,6 +33,7 @@ def aggregate_rasters(rasterize_parameters: xr.Dataset) -> xr.Dataset:
     return (rasterize_parameters / rasterize_parameters["building_count"]).fillna(0)
 
 
+@log_execution_time
 def merge_parameters(
     frontal_area_density: pd.DataFrame,
     plan_area_density: pd.DataFrame,
@@ -171,6 +180,7 @@ def merge_parameters(
     return gdf.to_crs(Settings.OUTPUT_CRS)
 
 
+@log_execution_time
 def numpy_to_binary(raster_to_numpy: np.ndarray) -> bytes:
     """Turn the master numpy array containing all 132 aggregated parameters into a binary stream.
 
@@ -197,6 +207,7 @@ def numpy_to_binary(raster_to_numpy: np.ndarray) -> bytes:
     return master_out_final
 
 
+@log_execution_time
 def raster_to_numpy(aggregate_rasters: xr.Dataset) -> np.ndarray:
     """Stack all 132 rasterized parameters into one numpy array for conversion to a binary file.
 
@@ -219,6 +230,7 @@ def raster_to_numpy(aggregate_rasters: xr.Dataset) -> np.ndarray:
     return master * 10**Settings.SCALING_FACTOR
 
 
+@log_execution_time
 def rasterize_parameters(merge_parameters: gpd.GeoDataFrame) -> xr.Dataset:
     """Rasterize parameters in preparation for conversion to numpy arrays. Raster will be of resolution Settings.DEFAULT_OUTPUT_RESOLUTION
     and each cell will be the sum of each parameter value within. By default all_touched is True so that every building that is within a cell is
@@ -243,6 +255,7 @@ def rasterize_parameters(merge_parameters: gpd.GeoDataFrame) -> xr.Dataset:
     )
 
 
+@log_execution_time
 def write_index(
     raster_to_numpy: np.ndarray,
     building_geometry: pd.Series,
@@ -308,6 +321,7 @@ def write_index(
         )
 
 
+@log_execution_time
 def write_binary(numpy_to_binary: bytes, raster_to_numpy: np.ndarray) -> None:
     """Write the binary file that will be input to WRF.
 
