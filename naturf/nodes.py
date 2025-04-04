@@ -1,9 +1,14 @@
-import geopandas as gpd
 import math
+import multiprocessing 
+
+import geopandas as gpd
 import numpy as np
 import pandas as pd
 from pyproj.crs import CRS
 from hamilton.function_modifiers import extract_columns
+from shapely.geometry import Polygon, MultiPolygon
+from shapely.geometry.base import BaseGeometry
+from joblib import Parallel, delayed
 
 from .config import Settings
 
@@ -1084,72 +1089,137 @@ def vertical_distribution_of_building_heights(building_height: pd.Series) -> pd.
     )
 
 
-def wall_angle_direction_length(building_geometry: pd.Series) -> pd.DataFrame:
-    """Calculate the wall angle, direction, and length for each building in a GeoPandas GeoSeries.
-
-    :param geometry:                    Geometry for a series of buildings.
-    :type geometry:                     pd.Series
-
-    :return:                            Pandas DataFrame with wall angle, direction, and length for each building.
-
+def _get_polygon_segment_properties(polygon: Polygon) -> tuple[list, list, list]:
     """
+    Calculate the angles, directions, and lengths of each segment of a polygon's exterior.
 
-    wall_angle, wall_direction, wall_length = (
-        [[] for x in range(building_geometry.size)],
-        [[] for x in range(building_geometry.size)],
-        [[] for x in range(building_geometry.size)],
+    This function processes the exterior coordinates of a given polygon to determine the 
+    angle in degrees, cardinal direction, and length of each segment. The direction is 
+    determined based on predefined degree ranges specified in the Settings.
+
+    :param polygon: A Shapely Polygon object whose exterior segments are to be analyzed.
+    :type polygon: Polygon
+
+    :return: A tuple containing three lists: angles (in degrees), directions (as strings), 
+             and lengths (as floats) for each segment of the polygon's exterior.
+    :rtype: tuple[list, list, list]
+    """
+    angles, directions, lengths = [], [], []
+    coords = list(polygon.exterior.coords)
+    if len(coords) < 2: return angles, directions, lengths
+    for i in range(len(coords) - 1):
+        x1, y1 = coords[i]; x2, y2 = coords[i+1]
+        if x1 == x2 and y1 == y2: continue
+        angle_rad = np.arctan2(y2 - y1, x2 - x1)
+        angle_deg = np.degrees(angle_rad)
+        length = np.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+        # Determine direction based on Settings
+        if Settings.NORTHEAST_DEGREES <= angle_deg < Settings.NORTHWEST_DEGREES: direction = Settings.WEST
+        elif Settings.SOUTHEAST_DEGREES_ARCTAN <= angle_deg < Settings.NORTHEAST_DEGREES: direction = Settings.NORTH
+        elif Settings.SOUTHWEST_DEGREES_ARCTAN <= angle_deg < Settings.SOUTHEAST_DEGREES_ARCTAN: direction = Settings.EAST
+        else: direction = Settings.SOUTH
+        angles.append(angle_deg); directions.append(direction); lengths.append(length)
+    return angles, directions, lengths
+
+
+def _process_single_geometry(geom: BaseGeometry | None) -> dict:
+    """
+    Process a single geometry object to extract wall angles, directions, and lengths.
+
+    This function handles both Polygon and MultiPolygon geometries, extracting the 
+    angles, cardinal directions, and lengths of each segment of the geometry's exterior. 
+    It is designed to be used with parallel processing via joblib.Parallel.
+
+    :param geom: A geometry object which can be a Polygon, MultiPolygon, or None.
+    :type geom: BaseGeometry or None
+
+    :return: A dictionary containing lists of wall angles, directions, and lengths. 
+             If the geometry is None or invalid, the lists will be empty.
+    :rtype: dict
+    """
+    building_angles, building_directions, building_lengths = [], [], []
+
+    # Handle invalid/empty cases first
+    if geom is None or not isinstance(geom, BaseGeometry) or geom.is_empty:
+        return {
+            Settings.WALL_ANGLE: building_angles,
+            Settings.WALL_DIRECTION: building_directions,
+            Settings.WALL_LENGTH: building_lengths
+        }
+
+    # Process Polygon or MultiPolygon
+    if isinstance(geom, Polygon):
+        angles, directions, lengths = _get_polygon_segment_properties(geom)
+        building_angles.extend(angles)
+        building_directions.extend(directions)
+        building_lengths.extend(lengths)
+
+    elif isinstance(geom, MultiPolygon):
+        for poly in geom.geoms:
+            if isinstance(poly, Polygon):
+                angles, directions, lengths = _get_polygon_segment_properties(poly)
+                building_angles.extend(angles)
+                building_directions.extend(directions)
+                building_lengths.extend(lengths)
+    # else: handle other types if necessary, currently ignored
+
+    # Return the dictionary of results for this geometry
+    return {
+        Settings.WALL_ANGLE: building_angles,
+        Settings.WALL_DIRECTION: building_directions,
+        Settings.WALL_LENGTH: building_lengths
+    }
+
+
+def wall_angle_direction_length(building_geometry: pd.Series, n_jobs: int = -1) -> pd.DataFrame:
+    """
+    Computes the wall angle, direction, and length for each building in a given GeoPandas GeoSeries.
+
+    This function processes each building's geometry to determine the angles, cardinal directions, 
+    and lengths of its walls. It utilizes parallel processing to enhance performance, especially 
+    with large datasets.
+
+    :param building_geometry: A series containing the geometries of buildings.
+    :type building_geometry: pd.Series
+
+    :param n_jobs: The number of CPU cores to use for parallel processing. Defaults to -1, which 
+                   uses all available cores. If set to a value less than 1, it defaults to 1 core.
+    :type n_jobs: int
+
+    :return: A DataFrame where each row corresponds to a building and contains lists of wall angles, 
+             directions, and lengths.
+    :rtype: pd.DataFrame
+
+    :raises TypeError: If the input is not a GeoPandas GeoSeries or cannot be converted to one.
+    """
+    if not isinstance(building_geometry, gpd.GeoSeries):
+        try:
+            building_geometry = gpd.GeoSeries(building_geometry)
+        except Exception as e:
+            raise TypeError(f"Input must be a GeoPandas GeoSeries or convertible. Error: {e}")
+
+    # Determine the actual number of cores to use
+    if n_jobs == -1:
+        num_cores = multiprocessing.cpu_count()
+    elif n_jobs < 1:
+         num_cores = 1 # Ensure at least 1 core
+    else:
+         num_cores = min(n_jobs, multiprocessing.cpu_count()) # Don't exceed available cores
+
+    print(f"Starting parallel processing using {num_cores} cores...")
+
+    # Use joblib.Parallel to process geometries
+    # delayed() wraps the function and its arguments for parallel execution
+    results_list = Parallel(n_jobs=num_cores)(
+        delayed(_process_single_geometry)(geom) for geom in building_geometry
     )
 
-    for building in range(building_geometry.size):
-        points_in_polygon = building_geometry.values[building].exterior.xy
+    print("Parallel processing finished.")
 
-        for index, item in enumerate(zip(points_in_polygon[0], points_in_polygon[1])):
-            x, y = item
+    # Create the final DataFrame from the list of dictionaries
+    output_df = pd.DataFrame(results_list, index=building_geometry.index)
 
-            # Store the first set of coordinates.
-            if index == 0:
-                x1, y1 = x, y
-
-            else:
-                x2, y2 = x, y
-
-                wall_angle[building].append(np.degrees(np.arctan2(y2 - y1, x2 - x1)))
-
-                # For each direction, the start degree (from counterclockwise) is included (<=) and the end degree is not included (<).
-                if (
-                    Settings.NORTHEAST_DEGREES
-                    <= wall_angle[building][index - 1]
-                    < Settings.NORTHWEST_DEGREES
-                ):
-                    wall_direction[building].append(Settings.WEST)
-                elif (
-                    Settings.SOUTHEAST_DEGREES_ARCTAN
-                    <= wall_angle[building][index - 1]
-                    < Settings.NORTHEAST_DEGREES
-                ):
-                    wall_direction[building].append(Settings.NORTH)
-                elif (
-                    Settings.SOUTHWEST_DEGREES_ARCTAN
-                    <= wall_angle[building][index - 1]
-                    < Settings.SOUTHEAST_DEGREES_ARCTAN
-                ):
-                    wall_direction[building].append(Settings.EAST)
-                else:
-                    wall_direction[building].append(Settings.SOUTH)
-
-                wall_length[building].append(np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2))
-
-                # Reset start coordinates.
-                x1, y1 = x, y
-
-    return pd.concat(
-        [
-            pd.Series(wall_angle, name=Settings.WALL_ANGLE),
-            pd.Series(wall_direction, name=Settings.WALL_DIRECTION),
-            pd.Series(wall_length, name=Settings.WALL_LENGTH),
-        ],
-        axis=1,
-    )
+    return output_df
 
 
 def wall_length(wall_angle_direction_length: pd.DataFrame) -> pd.DataFrame:
