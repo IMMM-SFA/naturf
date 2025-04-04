@@ -414,7 +414,7 @@ class TestNodes(unittest.TestCase):
         ]
 
         for case in testcases:
-            actual = nodes.building_plan_area(case.input)
+            actual = pd.Series(nodes.building_plan_area(case.input).values)
             expected = pd.Series(case.expected)
             pd.testing.assert_series_equal(
                 expected,
