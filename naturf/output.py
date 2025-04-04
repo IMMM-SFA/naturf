@@ -231,8 +231,6 @@ def numpy_to_binary(raster_to_numpy: np.ndarray) -> bytes:
         raise 
 
 
-
-
 @log_execution_time
 def raster_to_numpy(aggregate_rasters: xr.Dataset) -> np.ndarray:
     """Stack all 132 rasterized parameters into one numpy array for conversion to a binary file.
