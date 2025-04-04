@@ -5,7 +5,6 @@ import geopandas as gpd
 import numpy as np
 import pandas as pd
 from pyproj.crs import CRS
-import struct
 import xarray as xr
 
 from functools import partial
@@ -32,8 +31,7 @@ def aggregate_rasters(rasterize_parameters: xr.Dataset) -> xr.Dataset:
     """
 
     return (rasterize_parameters / rasterize_parameters["building_count"]).fillna(0)
-    x = (rasterize_parameters / rasterize_parameters["building_count"]).fillna(0)
-    
+
 
 @log_execution_time
 def merge_parameters(
@@ -204,7 +202,7 @@ def numpy_to_binary(raster_to_numpy: np.ndarray) -> bytes:
     try:
         # 1. Define the target NumPy dtype (Big-endian 4-byte signed integer)
         #    '>' for big-endian, 'i4' for 4-byte signed integer.
-        target_dtype = np.dtype('>i4')
+        target_dtype = np.dtype(">i4")
 
         # 2. Convert the array to the target dtype.
         #    - This handles the int() conversion and endianness simultaneously.
@@ -213,7 +211,9 @@ def numpy_to_binary(raster_to_numpy: np.ndarray) -> bytes:
         #      to replace NaNs with 0 before converting to int).
         #    - WARNING: If values exceed the range of int32, they will wrap around (standard C behavior).
         #      Consider using np.clip if you need to limit values before conversion.
-        logger.debug(f"Converting array of shape {raster_to_numpy.shape} and dtype {raster_to_numpy.dtype} to {target_dtype}...")
+        logger.debug(
+            f"Converting array of shape {raster_to_numpy.shape} and dtype {raster_to_numpy.dtype} to {target_dtype}..."
+        )
         packed_array = raster_to_numpy.astype(target_dtype)
 
         # 3. Get the bytes directly from the array's data buffer.
@@ -224,12 +224,17 @@ def numpy_to_binary(raster_to_numpy: np.ndarray) -> bytes:
         return binary_data
 
     except ValueError as e:
-        logger.error(f"ValueError during dtype conversion. Input might contain NaN or incompatible values: {e}", exc_info=True)
+        logger.error(
+            f"ValueError during dtype conversion. Input might contain NaN or incompatible values: {e}",
+            exc_info=True,
+        )
         raise
 
     except Exception as e:
-        logger.error(f"An unexpected error occurred during NumPy to binary conversion: {e}", exc_info=True)
-        raise 
+        logger.error(
+            f"An unexpected error occurred during NumPy to binary conversion: {e}", exc_info=True
+        )
+        raise
 
 
 @log_execution_time
@@ -348,9 +353,7 @@ def write_index(
 
 @log_execution_time
 def write_binary(
-    numpy_to_binary: bytes, 
-    raster_to_numpy: np.ndarray,
-    binary_output_directory: str = ""
+    numpy_to_binary: bytes, raster_to_numpy: np.ndarray, binary_output_directory: str = ""
 ) -> None:
     """Write the binary file that will be input to WRF.
 
