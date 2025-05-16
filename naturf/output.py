@@ -291,7 +291,7 @@ def write_index(
     building_geometry: pd.Series,
     target_crs: CRS,
     index_filename: str = "index",
-) -> str:
+) -> pd.Series:
     """Write the index file that will accompany the output binary file.
 
     :param raster_to_numpy:                 132 level numpy array with each level being an aggregated parameter.
@@ -350,11 +350,13 @@ def write_index(
             ]
         )
 
+    return pd.Series({"write_index": [True]})
+
 
 @log_execution_time
 def write_binary(
     numpy_to_binary: bytes, raster_to_numpy: np.ndarray, binary_output_directory: str = ""
-) -> None:
+) -> pd.Series:
     """Write the binary file that will be input to WRF.
 
     :param numpy_to_binary:                 Binary object containing the parameter data.
@@ -384,3 +386,5 @@ def write_binary(
     with open(out_binary_path, "wb") as tile:
         tile.write(numpy_to_binary)
         tile.close()
+
+    return pd.Series({"write_binary": [True]})
