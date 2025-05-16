@@ -192,7 +192,7 @@ def buildings_intersecting_plan_area(
 @log_execution_time
 def building_plan_area(
     buildings_intersecting_plan_area: gpd.GeoDataFrame,
-) -> pd.Series:
+) -> pd.DataFrame:
     """
     Optimized calculation of building plan area using row-wise intersection
     and groupby sum.
@@ -208,7 +208,7 @@ def building_plan_area(
     :type buildings_intersecting_plan_area:  gpd.GeoDataFrame
     :return:                                 Series indexed by 'building_id_target',
                                              containing the total summed intersection area.
-    :rtype:                                  pd.Series
+    :rtype:                                  pd.DataFrame
     """
 
     # Define column names
@@ -243,7 +243,7 @@ def building_plan_area(
     # Group by target building ID and sum areas
     total_plan_area_series = gdf.groupby(target_id_col)[area_col].sum()
 
-    return total_plan_area_series
+    return pd.DataFrame({"building_plan_area": total_plan_area_series.values})
 
 
 @log_execution_time
@@ -291,7 +291,7 @@ def building_surface_area_to_plan_area_ratio(
 
 @log_execution_time
 def complete_aspect_ratio(
-    building_surface_area: pd.Series, total_plan_area: pd.Series, building_plan_area: pd.Series
+    building_surface_area: pd.Series, total_plan_area: pd.Series, building_plan_area: pd.DataFrame
 ) -> pd.Series:
     """Calculate the complete aspect ratio for each building in a Pandas Series. In naturf, the building footprint area is the
     same as the roof area, and the exposed ground is the difference between total plan area and building plan area.
@@ -303,12 +303,12 @@ def complete_aspect_ratio(
     :type total_plan_area:                pd.Series
 
     :param building_plan_area:            Building plan area for each building.
-    :type building_plan_area:             pd.Series
+    :type building_plan_area:             pd.DataFrame
 
     :return:                              Panda Series with complete aspect ratio.
     """
 
-    exposed_ground = total_plan_area - building_plan_area
+    exposed_ground = total_plan_area - building_plan_area["building_plan_area"]
 
     return (building_surface_area + exposed_ground) / total_plan_area
 
@@ -804,14 +804,14 @@ def mean_building_height(buildings_intersecting_plan_area: gpd.GeoDataFrame) -> 
 
 @log_execution_time
 def plan_area_density(
-    building_plan_area: pd.Series, building_height: pd.Series, total_plan_area: pd.Series
+    building_plan_area: pd.DataFrame, building_height: pd.Series, total_plan_area: pd.Series
 ) -> pd.DataFrame:
     """Calculate the plan area density for each building in a GeoPandas GeoSeries. Plan area density is the building plan area
     at a specific height increment divided by the total plan area. naturf calculates plan area density from the four cardinal
     directions (north, east, south, west) and at 5-meter increments from ground level to 75 meters unless otherwise specified.
 
     :param building_plan_area:            Building plan area for each building.
-    :type building_plan_area:             pd.Series
+    :type building_plan_area:             pd.DataFrame
 
     :param building_height:               Building height for each building.
     :type building_height:                pd.Series
@@ -821,37 +821,37 @@ def plan_area_density(
 
     :return:                              Pandas DataFrame with plan area density for each BUILDING_HEIGHT_INTERVAL for each building.
     """
+    # --- Align inputs by position to avoid label‑based lookup errors ---
+    building_plan_area = building_plan_area["building_plan_area"].reset_index(drop=True).values
+    total_plan_area = total_plan_area.reset_index(drop=True).values
+    building_height = building_height.reset_index(drop=True).values
 
-    rows, cols = (
-        len(building_height.index),
-        int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL),
-    )
-    plan_area_density = [[0 for i in range(cols)] for j in range(rows)]
+    rows = len(building_height)
+    cols = int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL)
+    plan_area_density_values = [[0 for _ in range(cols)] for _ in range(rows)]
 
-    for building in range(building_plan_area.size):
-        building_height_counter = 0
+    # Iterate over buildings by positional index
+    for idx in range(rows):
+        height_counter = 0
+        max_height = building_height[idx]
 
-        # Go from ground level to building height by the building height interval and calculate plan area density.
-        while building_height_counter < building_height[building]:
-            plan_area_density[building][
-                int(building_height_counter / Settings.BUILDING_HEIGHT_INTERVAL)
-            ] = (building_plan_area[building] / total_plan_area[building])
-            building_height_counter += Settings.BUILDING_HEIGHT_INTERVAL
+        # Increment by BUILDING_HEIGHT_INTERVAL up to the building height
+        while height_counter < max_height:
+            col_idx = int(height_counter / Settings.BUILDING_HEIGHT_INTERVAL)
+            plan_area_density_values[idx][col_idx] = building_plan_area[idx] / total_plan_area[idx]
+            height_counter += Settings.BUILDING_HEIGHT_INTERVAL
 
-    columns_plan_area_density = [
-        f"{Settings.PLAN_AREA_DENSITY}_{i}"
-        for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
-    ]
-    return pd.DataFrame(plan_area_density, columns=columns_plan_area_density)
+    columns_plan_area_density = [f"{Settings.PLAN_AREA_DENSITY}_{i}" for i in range(cols)]
+    return pd.DataFrame(plan_area_density_values, columns=columns_plan_area_density)
 
 
 @log_execution_time
-def plan_area_fraction(building_plan_area: pd.Series, total_plan_area: pd.Series) -> pd.Series:
+def plan_area_fraction(building_plan_area: pd.DataFrame, total_plan_area: pd.Series) -> pd.Series:
     """Calculate the plan area fraction for each building in a Pandas Series. Plan area fraction is the building plan area at ground level
     for each building divided by the total plan area.
 
     :param building_plan_area:            Building plan area for each building.
-    :type building_plan_area:             pd.Series
+    :type building_plan_area:             pd.DataFrame
 
     :param total_plan_area:               Total plan area for each building.
     :type total_plan_area:                pd.Series
@@ -859,7 +859,7 @@ def plan_area_fraction(building_plan_area: pd.Series, total_plan_area: pd.Series
     :return:                              Pandas Series with plan area fraction for each building.
     """
 
-    return building_plan_area / total_plan_area
+    return building_plan_area["building_plan_area"].values / total_plan_area.values
 
 
 @log_execution_time
