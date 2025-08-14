@@ -678,7 +678,9 @@ def input_shapefile_df(input_shapefile: str) -> gpd.GeoDataFrame:
 
     # only keep geometry type == Polygon
     # only keep geometry type == Polygon or MultiPolygon
-    gdf = gdf.loc[gdf[Settings.DATA_GEOMETRY_FIELD_NAME].geom_type.isin(["Polygon", "MultiPolygon"])]
+    gdf = gdf.loc[
+        gdf[Settings.DATA_GEOMETRY_FIELD_NAME].geom_type.isin(["Polygon", "MultiPolygon"])
+    ]
 
     return gdf
 
