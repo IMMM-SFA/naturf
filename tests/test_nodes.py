@@ -414,8 +414,8 @@ class TestNodes(unittest.TestCase):
         ]
 
         for case in testcases:
-            actual = nodes.building_plan_area(case.input)
-            expected = pd.Series(case.expected)
+            actual = nodes.building_plan_area(case.input)["building_plan_area"]
+            expected = pd.Series(case.expected, name="building_plan_area")
             pd.testing.assert_series_equal(
                 expected,
                 actual,
@@ -460,7 +460,9 @@ class TestNodes(unittest.TestCase):
             ]
         )
         actual = nodes.complete_aspect_ratio(
-            building_surface_area, total_plan_area, building_plan_area
+            building_surface_area,
+            total_plan_area,
+            pd.DataFrame({"building_plan_area": building_plan_area}),
         )
         pd.testing.assert_series_equal(
             expected,
@@ -911,7 +913,11 @@ class TestNodes(unittest.TestCase):
             for i in range(int(Settings.MAX_BUILDING_HEIGHT / Settings.BUILDING_HEIGHT_INTERVAL))
         ]
 
-        actual = nodes.plan_area_density(building_plan_area, building_height, total_plan_area)
+        actual = nodes.plan_area_density(
+            pd.DataFrame({"building_plan_area": building_plan_area}),
+            building_height,
+            total_plan_area,
+        )
         expected = pd.DataFrame(plan_area_density, columns=columns_plan_area_density)
 
         # f"plan_area_density test failed, expected {expected}, actual {actual}"
@@ -926,7 +932,11 @@ class TestNodes(unittest.TestCase):
         building_plan_area = pd.Series([0, 0.01, 70, 100])
         total_plan_area = pd.Series([1, 1, 0.1, 0])
         expected = pd.Series([0.0, 0.01, 700, math.inf])
-        actual = nodes.plan_area_fraction(building_plan_area, total_plan_area)
+        actual = pd.Series(
+            nodes.plan_area_fraction(
+                pd.DataFrame({"building_plan_area": building_plan_area}), total_plan_area
+            )
+        )
         # f"plan_area_fraction test failed, expected {expected}, actual {actual}",
         pd.testing.assert_series_equal(
             expected,

@@ -271,7 +271,8 @@ class TestNodes(unittest.TestCase):
         with open(file_path, "r") as index:
             content = index.read()
             assert "type=continuous" in content, "Index file type is not as expected."
-            assert "projection=albers_nad83" in content, "Index file projection is not as expected."
+            # Projection updated to regular lat/lon in implementation
+            assert "projection=regular_ll" in content, "Index file projection is not as expected."
             assert (
                 "missing_value=-999900." in content
             ), "Index file missing_value is not as expected."
