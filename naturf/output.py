@@ -327,7 +327,7 @@ def write_index(
         index.writelines(
             [
                 "type=continuous\n",
-                "  projection=albers_nad83\n",
+                "  projection=regular_ll\n",
                 "  missing_value=-999900.\n",
                 "  dy=" + str(dy) + "\n",
                 "  dx=" + str(dx) + "\n",
