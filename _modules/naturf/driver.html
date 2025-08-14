@@ -6,10 +6,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>naturf.driver &mdash; naturf 1.0.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/katex-math.css?v=91adb8b6" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/katex-math.css?v=05624691" />
       <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/naturf.css?v=f9b8f5c0" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/getting_started.css?v=be86cd7f" />
@@ -20,8 +20,8 @@
       <script src="../../_static/documentation_options.js?v=baaebd52"></script>
       <script src="../../_static/doctools.js?v=888ff710"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="../../_static/katex.min.js?v=be8ff15f"></script>
-      <script src="../../_static/auto-render.min.js?v=ad136472"></script>
+      <script src="../../_static/katex.min.js?v=5cc8ed51"></script>
+      <script src="../../_static/auto-render.min.js?v=af98beb9"></script>
       <script src="../../_static/katex_autorenderer.js?v=bebc588a"></script>
       <script src="../../_static/design-tabs.js?v=f930bc37"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -87,15 +87,15 @@
            <div itemprop="articleBody">
              
   <h1>Source code for naturf.driver</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">hamilton</span> <span class="kn">import</span> <span class="n">driver</span><span class="p">,</span> <span class="n">base</span>
-<span class="kn">from</span> <span class="nn">hamilton.plugins</span> <span class="kn">import</span> <span class="n">h_tqdm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hamilton</span><span class="w"> </span><span class="kn">import</span> <span class="n">driver</span><span class="p">,</span> <span class="n">base</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hamilton.plugins</span><span class="w"> </span><span class="kn">import</span> <span class="n">h_tqdm</span>
 
-<span class="kn">import</span> <span class="nn">naturf.nodes</span> <span class="k">as</span> <span class="nn">nodes</span>
-<span class="kn">import</span> <span class="nn">naturf.output</span> <span class="k">as</span> <span class="nn">output</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">naturf.nodes</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nodes</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">naturf.output</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">output</span>
 
 <span class="n">DAGWORKS_API_KEY</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;DAGWORKS_API_KEY&quot;</span><span class="p">)</span>
 <span class="n">HAMILTON_UI_PROJECT_ID</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;HAMILTON_UI_PROJECT_ID&quot;</span><span class="p">)</span>
@@ -105,8 +105,8 @@
 
 <div class="viewcode-block" id="Model">
 <a class="viewcode-back" href="../../naturf.html#naturf.driver.Model">[docs]</a>
-<span class="k">class</span> <span class="nc">Model</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Model</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="c1"># dictionary of parameter inputs required to construct the DAG</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span>
 
@@ -121,7 +121,7 @@
         <span class="c1"># use the hosted version (there&#39;s a free tier) of the Hamilton UI to log telemetry to.</span>
         <span class="k">if</span> <span class="n">DAGWORKS_API_KEY</span> <span class="ow">and</span> <span class="n">HAMILTON_UI_USERNAME</span> <span class="ow">and</span> <span class="n">HAMILTON_UI_PROJECT_ID</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="kn">from</span> <span class="nn">dagworks</span> <span class="kn">import</span> <span class="n">adapters</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">dagworks</span><span class="w"> </span><span class="kn">import</span> <span class="n">adapters</span>
             <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
                 <span class="c1"># dagworks-sdk not installed</span>
                 <span class="k">pass</span>
@@ -138,7 +138,7 @@
         <span class="c1"># use the self-hosted version of the Hamilton UI to log telemetry to.</span>
         <span class="k">elif</span> <span class="n">HAMILTON_UI_USERNAME</span> <span class="ow">and</span> <span class="n">HAMILTON_UI_PROJECT_ID</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="kn">from</span> <span class="nn">hamilton_sdk</span> <span class="kn">import</span> <span class="n">adapters</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">hamilton_sdk</span><span class="w"> </span><span class="kn">import</span> <span class="n">adapters</span>
             <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
                 <span class="c1"># hamilton-sdk not installed</span>
                 <span class="k">pass</span>
@@ -163,7 +163,7 @@
 
 <div class="viewcode-block" id="Model.execute">
 <a class="viewcode-back" href="../../naturf.html#naturf.driver.Model.execute">[docs]</a>
-    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the driver.&quot;&quot;&quot;</span>
 
         <span class="c1"># generate initial data frame</span>
@@ -174,7 +174,7 @@
 
 <div class="viewcode-block" id="Model.graph">
 <a class="viewcode-back" href="../../naturf.html#naturf.driver.Model.graph">[docs]</a>
-    <span class="k">def</span> <span class="nf">graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">output_file_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">view</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">output_file_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Show the DAG. Return the graph object for the given inputs to execute.&quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">.</span><span class="n">visualize_execution</span><span class="p">(</span>
@@ -187,7 +187,7 @@
 
 <div class="viewcode-block" id="Model.list_parameters">
 <a class="viewcode-back" href="../../naturf.html#naturf.driver.Model.list_parameters">[docs]</a>
-    <span class="k">def</span> <span class="nf">list_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">list_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;List all available parameters.&quot;&quot;&quot;</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dr</span><span class="o">.</span><span class="n">list_available_variables</span><span class="p">()</span></div>

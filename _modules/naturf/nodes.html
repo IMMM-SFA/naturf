@@ -6,10 +6,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>naturf.nodes &mdash; naturf 1.0.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" />
-      <link rel="stylesheet" type="text/css" href="../../_static/katex-math.css?v=91adb8b6" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/katex-math.css?v=05624691" />
       <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/naturf.css?v=f9b8f5c0" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/getting_started.css?v=be86cd7f" />
@@ -20,8 +20,8 @@
       <script src="../../_static/documentation_options.js?v=baaebd52"></script>
       <script src="../../_static/doctools.js?v=888ff710"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="../../_static/katex.min.js?v=be8ff15f"></script>
-      <script src="../../_static/auto-render.min.js?v=ad136472"></script>
+      <script src="../../_static/katex.min.js?v=5cc8ed51"></script>
+      <script src="../../_static/auto-render.min.js?v=af98beb9"></script>
       <script src="../../_static/katex_autorenderer.js?v=bebc588a"></script>
       <script src="../../_static/design-tabs.js?v=f930bc37"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -87,19 +87,31 @@
            <div itemprop="articleBody">
              
   <h1>Source code for naturf.nodes</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">pyproj.crs</span> <span class="kn">import</span> <span class="n">CRS</span>
-<span class="kn">from</span> <span class="nn">hamilton.function_modifiers</span> <span class="kn">import</span> <span class="n">extract_columns</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">multiprocessing</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 
-<span class="kn">from</span> <span class="nn">.config</span> <span class="kn">import</span> <span class="n">Settings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">geopandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gpd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyproj.crs</span><span class="w"> </span><span class="kn">import</span> <span class="n">CRS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hamilton.function_modifiers</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract_columns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shapely.geometry</span><span class="w"> </span><span class="kn">import</span> <span class="n">Polygon</span><span class="p">,</span> <span class="n">MultiPolygon</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shapely.geometry.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseGeometry</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">joblib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Settings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_execution_time</span>
+
+
+<span class="c1"># Get a logger for this module (can be used for warnings)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="area_weighted_mean_of_building_heights">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.area_weighted_mean_of_building_heights">[docs]</a>
-<span class="k">def</span> <span class="nf">area_weighted_mean_of_building_heights</span><span class="p">(</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">area_weighted_mean_of_building_heights</span><span class="p">(</span>
     <span class="n">buildings_intersecting_plan_area</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the area weighted mean of building heights for each target building in a GeoPandas GeoDataFrame.</span>
@@ -133,7 +145,8 @@
 
 <div class="viewcode-block" id="average_distance_between_buildings">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.average_distance_between_buildings">[docs]</a>
-<span class="k">def</span> <span class="nf">average_distance_between_buildings</span><span class="p">(</span><span class="n">distance_between_buildings</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">average_distance_between_buildings</span><span class="p">(</span><span class="n">distance_between_buildings</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the average distance from the target building to all neighboring buildings.</span>
 
 <span class="sd">    :param distance_between_buildings:          distance from the target building to each</span>
@@ -162,7 +175,8 @@
 
 <div class="viewcode-block" id="building_area">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.building_area">[docs]</a>
-<span class="k">def</span> <span class="nf">building_area</span><span class="p">(</span><span class="n">building_geometry</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">building_area</span><span class="p">(</span><span class="n">building_geometry</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the area of the building geometry.</span>
 
 <span class="sd">    :param building_geometry:                       Building Geometry.</span>
@@ -178,7 +192,8 @@
 
 <div class="viewcode-block" id="buildings_intersecting_plan_area">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.buildings_intersecting_plan_area">[docs]</a>
-<span class="k">def</span> <span class="nf">buildings_intersecting_plan_area</span><span class="p">(</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">buildings_intersecting_plan_area</span><span class="p">(</span>
     <span class="n">building_id</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
     <span class="n">building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
     <span class="n">building_geometry</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
@@ -277,66 +292,68 @@
 
 <div class="viewcode-block" id="building_plan_area">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.building_plan_area">[docs]</a>
-<span class="k">def</span> <span class="nf">building_plan_area</span><span class="p">(</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">building_plan_area</span><span class="p">(</span>
     <span class="n">buildings_intersecting_plan_area</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">,</span>
-    <span class="n">join_predicate</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;intersection&quot;</span><span class="p">,</span>
-    <span class="n">join_rsuffix</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Settings</span><span class="o">.</span><span class="n">NEIGHBOR</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the building plan area from the GeoDataFrame of buildings intersecting the plan area.</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Optimized calculation of building plan area using row-wise intersection</span>
+<span class="sd">    and groupby sum.</span>
 
-<span class="sd">    :param buildings_intersecting_plan_area:    Geometry field for the neighboring buildings from the spatially</span>
-<span class="sd">                                                joined data.</span>
-<span class="sd">    :type buildings_intersecting_plan_area:     gpd.GeoDataFrame</span>
+<span class="sd">    Calculates the total area of intersection between each target&#39;s buffered</span>
+<span class="sd">    geometry and all its associated neighbors&#39; original geometries.</span>
 
-<span class="sd">    :param join_predicate:                      Selected topology of join.</span>
-<span class="sd">                                                DEFAULT: `intersection`</span>
-<span class="sd">    :type join_predicate:                       str</span>
-
-<span class="sd">    :param join_rsuffix:                        Suffix of the right object in the join.</span>
-<span class="sd">                                                DEFAULT: `neighbor`</span>
-<span class="sd">    :type join_rsuffix:                         str</span>
-
-<span class="sd">    :return:                                    The building plan area for each unique building in the</span>
-<span class="sd">                                                `buildings_intersecting_plan_area` GeoDataFrame.</span>
-
+<span class="sd">    :param buildings_intersecting_plan_area: GeoDataFrame resulting from sjoin,</span>
+<span class="sd">                                             containing target IDs (&#39;building_id_target&#39;),</span>
+<span class="sd">                                             target buffered geometry (&#39;building_buffered_target&#39;),</span>
+<span class="sd">                                             and neighbor geometry (&#39;building_geometry_neighbor&#39;)</span>
+<span class="sd">                                             per intersection pair.</span>
+<span class="sd">    :type buildings_intersecting_plan_area:  gpd.GeoDataFrame</span>
+<span class="sd">    :return:                                 Series indexed by &#39;building_id_target&#39;,</span>
+<span class="sd">                                             containing the total summed intersection area.</span>
+<span class="sd">    :rtype:                                  pd.DataFrame</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">building_plan_area</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># Define column names</span>
+    <span class="n">target_id_col</span> <span class="o">=</span> <span class="s2">&quot;building_id_target&quot;</span>
+    <span class="n">target_buffer_col</span> <span class="o">=</span> <span class="s2">&quot;building_buffered_target&quot;</span>
+    <span class="n">neighbor_geom_col</span> <span class="o">=</span> <span class="s2">&quot;building_geometry_neighbor&quot;</span>
+    <span class="n">area_col</span> <span class="o">=</span> <span class="s2">&quot;intersection_area&quot;</span>  <span class="c1"># temporary column for calculated area</span>
 
-    <span class="k">for</span> <span class="n">target_building_id</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">buildings_intersecting_plan_area</span><span class="o">.</span><span class="n">building_id_target</span><span class="o">.</span><span class="n">unique</span><span class="p">()):</span>
-        <span class="c1"># Get DataFrame with any building that intersects the target_building_id plan area.</span>
-        <span class="n">target_building_gdf</span> <span class="o">=</span> <span class="n">buildings_intersecting_plan_area</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
-            <span class="n">buildings_intersecting_plan_area</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">TARGET_ID_FIELD</span><span class="p">]</span> <span class="o">==</span> <span class="n">target_building_id</span>
-        <span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="c1"># Input validation</span>
+    <span class="n">required_columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">target_id_col</span><span class="p">,</span> <span class="n">target_buffer_col</span><span class="p">,</span> <span class="n">neighbor_geom_col</span><span class="p">]</span>
+    <span class="n">missing_cols</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">required_columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">buildings_intersecting_plan_area</span><span class="o">.</span><span class="n">columns</span>
+    <span class="p">]</span>
+    <span class="k">if</span> <span class="n">missing_cols</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing required columns: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">missing_cols</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Create GeoDataFrames with building and neighbor info.</span>
-        <span class="n">target_gdf</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">target_building_gdf</span><span class="p">[[</span><span class="n">Settings</span><span class="o">.</span><span class="n">TARGET_ID_FIELD</span><span class="p">,</span> <span class="n">Settings</span><span class="o">.</span><span class="n">TARGET_BUFFERED_FIELD</span><span class="p">]]</span>
-            <span class="o">.</span><span class="n">set_geometry</span><span class="p">(</span><span class="n">Settings</span><span class="o">.</span><span class="n">TARGET_BUFFERED_FIELD</span><span class="p">)</span>
-            <span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
-        <span class="p">)</span>
-        <span class="n">neighbor_gdf</span> <span class="o">=</span> <span class="n">target_building_gdf</span><span class="p">[</span>
-            <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;index_</span><span class="si">{</span><span class="n">join_rsuffix</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">Settings</span><span class="o">.</span><span class="n">NEIGHBOR_GEOMETRY_FIELD</span><span class="p">]</span>
-        <span class="p">]</span><span class="o">.</span><span class="n">set_geometry</span><span class="p">(</span><span class="n">Settings</span><span class="o">.</span><span class="n">NEIGHBOR_GEOMETRY_FIELD</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">buildings_intersecting_plan_area</span><span class="p">[</span><span class="n">target_buffer_col</span><span class="p">],</span> <span class="s2">&quot;geom_type&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span>
+        <span class="n">buildings_intersecting_plan_area</span><span class="p">[</span><span class="n">neighbor_geom_col</span><span class="p">],</span> <span class="s2">&quot;geom_type&quot;</span>
+    <span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Columns &#39;</span><span class="si">{</span><span class="n">target_buffer_col</span><span class="si">}</span><span class="s2">&#39; or &#39;</span><span class="si">{</span><span class="n">neighbor_geom_col</span><span class="si">}</span><span class="s2">&#39; not GeoSeries.&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Create a new GeoDataFrame with the area of intersection.</span>
-        <span class="n">intersection_gdf</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">overlay</span><span class="p">(</span>
-            <span class="n">target_gdf</span><span class="p">,</span> <span class="n">neighbor_gdf</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="n">join_predicate</span><span class="p">,</span> <span class="n">keep_geom_type</span><span class="o">=</span><span class="kc">False</span>
-        <span class="p">)</span>
+    <span class="c1"># Work on a copy or directly on the input depending on whether modification is okay</span>
+    <span class="n">gdf</span> <span class="o">=</span> <span class="n">buildings_intersecting_plan_area</span>  <span class="c1"># Use directly for efficiency if input not needed later</span>
 
-        <span class="c1"># Sum up the area of intersection and add to the output list.</span>
-        <span class="n">building_plan_area</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">intersection_gdf</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">DATA_GEOMETRY_FIELD_NAME</span><span class="p">]</span><span class="o">.</span><span class="n">area</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+    <span class="c1"># Calculate intersection geometry for each row</span>
+    <span class="n">intersection_geoms</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="n">target_buffer_col</span><span class="p">]</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">gdf</span><span class="p">[</span><span class="n">neighbor_geom_col</span><span class="p">])</span>
 
-        <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="c1"># Calculate area of each intersection</span>
+    <span class="c1"># Assign area directly. Empty or invalid intersections yield area 0.0.</span>
+    <span class="n">gdf</span><span class="p">[</span><span class="n">area_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">intersection_geoms</span><span class="o">.</span><span class="n">area</span>
 
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">building_plan_area</span><span class="p">)</span></div>
+    <span class="c1"># Group by target building ID and sum areas</span>
+    <span class="n">total_plan_area_series</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">target_id_col</span><span class="p">)[</span><span class="n">area_col</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;building_plan_area&quot;</span><span class="p">:</span> <span class="n">total_plan_area_series</span><span class="o">.</span><span class="n">values</span><span class="p">})</span></div>
 
 
 
 <div class="viewcode-block" id="building_surface_area">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.building_surface_area">[docs]</a>
-<span class="k">def</span> <span class="nf">building_surface_area</span><span class="p">(</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">building_surface_area</span><span class="p">(</span>
     <span class="n">wall_length</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">building_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the building surface area for each building in a Panda Series. In naturf, the building footprint area is the</span>
@@ -362,7 +379,8 @@
 
 <div class="viewcode-block" id="building_surface_area_to_plan_area_ratio">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.building_surface_area_to_plan_area_ratio">[docs]</a>
-<span class="k">def</span> <span class="nf">building_surface_area_to_plan_area_ratio</span><span class="p">(</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">building_surface_area_to_plan_area_ratio</span><span class="p">(</span>
     <span class="n">building_surface_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">total_plan_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the building surface area to plan area ratio for each building in a Pandas Series. In naturf, the building footprint area is the</span>
@@ -383,8 +401,9 @@
 
 <div class="viewcode-block" id="complete_aspect_ratio">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.complete_aspect_ratio">[docs]</a>
-<span class="k">def</span> <span class="nf">complete_aspect_ratio</span><span class="p">(</span>
-    <span class="n">building_surface_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">total_plan_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">building_plan_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">complete_aspect_ratio</span><span class="p">(</span>
+    <span class="n">building_surface_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">total_plan_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">building_plan_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the complete aspect ratio for each building in a Pandas Series. In naturf, the building footprint area is the</span>
 <span class="sd">    same as the roof area, and the exposed ground is the difference between total plan area and building plan area.</span>
@@ -396,12 +415,12 @@
 <span class="sd">    :type total_plan_area:                pd.Series</span>
 
 <span class="sd">    :param building_plan_area:            Building plan area for each building.</span>
-<span class="sd">    :type building_plan_area:             pd.Series</span>
+<span class="sd">    :type building_plan_area:             pd.DataFrame</span>
 
 <span class="sd">    :return:                              Panda Series with complete aspect ratio.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">exposed_ground</span> <span class="o">=</span> <span class="n">total_plan_area</span> <span class="o">-</span> <span class="n">building_plan_area</span>
+    <span class="n">exposed_ground</span> <span class="o">=</span> <span class="n">total_plan_area</span> <span class="o">-</span> <span class="n">building_plan_area</span><span class="p">[</span><span class="s2">&quot;building_plan_area&quot;</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="p">(</span><span class="n">building_surface_area</span> <span class="o">+</span> <span class="n">exposed_ground</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_plan_area</span></div>
 
@@ -409,7 +428,8 @@
 
 <div class="viewcode-block" id="distance_between_buildings">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.distance_between_buildings">[docs]</a>
-<span class="k">def</span> <span class="nf">distance_between_buildings</span><span class="p">(</span><span class="n">buildings_intersecting_plan_area</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">distance_between_buildings</span><span class="p">(</span><span class="n">buildings_intersecting_plan_area</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the distance between each building and its neighbor as defined in buildings_intersecting_plan_area.</span>
 
 <span class="sd">    :param buildings_intersecting_plan_area:    Geometry field for the neighboring buildings from the spatially</span>
@@ -429,8 +449,9 @@
 
 <div class="viewcode-block" id="filter_height_range">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.filter_height_range">[docs]</a>
+<span class="nd">@log_execution_time</span>
 <span class="nd">@extract_columns</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">ID_FIELD</span><span class="p">,</span> <span class="n">Settings</span><span class="o">.</span><span class="n">HEIGHT_FIELD</span><span class="p">,</span> <span class="n">Settings</span><span class="o">.</span><span class="n">GEOMETRY_FIELD</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">filter_height_range</span><span class="p">(</span><span class="n">standardize_column_names_df</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">filter_height_range</span><span class="p">(</span><span class="n">standardize_column_names_df</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter out any zero height buildings and reindex the data frame.  Extract the building_id,</span>
 <span class="sd">    building_height, and geometry fields to nodes.</span>
 
@@ -454,7 +475,8 @@
 
 <div class="viewcode-block" id="frontal_area">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.frontal_area">[docs]</a>
-<span class="k">def</span> <span class="nf">frontal_area</span><span class="p">(</span><span class="n">frontal_length</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">frontal_area</span><span class="p">(</span><span class="n">frontal_length</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the frontal area for each building in a Pandas DataFrame in each cardinal direction.</span>
 
 <span class="sd">    :param frontal_length:                Frontal length in each cardinal direction for each building.</span>
@@ -481,7 +503,8 @@
 
 <div class="viewcode-block" id="frontal_area_density">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.frontal_area_density">[docs]</a>
-<span class="k">def</span> <span class="nf">frontal_area_density</span><span class="p">(</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">frontal_area_density</span><span class="p">(</span>
     <span class="n">frontal_length</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">total_plan_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the frontal area density for each building in a GeoPandas GeoSeries. Frontal area density is the frontal area of a</span>
@@ -629,7 +652,8 @@
 
 <div class="viewcode-block" id="frontal_area_index">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.frontal_area_index">[docs]</a>
-<span class="k">def</span> <span class="nf">frontal_area_index</span><span class="p">(</span><span class="n">frontal_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">total_plan_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">frontal_area_index</span><span class="p">(</span><span class="n">frontal_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">total_plan_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the frontal area index for each building in a Pandas DataFrame in each cardinal direction.</span>
 
 <span class="sd">    :param frontal_area:                  Frontal area in each cardinal direction for each building.</span>
@@ -655,67 +679,72 @@
 
 <div class="viewcode-block" id="frontal_length">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.frontal_length">[docs]</a>
-<span class="k">def</span> <span class="nf">frontal_length</span><span class="p">(</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">frontal_length</span><span class="p">(</span>
     <span class="n">buildings_intersecting_plan_area</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the frontal length for each cardinal direction from the GeoDataFrame of buildings intersecting the plan area.</span>
-<span class="sd">    `buildings_intersecting_plan_area()` needs to include `wall_length`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the total frontal length for each cardinal direction per target building</span>
+<span class="sd">    using optimized pandas groupby aggregation.</span>
 
-<span class="sd">    :param buildings_intersecting_plan_area:    Geometry field for the neighboring buildings from the spatially</span>
-<span class="sd">                                                joined data.</span>
-<span class="sd">    :type buildings_intersecting_plan_area:     gpd.GeoDataFrame</span>
+<span class="sd">    Requires input GeoDataFrame to have columns like &#39;wall_length_north_neighbor&#39;, etc.,</span>
+<span class="sd">    and a column specified by Settings.TARGET_ID_FIELD.</span>
 
-<span class="sd">    :return:                                    The frontal area for each cardinal direction for each unique building in the</span>
-<span class="sd">                                                `buildings_intersecting_plan_area` GeoDataFrame.</span>
-
+<span class="sd">    :param buildings_intersecting_plan_area: GeoDataFrame with target building IDs</span>
+<span class="sd">                                             and neighbor wall lengths per direction.</span>
+<span class="sd">    :type buildings_intersecting_plan_area:  gpd.GeoDataFrame</span>
+<span class="sd">    :return:                                 DataFrame indexed by target_building_id</span>
+<span class="sd">                                             with total frontal lengths per direction.</span>
+<span class="sd">    :rtype:                                  pd.DataFrame</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">number_target_buildings</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">buildings_intersecting_plan_area</span><span class="o">.</span><span class="n">building_id_target</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
-    <span class="n">frontal_length_north</span><span class="p">,</span> <span class="n">frontal_length_east</span><span class="p">,</span> <span class="n">frontal_length_south</span><span class="p">,</span> <span class="n">frontal_length_west</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">number_target_buildings</span><span class="p">,</span>
-        <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">number_target_buildings</span><span class="p">,</span>
-        <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">number_target_buildings</span><span class="p">,</span>
-        <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">number_target_buildings</span><span class="p">,</span>
+    <span class="c1"># Construct the specific column names required based on Settings</span>
+    <span class="n">col_north</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Settings</span><span class="o">.</span><span class="n">WALL_LENGTH_NORTH</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">Settings</span><span class="o">.</span><span class="n">NEIGHBOR</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">col_east</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Settings</span><span class="o">.</span><span class="n">WALL_LENGTH_EAST</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">Settings</span><span class="o">.</span><span class="n">NEIGHBOR</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">col_south</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Settings</span><span class="o">.</span><span class="n">WALL_LENGTH_SOUTH</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">Settings</span><span class="o">.</span><span class="n">NEIGHBOR</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">col_west</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Settings</span><span class="o">.</span><span class="n">WALL_LENGTH_WEST</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">Settings</span><span class="o">.</span><span class="n">NEIGHBOR</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">grouping_col</span> <span class="o">=</span> <span class="n">Settings</span><span class="o">.</span><span class="n">TARGET_ID_FIELD</span>
+
+    <span class="c1"># Input validation</span>
+    <span class="n">required_columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">grouping_col</span><span class="p">,</span> <span class="n">col_north</span><span class="p">,</span> <span class="n">col_east</span><span class="p">,</span> <span class="n">col_south</span><span class="p">,</span> <span class="n">col_west</span><span class="p">]</span>
+    <span class="n">missing_cols</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">required_columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">buildings_intersecting_plan_area</span><span class="o">.</span><span class="n">columns</span>
+    <span class="p">]</span>
+    <span class="k">if</span> <span class="n">missing_cols</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Missing required columns in input GeoDataFrame: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">missing_cols</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Define the aggregation operations</span>
+    <span class="c1"># We want to sum each of the directional wall length columns</span>
+    <span class="n">aggregations</span> <span class="o">=</span> <span class="p">{</span><span class="n">col_north</span><span class="p">:</span> <span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="n">col_east</span><span class="p">:</span> <span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="n">col_south</span><span class="p">:</span> <span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="n">col_west</span><span class="p">:</span> <span class="s2">&quot;sum&quot;</span><span class="p">}</span>
+
+    <span class="c1"># Perform the groupby and aggregation</span>
+    <span class="c1"># Group by the target building ID, then apply the sum aggregation</span>
+    <span class="n">frontal_lengths_grouped</span> <span class="o">=</span> <span class="n">buildings_intersecting_plan_area</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">grouping_col</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+        <span class="n">aggregations</span>
     <span class="p">)</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="k">for</span> <span class="n">target_building_id</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">buildings_intersecting_plan_area</span><span class="o">.</span><span class="n">building_id_target</span><span class="o">.</span><span class="n">unique</span><span class="p">()):</span>
-        <span class="c1"># Get DataFrame with any building that intersects the target_building_id plan area.</span>
-        <span class="n">target_building_gdf</span> <span class="o">=</span> <span class="n">buildings_intersecting_plan_area</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
-            <span class="n">buildings_intersecting_plan_area</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">TARGET_ID_FIELD</span><span class="p">]</span> <span class="o">==</span> <span class="n">target_building_id</span>
-        <span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="c1"># Rename the resulting columns to the final desired names</span>
+    <span class="n">rename_map</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">col_north</span><span class="p">:</span> <span class="n">Settings</span><span class="o">.</span><span class="n">FRONTAL_LENGTH_NORTH</span><span class="p">,</span>
+        <span class="n">col_east</span><span class="p">:</span> <span class="n">Settings</span><span class="o">.</span><span class="n">FRONTAL_LENGTH_EAST</span><span class="p">,</span>
+        <span class="n">col_south</span><span class="p">:</span> <span class="n">Settings</span><span class="o">.</span><span class="n">FRONTAL_LENGTH_SOUTH</span><span class="p">,</span>
+        <span class="n">col_west</span><span class="p">:</span> <span class="n">Settings</span><span class="o">.</span><span class="n">FRONTAL_LENGTH_WEST</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">frontal_lengths_final</span> <span class="o">=</span> <span class="n">frontal_lengths_grouped</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">rename_map</span><span class="p">)</span>
 
-        <span class="c1"># Sum frontal length for each cardinal direction</span>
-        <span class="n">frontal_length_north</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">target_building_gdf</span><span class="p">[</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Settings</span><span class="o">.</span><span class="n">WALL_LENGTH_NORTH</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">Settings</span><span class="o">.</span><span class="n">NEIGHBOR</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-        <span class="n">frontal_length_east</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">target_building_gdf</span><span class="p">[</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Settings</span><span class="o">.</span><span class="n">WALL_LENGTH_EAST</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">Settings</span><span class="o">.</span><span class="n">NEIGHBOR</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-        <span class="n">frontal_length_south</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">target_building_gdf</span><span class="p">[</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Settings</span><span class="o">.</span><span class="n">WALL_LENGTH_SOUTH</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">Settings</span><span class="o">.</span><span class="n">NEIGHBOR</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-        <span class="n">frontal_length_west</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">target_building_gdf</span><span class="p">[</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Settings</span><span class="o">.</span><span class="n">WALL_LENGTH_WEST</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">Settings</span><span class="o">.</span><span class="n">NEIGHBOR</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="c1"># drop index</span>
+    <span class="n">frontal_lengths_final</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-        <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
-
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
-        <span class="p">[</span>
-            <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">frontal_length_north</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">Settings</span><span class="o">.</span><span class="n">FRONTAL_LENGTH_NORTH</span><span class="p">),</span>
-            <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">frontal_length_east</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">Settings</span><span class="o">.</span><span class="n">FRONTAL_LENGTH_EAST</span><span class="p">),</span>
-            <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">frontal_length_south</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">Settings</span><span class="o">.</span><span class="n">FRONTAL_LENGTH_SOUTH</span><span class="p">),</span>
-            <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">frontal_length_west</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">Settings</span><span class="o">.</span><span class="n">FRONTAL_LENGTH_WEST</span><span class="p">),</span>
-        <span class="p">],</span>
-        <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">frontal_lengths_final</span></div>
 
 
 
 <div class="viewcode-block" id="grimmond_oke_displacement_height">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.grimmond_oke_displacement_height">[docs]</a>
-<span class="k">def</span> <span class="nf">grimmond_oke_displacement_height</span><span class="p">(</span><span class="n">building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">grimmond_oke_displacement_height</span><span class="p">(</span><span class="n">building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the Grimmond &amp; Oke displacement height for each building</span>
 
 <span class="sd">    :param building_height:                     Building height field.</span>
@@ -731,7 +760,8 @@
 
 <div class="viewcode-block" id="grimmond_oke_roughness_length">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.grimmond_oke_roughness_length">[docs]</a>
-<span class="k">def</span> <span class="nf">grimmond_oke_roughness_length</span><span class="p">(</span><span class="n">building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">grimmond_oke_roughness_length</span><span class="p">(</span><span class="n">building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the Grimmond &amp; Oke roughness length for each building</span>
 
 <span class="sd">    :param building_height:                     Building height field.</span>
@@ -747,7 +777,8 @@
 
 <div class="viewcode-block" id="height_to_width_ratio">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.height_to_width_ratio">[docs]</a>
-<span class="k">def</span> <span class="nf">height_to_width_ratio</span><span class="p">(</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">height_to_width_ratio</span><span class="p">(</span>
     <span class="n">mean_building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">average_distance_between_buildings</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the height to width ratio for each building.</span>
@@ -768,7 +799,8 @@
 
 <div class="viewcode-block" id="input_shapefile_df">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.input_shapefile_df">[docs]</a>
-<span class="k">def</span> <span class="nf">input_shapefile_df</span><span class="p">(</span><span class="n">input_shapefile</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">:</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">input_shapefile_df</span><span class="p">(</span><span class="n">input_shapefile</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Import shapefile to GeoDataFrame using only desired columns.</span>
 
 <span class="sd">    :params input_shapefile:                        Full path with file name and extension to the input shapefile.</span>
@@ -786,13 +818,20 @@
         <span class="p">]</span>
     <span class="p">]</span><span class="o">.</span><span class="n">set_geometry</span><span class="p">(</span><span class="n">Settings</span><span class="o">.</span><span class="n">DATA_GEOMETRY_FIELD_NAME</span><span class="p">)</span>
 
+    <span class="c1"># only keep geometry type == Polygon</span>
+    <span class="c1"># only keep geometry type == Polygon or MultiPolygon</span>
+    <span class="n">gdf</span> <span class="o">=</span> <span class="n">gdf</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="n">gdf</span><span class="p">[</span><span class="n">Settings</span><span class="o">.</span><span class="n">DATA_GEOMETRY_FIELD_NAME</span><span class="p">]</span><span class="o">.</span><span class="n">geom_type</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">&quot;Polygon&quot;</span><span class="p">,</span> <span class="s2">&quot;MultiPolygon&quot;</span><span class="p">])</span>
+    <span class="p">]</span>
+
     <span class="k">return</span> <span class="n">gdf</span></div>
 
 
 
 <div class="viewcode-block" id="lot_area">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.lot_area">[docs]</a>
-<span class="k">def</span> <span class="nf">lot_area</span><span class="p">(</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">lot_area</span><span class="p">(</span>
     <span class="n">buildings_intersecting_plan_area</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">,</span> <span class="n">building_surface_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the lot area for each building in a Panda Series. Lot area is the total surface area of all buildings</span>
@@ -821,7 +860,8 @@
 
 <div class="viewcode-block" id="macdonald_displacement_height">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.macdonald_displacement_height">[docs]</a>
-<span class="k">def</span> <span class="nf">macdonald_displacement_height</span><span class="p">(</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">macdonald_displacement_height</span><span class="p">(</span>
     <span class="n">building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">plan_area_fraction</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the Macdonald et al. displacement height for each building in a Pandas Series.</span>
@@ -847,7 +887,8 @@
 
 <div class="viewcode-block" id="macdonald_roughness_length">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.macdonald_roughness_length">[docs]</a>
-<span class="k">def</span> <span class="nf">macdonald_roughness_length</span><span class="p">(</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">macdonald_roughness_length</span><span class="p">(</span>
     <span class="n">building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
     <span class="n">macdonald_displacement_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
     <span class="n">frontal_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
@@ -903,7 +944,8 @@
 
 <div class="viewcode-block" id="mean_building_height">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.mean_building_height">[docs]</a>
-<span class="k">def</span> <span class="nf">mean_building_height</span><span class="p">(</span><span class="n">buildings_intersecting_plan_area</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">mean_building_height</span><span class="p">(</span><span class="n">buildings_intersecting_plan_area</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the mean building height for all buildings within the target building&#39;s total plan area.</span>
 
 <span class="sd">    :param buildings_intersecting_plan_area:    Geometry field for the neighboring buildings from the spatially</span>
@@ -923,15 +965,16 @@
 
 <div class="viewcode-block" id="plan_area_density">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.plan_area_density">[docs]</a>
-<span class="k">def</span> <span class="nf">plan_area_density</span><span class="p">(</span>
-    <span class="n">building_plan_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">total_plan_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plan_area_density</span><span class="p">(</span>
+    <span class="n">building_plan_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">total_plan_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the plan area density for each building in a GeoPandas GeoSeries. Plan area density is the building plan area</span>
 <span class="sd">    at a specific height increment divided by the total plan area. naturf calculates plan area density from the four cardinal</span>
 <span class="sd">    directions (north, east, south, west) and at 5-meter increments from ground level to 75 meters unless otherwise specified.</span>
 
 <span class="sd">    :param building_plan_area:            Building plan area for each building.</span>
-<span class="sd">    :type building_plan_area:             pd.Series</span>
+<span class="sd">    :type building_plan_area:             pd.DataFrame</span>
 
 <span class="sd">    :param building_height:               Building height for each building.</span>
 <span class="sd">    :type building_height:                pd.Series</span>
@@ -941,39 +984,40 @@
 
 <span class="sd">    :return:                              Pandas DataFrame with plan area density for each BUILDING_HEIGHT_INTERVAL for each building.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># --- Align inputs by position to avoid label‑based lookup errors ---</span>
+    <span class="n">building_plan_area</span> <span class="o">=</span> <span class="n">building_plan_area</span><span class="p">[</span><span class="s2">&quot;building_plan_area&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">total_plan_area</span> <span class="o">=</span> <span class="n">total_plan_area</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">building_height</span> <span class="o">=</span> <span class="n">building_height</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
 
-    <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="nb">len</span><span class="p">(</span><span class="n">building_height</span><span class="o">.</span><span class="n">index</span><span class="p">),</span>
-        <span class="nb">int</span><span class="p">(</span><span class="n">Settings</span><span class="o">.</span><span class="n">MAX_BUILDING_HEIGHT</span> <span class="o">/</span> <span class="n">Settings</span><span class="o">.</span><span class="n">BUILDING_HEIGHT_INTERVAL</span><span class="p">),</span>
-    <span class="p">)</span>
-    <span class="n">plan_area_density</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">)]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">)]</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">building_height</span><span class="p">)</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Settings</span><span class="o">.</span><span class="n">MAX_BUILDING_HEIGHT</span> <span class="o">/</span> <span class="n">Settings</span><span class="o">.</span><span class="n">BUILDING_HEIGHT_INTERVAL</span><span class="p">)</span>
+    <span class="n">plan_area_density_values</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">)]</span>
 
-    <span class="k">for</span> <span class="n">building</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">building_plan_area</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
-        <span class="n">building_height_counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># Iterate over buildings by positional index</span>
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+        <span class="n">height_counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">max_height</span> <span class="o">=</span> <span class="n">building_height</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
 
-        <span class="c1"># Go from ground level to building height by the building height interval and calculate plan area density.</span>
-        <span class="k">while</span> <span class="n">building_height_counter</span> <span class="o">&lt;</span> <span class="n">building_height</span><span class="p">[</span><span class="n">building</span><span class="p">]:</span>
-            <span class="n">plan_area_density</span><span class="p">[</span><span class="n">building</span><span class="p">][</span>
-                <span class="nb">int</span><span class="p">(</span><span class="n">building_height_counter</span> <span class="o">/</span> <span class="n">Settings</span><span class="o">.</span><span class="n">BUILDING_HEIGHT_INTERVAL</span><span class="p">)</span>
-            <span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">building_plan_area</span><span class="p">[</span><span class="n">building</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_plan_area</span><span class="p">[</span><span class="n">building</span><span class="p">])</span>
-            <span class="n">building_height_counter</span> <span class="o">+=</span> <span class="n">Settings</span><span class="o">.</span><span class="n">BUILDING_HEIGHT_INTERVAL</span>
+        <span class="c1"># Increment by BUILDING_HEIGHT_INTERVAL up to the building height</span>
+        <span class="k">while</span> <span class="n">height_counter</span> <span class="o">&lt;</span> <span class="n">max_height</span><span class="p">:</span>
+            <span class="n">col_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">height_counter</span> <span class="o">/</span> <span class="n">Settings</span><span class="o">.</span><span class="n">BUILDING_HEIGHT_INTERVAL</span><span class="p">)</span>
+            <span class="n">plan_area_density_values</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="n">col_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">building_plan_area</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">/</span> <span class="n">total_plan_area</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="n">height_counter</span> <span class="o">+=</span> <span class="n">Settings</span><span class="o">.</span><span class="n">BUILDING_HEIGHT_INTERVAL</span>
 
-    <span class="n">columns_plan_area_density</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Settings</span><span class="o">.</span><span class="n">PLAN_AREA_DENSITY</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">Settings</span><span class="o">.</span><span class="n">MAX_BUILDING_HEIGHT</span> <span class="o">/</span> <span class="n">Settings</span><span class="o">.</span><span class="n">BUILDING_HEIGHT_INTERVAL</span><span class="p">))</span>
-    <span class="p">]</span>
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">plan_area_density</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns_plan_area_density</span><span class="p">)</span></div>
+    <span class="n">columns_plan_area_density</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Settings</span><span class="o">.</span><span class="n">PLAN_AREA_DENSITY</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">plan_area_density_values</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns_plan_area_density</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="plan_area_fraction">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.plan_area_fraction">[docs]</a>
-<span class="k">def</span> <span class="nf">plan_area_fraction</span><span class="p">(</span><span class="n">building_plan_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">total_plan_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plan_area_fraction</span><span class="p">(</span><span class="n">building_plan_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">total_plan_area</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the plan area fraction for each building in a Pandas Series. Plan area fraction is the building plan area at ground level</span>
 <span class="sd">    for each building divided by the total plan area.</span>
 
 <span class="sd">    :param building_plan_area:            Building plan area for each building.</span>
-<span class="sd">    :type building_plan_area:             pd.Series</span>
+<span class="sd">    :type building_plan_area:             pd.DataFrame</span>
 
 <span class="sd">    :param total_plan_area:               Total plan area for each building.</span>
 <span class="sd">    :type total_plan_area:                pd.Series</span>
@@ -981,13 +1025,14 @@
 <span class="sd">    :return:                              Pandas Series with plan area fraction for each building.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">return</span> <span class="n">building_plan_area</span> <span class="o">/</span> <span class="n">total_plan_area</span></div>
+    <span class="k">return</span> <span class="n">building_plan_area</span><span class="p">[</span><span class="s2">&quot;building_plan_area&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">/</span> <span class="n">total_plan_area</span><span class="o">.</span><span class="n">values</span></div>
 
 
 
 <div class="viewcode-block" id="raupach_displacement_height">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.raupach_displacement_height">[docs]</a>
-<span class="k">def</span> <span class="nf">raupach_displacement_height</span><span class="p">(</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">raupach_displacement_height</span><span class="p">(</span>
     <span class="n">building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">frontal_area_index</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the Raupach displacement height for each building in each cardinal direction in a Panda Series. Default values for constants are set</span>
@@ -1025,7 +1070,8 @@
 
 <div class="viewcode-block" id="raupach_roughness_length">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.raupach_roughness_length">[docs]</a>
-<span class="k">def</span> <span class="nf">raupach_roughness_length</span><span class="p">(</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">raupach_roughness_length</span><span class="p">(</span>
     <span class="n">building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
     <span class="n">frontal_area_index</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
     <span class="n">raupach_displacement_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
@@ -1082,7 +1128,8 @@
 
 <div class="viewcode-block" id="rooftop_area_density">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.rooftop_area_density">[docs]</a>
-<span class="k">def</span> <span class="nf">rooftop_area_density</span><span class="p">(</span><span class="n">plan_area_density</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rooftop_area_density</span><span class="p">(</span><span class="n">plan_area_density</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the rooftop area density for each building in a Pandas DataFrame. Rooftop area density is the roof area</span>
 <span class="sd">    of all buildings within the total plan area  at a specified height increment divided by the total plan area. naturf</span>
 <span class="sd">    projects building footprints vertically to the building height, meaning that rooftop area density is equal to the plan area</span>
@@ -1105,7 +1152,8 @@
 
 <div class="viewcode-block" id="sky_view_factor">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.sky_view_factor">[docs]</a>
-<span class="k">def</span> <span class="nf">sky_view_factor</span><span class="p">(</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sky_view_factor</span><span class="p">(</span>
     <span class="n">building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">average_distance_between_buildings</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the 2D sky view factor for each building.</span>
@@ -1126,7 +1174,8 @@
 
 <div class="viewcode-block" id="standard_deviation_of_building_heights">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.standard_deviation_of_building_heights">[docs]</a>
-<span class="k">def</span> <span class="nf">standard_deviation_of_building_heights</span><span class="p">(</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">standard_deviation_of_building_heights</span><span class="p">(</span>
     <span class="n">buildings_intersecting_plan_area</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the standard deviation of building heights for all buildings within the target building&#39;s total plan area.</span>
@@ -1152,7 +1201,8 @@
 
 <div class="viewcode-block" id="standardize_column_names_df">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.standardize_column_names_df">[docs]</a>
-<span class="k">def</span> <span class="nf">standardize_column_names_df</span><span class="p">(</span><span class="n">input_shapefile_df</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">:</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">standardize_column_names_df</span><span class="p">(</span><span class="n">input_shapefile_df</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Standardize field names so use throughout code will be consistent throughout.</span>
 
 <span class="sd">    :params input_shapefile_df:                     GeoDataFrame of from the input shapefile.</span>
@@ -1178,7 +1228,8 @@
 
 <div class="viewcode-block" id="target_crs">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.target_crs">[docs]</a>
-<span class="k">def</span> <span class="nf">target_crs</span><span class="p">(</span><span class="n">input_shapefile_df</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CRS</span><span class="p">:</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">target_crs</span><span class="p">(</span><span class="n">input_shapefile_df</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CRS</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract coordinate reference system from geometry.</span>
 
 <span class="sd">    :params input_shapefile_df:                     GeoDataFrame of from the input shapefile.</span>
@@ -1194,7 +1245,8 @@
 
 <div class="viewcode-block" id="total_plan_area">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.total_plan_area">[docs]</a>
-<span class="k">def</span> <span class="nf">total_plan_area</span><span class="p">(</span><span class="n">total_plan_area_geometry</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoSeries</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">total_plan_area</span><span class="p">(</span><span class="n">total_plan_area_geometry</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoSeries</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the total plan area for each building in a GeoPandas GeoSeries.</span>
 
 <span class="sd">    :param geometry:                    Geometry for a series of buildings.</span>
@@ -1210,7 +1262,8 @@
 
 <div class="viewcode-block" id="total_plan_area_geometry">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.total_plan_area_geometry">[docs]</a>
-<span class="k">def</span> <span class="nf">total_plan_area_geometry</span><span class="p">(</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">total_plan_area_geometry</span><span class="p">(</span>
     <span class="n">building_geometry</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">radius</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Settings</span><span class="o">.</span><span class="n">RADIUS</span><span class="p">,</span> <span class="n">cap_style</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Settings</span><span class="o">.</span><span class="n">CAP_STYLE</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoSeries</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the geometry of the total plan area which is the buffer of the building for the desired radius and cap style.</span>
@@ -1237,7 +1290,8 @@
 
 <div class="viewcode-block" id="vertical_distribution_of_building_heights">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.vertical_distribution_of_building_heights">[docs]</a>
-<span class="k">def</span> <span class="nf">vertical_distribution_of_building_heights</span><span class="p">(</span><span class="n">building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">vertical_distribution_of_building_heights</span><span class="p">(</span><span class="n">building_height</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Represent the location of buildings at 5m increments from ground level to 75m unless otherwise specified. If is within a</span>
 <span class="sd">    given height bin, it will be given a 1 and it will be given a 0 otherwise.&quot;</span>
 
@@ -1275,80 +1329,153 @@
 
 
 
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_polygon_segment_properties</span><span class="p">(</span><span class="n">polygon</span><span class="p">:</span> <span class="n">Polygon</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">list</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the angles, directions, and lengths of each segment of a polygon&#39;s exterior.</span>
+
+<span class="sd">    This function processes the exterior coordinates of a given polygon to determine the</span>
+<span class="sd">    angle in degrees, cardinal direction, and length of each segment. The direction is</span>
+<span class="sd">    determined based on predefined degree ranges specified in the Settings.</span>
+
+<span class="sd">    :param polygon: A Shapely Polygon object whose exterior segments are to be analyzed.</span>
+<span class="sd">    :type polygon: Polygon</span>
+
+<span class="sd">    :return: A tuple containing three lists: angles (in degrees), directions (as strings),</span>
+<span class="sd">             and lengths (as floats) for each segment of the polygon&#39;s exterior.</span>
+<span class="sd">    :rtype: tuple[list, list, list]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">angles</span><span class="p">,</span> <span class="n">directions</span><span class="p">,</span> <span class="n">lengths</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="n">coords</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">polygon</span><span class="o">.</span><span class="n">exterior</span><span class="o">.</span><span class="n">coords</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">angles</span><span class="p">,</span> <span class="n">directions</span><span class="p">,</span> <span class="n">lengths</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+
+        <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">coords</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">coords</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">x1</span> <span class="o">==</span> <span class="n">x2</span> <span class="ow">and</span> <span class="n">y1</span> <span class="o">==</span> <span class="n">y2</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">angle_rad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">)</span>
+        <span class="n">angle_deg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">angle_rad</span><span class="p">)</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Determine direction</span>
+        <span class="k">if</span> <span class="n">Settings</span><span class="o">.</span><span class="n">NORTHEAST_DEGREES</span> <span class="o">&lt;=</span> <span class="n">angle_deg</span> <span class="o">&lt;</span> <span class="n">Settings</span><span class="o">.</span><span class="n">NORTHWEST_DEGREES</span><span class="p">:</span>
+            <span class="n">direction</span> <span class="o">=</span> <span class="n">Settings</span><span class="o">.</span><span class="n">WEST</span>
+        <span class="k">elif</span> <span class="n">Settings</span><span class="o">.</span><span class="n">SOUTHEAST_DEGREES_ARCTAN</span> <span class="o">&lt;=</span> <span class="n">angle_deg</span> <span class="o">&lt;</span> <span class="n">Settings</span><span class="o">.</span><span class="n">NORTHEAST_DEGREES</span><span class="p">:</span>
+            <span class="n">direction</span> <span class="o">=</span> <span class="n">Settings</span><span class="o">.</span><span class="n">NORTH</span>
+        <span class="k">elif</span> <span class="n">Settings</span><span class="o">.</span><span class="n">SOUTHWEST_DEGREES_ARCTAN</span> <span class="o">&lt;=</span> <span class="n">angle_deg</span> <span class="o">&lt;</span> <span class="n">Settings</span><span class="o">.</span><span class="n">SOUTHEAST_DEGREES_ARCTAN</span><span class="p">:</span>
+            <span class="n">direction</span> <span class="o">=</span> <span class="n">Settings</span><span class="o">.</span><span class="n">EAST</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">direction</span> <span class="o">=</span> <span class="n">Settings</span><span class="o">.</span><span class="n">SOUTH</span>
+
+        <span class="n">angles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">angle_deg</span><span class="p">)</span>
+        <span class="n">directions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
+        <span class="n">lengths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">angles</span><span class="p">,</span> <span class="n">directions</span><span class="p">,</span> <span class="n">lengths</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_process_single_geometry</span><span class="p">(</span><span class="n">geom</span><span class="p">:</span> <span class="n">BaseGeometry</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Process a single geometry object to extract wall angles, directions, and lengths.</span>
+
+<span class="sd">    This function handles both Polygon and MultiPolygon geometries, extracting the</span>
+<span class="sd">    angles, cardinal directions, and lengths of each segment of the geometry&#39;s exterior.</span>
+<span class="sd">    It is designed to be used with parallel processing via joblib.Parallel.</span>
+
+<span class="sd">    :param geom: A geometry object which can be a Polygon, MultiPolygon, or None.</span>
+<span class="sd">    :type geom: BaseGeometry or None</span>
+
+<span class="sd">    :return: A dictionary containing lists of wall angles, directions, and lengths.</span>
+<span class="sd">             If the geometry is None or invalid, the lists will be empty.</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">building_angles</span><span class="p">,</span> <span class="n">building_directions</span><span class="p">,</span> <span class="n">building_lengths</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+
+    <span class="c1"># Handle invalid/empty cases first</span>
+    <span class="k">if</span> <span class="n">geom</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">geom</span><span class="p">,</span> <span class="n">BaseGeometry</span><span class="p">)</span> <span class="ow">or</span> <span class="n">geom</span><span class="o">.</span><span class="n">is_empty</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">Settings</span><span class="o">.</span><span class="n">WALL_ANGLE</span><span class="p">:</span> <span class="n">building_angles</span><span class="p">,</span>
+            <span class="n">Settings</span><span class="o">.</span><span class="n">WALL_DIRECTION</span><span class="p">:</span> <span class="n">building_directions</span><span class="p">,</span>
+            <span class="n">Settings</span><span class="o">.</span><span class="n">WALL_LENGTH</span><span class="p">:</span> <span class="n">building_lengths</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="c1"># Process Polygon or MultiPolygon</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">geom</span><span class="p">,</span> <span class="n">Polygon</span><span class="p">):</span>
+        <span class="n">angles</span><span class="p">,</span> <span class="n">directions</span><span class="p">,</span> <span class="n">lengths</span> <span class="o">=</span> <span class="n">_get_polygon_segment_properties</span><span class="p">(</span><span class="n">geom</span><span class="p">)</span>
+        <span class="n">building_angles</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
+        <span class="n">building_directions</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">directions</span><span class="p">)</span>
+        <span class="n">building_lengths</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">geom</span><span class="p">,</span> <span class="n">MultiPolygon</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">poly</span> <span class="ow">in</span> <span class="n">geom</span><span class="o">.</span><span class="n">geoms</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">poly</span><span class="p">,</span> <span class="n">Polygon</span><span class="p">):</span>
+                <span class="n">angles</span><span class="p">,</span> <span class="n">directions</span><span class="p">,</span> <span class="n">lengths</span> <span class="o">=</span> <span class="n">_get_polygon_segment_properties</span><span class="p">(</span><span class="n">poly</span><span class="p">)</span>
+                <span class="n">building_angles</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
+                <span class="n">building_directions</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">directions</span><span class="p">)</span>
+                <span class="n">building_lengths</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="n">Settings</span><span class="o">.</span><span class="n">WALL_ANGLE</span><span class="p">:</span> <span class="n">building_angles</span><span class="p">,</span>
+        <span class="n">Settings</span><span class="o">.</span><span class="n">WALL_DIRECTION</span><span class="p">:</span> <span class="n">building_directions</span><span class="p">,</span>
+        <span class="n">Settings</span><span class="o">.</span><span class="n">WALL_LENGTH</span><span class="p">:</span> <span class="n">building_lengths</span><span class="p">,</span>
+    <span class="p">}</span>
+
+
 <div class="viewcode-block" id="wall_angle_direction_length">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.wall_angle_direction_length">[docs]</a>
-<span class="k">def</span> <span class="nf">wall_angle_direction_length</span><span class="p">(</span><span class="n">building_geometry</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the wall angle, direction, and length for each building in a GeoPandas GeoSeries.</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">wall_angle_direction_length</span><span class="p">(</span><span class="n">building_geometry</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the wall angle, direction, and length for each building in a given GeoPandas GeoSeries.</span>
 
-<span class="sd">    :param geometry:                    Geometry for a series of buildings.</span>
-<span class="sd">    :type geometry:                     pd.Series</span>
+<span class="sd">    This function processes each building&#39;s geometry to determine the angles, cardinal directions,</span>
+<span class="sd">    and lengths of its walls. It utilizes parallel processing to enhance performance, especially</span>
+<span class="sd">    with large datasets.</span>
 
-<span class="sd">    :return:                            Pandas DataFrame with wall angle, direction, and length for each building.</span>
+<span class="sd">    :param building_geometry: A series containing the geometries of buildings.</span>
+<span class="sd">    :type building_geometry: pd.Series</span>
 
+<span class="sd">    :param n_jobs: The number of CPU cores to use for parallel processing. Defaults to -1, which</span>
+<span class="sd">                   uses all available cores. If set to a value less than 1, it defaults to 1 core.</span>
+<span class="sd">    :type n_jobs: int</span>
+
+<span class="sd">    :return: A DataFrame where each row corresponds to a building and contains lists of wall angles,</span>
+<span class="sd">             directions, and lengths.</span>
+<span class="sd">    :rtype: pd.DataFrame</span>
+
+<span class="sd">    :raises TypeError: If the input is not a GeoPandas GeoSeries or cannot be converted to one.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">building_geometry</span><span class="p">,</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoSeries</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">building_geometry</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoSeries</span><span class="p">(</span><span class="n">building_geometry</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input must be a GeoPandas GeoSeries or convertible. Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="n">wall_angle</span><span class="p">,</span> <span class="n">wall_direction</span><span class="p">,</span> <span class="n">wall_length</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="p">[[]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">building_geometry</span><span class="o">.</span><span class="n">size</span><span class="p">)],</span>
-        <span class="p">[[]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">building_geometry</span><span class="o">.</span><span class="n">size</span><span class="p">)],</span>
-        <span class="p">[[]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">building_geometry</span><span class="o">.</span><span class="n">size</span><span class="p">)],</span>
+    <span class="c1"># Determine the actual number of cores to use</span>
+    <span class="k">if</span> <span class="n">n_jobs</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">num_cores</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">n_jobs</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">num_cores</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Ensure at least 1 core</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">num_cores</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">())</span>
+
+    <span class="n">results_list</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">num_cores</span><span class="p">)(</span>
+        <span class="n">delayed</span><span class="p">(</span><span class="n">_process_single_geometry</span><span class="p">)(</span><span class="n">geom</span><span class="p">)</span> <span class="k">for</span> <span class="n">geom</span> <span class="ow">in</span> <span class="n">building_geometry</span>
     <span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">building</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">building_geometry</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
-        <span class="n">points_in_polygon</span> <span class="o">=</span> <span class="n">building_geometry</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">building</span><span class="p">]</span><span class="o">.</span><span class="n">exterior</span><span class="o">.</span><span class="n">xy</span>
+    <span class="n">output_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results_list</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">building_geometry</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">points_in_polygon</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">points_in_polygon</span><span class="p">[</span><span class="mi">1</span><span class="p">])):</span>
-            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">item</span>
-
-            <span class="c1"># Store the first set of coordinates.</span>
-            <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
-
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
-
-                <span class="n">wall_angle</span><span class="p">[</span><span class="n">building</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">)))</span>
-
-                <span class="c1"># For each direction, the start degree (from counterclockwise) is included (&lt;=) and the end degree is not included (&lt;).</span>
-                <span class="k">if</span> <span class="p">(</span>
-                    <span class="n">Settings</span><span class="o">.</span><span class="n">NORTHEAST_DEGREES</span>
-                    <span class="o">&lt;=</span> <span class="n">wall_angle</span><span class="p">[</span><span class="n">building</span><span class="p">][</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
-                    <span class="o">&lt;</span> <span class="n">Settings</span><span class="o">.</span><span class="n">NORTHWEST_DEGREES</span>
-                <span class="p">):</span>
-                    <span class="n">wall_direction</span><span class="p">[</span><span class="n">building</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Settings</span><span class="o">.</span><span class="n">WEST</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="p">(</span>
-                    <span class="n">Settings</span><span class="o">.</span><span class="n">SOUTHEAST_DEGREES_ARCTAN</span>
-                    <span class="o">&lt;=</span> <span class="n">wall_angle</span><span class="p">[</span><span class="n">building</span><span class="p">][</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
-                    <span class="o">&lt;</span> <span class="n">Settings</span><span class="o">.</span><span class="n">NORTHEAST_DEGREES</span>
-                <span class="p">):</span>
-                    <span class="n">wall_direction</span><span class="p">[</span><span class="n">building</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Settings</span><span class="o">.</span><span class="n">NORTH</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="p">(</span>
-                    <span class="n">Settings</span><span class="o">.</span><span class="n">SOUTHWEST_DEGREES_ARCTAN</span>
-                    <span class="o">&lt;=</span> <span class="n">wall_angle</span><span class="p">[</span><span class="n">building</span><span class="p">][</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
-                    <span class="o">&lt;</span> <span class="n">Settings</span><span class="o">.</span><span class="n">SOUTHEAST_DEGREES_ARCTAN</span>
-                <span class="p">):</span>
-                    <span class="n">wall_direction</span><span class="p">[</span><span class="n">building</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Settings</span><span class="o">.</span><span class="n">EAST</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">wall_direction</span><span class="p">[</span><span class="n">building</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Settings</span><span class="o">.</span><span class="n">SOUTH</span><span class="p">)</span>
-
-                <span class="n">wall_length</span><span class="p">[</span><span class="n">building</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
-
-                <span class="c1"># Reset start coordinates.</span>
-                <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
-
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
-        <span class="p">[</span>
-            <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">wall_angle</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">Settings</span><span class="o">.</span><span class="n">WALL_ANGLE</span><span class="p">),</span>
-            <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">wall_direction</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">Settings</span><span class="o">.</span><span class="n">WALL_DIRECTION</span><span class="p">),</span>
-            <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">wall_length</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">Settings</span><span class="o">.</span><span class="n">WALL_LENGTH</span><span class="p">),</span>
-        <span class="p">],</span>
-        <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">output_df</span></div>
 
 
 
 <div class="viewcode-block" id="wall_length">
 <a class="viewcode-back" href="../../naturf.html#naturf.nodes.wall_length">[docs]</a>
-<span class="k">def</span> <span class="nf">wall_length</span><span class="p">(</span><span class="n">wall_angle_direction_length</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="nd">@log_execution_time</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">wall_length</span><span class="p">(</span><span class="n">wall_angle_direction_length</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the wall length for each building in a GeoPandas GeoSeries.</span>
 
 <span class="sd">    :param wall_angle_direction_length:                Wall angle, direction, and length for a series of buildings.</span>

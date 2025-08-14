@@ -7,10 +7,10 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>naturf package &mdash; naturf 1.0.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" />
-      <link rel="stylesheet" type="text/css" href="_static/katex-math.css?v=91adb8b6" />
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" />
+      <link rel="stylesheet" type="text/css" href="_static/katex-math.css?v=05624691" />
       <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
       <link rel="stylesheet" type="text/css" href="_static/css/naturf.css?v=f9b8f5c0" />
       <link rel="stylesheet" type="text/css" href="_static/css/getting_started.css?v=be86cd7f" />
@@ -21,8 +21,8 @@
       <script src="_static/documentation_options.js?v=baaebd52"></script>
       <script src="_static/doctools.js?v=888ff710"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="_static/katex.min.js?v=be8ff15f"></script>
-      <script src="_static/auto-render.min.js?v=ad136472"></script>
+      <script src="_static/katex.min.js?v=5cc8ed51"></script>
+      <script src="_static/auto-render.min.js?v=af98beb9"></script>
       <script src="_static/katex_autorenderer.js?v=bebc588a"></script>
       <script src="_static/design-tabs.js?v=f930bc37"></script>
       <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -830,22 +830,25 @@ neighbor building.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="naturf.nodes.building_plan_area">
-<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">building_plan_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buildings_intersecting_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">join_predicate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'intersection'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">join_rsuffix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'neighbor'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#building_plan_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.building_plan_area" title="Link to this definition"></a></dt>
-<dd><p>Calculate the building plan area from the GeoDataFrame of buildings intersecting the plan area.</p>
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">building_plan_area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buildings_intersecting_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#building_plan_area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.building_plan_area" title="Link to this definition"></a></dt>
+<dd><p>Optimized calculation of building plan area using row-wise intersection
+and groupby sum.</p>
+<p>Calculates the total area of intersection between each target’s buffered
+geometry and all its associated neighbors’ original geometries.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>buildings_intersecting_plan_area</strong> (<em>gpd.GeoDataFrame</em>) – Geometry field for the neighboring buildings from the spatially
-joined data.</p></li>
-<li><p><strong>join_predicate</strong> (<em>str</em>) – Selected topology of join.
-DEFAULT: <cite>intersection</cite></p></li>
-<li><p><strong>join_rsuffix</strong> (<em>str</em>) – Suffix of the right object in the join.
-DEFAULT: <cite>neighbor</cite></p></li>
-</ul>
+<dd class="field-odd"><p><strong>buildings_intersecting_plan_area</strong> (<em>gpd.GeoDataFrame</em>) – GeoDataFrame resulting from sjoin,
+containing target IDs (‘building_id_target’),
+target buffered geometry (‘building_buffered_target’),
+and neighbor geometry (‘building_geometry_neighbor’)
+per intersection pair.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The building plan area for each unique building in the
-<cite>buildings_intersecting_plan_area</cite> GeoDataFrame.</p>
+<dd class="field-even"><p>Series indexed by ‘building_id_target’,
+containing the total summed intersection area.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -919,7 +922,7 @@ buildings and their attributes.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="naturf.nodes.complete_aspect_ratio">
-<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">complete_aspect_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_surface_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#complete_aspect_ratio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.complete_aspect_ratio" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">complete_aspect_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_surface_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#complete_aspect_ratio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.complete_aspect_ratio" title="Link to this definition"></a></dt>
 <dd><p>Calculate the complete aspect ratio for each building in a Pandas Series. In naturf, the building footprint area is the
 same as the roof area, and the exposed ground is the difference between total plan area and building plan area.</p>
 <dl class="field-list simple">
@@ -927,7 +930,7 @@ same as the roof area, and the exposed ground is the difference between total pl
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>building_surface_area</strong> (<em>pd.Series</em>) – Building surface area for each building.</p></li>
 <li><p><strong>total_plan_area</strong> (<em>pd.Series</em>) – Total plan area for each building.</p></li>
-<li><p><strong>building_plan_area</strong> (<em>pd.Series</em>) – Building plan area for each building.</p></li>
+<li><p><strong>building_plan_area</strong> (<em>pd.DataFrame</em>) – Building plan area for each building.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1024,16 +1027,21 @@ each BUILDING_HEIGHT_INTERVAL for each building.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="naturf.nodes.frontal_length">
 <span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">frontal_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buildings_intersecting_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GeoDataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#frontal_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.frontal_length" title="Link to this definition"></a></dt>
-<dd><p>Calculate the frontal length for each cardinal direction from the GeoDataFrame of buildings intersecting the plan area.
-<cite>buildings_intersecting_plan_area()</cite> needs to include <cite>wall_length</cite>.</p>
+<dd><p>Calculate the total frontal length for each cardinal direction per target building
+using optimized pandas groupby aggregation.</p>
+<p>Requires input GeoDataFrame to have columns like ‘wall_length_north_neighbor’, etc.,
+and a column specified by Settings.TARGET_ID_FIELD.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>buildings_intersecting_plan_area</strong> (<em>gpd.GeoDataFrame</em>) – Geometry field for the neighboring buildings from the spatially
-joined data.</p>
+<dd class="field-odd"><p><strong>buildings_intersecting_plan_area</strong> (<em>gpd.GeoDataFrame</em>) – GeoDataFrame with target building IDs
+and neighbor wall lengths per direction.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The frontal area for each cardinal direction for each unique building in the
-<cite>buildings_intersecting_plan_area</cite> GeoDataFrame.</p>
+<dd class="field-even"><p>DataFrame indexed by target_building_id
+with total frontal lengths per direction.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1166,14 +1174,14 @@ joined data.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="naturf.nodes.plan_area_density">
-<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">plan_area_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#plan_area_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.plan_area_density" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">plan_area_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#plan_area_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.plan_area_density" title="Link to this definition"></a></dt>
 <dd><p>Calculate the plan area density for each building in a GeoPandas GeoSeries. Plan area density is the building plan area
 at a specific height increment divided by the total plan area. naturf calculates plan area density from the four cardinal
 directions (north, east, south, west) and at 5-meter increments from ground level to 75 meters unless otherwise specified.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>building_plan_area</strong> (<em>pd.Series</em>) – Building plan area for each building.</p></li>
+<li><p><strong>building_plan_area</strong> (<em>pd.DataFrame</em>) – Building plan area for each building.</p></li>
 <li><p><strong>building_height</strong> (<em>pd.Series</em>) – Building height for each building.</p></li>
 <li><p><strong>total_plan_area</strong> (<em>pd.Series</em>) – Total plan area for each building.</p></li>
 </ul>
@@ -1186,13 +1194,13 @@ directions (north, east, south, west) and at 5-meter increments from ground leve
 
 <dl class="py function">
 <dt class="sig sig-object py" id="naturf.nodes.plan_area_fraction">
-<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">plan_area_fraction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#plan_area_fraction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.plan_area_fraction" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">plan_area_fraction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_plan_area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#plan_area_fraction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.plan_area_fraction" title="Link to this definition"></a></dt>
 <dd><p>Calculate the plan area fraction for each building in a Pandas Series. Plan area fraction is the building plan area at ground level
 for each building divided by the total plan area.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>building_plan_area</strong> (<em>pd.Series</em>) – Building plan area for each building.</p></li>
+<li><p><strong>building_plan_area</strong> (<em>pd.DataFrame</em>) – Building plan area for each building.</p></li>
 <li><p><strong>total_plan_area</strong> (<em>pd.Series</em>) – Total plan area for each building.</p></li>
 </ul>
 </dd>
@@ -1370,14 +1378,28 @@ BUILDING_HEIGHT_INTERVAL for each building.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="naturf.nodes.wall_angle_direction_length">
-<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">wall_angle_direction_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#wall_angle_direction_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.wall_angle_direction_length" title="Link to this definition"></a></dt>
-<dd><p>Calculate the wall angle, direction, and length for each building in a GeoPandas GeoSeries.</p>
+<span class="sig-prename descclassname"><span class="pre">naturf.nodes.</span></span><span class="sig-name descname"><span class="pre">wall_angle_direction_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">building_geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/naturf/nodes.html#wall_angle_direction_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.nodes.wall_angle_direction_length" title="Link to this definition"></a></dt>
+<dd><p>Computes the wall angle, direction, and length for each building in a given GeoPandas GeoSeries.</p>
+<p>This function processes each building’s geometry to determine the angles, cardinal directions,
+and lengths of its walls. It utilizes parallel processing to enhance performance, especially
+with large datasets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>geometry</strong> (<em>pd.Series</em>) – Geometry for a series of buildings.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>building_geometry</strong> (<em>pd.Series</em>) – A series containing the geometries of buildings.</p></li>
+<li><p><strong>n_jobs</strong> (<em>int</em>) – The number of CPU cores to use for parallel processing. Defaults to -1, which
+uses all available cores. If set to a value less than 1, it defaults to 1 core.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Pandas DataFrame with wall angle, direction, and length for each building.</p>
+<dd class="field-even"><p>A DataFrame where each row corresponds to a building and contains lists of wall angles,
+directions, and lengths.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>TypeError</strong> – If the input is not a GeoPandas GeoSeries or cannot be converted to one.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1453,13 +1475,25 @@ total plan area.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="naturf.output.numpy_to_binary">
 <span class="sig-prename descclassname"><span class="pre">naturf.output.</span></span><span class="sig-name descname"><span class="pre">numpy_to_binary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster_to_numpy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span></span></span><a class="reference internal" href="_modules/naturf/output.html#numpy_to_binary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.output.numpy_to_binary" title="Link to this definition"></a></dt>
-<dd><p>Turn the master numpy array containing all 132 aggregated parameters into a binary stream.</p>
+<dd><p>Optimized conversion of a NumPy array to a binary string of packed big-endian integers.</p>
+<p>This version uses NumPy’s vectorized <cite>astype</cite> and <cite>tobytes</cite> methods for efficiency.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>raster_to_numpy</strong> (<em>np.ndarray</em>) – 132 level numpy array with each level being an aggregated parameter.</p>
+<dd class="field-odd"><p><strong>raster_to_numpy</strong> (<em>np.ndarray</em>) – Input NumPy array (presumably 3D).
+Assumes numeric values that can be represented as int32.
+Floats will be truncated towards zero. NaNs will cause an error.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Binary object containing the parameter data.</p>
+<dd class="field-even"><p>Binary string containing packed data in C-contiguous order.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bytes</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If input is not a NumPy array.</p></li>
+<li><p><strong>ValueError</strong> – If input contains NaN or values incompatible with int32 conversion.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -1496,13 +1530,14 @@ included in the sum.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="naturf.output.write_binary">
-<span class="sig-prename descclassname"><span class="pre">naturf.output.</span></span><span class="sig-name descname"><span class="pre">write_binary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numpy_to_binary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raster_to_numpy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/naturf/output.html#write_binary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.output.write_binary" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">naturf.output.</span></span><span class="sig-name descname"><span class="pre">write_binary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numpy_to_binary</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raster_to_numpy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_output_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/output.html#write_binary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.output.write_binary" title="Link to this definition"></a></dt>
 <dd><p>Write the binary file that will be input to WRF.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>numpy_to_binary</strong> (<em>bytes</em>) – Binary object containing the parameter data.</p></li>
 <li><p><strong>raster_to_numpy</strong> (<em>np.ndarray</em>) – 132 level numpy array with each level being an aggregated parameter.</p></li>
+<li><p><strong>binary_output_directory</strong> (<em>str</em>) – Full path to the directory to write the binary file to.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1510,7 +1545,7 @@ included in the sum.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="naturf.output.write_index">
-<span class="sig-prename descclassname"><span class="pre">naturf.output.</span></span><span class="sig-name descname"><span class="pre">write_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster_to_numpy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CRS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'index'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/naturf/output.html#write_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.output.write_index" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">naturf.output.</span></span><span class="sig-name descname"><span class="pre">write_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raster_to_numpy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building_geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CRS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'index'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="reference internal" href="_modules/naturf/output.html#write_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#naturf.output.write_index" title="Link to this definition"></a></dt>
 <dd><p>Write the index file that will accompany the output binary file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
